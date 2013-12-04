@@ -52,9 +52,9 @@ class Slider extends Component with Orientable.Wrapper with Publisher {
   def adjusting = peer.getValueIsAdjusting
 
   def labels: scala.collection.Map[Int, Label] = {
-    val labelTable = peer.getLabelTable.asInstanceOf[java.util.Hashtable[Int, JLabel]]
-    new scala.collection.JavaConversions.JMapWrapper(labelTable)
-      .mapValues(v => UIElement.cachedWrapper[Label](v))
+    import scala.collection.convert.WrapAsScala._
+    val labelTable = peer.getLabelTable.asInstanceOf[java.util.Map[Int, JLabel]]
+    labelTable.mapValues(v => UIElement.cachedWrapper[Label](v))
   }
   def labels_=(l: scala.collection.Map[Int, Label]) {
     // TODO: do some lazy wrapping

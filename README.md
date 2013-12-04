@@ -35,5 +35,3 @@ Notes:
 
 Visual appearance of combo boxes using the GTK LaF is broken on JDKs < 1.7b30. 
 This is a Java Swing problem.
-
-To download the latest version, go to http://lamp.epfl.ch/~imaier or use sbaz.
