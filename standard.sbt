@@ -22,10 +22,6 @@ resourceGenerators in Compile <+= Def.task {
   Seq(file)
 }
 
-mappings in (Compile, packageBin) += {
-   (baseDirectory.value / s"${name.value}.properties") -> s"${name.value}.properties"
-}
-
 
 // maven publishing
 publishTo := {
@@ -71,3 +67,17 @@ pomExtra := (
     </developer>
   </developers>
 )
+
+val osgiVersion = version(_.replace('-', '.'))
+
+OsgiKeys.bundleSymbolicName := s"${organization.value}.${name.value}"
+
+OsgiKeys.bundleVersion := osgiVersion.value
+
+// Sources should also have a nice MANIFEST file
+packageOptions in packageSrc := Seq(Package.ManifestAttributes(
+                      ("Bundle-SymbolicName", s"${organization.value}.${name.value}.source"),
+                      ("Bundle-Name", s"${name.value} sources"),
+                      ("Bundle-Version", osgiVersion.value),
+                      ("Eclipse-SourceBundle", s"""${organization.value}.${name.value};version="${osgiVersion.value}";roots:="."""")
+                  ))
