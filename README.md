@@ -1,4 +1,4 @@
-scala-swing (unsupported) [<img src="https://api.travis-ci.org/scala/scala-swing.png?branch=java7"/>](https://travis-ci.org/scala/scala-swing?branch=java7)
+scala-swing (unsupported) [<img src="https://api.travis-ci.org/scala/scala-swing.png?branch=java7-2.9.x"/>](https://travis-ci.org/scala/scala-swing?branch=java7-2.9.x)
 =========
 
 We welcome contributions, but do not actively maintain this library.

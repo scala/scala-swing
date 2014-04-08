@@ -6,6 +6,6 @@ name := "scala-swing"
 
 version := "1.0.0-SNAPSHOT"
 
-scalaVersion := "2.11.0-M7"
+scalaVersion := "2.9.2"
 
-snapshotScalaBinaryVersion := "2.11.0-M7"
+snapshotScalaBinaryVersion := "2.9.2"
