@@ -28,26 +28,26 @@ class PublisherTest extends FunSuite {
   class TstReactor(publisher: TstPublisher) extends Reactor {
     listenTo(publisher)
 
-    var reacted = false
+    var reacted: Int = 0
 
     reactions += {
       case TstPublisher.Destroyed(p) if p eq publisher =>
-        reacted = true
+        reacted = reacted + 1
         deafTo(publisher)
     }
   }
 
   // Regression test for: https://issues.scala-lang.org/browse/SI-8495
-  test("listeners should not be called after they have been removed from the publisher") {
+  test("all listeners should be called exactly once, even if listener state changes during publishing") {
     (1 until LoopCount) foreach { c =>
-        val publisher = new TstPublisher
-        val reactors = immutable.Seq.fill(ReactorsSize)(new TstReactor(publisher))
+      val publisher = new TstPublisher
+      val reactors = immutable.Seq.fill(ReactorsSize)(new TstReactor(publisher))
 
-        publisher.publish(TstPublisher.Destroyed(publisher))
+      publisher.publish(TstPublisher.Destroyed(publisher))
 
-        reactors.foreach {  r =>
-            assert(r.reacted, true)
-        }
+      reactors.foreach {  r =>
+        assert(r.reacted == 1)
+      }
     }
   }
 }
