@@ -44,7 +44,7 @@ trait Publisher extends Reactor {
   /**
    * Notify all registered reactions.
    */
-  def publish(e: Event) { for (l <- listeners) if (l.isDefinedAt(e)) l(e) }
+  def publish(e: Event) { for (l <- listeners.clone()) if ( listeners.containsExists(l) && l.isDefinedAt(e)) l(e) }
 
   listenTo(this)
 }
@@ -168,6 +168,7 @@ private[swing] abstract class RefSet[A <: AnyRef] extends mutable.Set[A] with Si
   def -=(el: A): this.type = { underlying -= Ref(el); purgeReferences(); this }
   def +=(el: A): this.type = { purgeReferences(); underlying += Ref(el); this }
   def contains(el: A): Boolean = { purgeReferences(); underlying.contains(Ref(el)) }
+  def containsExists(el: A): Boolean = {  underlying.contains(Ref(el)) }
   override def size = { purgeReferences(); underlying.size }
 
   protected[this] def removeReference(ref: Reference[A]) { underlying -= ref }
