@@ -8,19 +8,15 @@
 
 package scala.swing.examples
 
-import java.awt.Dimension
 import scala.swing._
 import swing.event._
 
 object TableSelection extends SimpleSwingApplication {
   val model = Array(List("Mary", "Campione", "Snowboarding", 5, false).toArray,
-                    List("Alison", "Huml", "Rowing", 5, false).toArray,
-                    List("Kathy", "Walrath", "Knitting", 5, false).toArray,
-                    List("Sharon", "Zakhour", "Speed reading", 5, false).toArray,
-                    List("Philip", "Milne", "Pool", 5, false).toArray)
-  /*val model = Array.tabulate(10000) { i =>
-    List("Mary", "Campione", "Snowboarding", i, false).toArray
-  }*/
+    List("Alison", "Huml", "Rowing", 5, false).toArray,
+    List("Kathy", "Walrath", "Knitting", 5, false).toArray,
+    List("Sharon", "Zakhour", "Speed reading", 5, false).toArray,
+    List("Philip", "Milne", "Pool", 5, false).toArray)
 
   lazy val ui = new BoxPanel(Orientation.Vertical) {
     val table = new Table(model, Array("First Name", "Last Name", "Sport", "# of Years", "Vegetarian")) {
@@ -53,12 +49,14 @@ object TableSelection extends SimpleSwingApplication {
     val cellSelection = radio(elemMutex, "Cell Selection")
     elemMutex.select(rowSelection)
 
-    val output = new TextArea(5, 40) { editable = false }
+    val output = new TextArea(5, 40) {
+      editable = false
+    }
     contents += new ScrollPane(output)
 
     def outputSelection() {
       output.append("Lead: " + table.selection.rows.leadIndex + "," +
-          table.selection.columns.leadIndex + ". ")
+        table.selection.columns.leadIndex + ". ")
       output.append("Rows:")
       for (c <- table.selection.rows) output.append(" " + c)
       output.append(". Columns:")

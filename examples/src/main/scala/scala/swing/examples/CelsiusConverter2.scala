@@ -17,6 +17,7 @@ object CelsiusConverter2 extends SimpleSwingApplication {
     columns = 5
     horizontalAlignment = Alignment.Right
   }
+
   val celsius = newField
   val fahrenheit = newField
 
@@ -33,12 +34,13 @@ object CelsiusConverter2 extends SimpleSwingApplication {
   }
 
   lazy val ui = new FlowPanel(celsius, new Label(" Celsius  =  "),
-                              fahrenheit, new Label(" Fahrenheit")) {
+    fahrenheit, new Label(" Fahrenheit")) {
     border = Swing.EmptyBorder(15, 10, 10, 10)
   }
+
   def top = new MainFrame {
     title = "Convert Celsius / Fahrenheit"
-   	contents = ui
+    contents = ui
   }
 }
 

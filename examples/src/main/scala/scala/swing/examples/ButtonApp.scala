@@ -8,8 +8,6 @@
 
 package scala.swing.examples
 
-import java.awt.Dimension
-
 import scala.swing._
 import scala.swing.event._
 

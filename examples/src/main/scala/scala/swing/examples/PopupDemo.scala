@@ -10,15 +10,14 @@ package scala.swing.examples
 
 import scala.swing._
 import scala.swing.event._
-import scala.swing.Swing._
 
 /**
  * @author John Sullivan
  * @author Ingo Maier
  */
 object PopupDemo extends SimpleSwingApplication {
-	def top = new MainFrame {
-		val popupMenu = new PopupMenu {
+  def top = new MainFrame {
+    val popupMenu = new PopupMenu {
       contents += new Menu("menu 1") {
         contents += new RadioMenuItem("radio 1.1")
         contents += new RadioMenuItem("radio 1.2")
@@ -37,5 +36,5 @@ object PopupDemo extends SimpleSwingApplication {
     listenTo(button)
 
     contents = new FlowPanel(button)
-	}
+  }
 }

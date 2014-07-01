@@ -31,7 +31,7 @@ object CountButton extends SimpleSwingApplication {
       reactions += {
         case ButtonClicked(b) =>
           nclicks += 1
-          label.text = "Number of button clicks: "+nclicks
+          label.text = "Number of button clicks: " + nclicks
       }
     }
   }
