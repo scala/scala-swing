@@ -1,7 +1,7 @@
-package examples.swing
+package scala.swing.examples
 
-import swing._
-import event._
+import scala.swing._
+import scala.swing.event._
 
 /** A GUI app to convert celsius to centigrade
  */

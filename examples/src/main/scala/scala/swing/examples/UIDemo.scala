@@ -1,9 +1,9 @@
-package examples.swing
+package scala.swing.examples
 
-import swing._
-import event._
-import Swing._
-import ListView._
+import scala.swing._
+import scala.swing.event._
+import scala.swing.Swing._
+import scala.swing.ListView._
 
 object UIDemo extends SimpleSwingApplication {
   def top = new MainFrame {

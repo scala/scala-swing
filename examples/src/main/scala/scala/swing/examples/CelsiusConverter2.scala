@@ -1,7 +1,7 @@
-package examples.swing
+package scala.swing.examples
 
-import swing._
-import event._
+import scala.swing._
+import scala.swing.event._
 
 object CelsiusConverter2 extends SimpleSwingApplication {
   def newField = new TextField {

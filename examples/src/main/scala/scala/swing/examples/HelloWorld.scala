@@ -1,6 +1,6 @@
-package examples.swing
+package scala.swing.examples
 
-import swing._
+import scala.swing._
 
 /**
  * A simple swing demo.

@@ -1,9 +1,9 @@
-package examples.swing
+package scala.swing.examples
 
 import java.awt.Dimension
 
-import swing._
-import swing.event._
+import scala.swing._
+import scala.swing.event._
 
 object ButtonApp extends SimpleSwingApplication {
   def top = new MainFrame {

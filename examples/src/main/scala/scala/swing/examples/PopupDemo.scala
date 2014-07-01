@@ -1,8 +1,8 @@
-package examples.swing
+package scala.swing.examples
 
-import swing._
-import event._
-import Swing._
+import scala.swing._
+import scala.swing.event._
+import scala.swing.Swing._
 
 /**
  * @author John Sullivan

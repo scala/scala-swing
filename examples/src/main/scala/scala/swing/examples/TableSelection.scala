@@ -1,6 +1,7 @@
-package examples.swing
+package scala.swing.examples
 
 import java.awt.Dimension
+import scala.swing._
 import swing.event._
 
 object TableSelection extends SimpleSwingApplication {

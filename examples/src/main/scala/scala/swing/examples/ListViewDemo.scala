@@ -1,4 +1,6 @@
-package examples.swing
+package scala.swing.examples
+
+import scala.swing._
 
 object ListViewDemo extends SimpleSwingApplication {
   def top = new MainFrame {

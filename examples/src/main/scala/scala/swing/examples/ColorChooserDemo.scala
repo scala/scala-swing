@@ -1,10 +1,10 @@
-package examples.swing
+package scala.swing.examples
 
 import java.awt.{Color, Font, Dimension}
-import swing._
-import event._
-import Swing._
-import BorderPanel._
+import scala.swing._
+import scala.swing.event._
+import scala.swing.Swing._
+import scala.swing.BorderPanel._
 
 /**
  * Demo for ColorChooser.

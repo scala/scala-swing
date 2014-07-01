@@ -1,6 +1,7 @@
-package examples.swing
+package scala.swing.examples
 
-import event._
+import scala.swing._
+import scala.swing.event._
 
 class SimpleApplet extends Applet {
   object ui extends UI with Reactor {

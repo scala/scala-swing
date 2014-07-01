@@ -1,4 +1,4 @@
-package examples.swing
+package scala.swing.examples
 
 import scala.swing._
 import scala.swing.event._

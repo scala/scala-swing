@@ -1,7 +1,7 @@
-package examples.swing
+package scala.swing.examples
 
-import swing._
-import swing.event._
+import scala.swing._
+import scala.swing.event._
 
 object SwingApp extends SimpleSwingApplication {
   def top = new MainFrame {
