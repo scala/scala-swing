@@ -1,7 +1,7 @@
 package scala.swing.examples
 
 import scala.swing.Swing._
-import scala.swing.{MainFrame, Panel}
+import scala.swing.{SimpleSwingApplication, MainFrame, Panel}
 import scala.swing.event._
 import java.awt.{Color, Graphics2D, Point, geom}
 
