@@ -30,5 +30,21 @@ test in Test := {
 }
 
 
+// set the prompt (for this build) to include the project id.
+shellPrompt in ThisBuild := { state => Project.extract(state).currentRef.project + "> " }
+
+
+lazy val swing = project.in( file(".") )
+
+lazy val examples = project.in( file("examples") )
+  .dependsOn(swing)
+  .settings(
+    scalaVersion := "2.11.1",
+    fork in run := true,
+    fork := true
+  )
+
+
+
 
 
