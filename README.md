@@ -1,4 +1,4 @@
-scala-swing (unsupported) [<img src="https://api.travis-ci.org/scala/scala-swing.png?branch=java7"/>](https://travis-ci.org/scala/scala-swing?branch=java7)
+scala-swing (mostly-unsupported) [<img src="https://api.travis-ci.org/scala/scala-swing.png?branch=java7"/>](https://travis-ci.org/scala/scala-swing?branch=java7)
 =========
 
 This is now community maintained. If you're interested in helping then contact @adriaanm or @andy1138 
@@ -26,7 +26,41 @@ The library comprises three main packages:
 
 - `scala.swing`: All widget classes and traits.
 - `scala.swing.event`: The event hierarchy.
-- `scala.swing.test`: A set of demos.
+
+
+Examples
+---
+
+A number of examples can be found in the `examples` project. 
+A good place to start is  `[12] scala.swing.examples.UIDemo` (_index number may be different for you_). This gives pulls in the all the other examples into a tabbed window.
+
+
+```
+$ sbt examples/run
+
+Multiple main classes detected, select one to run:
+
+ [1] scala.swing.examples.ButtonApp
+ [2] scala.swing.examples.Dialogs
+ [3] scala.swing.examples.ComboBoxes
+ [4] scala.swing.examples.CelsiusConverter2
+ [5] scala.swing.examples.ListViewDemo
+ [6] scala.swing.examples.HelloWorld
+ [7] scala.swing.examples.LabelTest
+ [8] scala.swing.examples.PopupDemo
+ [9] scala.swing.examples.ColorChooserDemo
+ [10] scala.swing.examples.LinePainting
+ [11] scala.swing.examples.GridBagDemo
+ [12] scala.swing.examples.UIDemo
+ [13] scala.swing.examples.TableSelection
+ [14] scala.swing.examples.CelsiusConverter
+ [15] scala.swing.examples.SwingApp
+ [16] scala.swing.examples.CountButton
+
+Enter number:
+```
+
+
 
 
 Versions
