@@ -1,8 +1,8 @@
 scala-swing (unsupported) [<img src="https://api.travis-ci.org/scala/scala-swing.png?branch=java7"/>](https://travis-ci.org/scala/scala-swing?branch=java7)
 =========
 
-We welcome contributions, but do not actively maintain this library.
-If you're interested in becoming a maintainer, please contact @adriaanm.
+This is now community maintained. If you're interested in helping then contact @adriaanm or @andy1138 
+Questions can asked on the [Google Group](https://groups.google.com/forum/#!forum/scala-swing)
 
 This is a UI library that will wrap most of Java Swing for Scala in a straightforward manner. 
 The widget class hierarchy loosely resembles that of Java Swing. The main differences are:
@@ -27,7 +27,16 @@ The library comprises three main packages:
 - `scala.swing`: All widget classes and traits.
 - `scala.swing.event`: The event hierarchy.
 - `scala.swing.test`: A set of demos.
-    
+
+
+Versions
+---
+  
+- Version 1.xx.xx branch is compiled with java6, 
+- Version 2.xx.xx compiled with java7, targeted to java6.
+
+_Reason for different versions can be found at [SI-3634](https://issues.scala-lang.org/browse/SI-3634)_
+
 
 Notes:
 
