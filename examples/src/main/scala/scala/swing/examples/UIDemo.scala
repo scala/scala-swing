@@ -1,9 +1,17 @@
-package examples.swing
+/*                     __                                               *\
+**     ________ ___   / /  ___     Scala API                            **
+**    / __/ __// _ | / /  / _ |    (c) 2007-2014, LAMP/EPFL             **
+**  __\ \/ /__/ __ |/ /__/ __ |    http://scala-lang.org/               **
+** /____/\___/_/ |_/____/_/ | |                                         **
+**                          |/                                          **
+\*                                                                      */
 
-import swing._
-import event._
-import Swing._
-import ListView._
+package scala.swing.examples
+
+import scala.swing._
+import scala.swing.event._
+import scala.swing.Swing._
+import scala.swing.ListView._
 
 object UIDemo extends SimpleSwingApplication {
   def top = new MainFrame {
@@ -17,7 +25,7 @@ object UIDemo extends SimpleSwingApplication {
       contents += new Menu("A Menu") {
         contents += new MenuItem("An item")
         contents += new MenuItem(Action("An action item") {
-          println("Action '"+ title +"' invoked")
+          println("Action '" + title + "' invoked")
         })
         contents += new Separator
         contents += new CheckMenuItem("Check me")
@@ -26,7 +34,7 @@ object UIDemo extends SimpleSwingApplication {
         val a = new RadioMenuItem("a")
         val b = new RadioMenuItem("b")
         val c = new RadioMenuItem("c")
-        val mutex = new ButtonGroup(a,b,c)
+        val mutex = new ButtonGroup(a, b, c)
         contents ++= mutex.buttons
       }
       contents += new Menu("Empty Menu")
@@ -36,25 +44,28 @@ object UIDemo extends SimpleSwingApplication {
      * The root component in this frame is a panel with a border layout.
      */
     contents = new BorderPanel {
+
       import BorderPanel.Position._
 
       var reactLive = false
 
       val tabs = new TabbedPane {
+
         import TabbedPane._
+
         val buttons = new FlowPanel {
-          border = Swing.EmptyBorder(5,5,5,5)
+          border = Swing.EmptyBorder(5, 5, 5, 5)
 
           contents += new BoxPanel(Orientation.Vertical) {
-            border = CompoundBorder(TitledBorder(EtchedBorder, "Radio Buttons"), EmptyBorder(5,5,5,10))
+            border = CompoundBorder(TitledBorder(EtchedBorder, "Radio Buttons"), EmptyBorder(5, 5, 5, 10))
             val a = new RadioButton("Green Vegetables")
             val b = new RadioButton("Red Meat")
             val c = new RadioButton("White Tofu")
-            val mutex = new ButtonGroup(a,b,c)
+            val mutex = new ButtonGroup(a, b, c)
             contents ++= mutex.buttons
           }
           contents += new BoxPanel(Orientation.Vertical) {
-            border = CompoundBorder(TitledBorder(EtchedBorder, "Check Boxes"), EmptyBorder(5,5,5,10))
+            border = CompoundBorder(TitledBorder(EtchedBorder, "Check Boxes"), EmptyBorder(5, 5, 5, 10))
             val paintLabels = new CheckBox("Paint Labels")
             val paintTicks = new CheckBox("Paint Ticks")
             val snapTicks = new CheckBox("Snap To Ticks")
@@ -72,7 +83,9 @@ object UIDemo extends SimpleSwingApplication {
                 reactLive = live.selected
             }
           }
-          contents += new Button(Action("Center Frame") { centerOnScreen() })
+          contents += new Button(Action("Center Frame") {
+            centerOnScreen()
+          })
         }
         pages += new Page("Buttons", buttons)
         pages += new Page("GridBag", GridBagDemo.ui)
@@ -121,9 +134,10 @@ object UIDemo extends SimpleSwingApplication {
       object slider extends Slider {
         min = 0
         value = tabs.selection.index
-        max = tabs.pages.size-1
+        max = tabs.pages.size - 1
         majorTickSpacing = 1
       }
+
       layout(slider) = South
 
       /*
@@ -134,7 +148,7 @@ object UIDemo extends SimpleSwingApplication {
       listenTo(list.selection)
       reactions += {
         case ValueChanged(`slider`) =>
-          if(!slider.adjusting || reactLive) tabs.selection.index = slider.value
+          if (!slider.adjusting || reactLive) tabs.selection.index = slider.value
         case SelectionChanged(`tabs`) =>
           slider.value = tabs.selection.index
           list.selectIndices(tabs.selection.index)
