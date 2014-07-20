@@ -44,6 +44,14 @@ lazy val examples = project.in( file("examples") )
     fork := true
   )
 
+lazy val uitest = project.in( file("uitest") )
+  .dependsOn(swing)
+  .settings(
+    scalaVersion := "2.11.1",
+    fork in run := true,
+    fork := true
+  )
+
 
 
 
