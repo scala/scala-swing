@@ -27,8 +27,20 @@ The library comprises three main packages:
 - `scala.swing`: All widget classes and traits.
 - `scala.swing.event`: The event hierarchy.
 - `scala.swing.test`: A set of demos.
-    
 
-Notes:
+<br>
+
+ScalaDocs
+===
+
+Documentation for scala-swing included in 2.11.1 is can be found [here](http://www.scala-lang.org/api/2.11.1/scala-swing/#scala.swing.package)
+
+Other version can be found at [http://www.scala-lang.org/documentation/api.html](http://www.scala-lang.org/documentation/api.html) 
+
+
+<br><br>
+
+_Notes:_
 
 - Visual appearance of combo boxes using the GTK LaF is broken on JDKs < 1.7b30. This is a Java Swing problem.
+
