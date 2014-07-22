@@ -28,7 +28,6 @@ The library comprises three main packages:
 - `scala.swing.event`: The event hierarchy.
 - `examples.swing`: A set of demos. ( in ./docs )
 
-<br>
 
 ScalaDocs
 ---
@@ -37,14 +36,13 @@ Documentation for scala-swing included in 2.11.1 is can be found [here](http://w
 
 Other version can be found at [http://www.scala-lang.org/documentation/api.html](http://www.scala-lang.org/documentation/api.html) 
 
-<br><br>
 
 Current Work
 ---
 
 Current changes are being made on the **java7** branch. This is to mainly because of the EOL of java6 and the generification that happened between jdk6 and jdk7 requiring a difference in the source code. This class files are targeted at java6 and will run with all versions upwards. 
 
-<br><br>
+<br>
 
 _Notes:_
 
