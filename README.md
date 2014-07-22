@@ -26,7 +26,7 @@ The library comprises three main packages:
 
 - `scala.swing`: All widget classes and traits.
 - `scala.swing.event`: The event hierarchy.
-- `scala.swing.test`: A set of demos.
+- `examples.swing`: A set of demos. ( in ./docs )
 
 <br>
 
