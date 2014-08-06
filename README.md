@@ -26,9 +26,30 @@ The library comprises three main packages:
 
 - `scala.swing`: All widget classes and traits.
 - `scala.swing.event`: The event hierarchy.
-- `scala.swing.test`: A set of demos.
-    
+- `examples.swing`: A set of demos. ( in ./docs )
 
-Notes:
+
+ScalaDocs
+---
+
+Documentation for scala-swing included in 2.11.1 is can be found [here](http://www.scala-lang.org/api/2.11.1/scala-swing/#scala.swing.package)
+
+Other version can be found at [http://www.scala-lang.org/documentation/api.html](http://www.scala-lang.org/documentation/api.html) 
+
+
+Current Work
+---
+
+Current changes are being made on the **java7** branch. This is to mainly because of the EOL of java6 and the generification that happened between jdk6 and jdk7 requiring a difference in the source code. This class files are targeted at java6 and will run with all versions upwards. 
+
+<br>
+
+_Notes:_
 
 - Visual appearance of combo boxes using the GTK LaF is broken on JDKs < 1.7b30. This is a Java Swing problem.
+- The generification added to some java7 swing components make the course code incompatible between java6 and java7. This is not an issue with the generated .class files because of _Type Erasure_ will work across all versions of java from java6 upwards. See [Issue SI-3634](https://issues.scala-lang.org/browse/SI-3634)
+
+
+
+
+
