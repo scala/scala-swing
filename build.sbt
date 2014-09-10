@@ -19,15 +19,15 @@ scalaModuleOsgiSettings
 
 OsgiKeys.exportPackage     := Seq(s"scala.swing.*;version=${version.value}")
 
-MimaPlugin.mimaDefaultSettings
-
-MimaKeys.previousArtifact  := Some(organization.value % s"${name.value}_2.11" % "1.0.1")
-
-// run mima during tests
-test in Test := {
-  MimaKeys.reportBinaryIssues.value
-  (test in Test).value
-}
+//MimaPlugin.mimaDefaultSettings
+//
+//MimaKeys.previousArtifact  := Some(organization.value % s"${name.value}_2.11" % "1.0.1")
+//
+//// run mima during tests
+//test in Test := {
+//  MimaKeys.reportBinaryIssues.value
+//  (test in Test).value
+//}
 
 
 // set the prompt (for this build) to include the project id.
