@@ -9,63 +9,65 @@
 package scala.swing.uitest
 
 
-import scala.swing.FileChooser.Result
+
 import scala.swing.Swing._
 import scala.swing.event.ButtonClicked
 import scala.swing._
 
+
 /**
  * Test for issue SI-7597 https://issues.scala-lang.org/browse/SI-7597
+ * (expanded to include other showXXXDialog dialogs )
  */
 object SI7597 extends SimpleSwingApplication {
   def top = new MainFrame {
-    title = "SI7597 FileChooser test"
-
+    title = "SI7597 showXXXDialog tests"
+    size = new Dimension(900, 200)
 
     lazy val dialog = aDialog
 
-    val fileChooser = new FileChooser
+    val fileChooserDialog = new FileChooser
+    val colorChooser = new ColorChooser
 
-
-    contents = new FlowPanel {
+    contents = new BoxPanel(Orientation.Vertical) {
       contents ++= Seq(
-        fileChooserStyles[Component]("Component", this),
-        fileChooserStyles[Frame]("Frame", top),
-        fileChooserStyles[Dialog]("Dialog", dialog)
+        fileChooserStyles("Component", parent = this),
+        fileChooserStyles("Frame", parent = top),
+        fileChooserStyles("Dialog", parent = dialog)
       )
     }
 
-    size = new Dimension(400, 400)
+    def fileChooserStyles(rowTitle : String, parent : => PeerContainer) = new FlowPanel {
+      contents ++= Seq(new Label(s"Parent is $rowTitle"))
 
-
-    def fileChooserStyles[T <: PeerContainer](rowTitle: String, parent: => T) = new FlowPanel {
       contents ++= Seq(
-        new Label(s"Parent is $rowTitle"),
-        fileChooserButton("Open", fileChooser.showOpenDialog(parent)),
-        fileChooserButton("Save", fileChooser.showSaveDialog(parent)),
-        fileChooserButton("Text", fileChooser.showDialog(parent, "Text"))
+        simpleButton("Open", fileChooserDialog.showOpenDialog(parent)),
+        simpleButton("Save", fileChooserDialog.showSaveDialog(parent)),
+        simpleButton("Text", fileChooserDialog.showDialog(parent, "Text")),
+        simpleButton("Confirmation", Dialog.showConfirmation(parent, "Confirmation") ),
+        simpleButton("Input", Dialog.showInput(parent, "Input", initial = "Some text") ),
+        simpleButton("Message", Dialog.showMessage(parent, "Message" )),
+        simpleButton("Message", Dialog.showOptions(parent, "Message", entries = List("First", "Second", "Third"), initial=1 )),
+        simpleButton("Color", ColorChooser.showDialog(parent, "Color", java.awt.Color.RED))
       )
     }
 
-    def fileChooserButton(parentTitle: String, fileChooserStyle: => Result.Value): Button = new Button {
+    def simpleButton(parentTitle : String, dialogChooser : => Any): Button = new Button {
       text = parentTitle
       reactions += {
-        case ButtonClicked(_) =>
-          text = fileChooserStyle match {
-            case Result.Approve => s"$parentTitle: ${fileChooser.selectedFile.toString}"
-            case _ => parentTitle
+        case _ : ButtonClicked =>
+          dialogChooser match {
+            case action => println(s"Result: $action")
           }
       }
     }
-
   }
 
 
-  def aDialog = new Dialog(top) {
+  def aDialog:Dialog = new Dialog(top) {
     title = "A Dialog"
-    size = new Dimension(300, 300)
-    contents = new Label("Do not Close")
+    size = new Dimension(300, 600)
+    contents = new Label("Test Dialog.  Do Not Close")
     visible = true
   }
-
 }

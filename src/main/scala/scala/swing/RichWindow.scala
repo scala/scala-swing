@@ -126,7 +126,7 @@ object Dialog {
 
   private def uiString(txt: String) = UIManager.getString(txt)
 
-  def showConfirmation(parent: Component = null,
+  def showConfirmation(parent: PeerContainer = null,
                        message: Any,
                        title: String = uiString("OptionPane.titleText"),
                        optionType: Options.Value = Options.YesNo,
@@ -135,7 +135,7 @@ object Dialog {
     Result(JOptionPane.showConfirmDialog(nullPeer(parent), message, title,
       optionType.id, messageType.id, Swing.wrapIcon(icon)))
 
-  def showOptions(parent: Component = null,
+  def showOptions(parent: PeerContainer = null,
                   message: Any,
                   title: String = uiString("OptionPane.titleText"),
                   optionType: Options.Value = Options.YesNo,
@@ -149,7 +149,7 @@ object Dialog {
     Result(r)
   }
 
-  def showInput[A](parent: Component = null,
+  def showInput[A](parent: PeerContainer = null,
                    message: Any,
                    title: String = uiString("OptionPane.inputDialogTitle"),
                    messageType: Message.Value = Message.Question,
@@ -164,7 +164,7 @@ object Dialog {
 
     toOption[A](r)
   }
-  def showMessage(parent: Component = null,
+  def showMessage(parent: PeerContainer = null,
                   message: Any,
                   title: String = uiString("OptionPane.messageDialogTitle"),
                   messageType: Message.Value = Message.Info,

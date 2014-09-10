@@ -40,26 +40,26 @@ object FileChooser {
  * @see [[javax.swing.JFileChooser]]
  */
 class FileChooser(dir: File) {
-  import FileChooser._
+  import scala.swing.FileChooser._
   lazy val peer: JFileChooser = new JFileChooser(dir)
 
   def this() = this(null)
 
-  import Swing._
+  import scala.swing.Swing._
 
   /**
    * Display a dialog box to select a file.
    * @param over Parent container -  Component, Frame or Dialog
    * @return Status of how the dialog was closed.
    */
-  def showOpenDialog[T <: PeerContainer](over: T): Result.Value = Result(peer.showOpenDialog(nullPeer(over)))
+  def showOpenDialog(over: PeerContainer): Result.Value = Result(peer.showOpenDialog(nullPeer(over)))
 
   /**
    * Display a dialog box to select a file.
    * @param over Parent container -  Component, Frame or Dialog
    * @return Parent container -  Component, Frame or Dialog
    */
-  def showSaveDialog[T <: PeerContainer](over: T): Result.Value = Result(peer.showSaveDialog(nullPeer(over)))
+  def showSaveDialog(over: PeerContainer): Result.Value = Result(peer.showSaveDialog(nullPeer(over)))
 
   /**
    * Display a dialog box to select a file.
@@ -67,7 +67,7 @@ class FileChooser(dir: File) {
    * @param approveText text for the 'ok' button
    * @return Parent container -  Component, Frame or Dialog
    */
-  def showDialog[T <: PeerContainer](over: T, approveText: String): Result.Value = Result(peer.showDialog(nullPeer(over), approveText))
+  def showDialog(over: PeerContainer, approveText: String): Result.Value = Result(peer.showDialog(nullPeer(over), approveText))
 
   def controlButtonsAreShown: Boolean = peer.getControlButtonsAreShown
   def controlButtonsAreShown_=(b: Boolean) { peer.setControlButtonsAreShown(b) }
