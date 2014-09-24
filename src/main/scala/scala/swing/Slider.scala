@@ -11,7 +11,7 @@
 package scala.swing
 
 import javax.swing.{JSlider, JLabel}
-import event._
+import scala.swing.event._
 
 /**
  * Lets users select a value from a given range. Visually, this is represented
@@ -58,7 +58,7 @@ class Slider extends Component with Orientable.Wrapper with Publisher {
   }
   def labels_=(l: scala.collection.Map[Int, Label]) {
     // TODO: do some lazy wrapping
-    val table = new java.util.Hashtable[Any, Any]
+    val table = new java.util.Hashtable[java.lang.Integer, javax.swing.JComponent]
     for ((k,v) <- l) table.put(k, v.peer)
     peer.setLabelTable(table)
   }
