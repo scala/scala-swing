@@ -1,6 +1,6 @@
 language: scala
 script:
-  - sbt ++$TRAVIS_SCALA_VERSION clean update compile test
+  - sbt ++$TRAVIS_SCALA_VERSION clean update compile test examples/compile
 scala:
   - 2.11.1
 
