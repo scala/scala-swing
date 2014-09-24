@@ -1,0 +1,219 @@
+/*
+ * Copyright (c) 1995, 2008, Oracle and/or its affiliates. All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ *
+ *   - Redistributions of source code must retain the above copyright
+ *     notice, this list of conditions and the following disclaimer.
+ *
+ *   - Redistributions in binary form must reproduce the above copyright
+ *     notice, this list of conditions and the following disclaimer in the
+ *     documentation and/or other materials provided with the distribution.
+ *
+ *   - Neither the name of Oracle or the names of its
+ *     contributors may be used to endorse or promote products derived
+ *     from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
+ * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+ * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+ * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+ * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+ * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+ * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+ * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+ * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+package scala.swing.examples.tutorials.misc
+
+import scala.swing._
+import scala.swing.event.ButtonClicked
+import java.awt.Dimension
+import java.awt.event.{ActionEvent, ActionListener, KeyEvent}
+import java.net.URL
+import javax.swing.{ ImageIcon, JToolBar }
+
+/* 
+ * Tutorials: How to Use Actions
+ * http://docs.oracle.com/javase/tutorial/uiswing/misc/action.html
+ * 
+ * The graphics in this application require a download of the Java Look and Feel Graphics
+ * Repository from Oracle.
+ * http://www.oracle.com/technetwork/java/javasebusiness/downloads/java-archive-downloads-java-client-419417.html#7520-jlf-1.0-oth-JPR
+ * Accept the user agreement from the site, unzip, and place the jar file contents in your classpath.
+ * 
+ * Source code references:
+ * http://docs.oracle.com/javase/tutorial/uiswing/examples/misc/ActionDemoProject/src/misc/ActionDemo.java
+ * 
+ * ActionDemo.scala requires the Java Look and Feel jar file jlfgr-1_0.jar.
+ */
+class ActionDemo extends BorderPanel {
+  //Create a scrolled text area.
+  val textArea = new TextArea(5, 30) {
+    editable = false
+  }
+  val scrollPane = new ScrollPane(textArea)
+  preferredSize = new Dimension(450, 150)
+
+  layout(scrollPane) = BorderPanel.Position.Center
+
+  //Create the actions shared by the toolbar and menu.
+  val leftAction = new LeftAction()
+  class LeftAction extends Action("Go left") with ActionListener {
+    override def apply(): Unit = {}
+    icon = ActionDemo.createNavigationIcon("Back24")
+    mnemonic = new Integer(KeyEvent.VK_L)
+    peer.putValue(javax.swing.Action.SHORT_DESCRIPTION, "This is the left button.")
+    // peer.putValue(javax.swing.Action.MNEMONIC_KEY, mnemonic)
+    override def actionPerformed(e: ActionEvent): Unit = {
+      displayResult("Action for first button/menu item", e);
+    }
+  }
+  val middleAction = new Action("Do something") with ActionListener {
+    override def apply(): Unit = {}
+    icon = ActionDemo.createNavigationIcon("Up24")
+    mnemonic = new Integer(KeyEvent.VK_M)
+    peer.putValue(javax.swing.Action.SHORT_DESCRIPTION, "This is the middle button.")
+    // peer.putValue(javax.swing.Action.MNEMONIC_KEY, mnemonic)
+    override def actionPerformed(e: ActionEvent): Unit = {
+      displayResult("Action for second button/menu item", e);
+    }
+  }
+  val rightAction = new Action("Go right") with ActionListener {
+    override def apply(): Unit = {}
+    icon = ActionDemo.createNavigationIcon("Forward24")
+    mnemonic = new Integer(KeyEvent.VK_R)
+    peer.putValue(javax.swing.Action.SHORT_DESCRIPTION, "This is the right button.")
+    // peer.putValue(javax.swing.Action.MNEMONIC_KEY, mnemonic)
+    override def actionPerformed(e: ActionEvent): Unit = {
+      displayResult("Action for third button/menu item", e);
+    }
+  }
+
+  def displayResult(actionDescription: String, e: ActionEvent): Unit = {
+    val newline = "\n"
+    val s: String = "Action event detected: " +
+      actionDescription +
+      newline +
+      "    Event source: " + e.getSource() +
+      newline;
+    textArea.append(s);
+  }
+
+  def createMenuBar(): MenuBar = {
+    //Create the menu bar.
+    val menuBar = new MenuBar()
+
+    //Create the first menu.
+    val mainMenu = new Menu("Menu")
+    val actions = new Array[Action](3)
+    actions(0) = leftAction
+    actions(1) = middleAction
+    actions(2) = rightAction
+    for (i <- 0 until actions.length) {
+      mainMenu.contents += new MenuItem(actions(i)) {
+        icon = Swing.EmptyIcon
+      }
+    }
+
+    //Set up the  menu bar.
+    menuBar.contents += mainMenu
+    menuBar.contents += createAbleMenu()
+    menuBar
+  }
+  
+  def createToolBar(): Unit = {
+    val toolBar = new ToolBar()
+    //first button
+    val button1 = new Button(leftAction) {
+      if (icon != null) text = "" // an icon-only button
+    }
+    val button2 = new Button(middleAction) {
+      if (icon != null) text = "" // an icon-only button
+    }
+    val button3 = new Button(rightAction) {
+      if (icon != null) text = "" // an icon-only button
+    }
+    toolBar.contents += button1
+    toolBar.contents += button2
+    toolBar.contents += button3
+    layout(toolBar) = BorderPanel.Position.North
+  }
+
+  def createAbleMenu(): Menu = {
+    val ableMenu = new Menu("Action State")
+    val cmi1 = new CheckMenuItem("First action enabled") { selected = true }
+    val cmi2 = new CheckMenuItem("Second action enabled") { selected = true }
+    val cmi3 = new CheckMenuItem("Third action enabled") { selected = true }
+
+    ableMenu.contents += cmi1
+    ableMenu.contents += cmi2
+    ableMenu.contents += cmi3
+    listenTo(cmi1)
+    listenTo(cmi2)
+    listenTo(cmi3)
+    reactions += {
+      case ButtonClicked(`cmi1`) => leftAction.enabled = cmi1.selected
+      case ButtonClicked(`cmi2`) => middleAction.enabled = cmi2.selected
+      case ButtonClicked(`cmi3`) => rightAction.enabled = cmi3.selected
+    }
+    ableMenu
+  }
+
+}
+
+object ActionDemo {
+  /** Returns an ImageIcon, or null if the path was invalid. */
+  def createNavigationIcon(imageName: String): ImageIcon = {
+    val imgLocation = "/toolbarButtonGraphics/navigation/" + imageName + ".gif"
+    val imageURL: URL = getClass().getResource(imgLocation)
+
+    if (imageURL == null) {
+      System.err.println("Resource not found: "
+        + imgLocation)
+      return null
+    } else {
+      return new ImageIcon(imageURL)
+    }
+  }
+  /**
+   * Create the GUI and show it.  For thread safety,
+   * this method should be invoked from the
+   * event-dispatching thread.
+   */
+  def createAndShowGUI(): Unit = {
+    val frame = new Frame() {
+      title = "ActionDemo"
+      //Create and set up the content pane.
+      val demo = new ActionDemo()
+      demo.opaque = true //content panes must be opaque
+      menuBar = demo.createMenuBar()
+      demo.createToolBar()
+      contents = demo
+      // Display the window
+      pack()
+      visible = true
+      override def closeOperation() = {
+        sys.exit(0)
+      }
+    }
+  }
+
+  def main(args: Array[String]): Unit = {
+    //Schedule a job for the event-dispatching thread:
+    //creating and showing this application's GUI.
+    javax.swing.SwingUtilities.invokeLater(new Runnable() {
+      def run(): Unit = {
+        createAndShowGUI()
+      }
+    })
+  }
+}
+
+class ToolBar extends scala.swing.Component with SequentialContainer.Wrapper {
+  override lazy val peer: JToolBar = new JToolBar with SuperMixin
+}
