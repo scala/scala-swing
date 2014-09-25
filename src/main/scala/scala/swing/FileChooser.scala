@@ -37,7 +37,7 @@ object FileChooser {
 /**
  * Used to open file dialogs.
  *
- * @see [[javax.swing.JFileChooser]]
+ * @see  [[http://docs.oracle.com/javase/7/docs/api/javax/swing/JFileChooser.html javax.swing.JFileChooser]]
  */
 class FileChooser(dir: File) {
   import scala.swing.FileChooser._
@@ -48,24 +48,24 @@ class FileChooser(dir: File) {
   import scala.swing.Swing._
 
   /**
-   * Display a dialog box to select a file.
-   * @param over Parent container -  Component, Frame or Dialog
-   * @return Status of how the dialog was closed.
+   * Display a dialog box to select an "Open File" file.
+   * @param over Parent container -  [[scala.swing.Component Component]], [[scala.swing.Frame Frame]] or [[scala.swing.Dialog Dialog]]
+   * @return a [[scala.swing.FileChooser.Result Result]] value based how dialog was closed.
    */
   def showOpenDialog(over: PeerContainer): Result.Value = Result(peer.showOpenDialog(nullPeer(over)))
 
   /**
-   * Display a dialog box to select a file.
-   * @param over Parent container -  Component, Frame or Dialog
-   * @return Parent container -  Component, Frame or Dialog
+   * Display a dialog box to select a "Save File" file.
+   * @param over Parent container -  [[scala.swing.Component Component]], [[scala.swing.Frame Frame]] or [[scala.swing.Dialog Dialog]]
+   * @return a [[scala.swing.FileChooser.Result Result]] value based how dialog was closed.
    */
   def showSaveDialog(over: PeerContainer): Result.Value = Result(peer.showSaveDialog(nullPeer(over)))
 
   /**
    * Display a dialog box to select a file.
-   * @param over Parent container -  Component, Frame or Dialog
-   * @param approveText text for the 'ok' button
-   * @return Parent container -  Component, Frame or Dialog
+   * @param over Parent container -  [[scala.swing.Component Component]], [[scala.swing.Frame Frame]] or [[scala.swing.Dialog Dialog]]
+   * @param approveText Text for the 'ok' or 'approve' button.
+   * @return a [[scala.swing.FileChooser.Result Result]] value based how dialog was closed.
    */
   def showDialog(over: PeerContainer, approveText: String): Result.Value = Result(peer.showDialog(nullPeer(over), approveText))
 
