@@ -144,7 +144,6 @@ class IconDemoApp extends MainFrame {
        */
       override def process(chunks: java.util.List[ThumbnailAction]): Unit = {
         println("process")
-        // Problem: process never gets called.
         val it: java.util.Iterator[ThumbnailAction] = chunks.iterator()
         while (it.hasNext()) {
           val thumbAction = it.next()
