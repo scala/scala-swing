@@ -15,15 +15,12 @@ class SizeDisplayer(text: String, icon: Icon) extends Label(text, icon, Alignmen
   //lots of unnecessary Dimensions and Rectangles.
   private var textSizeR = new Rectangle()
   private var textSizeD = new Dimension()
-  var userPreferredSize: Dimension = null
-  var userMinimumSize: Dimension = null
-  var userMaximumSize: Dimension = null
+  private var userPreferredSize: Dimension = null
+  private var userMinimumSize: Dimension = null
+  private var userMaximumSize: Dimension = null
 
   def paintComponent(g: Graphics): Unit = {
     val g2d = g.create().asInstanceOf[Graphics2D] //copy g
-    val minSize: Dimension = peer.getMinimumSize();
-    val prefSize: Dimension = peer.getPreferredSize();
-    val size: Dimension = peer.getSize();
     var prefX = 0
     var prefY = 0;
 
@@ -52,17 +49,17 @@ class SizeDisplayer(text: String, icon: Icon) extends Label(text, icon, Alignmen
     }
 
     //Draw the preferred size rectangle.
-    prefX = (size.width - prefSize.width) / 2
-    prefY = (size.height - prefSize.height) / 2
+    prefX = (size.width - preferredSize.width) / 2
+    prefY = (size.height - preferredSize.height) / 2
     g2d.setColor(Color.RED)
-    g2d.drawRect(prefX, prefY, prefSize.width - 1, prefSize.height - 1)
+    g2d.drawRect(prefX, prefY, preferredSize.width - 1, preferredSize.height - 1)
 
     //Draw the minimum size rectangle.
-    if (minSize.width != prefSize.width || minSize.height != prefSize.height) {
-      val minX = (size.width - minSize.width) / 2
-      val minY = (size.height - minSize.height) / 2
+    if (minimumSize.width != preferredSize.width || minimumSize.height != preferredSize.height) {
+      val minX = (size.width - minimumSize.width) / 2
+      val minY = (size.height - minimumSize.height) / 2
       g2d.setColor(Color.CYAN)
-      g2d.drawRect(minX, minY, minSize.width - 1, minSize.height - 1)
+      g2d.drawRect(minX, minY, minimumSize.width - 1, minimumSize.height - 1)
     }
 
     //Draw the text.
