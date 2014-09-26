@@ -46,57 +46,31 @@ import scala.swing._
  * @author kwalrath
  */
 /* MenuGlueDemo.scala requires no other files. */
-class MenuGlueDemo {
-    def createMenuBar(): MenuBar = {
-        val menuBar = new MenuBar();
-        menuBar.contents += createMenu("Menu 1")
-        menuBar.contents += createMenu("Menu 2")
-        menuBar.contents += Swing.HGlue
-        menuBar.contents += createMenu("Menu 3")
-        menuBar;
-    }
- 
-    def createMenu(title: String): Menu = {
-        val m = new Menu(title);
-        m.contents += new MenuItem("Menu item #1 in " + title)
-        m.contents += new MenuItem("Menu item #2 in " + title)
-        m.contents += new MenuItem("Menu item #3 in " + title)
-        m;
-    }
+class MenuGlueDemo extends MainFrame {
+  def createMenuBar(): MenuBar = {
+    val menuBar = new MenuBar();
+    menuBar.contents += createMenu("Menu 1")
+    menuBar.contents += createMenu("Menu 2")
+    menuBar.contents += Swing.HGlue
+    menuBar.contents += createMenu("Menu 3")
+    menuBar;
+  }
+
+  def createMenu(title: String): Menu = {
+    val m = new Menu(title);
+    m.contents += new MenuItem("Menu item #1 in " + title)
+    m.contents += new MenuItem("Menu item #2 in " + title)
+    m.contents += new MenuItem("Menu item #3 in " + title)
+    m;
+  }
 }
 
-object MenuGlueDemo {
-    /**
-     * Create the GUI and show it.  For thread safety,
-     * this method should be invoked from the
-     * event-dispatching thread.
-     */
-    def createAndShowGUI(): Unit = {
-        //Create and set up the window.
-        val frame = new Frame() {
-          title = "MenuGlueDemo"
-          //Create and set up the content pane.
-          val demo = new MenuGlueDemo();
-            // Display the window
-          contents = new FlowPanel() {
-            contents += demo.createMenuBar()
-          }
-          size = new Dimension(300, 100)
-          pack()
-          visible = true
-          override def closeOperation() = {
-            sys.exit(0)
-          }
-        }
+object MenuGlueDemo extends SimpleSwingApplication {
+  def top = new MenuGlueDemo() {
+    title = "MenuGlueDemo"
+    contents = new FlowPanel() {
+      contents += createMenuBar()
     }
- 
-    def main(args: Array[String]): Unit = {
-        //Schedule a job for the event-dispatching thread:
-        //creating and showing this application's GUI.
-        javax.swing.SwingUtilities.invokeLater(new Runnable() {
-            def run(): Unit = {
-                createAndShowGUI();
-            }
-        })
-    }
+    size = new Dimension(300, 100)
+  }
 }

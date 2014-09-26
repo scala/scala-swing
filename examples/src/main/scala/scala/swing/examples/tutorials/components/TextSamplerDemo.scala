@@ -50,11 +50,10 @@ import scala.swing.event._
  *   /scala/swing/examples/tutorials/images/Pig.gif
  *   /scala/swing/examples/tutorials/images/sound.gif
  */
-object TextSamplerDemo {
+object TextSamplerDemo extends SimpleSwingApplication {
   val newline = "\n"
 
-  def createAndShowGUI(): Unit = {
-    val top = new Frame() {
+  def top = new MainFrame() {
       title = "TextSamplerDemo"
 
       private val textFieldString = "TextField"
@@ -223,15 +222,7 @@ object TextSamplerDemo {
         layout(leftPane) = BorderPanel.Position.West
         layout(rightPane) = BorderPanel.Position.East
       }
-      // Display the window
-      pack()
-      visible = true
-      override def closeOperation() = {
-        sys.exit(0)
-      }
     }
-
-  }
 
   def addStylesToDocument(doc: javax.swing.text.StyledDocument, button: Button): Unit = {
     val `def` = StyleContext.getDefaultStyleContext.getStyle(StyleContext.DEFAULT_STYLE)
@@ -303,19 +294,7 @@ object TextSamplerDemo {
     }
     img
   }
-
-  def main(args: Array[String]): Unit = {
-    //Schedule a job for the event-dispatching thread:
-    //creating and showing this application's GUI.
-    javax.swing.SwingUtilities.invokeLater(new Runnable() {
-      def run(): Unit = {
-        javax.swing.UIManager.put("swing.boldMetal", false)
-        createAndShowGUI()
-      }
-    })
-  }
 }
-
 
 class TextPane() extends TextComponent {
   override lazy val peer: javax.swing.JTextPane = new javax.swing.JTextPane() with SuperMixin

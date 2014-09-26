@@ -33,7 +33,7 @@ package scala.swing.examples.tutorials.misc
 import scala.swing._
 import scala.swing.event.ButtonClicked
 import java.awt.Dimension
-import java.awt.event.{ActionEvent, ActionListener, KeyEvent}
+import java.awt.event.{ ActionEvent, ActionListener, KeyEvent }
 import java.net.URL
 import javax.swing.{ ImageIcon, JToolBar }
 
@@ -125,7 +125,7 @@ class ActionDemo extends BorderPanel {
     menuBar.contents += createAbleMenu()
     menuBar
   }
-  
+
   def createToolBar(): Unit = {
     val toolBar = new ToolBar()
     //first button
@@ -166,7 +166,7 @@ class ActionDemo extends BorderPanel {
 
 }
 
-object ActionDemo {
+object ActionDemo extends SimpleSwingApplication {
   /** Returns an ImageIcon, or null if the path was invalid. */
   def createNavigationIcon(imageName: String): ImageIcon = {
     val imgLocation = "/toolbarButtonGraphics/navigation/" + imageName + ".gif"
@@ -180,37 +180,14 @@ object ActionDemo {
       return new ImageIcon(imageURL)
     }
   }
-  /**
-   * Create the GUI and show it.  For thread safety,
-   * this method should be invoked from the
-   * event-dispatching thread.
-   */
-  def createAndShowGUI(): Unit = {
-    val frame = new Frame() {
-      title = "ActionDemo"
-      //Create and set up the content pane.
-      val demo = new ActionDemo()
-      demo.opaque = true //content panes must be opaque
-      menuBar = demo.createMenuBar()
-      demo.createToolBar()
-      contents = demo
-      // Display the window
-      pack()
-      visible = true
-      override def closeOperation() = {
-        sys.exit(0)
-      }
-    }
-  }
 
-  def main(args: Array[String]): Unit = {
-    //Schedule a job for the event-dispatching thread:
-    //creating and showing this application's GUI.
-    javax.swing.SwingUtilities.invokeLater(new Runnable() {
-      def run(): Unit = {
-        createAndShowGUI()
-      }
-    })
+  def top = new MainFrame() {
+    title = "ActionDemo"
+    //Create and set up the content pane.
+    val demo = new ActionDemo()
+    menuBar = demo.createMenuBar()
+    demo.createToolBar()
+    contents = demo
   }
 }
 

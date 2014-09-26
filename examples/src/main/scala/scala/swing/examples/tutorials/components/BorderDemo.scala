@@ -284,7 +284,7 @@ class BorderDemo extends GridPanel(1, 0) {
 
 }
 
-object BorderDemo {
+object BorderDemo extends SimpleSwingApplication {
 
   def createImageIcon(path: String, description: String): ImageIcon = {
     val imgURL: URL = getClass().getResource(path)
@@ -295,30 +295,10 @@ object BorderDemo {
       null
     }
   }
-
-  def createAndShowGUI(): Unit = {
-    val frame = new Frame() {
-      title = "BorderDemo"
-      //Create and set up the content pane.
-      val newContentPane = new BorderDemo();
-      newContentPane.opaque = true //content panes must be opaque
-      contents = newContentPane
-      // Display the window
-      pack()
-      visible = true
-      override def closeOperation() = {
-        sys.exit(0)
-      }
-    }
-  }
-
-  def main(args: Array[String]): Unit = {
-    //Schedule a job for the event-dispatching thread:
-    //creating and showing this application's GUI.
-    javax.swing.SwingUtilities.invokeLater(new Runnable() {
-      def run(): Unit = {
-        createAndShowGUI()
-      }
-    })
+  
+  def top = new MainFrame() {
+    title = "BorderDemo"
+    //Create and set up the content pane.
+    contents = new BorderDemo();
   }
 }

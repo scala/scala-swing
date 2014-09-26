@@ -168,7 +168,7 @@ class SliderDemo2(window: Window) extends BorderPanel with ActionListener {
   }
 }
 
-object SliderDemo2 {
+object SliderDemo2 extends SimpleSwingApplication {
   /** Returns an ImageIcon, or null if the path was invalid. */
   def createImageIcon(path: String): ImageIcon = {
     val imgURL: URL = getClass().getResource(path)
@@ -180,36 +180,13 @@ object SliderDemo2 {
     }
   }
 
-  /**
-   * Create the GUI and show it.  For thread safety,
-   * this method should be invoked from the
-   * event-dispatching thread.
-   */
-  def createAndShowGUI(): Unit = {
-    val frame = new Frame() {
-      title = "SliderDemo2"
-      //Create and set up the content pane.
-      val newContentPane = new SliderDemo2(this);
-      newContentPane.opaque = true //content panes must be opaque
-      contents = newContentPane
-      // Display the window
-      pack()
-      visible = true
-      override def closeOperation() = {
-        sys.exit(0)
-      }
-    }
+  def top = new MainFrame() {
+    title = "SliderDemo2"
+    javax.swing.UIManager.put("swing.boldMetal", false)
+    //Create and set up the content pane.
+    contents = new SliderDemo2(this);
   }
-
-  def main(args: Array[String]): Unit = {
-    //Schedule a job for the event-dispatching thread:
-    //creating and showing this application's GUI.
-    javax.swing.SwingUtilities.invokeLater(new Runnable() {
-      def run(): Unit = {
-        javax.swing.UIManager.put("swing.boldMetal", false)
-        createAndShowGUI()
-      }
-    })
-  }
+  
+  javax.swing.SwingUtilities.updateComponentTreeUI(top.peer)
 }
 

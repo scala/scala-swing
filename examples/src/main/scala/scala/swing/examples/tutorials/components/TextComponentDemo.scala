@@ -54,7 +54,7 @@ import javax.swing.undo.UndoManager
  * TextComponentDemo.scala requires one additional file:
  *   DocumentSizeFilter.scala
  */
-class TextComponentDemo extends Frame {
+class TextComponentDemo extends MainFrame {
   private val MaxCharacters = 300
   private val newline = "\n"
   title = "TextComponentDemo"
@@ -392,31 +392,9 @@ class TextComponentDemo extends Frame {
 
 }
 
-object TextComponentDemo {
-  /**
-   * Create the GUI and show it.  For thread safety,
-   * this method should be invoked from the
-   * event dispatch thread.
-   */
-  def createAndShowGUI(): Unit = {
-    //Create and set up the window.
-    val frame = new TextComponentDemo();
-
-    //Display the window.
-    frame.pack();
-    frame.visible = true
+object TextComponentDemo extends SimpleSwingApplication {
+  def top = new TextComponentDemo() {
+    javax.swing.UIManager.put("swing.boldMetal", false)
   }
-
-  //The standard main method.
-  def main(args: Array[String]): Unit = {
-    //Schedule a job for the event dispatch thread:
-    //creating and showing this application's GUI.
-    javax.swing.SwingUtilities.invokeLater(new Runnable() {
-      def run(): Unit = {
-        //Turn off metal's use of bold fonts
-        UIManager.put("swing.boldMetal", false)
-        createAndShowGUI()
-      }
-    });
-  }
+  javax.swing.SwingUtilities.updateComponentTreeUI(top.peer)
 }

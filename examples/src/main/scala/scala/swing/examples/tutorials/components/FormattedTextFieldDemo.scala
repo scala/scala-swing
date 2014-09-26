@@ -160,38 +160,12 @@ class FormattedTextFieldDemo extends BorderPanel {
   }
 }
 
-object FormattedTextFieldDemo {
-  /**
-   * Create the GUI and show it.  For thread safety,
-   * this method should be invoked from the
-   * event-dispatching thread.
-   */
-  def createAndShowGUI(): Unit = {
-    //Create and set up the window.
-    val frame = new Frame() {
-      title = "FormattedTextFieldDemo"
-
-      //Create and set up the content pane.
-      val contentPane: FormattedTextFieldDemo = new FormattedTextFieldDemo()
-      contentPane.opaque = true
-      contents = contentPane
-      // Display the window
-      pack()
-      visible = true
-      override def closeOperation() = {
-        sys.exit(0)
-      }
-    }
+object FormattedTextFieldDemo extends SimpleSwingApplication {
+  def top = new MainFrame() {
+    title = "FormattedTextFieldDemo"
+    //Create and set up the content pane.
+    javax.swing.UIManager.put("swing.boldMetal", false)
+    contents = new FormattedTextFieldDemo();
   }
-
-  def main(args: Array[String]): Unit = {
-    //Schedule a job for the event-dispatching thread:
-    //creating and showing this application's GUI.
-    javax.swing.SwingUtilities.invokeLater(new Runnable() {
-      def run(): Unit = {
-        javax.swing.UIManager.put("swing.boldMetal", false)
-        createAndShowGUI()
-      }
-    })
-  }
+  javax.swing.SwingUtilities.updateComponentTreeUI(top.peer)
 }

@@ -42,7 +42,7 @@ import java.util.Random
  * Source code reference:
  * http://docs.oracle.com/javase/tutorial/uiswing/examples/concurrency/FlipperProject/src/concurrency/Flipper.java
  */
-class Flipper extends Frame {
+class Flipper extends MainFrame {
   var flipTask: FlipTask = null
   title = "Flipper"
 
@@ -76,8 +76,6 @@ class Flipper extends Frame {
   }
 
   contents = panel
-  pack()
-  visible = true
 
   class FlipPair(val heads: Long, val total: Long) {}
 
@@ -118,21 +116,8 @@ class Flipper extends Frame {
       flipTask.cancel(true)
       flipTask = null
   }
-
-  override def closeOperation(): Unit = {
-    sys.exit(0)
-  }
 }
 
-object Flipper {
-    //The standard main method.
-  def main(args: Array[String]): Unit = {
-    //Schedule a job for the event dispatch thread:
-    //creating and showing this application's GUI.
-    javax.swing.SwingUtilities.invokeLater(new Runnable() {
-      def run(): Unit = {
-        new Flipper()
-      }
-    });
-  }
+object Flipper extends SimpleSwingApplication {
+  def top = new Flipper()
 }

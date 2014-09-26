@@ -31,7 +31,7 @@
 package scala.swing.examples.tutorials.components
 
 import scala.swing._
-import scala.swing.event.{ButtonClicked, Key}
+import scala.swing.event.{ ButtonClicked, Key }
 import java.net.URL
 import javax.swing.{ ImageIcon, KeyStroke }
 import java.awt.event.{ ActionEvent, KeyEvent }
@@ -67,7 +67,7 @@ class MenuDemo extends BorderPanel {
     val menuItem1 = new MenuItem(new Action("A text-only menu item") {
       def apply() = {}
       accelerator = Some(KeyStroke.getKeyStroke(
-      KeyEvent.VK_1, ActionEvent.ALT_MASK))
+        KeyEvent.VK_1, ActionEvent.ALT_MASK))
       longDescription = "This doesn't really do anything"
     }) {
       mnemonic = Key.T
@@ -119,7 +119,7 @@ class MenuDemo extends BorderPanel {
     val menuItemS1 = new MenuItem(new Action("An item in the submenu") {
       def apply() = {}
       accelerator = Some(KeyStroke.getKeyStroke(
-      KeyEvent.VK_2, ActionEvent.ALT_MASK))
+        KeyEvent.VK_2, ActionEvent.ALT_MASK))
     })
     submenu.contents += menuItemS1
     //
@@ -155,15 +155,15 @@ class MenuDemo extends BorderPanel {
       case ButtonClicked(`menuItemS1`) => actionPerformed(menuItemS1)
       case ButtonClicked(`menuItemS2`) => actionPerformed(menuItemS2)
       // No ItemEvents in scala.swing....
-//      case SelectionChanged(`menuItem1`) => itemStateChanged(menuItem1)
-//      case SelectionChanged(`menuItem2`) => itemStateChanged(menuItem2)
-//      case SelectionChanged(`menuItem3`) => itemStateChanged(menuItem3)
-//      case SelectionChanged(`rbMenuItem1`) => itemStateChanged(rbMenuItem1)
-//      case SelectionChanged(`rbMenuItem2`) => itemStateChanged(rbMenuItem2)
-//      case SelectionChanged(`cbMenuItem1`) => itemStateChanged(cbMenuItem1)
-//      case SelectionChanged(`cbMenuItem2`) => itemStateChanged(cbMenuItem2)
-//      case SelectionChanged(`menuItemS1`) => itemStateChanged(menuItemS1)
-//      case SelectionChanged(`menuItemS2`) => itemStateChanged(menuItemS2)
+      //      case SelectionChanged(`menuItem1`) => itemStateChanged(menuItem1)
+      //      case SelectionChanged(`menuItem2`) => itemStateChanged(menuItem2)
+      //      case SelectionChanged(`menuItem3`) => itemStateChanged(menuItem3)
+      //      case SelectionChanged(`rbMenuItem1`) => itemStateChanged(rbMenuItem1)
+      //      case SelectionChanged(`rbMenuItem2`) => itemStateChanged(rbMenuItem2)
+      //      case SelectionChanged(`cbMenuItem1`) => itemStateChanged(cbMenuItem1)
+      //      case SelectionChanged(`cbMenuItem2`) => itemStateChanged(cbMenuItem2)
+      //      case SelectionChanged(`menuItemS1`) => itemStateChanged(menuItemS1)
+      //      case SelectionChanged(`menuItemS2`) => itemStateChanged(menuItemS2)
     }
     menuBar
   }
@@ -171,13 +171,13 @@ class MenuDemo extends BorderPanel {
   def actionPerformed(source: MenuItem) {
     val newline = "\n"
     val s = "Action event detected." +
-                   newline +
-                   "    Event source: " + source.text +
-                   " (an instance of " + getClassName(source) + ")";
-        output.append(s + newline);
-        output.caret.position = output.peer.getDocument().getLength()
+      newline +
+      "    Event source: " + source.text +
+      " (an instance of " + getClassName(source) + ")";
+    output.append(s + newline);
+    output.caret.position = output.peer.getDocument().getLength()
   }
-  
+
   def itemStateChanged(source: MenuItem) {
     val newline = "\n"
     val s = "Item event detected." +
@@ -199,7 +199,7 @@ class MenuDemo extends BorderPanel {
   }
 }
 
-object MenuDemo {
+object MenuDemo extends SimpleSwingApplication {
   /** Returns an ImageIcon, or null if the path was invalid. */
   def createImageIcon(path: String): ImageIcon = {
     val imgURL: URL = getClass().getResource(path)
@@ -209,38 +209,11 @@ object MenuDemo {
       null
     }
   }
-  /**
-   * Create the GUI and show it.  For thread safety,
-   * this method should be invoked from the
-   * event-dispatching thread.
-   */
-  def createAndShowGUI(): Unit = {
-    //Create and set up the window.
-    val frame: Frame = new Frame() {
-      title = "MenuDemo"
-      override def closeOperation() = {
-        sys.exit(0)
-      }
-    }
+  def top = new MainFrame() {
+    title = "MenuDemo"
     //Create and set up the content pane.
-    val newContentPane = new MenuDemo() {
-      opaque = true
-    }
-    frame.menuBar = newContentPane.createMenuBar
-    frame.contents = newContentPane
-
-    //Display the window.
-    frame.pack()
-    frame.visible = true
-  }
-
-  def main(args: Array[String]): Unit = {
-    //Schedule a job for the event-dispatching thread:
-    //creating and showing this application's GUI.
-    javax.swing.SwingUtilities.invokeLater(new Runnable() {
-      def run(): Unit = {
-        createAndShowGUI()
-      }
-    })
+    val newContentPane = new MenuDemo();
+    menuBar = newContentPane.createMenuBar
+    contents = newContentPane
   }
 }

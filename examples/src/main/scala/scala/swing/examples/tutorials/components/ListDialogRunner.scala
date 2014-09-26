@@ -43,44 +43,39 @@ import scala.swing.event.ButtonClicked
  * http://docs.oracle.com/javase/tutorial/uiswing/examples/components/ListDialogRunnerProject/src/components/ListDialogRunner.java
  * http://docs.oracle.com/javase/tutorial/uiswing/examples/components/ListDialogRunnerProject/src/components/ListDialog.java
  */
-object ListDialogRunner {
+
+class ListDialogRunner(frame: Frame) extends BoxPanel(Orientation.NoOrientation) {
   val names: Array[String] = Array("Arlo", "Cosmo", "Elmo", "Hugo",
     "Jethro", "Laszlo", "Milo", "Nemo",
     "Otto", "Ringo", "Rocco", "Rollo")
-  var frame: Frame = null
 
-  def createUI(): BoxPanel = {
-    val panel = new BoxPanel(Orientation.NoOrientation) {
-      //Create the labels.
-      val intro = new Label("The chosen name:")
-      val nameLabel = new Label(names(1)) {
-        //Use a wacky font if it exists. If not, this falls
-        //back to a font we know exists.
-        font = getAFont()
-      }
-      intro.peer.setLabelFor(nameLabel.peer)
+  //Create the labels.
+  val intro = new Label("The chosen name:")
+  val nameLabel = new Label(names(1)) {
+    //Use a wacky font if it exists. If not, this falls
+    //back to a font we know exists.
+    font = getAFont()
+  }
+  intro.peer.setLabelFor(nameLabel.peer)
 
-      //Create the button.
-      val button = new Button("Pick a new name...")
+  //Create the button.
+  val button = new Button("Pick a new name...")
 
-      contents += intro
-      contents += nameLabel
-      contents += button
+  contents += intro
+  contents += nameLabel
+  contents += button
 
-      listenTo(button)
-      reactions += {
-        case ButtonClicked(`button`) =>
-          nameLabel.text = ListDialog.showDialog(
-            frame,
-            button,
-            "Baby names ending in 0:",
-            "Name chooser",
-            names.asInstanceOf[Array[String]],
-            nameLabel.text,
-            "Cosmo  ")
-      }
-    }
-    panel
+  listenTo(button)
+  reactions += {
+    case ButtonClicked(`button`) =>
+      nameLabel.text = ListDialog.showDialog(
+        frame,
+        button,
+        "Baby names ending in 0:",
+        "Name chooser",
+        names.asInstanceOf[Array[String]],
+        nameLabel.text,
+        "Cosmo  ")
   }
 
   def getAFont(): Font = {
@@ -113,37 +108,12 @@ object ListDialogRunner {
       new Font("Serif", Font.ITALIC, 36)
     }
   }
-  /**
-   * Create the GUI and show it.  For thread safety,
-   * this method should be invoked from the
-   * event-dispatching thread.
-   */
-  def createAndShowGUI(): Unit = {
-    //Create and set up the window.
-    frame = new Frame() {
-      title = "Name That Baby"
+}
 
-      //Create and set up the content pane.
-      val contentPane: BoxPanel = createUI()
-      contentPane.opaque = true
-      contents = contentPane
-      // Display the window
-      pack()
-      visible = true
-      override def closeOperation() = {
-        sys.exit(0)
-      }
-    }
-  }
-
-  def main(args: Array[String]): Unit = {
-    //Schedule a job for the event-dispatching thread:
-    //creating and showing this application's GUI.
-    javax.swing.SwingUtilities.invokeLater(new Runnable() {
-      def run(): Unit = {
-        javax.swing.UIManager.put("swing.boldMetal", false)
-        createAndShowGUI()
-      }
-    })
+object ListDialogRunner extends SimpleSwingApplication {
+  def top = new MainFrame() {
+    title = "Name That Baby"
+    //Create and set up the content pane.
+    contents = new ListDialogRunner(this);
   }
 }

@@ -119,7 +119,7 @@ class SliderDemo(window: Window) extends BoxPanel(Orientation.Vertical) with Act
     case WindowDeiconified(`window`) =>
       startAnimation()
   }
-  
+
   startAnimation()
 
   def startAnimation(): Unit = {
@@ -169,7 +169,7 @@ class SliderDemo(window: Window) extends BoxPanel(Orientation.Vertical) with Act
   }
 }
 
-object SliderDemo {
+object SliderDemo extends SimpleSwingApplication {
   /** Returns an ImageIcon, or null if the path was invalid. */
   def createImageIcon(path: String): ImageIcon = {
     val imgURL: URL = getClass().getResource(path)
@@ -181,36 +181,13 @@ object SliderDemo {
     }
   }
 
-  /**
-   * Create the GUI and show it.  For thread safety,
-   * this method should be invoked from the
-   * event-dispatching thread.
-   */
-  def createAndShowGUI(): Unit = {
-    val frame = new Frame() {
-      title = "SliderDemo"
-      //Create and set up the content pane.
-      val newContentPane = new SliderDemo(this);
-      newContentPane.opaque = true //content panes must be opaque
-      contents = newContentPane
-      // Display the window
-      pack()
-      visible = true
-      override def closeOperation() = {
-        sys.exit(0)
-      }
-    }
+  def top = new MainFrame() {
+    title = "SliderDemo"
+    javax.swing.UIManager.put("swing.boldMetal", false)
+    //Create and set up the content pane.
+    contents = new SliderDemo(this);
   }
-
-  def main(args: Array[String]): Unit = {
-    //Schedule a job for the event-dispatching thread:
-    //creating and showing this application's GUI.
-    javax.swing.SwingUtilities.invokeLater(new Runnable() {
-      def run(): Unit = {
-        javax.swing.UIManager.put("swing.boldMetal", false)
-        createAndShowGUI()
-      }
-    })
-  }
+  
+  javax.swing.SwingUtilities.updateComponentTreeUI(top.peer)
 }
 

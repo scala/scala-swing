@@ -77,41 +77,49 @@ class FrameDemo2 {
 
   //Create a new MyFrame object and show it.
   def showNewWindow(): Unit = {
-    val frame = new MyFrame()
+    val frame: Option[Frame] = if (noDecorations) None else Some(new MyFrame())
+
     //Take care of the no window decorations case.
     //NOTE: Unless you really need the functionality
     //provided by JFrame, you would usually use a
     //Window or JWindow instead of an undecorated JFrame.
-    if (noDecorations) {
-      frame.peer.setUndecorated(true);
-    }
+
+    //Undecorated frames are not supported by scala swing.  Setting the Frame's
+    //JFrame peer to be undecorated causes Swing to throw a java.awt.IllegalComponentStateException
+    //with the message "The frame is displayable."
+    //
+    //if (noDecorations) {
+    //  frame.peer.setUndecorated(true);
+    //}
 
     //Set window location.
-    if (lastLocation != null) {
-      //Move the window over and down 40 pixels.
-      lastLocation.translate(40, 40);
-      if ((lastLocation.x > maxX) || (lastLocation.y > maxY)) {
-        lastLocation.setLocation(0, 0);
-      }
-      frame.location = lastLocation
-    } else {
-      lastLocation = frame.location
-    }
-
-    //Calling setIconImage sets the icon displayed when the window
-    //is minimized.  Most window systems (or look and feels, if
-    //decorations are provided by the look and feel) also use this
-    //icon in the window decorations.
-    if (specifyIcon) {
-      if (createIcon) {
-        //create an icon from scratch
-        frame.iconImage = FrameDemo2.createFDImage()
+    if (frame.isDefined) {
+      val f = frame.get
+      if (lastLocation != null) {
+        //Move the window over and down 40 pixels.
+        lastLocation.translate(40, 40);
+        if ((lastLocation.x > maxX) || (lastLocation.y > maxY)) {
+          lastLocation.setLocation(0, 0);
+        }
+        f.location = lastLocation
       } else {
-        //get the icon from a file
-        frame.iconImage = FrameDemo2.getFDImage()
+        lastLocation = f.location
+      }
+
+      //Calling setIconImage sets the icon displayed when the window
+      //is minimized.  Most window systems (or look and feels, if
+      //decorations are provided by the look and feel) also use this
+      //icon in the window decorations.
+      if (specifyIcon) {
+        if (createIcon) {
+          //create an icon from scratch
+          f.iconImage = FrameDemo2.createFDImage()
+        } else {
+          //get the icon from a file
+          f.iconImage = FrameDemo2.getFDImage()
+        }
       }
     }
-
   }
 
   // Create the window-creation controls that go in the main window.
@@ -187,7 +195,13 @@ class FrameDemo2 {
         JFrame.setDefaultLookAndFeelDecorated(false)
       case ButtonClicked(`rb3`) =>
         noDecorations = true
-        JFrame.setDefaultLookAndFeelDecorated(false)
+        //Undecorated frames are not supported by scala swing.  Setting the Frame's
+        //JFrame peer to be undecorated causes Swing to throw a java.awt.IllegalComponentStateException
+        //with the message "The frame is displayable."
+        //
+        // No need to set the default look and feel decorated property to false.
+        // JFrame.setDefaultLookAndFeelDecorated(false)
+        println("Undecorated frames are not supported by Scala Swing.")
       case ButtonClicked(`rb4`) => specifyIcon = false
       case ButtonClicked(`rb5`) =>
         specifyIcon = true
@@ -249,7 +263,7 @@ class MyFrame extends Frame {
   }
 }
 
-object FrameDemo2 {
+object FrameDemo2 extends SimpleSwingApplication {
   //Creates an icon-worthy Image from scratch.
   def createFDImage(): Image = {
     //Create a 16x16 pixel image.
@@ -277,52 +291,29 @@ object FrameDemo2 {
       return null;
     }
   }
-  /**
-   * Create the GUI and show it.  For thread safety,
-   * this method should be invoked from the
-   * event-dispatching thread.
-   */
-  def createAndShowGUI(): Unit = {
-    //Use the Java look and feel.
+
+  val top = new Frame() {
+    title = "FrameDemo2"
+    //Use the Java look and feel.  This needs to be done before the frame is created
+    //so the companion object FrameDemo2 cannot simply extend SimpleSwingApplcation.
     try {
       UIManager.setLookAndFeel(
         UIManager.getCrossPlatformLookAndFeelClassName());
     } catch {
       case e: Exception => ;
     }
-
     //Make sure we have nice window decorations.
     JFrame.setDefaultLookAndFeelDecorated(true);
     JDialog.setDefaultLookAndFeelDecorated(true);
+    //Create and set up the content pane.
+    val demo = new FrameDemo2();
+    //Add components to it.
+    val contentPane = peer.getContentPane()
 
-    //Instantiate the controlling class.
-    val frame = new Frame() {
-      title = "FrameDemo2"
-      //Create and set up the content pane.
-      val demo = new FrameDemo2();
-      //Add components to it.
-      val contentPane = peer.getContentPane()
-      override def closeOperation() = {
-        sys.exit(0)
-      }
-    }
-    frame.contentPane.add(frame.demo.createOptionControls(frame),
-      BorderLayout.CENTER)
-    frame.contentPane.add(frame.demo.createButtonPane(frame),
-      BorderLayout.PAGE_END)
-    //Display the window
-    frame.pack()
-    frame.visible = true
   }
-
-  //Start the demo.
-  def main(args: Array[String]): Unit = {
-    //Schedule a job for the event-dispatching thread:
-    //creating and showing this application's GUI.
-    javax.swing.SwingUtilities.invokeLater(new Runnable() {
-      def run(): Unit = {
-        createAndShowGUI();
-      }
-    })
-  }
+  top.contentPane.add(top.demo.createOptionControls(top),
+    BorderLayout.CENTER)
+  top.contentPane.add(top.demo.createButtonPane(top),
+    BorderLayout.PAGE_END)
+  javax.swing.SwingUtilities.updateComponentTreeUI(top.peer)
 }

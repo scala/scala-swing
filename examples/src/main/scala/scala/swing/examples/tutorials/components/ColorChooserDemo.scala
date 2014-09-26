@@ -66,41 +66,14 @@ class ColorChooserDemo extends BorderPanel {
     }
   }
 
-
   layout(bannerPanel) = BorderPanel.Position.Center
   layout(tcc) = BorderPanel.Position.South
 }
 
-object ColorChooserDemo {
-  /**
-   * Create the GUI and show it.  For thread safety,
-   * this method should be invoked from the
-   * event-dispatching thread.
-   */
-  def createAndShowGUI(): Unit = {
-    val frame = new Frame() {
-      title = "ColorChooserDemo"
-      //Create and set up the content pane.
-      val newContentPane = new ColorChooserDemo();
-      newContentPane.opaque = true //content panes must be opaque
-      contents = newContentPane
-      // Display the window
-      pack()
-      visible = true
-      override def closeOperation() = {
-        sys.exit(0)
-      }
-    }
-  }
-
-  def main(args: Array[String]): Unit = {
-    //Schedule a job for the event-dispatching thread:
-    //creating and showing this application's GUI.
-    javax.swing.SwingUtilities.invokeLater(new Runnable() {
-      def run(): Unit = {
-        javax.swing.UIManager.put("swing.boldMetal", false)
-        createAndShowGUI()
-      }
-    })
+object ColorChooserDemo extends SimpleSwingApplication {
+  def top = new MainFrame() {
+    title = "ColorChooserDemo"
+    //Create and set up the content pane.
+    contents = new ColorChooserDemo();
   }
 }

@@ -67,7 +67,7 @@ class LabelDemo extends GridPanel(3, 1) {
   contents += label3
 }
 
-object LabelDemo {
+object LabelDemo extends SimpleSwingApplication {
   /** Returns an ImageIcon, or null if the path was invalid. */
   def createImageIcon(path: String, description: String): ImageIcon = {
     val imgURL: URL = getClass().getResource(path)
@@ -78,36 +78,11 @@ object LabelDemo {
       null
     }
   }
-
-  /**
-   * Create the GUI and show it.  For thread safety,
-   * this method should be invoked from the
-   * event-dispatching thread.
-   */
-  def createAndShowGUI(): Unit = {
-    val frame = new Frame() {
-      title = "LabelDemo"
-      //Create and set up the content pane.
-      val newContentPane = new LabelDemo();
-      newContentPane.opaque = true //content panes must be opaque
-      contents = newContentPane
-      // Display the window
-      pack()
-      visible = true
-      override def closeOperation() = {
-        sys.exit(0)
-      }
-    }
+  def top = new MainFrame() {
+    title = "LabelDemo"
+    //Create and set up the content pane.
+    javax.swing.UIManager.put("swing.boldMetal", false)
+    contents = new LabelDemo();
   }
-
-  def main(args: Array[String]): Unit = {
-    //Schedule a job for the event-dispatching thread:
-    //creating and showing this application's GUI.
-    javax.swing.SwingUtilities.invokeLater(new Runnable() {
-      def run(): Unit = {
-        javax.swing.UIManager.put("swing.boldMetal", false)
-        createAndShowGUI()
-      }
-    })
-  }
+  javax.swing.SwingUtilities.updateComponentTreeUI(top.peer)
 }

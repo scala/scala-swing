@@ -74,35 +74,9 @@ class TextDemo extends GridBagPanel {
   }
 }
 
-object TextDemo {
-  /**
-   * Create the GUI and show it.  For thread safety,
-   * this method should be invoked from the
-   * event dispatch thread.
-   */
-  def createAndShowGUI(): Unit = {
-    val frame = new Frame() {
-      title = "TextDemo"
-      //Create and set up the content pane.
-      val newContentPane = new TextDemo()
-      contents = newContentPane
-      // Display the window
-      pack()
-      visible = true
-      override def closeOperation() = {
-        sys.exit(0)
-      }
-    }
-  }
-
-  //The standard main method.
-  def main(args: Array[String]): Unit = {
-    //Schedule a job for the event dispatch thread:
-    //creating and showing this application's GUI.
-    javax.swing.SwingUtilities.invokeLater(new Runnable() {
-      def run(): Unit = {
-        createAndShowGUI()
-      }
-    });
+object TextDemo extends SimpleSwingApplication {
+  def top = new MainFrame() {
+    title = "TextDemo"
+    contents = new TextDemo()
   }
 }

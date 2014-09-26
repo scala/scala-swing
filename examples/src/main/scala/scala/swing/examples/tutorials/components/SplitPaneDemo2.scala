@@ -43,7 +43,7 @@ import javax.swing.ImageIcon
  * Source code reference:
  * http://docs.oracle.com/javase/tutorial/uiswing/examples/components/SplitPaneDemo2Project/src/components/SplitPaneDemo2.java
  */
-class SplitPaneDemo2 extends Frame {
+class SplitPaneDemo2 extends MainFrame {
   title = "SplitPaneDemo2"
 
   //Create an instance of SplitPaneDemo.
@@ -92,7 +92,7 @@ class SplitPaneDemo2 extends Frame {
 
 }
 
-object SplitPaneDemo2 {
+object SplitPaneDemo2 extends SimpleSwingApplication {
   /** Returns an ImageIcon, or null if the path was invalid. */
   def createImageIcon(path: String): ImageIcon = {
     val imgURL: URL = getClass().getResource(path)
@@ -104,32 +104,6 @@ object SplitPaneDemo2 {
     }
   }
 
-  /**
-   * Create the GUI and show it.  For thread safety,
-   * this method should be invoked from the
-   * event-dispatching thread.
-   */
-  def createAndShowGUI(): Unit = {
-    val frame = new SplitPaneDemo2() {
-      title = "SplitPaneDemo2"
-      // Display the window
-      pack()
-      visible = true
-      override def closeOperation() = {
-         sys.exit(0)
-      }
-    }
-  }
-
-  def main(args: Array[String]): Unit = {
-    //Schedule a job for the event-dispatching thread:
-    //creating and showing this application's GUI.
-    javax.swing.SwingUtilities.invokeLater(new Runnable() {
-      def run(): Unit = {
-        javax.swing.UIManager.put("swing.boldMetal", false)
-        createAndShowGUI()
-      }
-    })
-  }
+  val top = new SplitPaneDemo2()
 }
 

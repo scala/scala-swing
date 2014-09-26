@@ -42,39 +42,18 @@ import java.awt.Dimension
  *
  * FrameDemo.scala requires no other files.
  */
-object FrameDemo {
+object FrameDemo extends SimpleSwingApplication {
   /**
-   * Create the GUI and show it.  For thread safety,
-   * this method should be invoked from the
-   * event-dispatching thread.
+   * Create the GUI and show it.
    */
-  def createAndShowGUI(): Unit = {
-    val label = new Label("") {
-    preferredSize = new Dimension(175, 100)
+  def top = new MainFrame() {
+    title = "FrameDemo"
+    val emptylabel = new Label("") {
+      preferredSize = new Dimension(175, 100)
     }
-    //Create and set up the window.
-    val frame = new Frame() {
-      title = "FrameDemo"
-      contents = new BorderPanel() {
-        layout(label) = BorderPanel.Position.Center
-      }
-      // Display the window
-      pack()
-      visible = true
-      override def closeOperation() = {
-        sys.exit(0)
-      }
+    //Create and set up the content pane.
+    contents = new BorderPanel() {
+      layout(emptylabel) = BorderPanel.Position.Center
     }
-  }
-
-  //The standard main method.
-  def main(args: Array[String]): Unit = {
-    //Schedule a job for the event dispatch thread:
-    //creating and showing this application's GUI.
-    javax.swing.SwingUtilities.invokeLater(new Runnable() {
-      def run(): Unit = {
-        createAndShowGUI()
-      }
-    });
   }
 }

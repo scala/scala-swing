@@ -107,34 +107,12 @@ class ButtonDemo extends FlowPanel {
 
 }
 
-object ButtonDemo {
-
-  def createAndShowGUI(): Unit = {
-    val frame = new Frame() {
-      title = "ButtonDemo"
-      //Create and set up the content pane.
-      val newContentPane = new ButtonDemo();
-      newContentPane.opaque = true //content panes must be opaque
-      contents = newContentPane
-      // Display the window
-      pack()
-      visible = true
-      override def closeOperation() = {
-        sys.exit(0)
-      }
-    }
+object ButtonDemo extends SimpleSwingApplication {
+  def top = new MainFrame() {
+    title = "ButtonDemo"
+    javax.swing.UIManager.put("swing.boldMetal", false)
+    //Create and set up the content pane.
+    contents = new ButtonDemo();
   }
-
-  def main(args: Array[String]): Unit = {
-    //Schedule a job for the event-dispatching thread:
-    //creating and showing this application's GUI.
-
-    javax.swing.SwingUtilities.invokeLater(new Runnable() {
-
-      def run(): Unit = {
-        javax.swing.UIManager.put("swing.boldMetal", false)
-        createAndShowGUI()
-      }
-    })
-  }
+  javax.swing.SwingUtilities.updateComponentTreeUI(top.peer)
 }

@@ -114,32 +114,10 @@ class ButtonHtmlDemo extends FlowPanel {
 
 }
 
-object ButtonHtmlDemo {
-
-  def createAndShowGUI(): Unit = {
-    val frame = new Frame() {
-      title = "ButtonHtmlDemo"
-      //Create and set up the content pane.
-      val newContentPane = new ButtonHtmlDemo();
-      newContentPane.opaque = true //content panes must be opaque
-      contents = newContentPane
-      // Display the window
-      pack()
-      visible = true
-      override def closeOperation() = {
-        sys.exit(0)
-      }
-    }
-  }
-
-  def main(args: Array[String]): Unit = {
-    //Schedule a job for the event-dispatching thread:
-    //creating and showing this application's GUI.
-    javax.swing.SwingUtilities.invokeLater(new Runnable() {
-
-      def run(): Unit = {
-        createAndShowGUI()
-      }
-    })
+object ButtonHtmlDemo extends SimpleSwingApplication {
+  def top = new MainFrame() {
+    title = "ButtonHtmlDemo"
+    //Create and set up the content pane.
+    contents = new ButtonHtmlDemo();
   }
 }

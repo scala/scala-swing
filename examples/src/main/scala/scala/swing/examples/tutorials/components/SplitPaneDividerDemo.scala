@@ -86,7 +86,7 @@ class SplitPaneDividerDemo extends BorderPanel {
   }
 }
 
-object SplitPaneDividerDemo {
+object SplitPaneDividerDemo extends SimpleSwingApplication {
   /** Returns an ImageIcon, or null if the path was invalid. */
   def createImageIcon(path: String): ImageIcon = {
     val imgURL: URL = getClass().getResource(path)
@@ -98,36 +98,9 @@ object SplitPaneDividerDemo {
     }
   }
 
-  /**
-   * Create the GUI and show it.  For thread safety,
-   * this method should be invoked from the
-   * event-dispatching thread.
-   */
-  def createAndShowGUI(): Unit = {
-    val frame = new Frame() {
-      title = "SplitPaneDividerDemo"
-      //Create and set up the content pane.
-      val newContentPane = new SplitPaneDividerDemo();
-      newContentPane.opaque = true //content panes must be opaque
-      contents = newContentPane
-      // Display the window
-      pack()
-      visible = true
-      override def closeOperation() = {
-        sys.exit(0)
-      }
-    }
-  }
-
-  def main(args: Array[String]): Unit = {
-    //Schedule a job for the event-dispatching thread:
-    //creating and showing this application's GUI.
-    javax.swing.SwingUtilities.invokeLater(new Runnable() {
-      def run(): Unit = {
-        javax.swing.UIManager.put("swing.boldMetal", false)
-        createAndShowGUI()
-      }
-    })
+  def top = new MainFrame() {
+    title = "SplitPaneDividerDemo"
+    contents = new SplitPaneDividerDemo()
   }
 }
 

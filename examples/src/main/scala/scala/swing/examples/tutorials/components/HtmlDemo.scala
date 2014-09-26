@@ -97,37 +97,10 @@ class HtmlDemo extends BoxPanel(Orientation.Horizontal) {
   }
 }
 
-object HtmlDemo {
-  /**
-   * Create the GUI and show it.  For thread safety,
-   * this method should be invoked from the
-   * event-dispatching thread.
-   */
-  def createAndShowGUI(): Unit = {
-    val frame = new Frame() {
-      title = "HtmlDemo"
-      //Create and set up the content pane.
-      val newContentPane = new HtmlDemo();
-      newContentPane.opaque = true //content panes must be opaque
-      contents = newContentPane
-      // Display the window
-      pack()
-      visible = true
-      override def closeOperation() = {
-        sys.exit(0)
-      }
-    }
-  }
-
-  def main(args: Array[String]): Unit = {
-    //Schedule a job for the event-dispatching thread:
-    //creating and showing this application's GUI.
-    javax.swing.SwingUtilities.invokeLater(new Runnable() {
-      def run(): Unit = {
-        //Turn off metal's use of bold fonts
-        javax.swing.UIManager.put("swing.boldMetal", false)
-        createAndShowGUI()
-      }
-    })
+object HtmlDemo extends SimpleSwingApplication {
+  def top = new MainFrame() {
+    title = "HtmlDemo"
+    //Create and set up the content pane.
+    contents = new HtmlDemo();
   }
 }

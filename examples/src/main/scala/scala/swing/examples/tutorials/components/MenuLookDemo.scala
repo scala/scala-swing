@@ -74,7 +74,7 @@ class MenuLookDemo extends BorderPanel {
     }
     menu.contents += menuItem1
     //         
-    val icon: ImageIcon = MenuDemo.createImageIcon("/scala/swing/examples/tutorials/images/middle.gif")
+    val icon: ImageIcon = MenuLookDemo.createImageIcon("/scala/swing/examples/tutorials/images/middle.gif")
     val menuItem2 = new MenuItem("Both text and icon") {
       icon = icon
       mnemonic = Key.B
@@ -169,7 +169,7 @@ class MenuLookDemo extends BorderPanel {
   }
 }
 
-object MenuLookDemo {
+object MenuLookDemo extends SimpleSwingApplication {
   /** Returns an ImageIcon, or null if the path was invalid. */
   def createImageIcon(path: String): ImageIcon = {
     val imgURL: URL = getClass().getResource(path)
@@ -179,38 +179,14 @@ object MenuLookDemo {
       null
     }
   }
-  /**
-   * Create the GUI and show it.  For thread safety,
-   * this method should be invoked from the
-   * event-dispatching thread.
-   */
-  def createAndShowGUI(): Unit = {
-    //Create and set up the window.
-    val frame: Frame = new Frame() {
-      title = "MenuLookDemo"
-      override def closeOperation() = {
-        sys.exit(0)
-      }
-    }
+  
+  def top = new MainFrame() {
+    title = "MenuLookDemo"
     //Create and set up the content pane.
     val newContentPane = new MenuLookDemo() {
       opaque = true
     }
-    frame.menuBar = newContentPane.createMenuBar
-    frame.contents = newContentPane
-
-    //Display the window.
-    frame.pack()
-    frame.visible = true
-  }
-
-  def main(args: Array[String]): Unit = {
-    //Schedule a job for the event-dispatching thread:
-    //creating and showing this application's GUI.
-    javax.swing.SwingUtilities.invokeLater(new Runnable() {
-      def run(): Unit = {
-        createAndShowGUI()
-      }
-    })
+    menuBar = newContentPane.createMenuBar
+    contents = newContentPane
   }
 }

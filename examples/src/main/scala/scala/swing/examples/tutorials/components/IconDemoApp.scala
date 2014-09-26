@@ -67,7 +67,7 @@ import javax.swing.{ Icon, ImageIcon, JToolBar, SwingWorker }
  * @date 7/25/2007
  * @version 2.0
  */
-class IconDemoApp extends Frame {
+class IconDemoApp extends MainFrame {
 
   private val imagedir = "/scala/swing/examples/tutorials/images/"
   private val placeholderIcon = new MissingIcon()
@@ -101,7 +101,6 @@ class IconDemoApp extends Frame {
     layout(buttonBar) = BorderPanel.Position.South
     layout(photographLabel) = BorderPanel.Position.Center
   }
-  visible = true
   size = new Dimension(400, 300)
 
   // this centers the frame on the screen
@@ -109,10 +108,6 @@ class IconDemoApp extends Frame {
 
   // start the image loading SwingWorker in a background thread
   loadImages.execute()
-
-  override def closeOperation() = {
-    sys.exit(0)
-  }
 
   /**
    * SwingWorker class that loads the images a background thread and calls publish
@@ -187,7 +182,7 @@ class IconDemoApp extends Frame {
   }
 }
 
-object IconDemoApp {
+object IconDemoApp extends SimpleSwingApplication {
   def createImageIcon(path: String,
     description: String): Option[ImageIcon] = {
     val imgURL: URL = getClass().getResource(path)
@@ -198,20 +193,9 @@ object IconDemoApp {
       None
     }
   }
-  /**
-   * Main entry point to the demo. Loads the Swing elements on the "Event
-   * Dispatch Thread".
-   *
-   * @param args
-   */
-  def main(args: Array[String]) {
-    javax.swing.SwingUtilities.invokeLater(new Runnable() {
-      def run() {
-        val app = new IconDemoApp() {
-          visible = true
-        }
-      }
-    });
+  
+  def top = new IconDemoApp() {
+    title = "IconDemoApp"
   }
 }
 
