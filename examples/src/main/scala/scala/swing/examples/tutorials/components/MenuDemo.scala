@@ -168,7 +168,7 @@ class MenuDemo extends BorderPanel {
     menuBar
   }
 
-  def actionPerformed(source: MenuItem) {
+  def actionPerformed(source: MenuItem): Unit = {
     val newline = "\n"
     val s = "Action event detected." +
       newline +
@@ -178,7 +178,7 @@ class MenuDemo extends BorderPanel {
     output.caret.position = output.peer.getDocument().getLength()
   }
 
-  def itemStateChanged(source: MenuItem) {
+  def itemStateChanged(source: MenuItem): Unit = {
     val newline = "\n"
     val s = "Item event detected." +
       newline +
@@ -192,7 +192,7 @@ class MenuDemo extends BorderPanel {
   }
 
   // Returns just the class name -- no package info.
-  def getClassName(o: AnyRef) {
+  def getClassName(o: AnyRef): String = {
     val classString = o.getClass().getName()
     val dotIndex = classString.lastIndexOf(".")
     classString.substring(dotIndex + 1)
