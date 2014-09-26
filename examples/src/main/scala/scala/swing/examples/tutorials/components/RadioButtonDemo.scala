@@ -137,7 +137,7 @@ object RadioButtonDemo extends SimpleSwingApplication {
       null
     }
   }
-  def top = new MainFrame() {
+  lazy val top = new MainFrame() {
     title = "RadioButtonDemo"
     contents = new RadioButtonDemo()
   }

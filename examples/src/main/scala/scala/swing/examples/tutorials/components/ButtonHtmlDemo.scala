@@ -115,7 +115,7 @@ class ButtonHtmlDemo extends FlowPanel {
 }
 
 object ButtonHtmlDemo extends SimpleSwingApplication {
-  def top = new MainFrame() {
+  lazy val top = new MainFrame() {
     title = "ButtonHtmlDemo"
     //Create and set up the content pane.
     contents = new ButtonHtmlDemo();

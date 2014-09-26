@@ -129,7 +129,7 @@ object CustomComboBoxDemo extends SimpleSwingApplication {
     }
   }
   
-  def top = new MainFrame() {
+  lazy val top = new MainFrame() {
     title = "CustomComboBoxDemo"
     //Create and set up the content pane.
     contents = new CustomComboBoxDemo();

@@ -46,7 +46,7 @@ object FrameDemo extends SimpleSwingApplication {
   /**
    * Create the GUI and show it.
    */
-  def top = new MainFrame() {
+  lazy val top = new MainFrame() {
     title = "FrameDemo"
     val emptylabel = new Label("") {
       preferredSize = new Dimension(175, 100)

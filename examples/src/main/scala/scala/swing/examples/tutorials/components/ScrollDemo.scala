@@ -129,7 +129,7 @@ object ScrollDemo extends SimpleSwingApplication {
     }
   }
 
-  def top = new MainFrame() {
+  lazy val top = new MainFrame() {
     title = "ScrollDemo"
     contents = new ScrollDemo()
   }

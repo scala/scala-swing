@@ -119,5 +119,5 @@ class Flipper extends MainFrame {
 }
 
 object Flipper extends SimpleSwingApplication {
-  def top = new Flipper()
+  lazy val top = new Flipper()
 }

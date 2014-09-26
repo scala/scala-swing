@@ -78,7 +78,7 @@ object LabelDemo extends SimpleSwingApplication {
       null
     }
   }
-  def top = new MainFrame() {
+  lazy val top = new MainFrame() {
     title = "LabelDemo"
     //Create and set up the content pane.
     javax.swing.UIManager.put("swing.boldMetal", false)

@@ -167,7 +167,7 @@ object CheckboxDemo extends SimpleSwingApplication {
       null
     }
   }
-  def top = new MainFrame() {
+  lazy val top = new MainFrame() {
     title = "CheckboxDemo"
     //Create and set up the content pane.
     contents = new CheckboxDemo();

@@ -90,7 +90,7 @@ object FileChooserDemo extends SimpleSwingApplication {
     contents += saveButton
   }
   
-  def top = new MainFrame {
+  lazy val top = new MainFrame {
     title = "FileChooserDemo"
     val bp = new BorderPanel {
       layout(buttonPanel) = BorderPanel.Position.North

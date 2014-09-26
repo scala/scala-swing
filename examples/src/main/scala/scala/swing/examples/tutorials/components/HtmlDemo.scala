@@ -98,7 +98,7 @@ class HtmlDemo extends BoxPanel(Orientation.Horizontal) {
 }
 
 object HtmlDemo extends SimpleSwingApplication {
-  def top = new MainFrame() {
+  lazy val top = new MainFrame() {
     title = "HtmlDemo"
     //Create and set up the content pane.
     contents = new HtmlDemo();

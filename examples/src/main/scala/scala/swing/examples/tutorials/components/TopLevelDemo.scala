@@ -42,7 +42,7 @@ import scala.swing._
  * TopLevelDemo.scala requires no other files.
  */
 object TopLevelDemo extends SimpleSwingApplication {
-    def top = new MainFrame() {
+    lazy val top = new MainFrame() {
       title = "TopLevelDemo"
         
       //Create the menu bar.  Make it have a green background.

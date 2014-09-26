@@ -133,7 +133,7 @@ class ScrollDemo2 extends BorderPanel {
 }
 
 object ScrollDemo2 extends SimpleSwingApplication {
-  def top = new MainFrame() {
+  lazy val top = new MainFrame() {
     title = "ScrollDemo2"
     contents = new ScrollDemo2()
   }

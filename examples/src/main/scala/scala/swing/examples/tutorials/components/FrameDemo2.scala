@@ -292,7 +292,7 @@ object FrameDemo2 extends SimpleSwingApplication {
     }
   }
 
-  val top = new Frame() {
+  lazy val top = new Frame() {
     title = "FrameDemo2"
     //Use the Java look and feel.  This needs to be done before the frame is created
     //so the companion object FrameDemo2 cannot simply extend SimpleSwingApplcation.

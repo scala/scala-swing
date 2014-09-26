@@ -296,7 +296,7 @@ object BorderDemo extends SimpleSwingApplication {
     }
   }
   
-  def top = new MainFrame() {
+  lazy val top = new MainFrame() {
     title = "BorderDemo"
     //Create and set up the content pane.
     contents = new BorderDemo();

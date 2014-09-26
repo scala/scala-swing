@@ -123,7 +123,7 @@ class ComboBoxDemo2 extends BoxPanel(Orientation.Vertical) {
 }
 
 object ComboBoxDemo2 extends SimpleSwingApplication {
-  def top = new MainFrame() {
+  lazy val top = new MainFrame() {
     title = "ComboBoxDemo2"
     //Create and set up the content pane.
     contents = new ComboBoxDemo2();

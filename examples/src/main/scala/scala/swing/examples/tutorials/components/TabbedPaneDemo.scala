@@ -91,7 +91,7 @@ object TabbedPaneDemo extends SimpleSwingApplication  {
     }
   }
   
-  def top = new MainFrame() {
+  lazy val top = new MainFrame() {
     title = "TabbedPaneDemo"
     contents = new TabbedPaneDemo()
   }

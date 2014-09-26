@@ -111,7 +111,7 @@ class ListDialogRunner(frame: Frame) extends BoxPanel(Orientation.NoOrientation)
 }
 
 object ListDialogRunner extends SimpleSwingApplication {
-  def top = new MainFrame() {
+  lazy val top = new MainFrame() {
     title = "Name That Baby"
     //Create and set up the content pane.
     contents = new ListDialogRunner(this);

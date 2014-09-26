@@ -240,7 +240,7 @@ class TableSelectionDemo extends BoxPanel(Orientation.Vertical) {
 }
 
 object TableSelectionDemo extends SimpleSwingApplication {
-  def top = new MainFrame() {
+  lazy val top = new MainFrame() {
     title = "TableSelectionDemo"
     contents = new TableSelectionDemo()
   }

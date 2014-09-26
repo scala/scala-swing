@@ -181,7 +181,7 @@ object ActionDemo extends SimpleSwingApplication {
     }
   }
 
-  def top = new MainFrame() {
+  lazy val top = new MainFrame() {
     title = "ActionDemo"
     //Create and set up the content pane.
     val demo = new ActionDemo()

@@ -148,7 +148,7 @@ class TablePrintDemo extends BoxPanel(Orientation.Vertical) {
 }
 
 object TablePrintDemo extends SimpleSwingApplication {
-  def top = new MainFrame() {
+  lazy val top = new MainFrame() {
     title = "TablePrintDemo"
     contents = new TablePrintDemo()
   }

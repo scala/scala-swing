@@ -75,7 +75,7 @@ class TextDemo extends GridBagPanel {
 }
 
 object TextDemo extends SimpleSwingApplication {
-  def top = new MainFrame() {
+  lazy val top = new MainFrame() {
     title = "TextDemo"
     contents = new TextDemo()
   }

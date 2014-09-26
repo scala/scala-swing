@@ -71,7 +71,7 @@ class ColorChooserDemo extends BorderPanel {
 }
 
 object ColorChooserDemo extends SimpleSwingApplication {
-  def top = new MainFrame() {
+  lazy val top = new MainFrame() {
     title = "ColorChooserDemo"
     //Create and set up the content pane.
     contents = new ColorChooserDemo();

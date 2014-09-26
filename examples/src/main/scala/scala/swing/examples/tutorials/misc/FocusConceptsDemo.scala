@@ -104,7 +104,7 @@ object FocusConceptsDemo extends SimpleSwingApplication {
   /* Turn off metal's use of bold fonts */
   javax.swing.UIManager.put("swing.boldMetal", false);
   //Create and set up the window.
-  def top = new MainFrame() {
+  lazy val top = new MainFrame() {
     title = "FocusConceptsDemo"
     contents = new FocusConceptsDemo()
   }

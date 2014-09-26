@@ -209,7 +209,7 @@ object MenuDemo extends SimpleSwingApplication {
       null
     }
   }
-  def top = new MainFrame() {
+  lazy val top = new MainFrame() {
     title = "MenuDemo"
     //Create and set up the content pane.
     val newContentPane = new MenuDemo();

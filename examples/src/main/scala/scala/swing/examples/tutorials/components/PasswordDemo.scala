@@ -88,7 +88,7 @@ object PasswordDemo extends SimpleSwingApplication {
       correctPassword.update(i, '0')
     isCorrect;
   }
-  def top = new MainFrame() {
+  lazy val top = new MainFrame() {
     title = "PasswordDemo"
     //Create and set up the content pane.
     contents = new PasswordDemo(this)

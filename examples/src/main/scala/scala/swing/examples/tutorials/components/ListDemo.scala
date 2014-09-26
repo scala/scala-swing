@@ -162,7 +162,7 @@ class ListDemo extends BorderPanel {
 }
 
 object ListDemo extends SimpleSwingApplication {
-  def top = new MainFrame() {
+  lazy val top = new MainFrame() {
     title = "ListDemo"
     //Create and set up the content pane.
     contents = new ListDemo();

@@ -91,7 +91,7 @@ class SimpleTableDemo extends GridPanel(1, 0) {
 }
 
 object SimpleTableDemo extends SimpleSwingApplication {
-  def top = new MainFrame() {
+  lazy val top = new MainFrame() {
     title = "SimpleTableDemo"
     contents = new SimpleTableDemo()
   }

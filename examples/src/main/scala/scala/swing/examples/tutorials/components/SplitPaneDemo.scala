@@ -110,7 +110,7 @@ object SplitPaneDemo extends SimpleSwingApplication {
     }
   }
 
-  def top = new MainFrame() {
+  lazy val top = new MainFrame() {
     title = "SplitPaneDemo"
     contents = new SplitPaneDemo()
   }

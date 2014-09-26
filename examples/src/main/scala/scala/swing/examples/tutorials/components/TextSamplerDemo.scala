@@ -53,7 +53,7 @@ import scala.swing.event._
 object TextSamplerDemo extends SimpleSwingApplication {
   val newline = "\n"
 
-  def top = new MainFrame() {
+  lazy val top = new MainFrame() {
       title = "TextSamplerDemo"
 
       private val textFieldString = "TextField"

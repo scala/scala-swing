@@ -161,7 +161,7 @@ class FormattedTextFieldDemo extends BorderPanel {
 }
 
 object FormattedTextFieldDemo extends SimpleSwingApplication {
-  def top = new MainFrame() {
+  lazy val top = new MainFrame() {
     title = "FormattedTextFieldDemo"
     //Create and set up the content pane.
     javax.swing.UIManager.put("swing.boldMetal", false)

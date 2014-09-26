@@ -181,7 +181,7 @@ object SliderDemo extends SimpleSwingApplication {
     }
   }
 
-  def top = new MainFrame() {
+  lazy val top = new MainFrame() {
     title = "SliderDemo"
     javax.swing.UIManager.put("swing.boldMetal", false)
     //Create and set up the content pane.

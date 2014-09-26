@@ -493,7 +493,7 @@ object DialogDemo extends SimpleSwingApplication {
     }
   }
 
-  def top = new MainFrame() {
+  lazy val top = new MainFrame() {
     title = "DialogDemo"
     //Create and set up the content pane.
     contents = new DialogDemo(this);

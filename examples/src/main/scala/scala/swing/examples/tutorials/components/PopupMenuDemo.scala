@@ -246,11 +246,9 @@ object PopupMenuDemo extends SimpleSwingApplication {
     }
   }
   /**
-   * Create the GUI and show it.  For thread safety,
-   * this method should be invoked from the
-   * event-dispatching thread.
+   * Create the GUI and show it.
    */
-  def top = new MainFrame() {
+  lazy val top = new MainFrame() {
       title = "PopupMenuDemo"
     //Create and set up the content pane.
     val demo = new PopupMenuDemo() {

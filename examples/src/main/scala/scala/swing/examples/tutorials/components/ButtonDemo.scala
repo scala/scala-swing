@@ -108,7 +108,7 @@ class ButtonDemo extends FlowPanel {
 }
 
 object ButtonDemo extends SimpleSwingApplication {
-  def top = new MainFrame() {
+  lazy val top = new MainFrame() {
     title = "ButtonDemo"
     javax.swing.UIManager.put("swing.boldMetal", false)
     //Create and set up the content pane.

@@ -66,7 +66,7 @@ class MenuGlueDemo extends MainFrame {
 }
 
 object MenuGlueDemo extends SimpleSwingApplication {
-  def top = new MenuGlueDemo() {
+  lazy val top = new MenuGlueDemo() {
     title = "MenuGlueDemo"
     contents = new FlowPanel() {
       contents += createMenuBar()

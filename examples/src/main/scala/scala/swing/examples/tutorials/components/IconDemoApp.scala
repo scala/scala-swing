@@ -194,7 +194,7 @@ object IconDemoApp extends SimpleSwingApplication {
     }
   }
   
-  def top = new IconDemoApp() {
+  lazy val top = new IconDemoApp() {
     title = "IconDemoApp"
   }
 }

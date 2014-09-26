@@ -104,6 +104,6 @@ object SplitPaneDemo2 extends SimpleSwingApplication {
     }
   }
 
-  val top = new SplitPaneDemo2()
+  lazy val top = new SplitPaneDemo2()
 }
 

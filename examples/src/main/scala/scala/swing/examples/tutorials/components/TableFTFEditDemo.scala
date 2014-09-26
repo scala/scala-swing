@@ -136,7 +136,7 @@ class TableFTFEditDemo extends GridPanel(1, 0) {
 }
 
 object TableFTFEditDemo extends SimpleSwingApplication {
-  def top = new MainFrame() {
+  lazy val top = new MainFrame() {
     title = "TableFTFEditDemo"
     contents = new TableFTFEditDemo()
   }
