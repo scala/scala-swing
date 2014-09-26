@@ -109,15 +109,19 @@ class RadioButtonDemo extends BorderPanel {
 
   reactions += {
     case ButtonClicked(`birdButton`) =>
-      picture.icon = RadioButtonDemo.createImageIcon("/scala/swing/examples/tutorials/images/" + RadioButtonDemo.birdString + ".gif")
+      picture.icon = getPictureIcon(RadioButtonDemo.birdString)
     case ButtonClicked(`catButton`) =>
-      picture.icon = RadioButtonDemo.createImageIcon("/scala/swing/examples/tutorials/images/" + RadioButtonDemo.catString + ".gif")
+      picture.icon = getPictureIcon(RadioButtonDemo.catString)
     case ButtonClicked(`dogButton`) =>
-      picture.icon = RadioButtonDemo.createImageIcon("/scala/swing/examples/tutorials/images/" + RadioButtonDemo.dogString + ".gif")
+      picture.icon = getPictureIcon(RadioButtonDemo.dogString)
     case ButtonClicked(`rabbitButton`) =>
-      picture.icon = RadioButtonDemo.createImageIcon("/scala/swing/examples/tutorials/images/" + RadioButtonDemo.rabbitString + ".gif")
+      picture.icon = getPictureIcon(RadioButtonDemo.rabbitString)
     case ButtonClicked(`pigButton`) =>
-      picture.icon = RadioButtonDemo.createImageIcon("/scala/swing/examples/tutorials/images/" + RadioButtonDemo.pigString + ".gif")
+      picture.icon = getPictureIcon(RadioButtonDemo.pigString)
+  }
+  
+  def getPictureIcon(gifName: String): ImageIcon = {
+    RadioButtonDemo.createImageIcon("/scala/swing/examples/tutorials/images/" + gifName + ".gif")
   }
 }
 
