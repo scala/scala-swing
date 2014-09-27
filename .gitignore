@@ -32,6 +32,8 @@ build.properties
 /.cache
 /.idea
 /.settings
+/examples/.classpath
+/examples/.project
 
 # bak files produced by ./cleanup-commit
 *.bak
