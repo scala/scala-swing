@@ -131,7 +131,7 @@ object TextSamplerDemo extends SimpleSwingApplication {
 
       //Create a text area.
       val textArea = new TextArea(
-        "This is an editable JTextArea. " +
+        "This is an editable TextArea. " +
           "A text area is a \"plain\" text component, " +
           "which means that although it can display text " +
           "in any font, all of the text is in the same font.")
@@ -172,7 +172,6 @@ object TextSamplerDemo extends SimpleSwingApplication {
       editorScrollPane.minimumSize = new java.awt.Dimension(10, 10)
 
       //Create a text pane and put it into a scrollpane.
-      // JTextPane has no analogue in scala.swing
       // val textPane:TextPane = new TextPane()
       val textPane: TextPane = createTextPane(button)
 
@@ -260,7 +259,7 @@ object TextSamplerDemo extends SimpleSwingApplication {
 
   def createTextPane(button: Button): TextPane = {
     val initStrings: Array[String] = Array(
-      "This is an editable JTextPane, ", //regular
+      "This is an editable TextPane, ", //regular
       "another ", //italic
       "styled ", //bold
       "text ", //small
@@ -269,7 +268,7 @@ object TextSamplerDemo extends SimpleSwingApplication {
       " " + newline, //button
       "...and embedded icons..." + newline, //regular
       " ", //icon
-      newline + "JTextPane is a subclass of JEditorPane that " +
+      newline + "Its peer, JTextPane, is a subclass of JEditorPane that " +
         "uses a StyledEditorKit and StyledDocument, and provides " +
         "cover methods for interacting with those objects.")
     val initStyles: Array[String] = Array(
@@ -296,10 +295,6 @@ object TextSamplerDemo extends SimpleSwingApplication {
   }
 }
 
-class TextPane() extends TextComponent {
-  override lazy val peer: javax.swing.JTextPane = new javax.swing.JTextPane() with SuperMixin
-  def styledDocument: javax.swing.text.StyledDocument = peer.getStyledDocument()
-}
 
 
 
