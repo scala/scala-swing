@@ -261,26 +261,6 @@ class BorderDemo extends GridPanel(1, 0) {
   tabbedPane.peer.setToolTipTextAt(1, toolTipText)
   contents += tabbedPane
 
-  //  def addCompForTitledBorder(border: TitledBorder,
-  //    description: String,
-  //    justification: Int,
-  //    position: Int, container: Panel): Unit = {
-  //    border.setTitleJustification(justification)
-  //    border.setTitlePosition(position)
-  //    addCompForBorder(border, description, container)
-  //  }
-  //
-  //  def addCompForBorder(border: Border,
-  //    description: String, container: Panel): (Component, Component) = {
-  //    val label: Label = new Label(description, Swing.EmptyIcon, Alignment.Center)
-  //    val comp: GridPanel = new GridPanel(1, 1) {
-  //      contents += label
-  //      border = border
-  //    }
-  //    container.contents += label
-  //    container.contents += comp
-  //  }
-
 }
 
 object BorderDemo extends SimpleSwingApplication {
