@@ -31,7 +31,6 @@
 package scala.swing.examples.tutorials.components
 
 import scala.swing._
-import javax.swing.border.TitledBorder
 import javax.swing.ImageIcon
 import java.awt.{ Color, Dimension }
 import java.net.URL
@@ -65,53 +64,53 @@ class BorderDemo extends GridPanel(1, 0) {
   //a BoxPanel.
   //AddCompForBorder can't take a third argument that is a Panel because Panel.contents
   //cannot be appended to.
-  var label: Label = new Label("line border", Swing.EmptyIcon, Alignment.Center)
-  var comp: GridPanel = new GridPanel(1, 1) {
-    contents += label
+  val label1: Label = new Label("line border", Swing.EmptyIcon, Alignment.Center)
+  val comp1: GridPanel = new GridPanel(1, 1) {
+    contents += label1
     border = blackline
   }
   simpleBorders.contents += Swing.RigidBox(new Dimension(0, 10))
-  simpleBorders.contents += comp
+  simpleBorders.contents += comp1
   // addCompForBorder(raisedetched, "raised etched border", simpleBorders)
-  label = new Label("raised etched border", Swing.EmptyIcon, Alignment.Center)
-  comp = new GridPanel(1, 1) {
-    contents += label
+  val label2 = new Label("raised etched border", Swing.EmptyIcon, Alignment.Center)
+  val comp2 = new GridPanel(1, 1) {
+    contents += label2
     border = raisedetched
   }
   simpleBorders.contents += Swing.RigidBox(new Dimension(0, 10))
-  simpleBorders.contents += comp
+  simpleBorders.contents += comp2
   // addCompForBorder(loweredetched, "lowered etched border", simpleBorders)
-  label = new Label("lowered etched border", Swing.EmptyIcon, Alignment.Center)
-  comp = new GridPanel(1, 1) {
-    contents += label
+  val label3 = new Label("lowered etched border", Swing.EmptyIcon, Alignment.Center)
+  val comp3 = new GridPanel(1, 1) {
+    contents += label3
     border = loweredetched
   }
   simpleBorders.contents += Swing.RigidBox(new Dimension(0, 10))
-  simpleBorders.contents += comp
+  simpleBorders.contents += comp3
   // addCompForBorder(raisedbevel, "raised bevel border", simpleBorders)
-  label = new Label("raised bevel border", Swing.EmptyIcon, Alignment.Center)
-  comp = new GridPanel(1, 1) {
-    contents += label
+  val label4 = new Label("raised bevel border", Swing.EmptyIcon, Alignment.Center)
+  val comp4 = new GridPanel(1, 1) {
+    contents += label4
     border = raisedbevel
   }
   simpleBorders.contents += Swing.RigidBox(new Dimension(0, 10))
-  simpleBorders.contents += comp
+  simpleBorders.contents += comp4
   // addCompForBorder(loweredbevel, "lowered bevel border", simpleBorders)
-  label = new Label("lowered bevel border", Swing.EmptyIcon, Alignment.Center)
-  comp = new GridPanel(1, 1) {
-    contents += label
+  val label5 = new Label("lowered bevel border", Swing.EmptyIcon, Alignment.Center)
+  val comp5 = new GridPanel(1, 1) {
+    contents += label5
     border = loweredbevel
   }
   simpleBorders.contents += Swing.RigidBox(new Dimension(0, 10))
-  simpleBorders.contents += comp
+  simpleBorders.contents += comp5
   // addCompForBorder(empty, "empty border", simpleBorders)
-  label = new Label("empty border", Swing.EmptyIcon, Alignment.Center)
-  comp = new GridPanel(1, 1) {
-    contents += label
+  val label6 = new Label("empty border", Swing.EmptyIcon, Alignment.Center)
+  val comp6 = new GridPanel(1, 1) {
+    contents += label6
     border = empty
   }
   simpleBorders.contents += Swing.RigidBox(new Dimension(0, 10))
-  simpleBorders.contents += comp
+  simpleBorders.contents += comp6
 
   //Second pane: matte borders
   val matteBorders = new BoxPanel(Orientation.Vertical) {
@@ -122,47 +121,47 @@ class BorderDemo extends GridPanel(1, 0) {
   val border0 = Swing.MatteBorder(-1, -1, -1, -1, icon)
   if (icon != null) {
     // addCompForBorder(border, "matte border (-1,-1,-1,-1,icon)", matteBorders)
-    label = new Label("matte border (-1,-1,-1,-1,icon)", Swing.EmptyIcon, Alignment.Center)
-    comp = new GridPanel(1, 1) {
-      contents += label
+    val label7 = new Label("matte border (-1,-1,-1,-1,icon)", Swing.EmptyIcon, Alignment.Center)
+    val comp7 = new GridPanel(1, 1) {
+      contents += label7
       border = border0
     }
     matteBorders.contents += Swing.RigidBox(new Dimension(0, 10))
-    matteBorders.contents += comp
+    matteBorders.contents += comp7
   } else {
     // addCompForBorder(border, "matte border (-1,-1,-1,-1,<null-icon>)", matteBorders)
-    label = new Label("matte border (-1,-1,-1,-1,<null-icon>)", Swing.EmptyIcon, Alignment.Center)
-    comp = new GridPanel(1, 1) {
-      contents += label
+    val label8 = new Label("matte border (-1,-1,-1,-1,<null-icon>)", Swing.EmptyIcon, Alignment.Center)
+    val comp8 = new GridPanel(1, 1) {
+      contents += label8
       border = border0
     }
   }
   val border1 = Swing.MatteBorder(1, 5, 1, 1, Color.red)
   // addCompForBorder(border1, "matte border (1,5,1,1,Color.red)", matteBorders)
-  label = new Label("matte border (1,5,1,1,Color.red)", Swing.EmptyIcon, Alignment.Center)
-  comp = new GridPanel(1, 1) {
-    contents += label
+  val label9 = new Label("matte border (1,5,1,1,Color.red)", Swing.EmptyIcon, Alignment.Center)
+  val comp9 = new GridPanel(1, 1) {
+    contents += label9
     border = border1
   }
   val border2 = Swing.MatteBorder(0, 20, 0, 0, icon)
   if (icon != null) {
     // addCompForBorder(border, "matte border (0,20,0,0,icon)", matteBorders)
-    label = new Label("matte border (0,20,0,0,icon)", Swing.EmptyIcon, Alignment.Center)
-    comp = new GridPanel(1, 1) {
-      contents += label
+    val label10 = new Label("matte border (0,20,0,0,icon)", Swing.EmptyIcon, Alignment.Center)
+    val comp10 = new GridPanel(1, 1) {
+      contents += label10
       border = border2
     }
     matteBorders.contents += Swing.RigidBox(new Dimension(0, 10))
-    matteBorders.contents += comp
+    matteBorders.contents += comp10
   } else {
     // addCompForBorder(border, "matte border (0,20,0,0,<null-icon>)")
-    label = new Label("matte border (0,20,0,0,<null-icon>)", Swing.EmptyIcon, Alignment.Center)
-    comp = new GridPanel(1, 1) {
-      contents += label
+    val label11 = new Label("matte border (0,20,0,0,<null-icon>)", Swing.EmptyIcon, Alignment.Center)
+    val comp11 = new GridPanel(1, 1) {
+      contents += label11
       border = border2
     }
     matteBorders.contents += Swing.RigidBox(new Dimension(0, 10))
-    matteBorders.contents += comp
+    matteBorders.contents += comp11
   }
 
   //Third pane: titled borders
@@ -172,51 +171,51 @@ class BorderDemo extends GridPanel(1, 0) {
   val titled1 = Swing.TitledBorder(blackline, "title")
   // addCompForTitledBorder(titled1, "titled line border" + " (centered, default pos.)",
   //  TitledBorder.CENTER,    TitledBorder.DEFAULT_POSITION, titledBorders)
-  titled1.setTitleJustification(TitledBorder.CENTER)
-  titled1.setTitlePosition(TitledBorder.DEFAULT_POSITION)
-  label = new Label("titled line border (centered, default pos.)", Swing.EmptyIcon, Alignment.Center)
-  comp = new GridPanel(1, 1) {
-    contents += label
+  titled1.setTitleJustification(javax.swing.border.TitledBorder.CENTER)
+  titled1.setTitlePosition(javax.swing.border.TitledBorder.DEFAULT_POSITION)
+  val label12 = new Label("titled line border (centered, default pos.)", Swing.EmptyIcon, Alignment.Center)
+  val comp12 = new GridPanel(1, 1) {
+    contents += label12
     border = titled1
   }
   titledBorders.contents += Swing.RigidBox(new Dimension(0, 10))
-  titledBorders.contents += comp
+  titledBorders.contents += comp12
   val titled2 = Swing.TitledBorder(loweredetched, "title")
   // addCompForTitledBorder(titled2, "titled lowered etched border" + " (right just., default pos.)",
   //  TitledBorder.RIGHT, TitledBorder.DEFAULT_POSITION, titledBorders)
-  titled2.setTitleJustification(TitledBorder.RIGHT)
-  titled2.setTitlePosition(TitledBorder.DEFAULT_POSITION)
-  label = new Label("titled lowered etched border (right just., default pos.)", Swing.EmptyIcon, Alignment.Center)
-  comp = new GridPanel(1, 1) {
-    contents += label
+  titled2.setTitleJustification(javax.swing.border.TitledBorder.RIGHT)
+  titled2.setTitlePosition(javax.swing.border.TitledBorder.DEFAULT_POSITION)
+  val label13 = new Label("titled lowered etched border (right just., default pos.)", Swing.EmptyIcon, Alignment.Center)
+  val comp13 = new GridPanel(1, 1) {
+    contents += label13
     border = titled2
   }
   titledBorders.contents += Swing.RigidBox(new Dimension(0, 10))
-  titledBorders.contents += comp
+  titledBorders.contents += comp13
   val titled3 = Swing.TitledBorder(loweredbevel, "title")
   // addCompForTitledBorder(titled3, "titled lowered bevel border" + " (default just., above top)",
   //  TitledBorder.DEFAULT_JUSTIFICATION,  TitledBorder.ABOVE_TOP, titledBorders)
-  titled3.setTitleJustification(TitledBorder.DEFAULT_JUSTIFICATION)
-  titled3.setTitlePosition(TitledBorder.ABOVE_TOP)
-  label = new Label("titled lowered bevel border (default just., above top)", Swing.EmptyIcon, Alignment.Center)
-  comp = new GridPanel(1, 1) {
-    contents += label
+  titled3.setTitleJustification(javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION)
+  titled3.setTitlePosition(javax.swing.border.TitledBorder.ABOVE_TOP)
+  val label14 = new Label("titled lowered bevel border (default just., above top)", Swing.EmptyIcon, Alignment.Center)
+  val comp14 = new GridPanel(1, 1) {
+    contents += label14
     border = titled3
   }
   titledBorders.contents += Swing.RigidBox(new Dimension(0, 10))
-  titledBorders.contents += comp
+  titledBorders.contents += comp14
   val titled4 = Swing.TitledBorder(empty, "title")
   // addCompForTitledBorder(titled4, "titled empty border" + " (default just., bottom)",
   //  TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.BOTTOM, titledBorders)
-  titled4.setTitleJustification(TitledBorder.DEFAULT_JUSTIFICATION)
-  titled4.setTitlePosition(TitledBorder.BOTTOM)
-  label = new Label("titled empty border (default just., bottom)", Swing.EmptyIcon, Alignment.Center)
-  comp = new GridPanel(1, 1) {
-    contents += label
+  titled4.setTitleJustification(javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION)
+  titled4.setTitlePosition(javax.swing.border.TitledBorder.BOTTOM)
+  val label15 = new Label("titled empty border (default just., bottom)", Swing.EmptyIcon, Alignment.Center)
+  val comp15 = new GridPanel(1, 1) {
+    contents += label15
     border = titled3
   }
   titledBorders.contents += Swing.RigidBox(new Dimension(0, 10))
-  titledBorders.contents += comp
+  titledBorders.contents += comp15
 
   //Fourth pane: compound borders
   val compoundBorders = new BoxPanel(Orientation.Vertical) {
@@ -225,33 +224,33 @@ class BorderDemo extends GridPanel(1, 0) {
   val redline = Swing.LineBorder(Color.red)
   val compound1 = Swing.CompoundBorder(raisedbevel, loweredbevel)
   // addCompForBorder(compound1, "compound border (two bevels)", compoundBorders)
-  label = new Label("compound border (two bevels)", Swing.EmptyIcon, Alignment.Center)
-  comp = new GridPanel(1, 1) {
-    contents += label
+  val label16 = new Label("compound border (two bevels)", Swing.EmptyIcon, Alignment.Center)
+  val comp16 = new GridPanel(1, 1) {
+    contents += label16
     border = compound1
   }
   compoundBorders.contents += Swing.RigidBox(new Dimension(0, 10))
-  compoundBorders.contents += comp
+  compoundBorders.contents += comp16
   val compound2 = Swing.CompoundBorder(redline, compound1)
   // addCompForBorder(compound2, "compound border (add a red outline)", compoundBorders)
-  label = new Label("compound border (add a red outline)", Swing.EmptyIcon, Alignment.Center)
-  comp = new GridPanel(1, 1) {
-    contents += label
+  val label17 = new Label("compound border (add a red outline)", Swing.EmptyIcon, Alignment.Center)
+  val comp17 = new GridPanel(1, 1) {
+    contents += label17
     border = compound2
   }
   compoundBorders.contents += Swing.RigidBox(new Dimension(0, 10))
-  compoundBorders.contents += comp
+  compoundBorders.contents += comp17
   val titledCompound = Swing.TitledBorder(compound2, "title")
-  titledCompound.setTitleJustification(TitledBorder.CENTER)
-  titledCompound.setTitlePosition(TitledBorder.BELOW_BOTTOM)
+  titledCompound.setTitleJustification(javax.swing.border.TitledBorder.CENTER)
+  titledCompound.setTitlePosition(javax.swing.border.TitledBorder.BELOW_BOTTOM)
   // addCompForBorder(titledn, "titled compound border" + " (centered, below bottom)")
-  label = new Label("titled compound border (centered, below bottom)", Swing.EmptyIcon, Alignment.Center)
-  comp = new GridPanel(1, 1) {
-    contents += label
+  val label18 = new Label("titled compound border (centered, below bottom)", Swing.EmptyIcon, Alignment.Center)
+  val comp18 = new GridPanel(1, 1) {
+    contents += label18
     border = titledCompound
   }
   compoundBorders.contents += Swing.RigidBox(new Dimension(0, 10))
-  compoundBorders.contents += comp
+  compoundBorders.contents += comp18
   val tabbedPane = new TabbedPane()
   tabbedPane.pages += new TabbedPane.Page("Simple", simpleBorders)
   tabbedPane.pages += new TabbedPane.Page("Matte", matteBorders)
