@@ -47,7 +47,7 @@ import javax.swing.ImageIcon
  */
 class TabbedPaneDemo extends GridPanel(1, 1) {
   val tabbedPane = new TabbedPane()
-  val icon1: ImageIcon = TabbedPaneDemo.createImageIcon("/scala/swing/examples/tutorials/images/middle.gif")
+  val icon1: ImageIcon = TabbedPaneDemo.createImageIcon("/scala/swing/examples/tutorials/images/middle.gif").get
   val panel1: Panel = makeTextPanel("Panel #1")
   tabbedPane.pages += new TabbedPane.Page("Tab 1", panel1, "Does nothing")
   tabbedPane.pages(0).mnemonic = 1
@@ -81,13 +81,13 @@ class TabbedPaneDemo extends GridPanel(1, 1) {
 
 object TabbedPaneDemo extends SimpleSwingApplication  {
   /** Returns an ImageIcon, or null if the path was invalid. */
-  def createImageIcon(path: String): ImageIcon = {
+  def createImageIcon(path: String): Option[ImageIcon] = {
     val imgURL: URL = getClass().getResource(path)
     if (imgURL != null) {
       // scala swing has no mechanism for setting the description.
-      new javax.swing.ImageIcon(imgURL)
+      Some(new ImageIcon(imgURL))
     } else {
-      null
+      None
     }
   }
   

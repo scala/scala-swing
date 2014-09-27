@@ -52,13 +52,13 @@ import javax.swing.ImageIcon
  */
 class SplitPaneDividerDemo extends BorderPanel {
   font = new Font("Serif", Font.ITALIC, 24)
-  val icon1 = SplitPaneDividerDemo.createImageIcon("/scala/swing/examples/tutorials/images/Cat.gif")
+  val icon1 = SplitPaneDividerDemo.createImageIcon("/scala/swing/examples/tutorials/images/Cat.gif").get
   val sd1 = new SizeDisplayer("left", icon1) {
     font = font
   }
   sd1.setMinimumSize(new Dimension(30,30))
   
-  val icon2 = SplitPaneDividerDemo.createImageIcon("/scala/swing/examples/tutorials/images/Dog.gif")
+  val icon2 = SplitPaneDividerDemo.createImageIcon("/scala/swing/examples/tutorials/images/Dog.gif").get
   val sd2 = new SizeDisplayer("right", icon2) {
     font = font
   }
@@ -87,14 +87,14 @@ class SplitPaneDividerDemo extends BorderPanel {
 }
 
 object SplitPaneDividerDemo extends SimpleSwingApplication {
-  /** Returns an ImageIcon, or null if the path was invalid. */
-  def createImageIcon(path: String): ImageIcon = {
+  /** Returns an ImageIcon option, or None if the path was invalid. */
+  def createImageIcon(path: String): Option[ImageIcon] = {
     val imgURL: URL = getClass().getResource(path)
     if (imgURL != null) {
       // scala swing has no mechanism for setting the description.
-      new javax.swing.ImageIcon(imgURL)
+      Some(new ImageIcon(imgURL))
     } else {
-      null
+      None
     }
   }
 

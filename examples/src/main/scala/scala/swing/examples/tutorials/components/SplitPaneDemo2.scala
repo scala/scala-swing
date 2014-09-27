@@ -93,17 +93,6 @@ class SplitPaneDemo2 extends MainFrame {
 }
 
 object SplitPaneDemo2 extends SimpleSwingApplication {
-  /** Returns an ImageIcon, or null if the path was invalid. */
-  def createImageIcon(path: String): ImageIcon = {
-    val imgURL: URL = getClass().getResource(path)
-    if (imgURL != null) {
-      // scala swing has no mechanism for setting the description.
-      new javax.swing.ImageIcon(imgURL)
-    } else {
-      null
-    }
-  }
-
   lazy val top = new SplitPaneDemo2()
 }
 

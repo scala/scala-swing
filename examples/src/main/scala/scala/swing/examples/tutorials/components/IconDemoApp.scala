@@ -124,12 +124,12 @@ class IconDemoApp extends MainFrame {
       override protected def doInBackground(): Unit = {
         println("doInBackground")
         for (i <- 0 until imageCaptions.length) {
-          val icon: ImageIcon = IconDemoApp.createImageIcon(imagedir + imageFileNames(i), imageCaptions(i)).get
+          val iconOption: Option[ImageIcon] = IconDemoApp.createImageIcon(imagedir + imageFileNames(i), imageCaptions(i))
 
           val thumbAction: ThumbnailAction =
-            if (icon != null) {
-              val thumbnailIcon: ImageIcon = new ImageIcon(getScaledImage(icon.getImage(), 32, 32))
-              new ThumbnailAction(icon, thumbnailIcon, imageCaptions(i))
+            if (iconOption.isDefined) {
+              val thumbnailIcon: ImageIcon = new ImageIcon(getScaledImage(iconOption.get.getImage(), 32, 32))
+              new ThumbnailAction(iconOption.get, thumbnailIcon, imageCaptions(i))
             } else {
               // the image failed to load for some reason
               // so load a placeholder instead

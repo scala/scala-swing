@@ -56,7 +56,7 @@ class SliderDemo2(window: Window) extends BorderPanel with ActionListener {
   val FpsInit = 15; //initial frames per second
   var frameNumber = 0
   val NumFrames = 14
-  val images = new Array[ImageIcon](NumFrames)
+  val images = new Array[Option[ImageIcon]](NumFrames)
   var frozen = false
   var delay = 1000 / FpsInit
   
@@ -154,14 +154,14 @@ class SliderDemo2(window: Window) extends BorderPanel with ActionListener {
   def updatePicture(frameNum: Int): Unit = {
     //Get the image if we haven't already.
     if (images(frameNumber) == null) {
-      images(frameNumber) = SliderDemo.createImageIcon("/scala/swing/examples/tutorials/images/doggy/T"
+      images(frameNumber) = SliderDemo2.createImageIcon("/scala/swing/examples/tutorials/images/doggy/T"
         + frameNumber
-        + ".gif");
+        + ".gif")
     }
 
     //Set the image.
-    if (images(frameNumber) != null) {
-      picture.icon = images(frameNumber)
+    if (images(frameNumber).isDefined) {
+      picture.icon = images(frameNumber).get
     } else { //image not found
       picture.text = "image #" + frameNumber + " not found"
     }
@@ -169,14 +169,14 @@ class SliderDemo2(window: Window) extends BorderPanel with ActionListener {
 }
 
 object SliderDemo2 extends SimpleSwingApplication {
-  /** Returns an ImageIcon, or null if the path was invalid. */
-  def createImageIcon(path: String): ImageIcon = {
+  /** Returns an ImageIcon option, or None if the path was invalid. */
+  def createImageIcon(path: String): Option[ImageIcon] = {
     val imgURL: URL = getClass().getResource(path)
     if (imgURL != null) {
-      // scala swing has no mechanism for setting the description.
-      new javax.swing.ImageIcon(imgURL)
+      // scala swing has no mechanism for setting the description in the peer.
+      Some(new ImageIcon(imgURL))
     } else {
-      null
+      None
     }
   }
 

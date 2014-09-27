@@ -31,10 +31,11 @@
 
 package scala.swing.examples.tutorials.components
 
-import java.awt.{ Cursor, Font, Toolkit }
-import javax.swing.text.{ StyleConstants, StyleContext }
 import scala.swing._
 import scala.swing.event._
+import java.awt.{ Cursor, Font, Toolkit }
+import java.net.URL
+import javax.swing.text.{ StyleConstants, StyleContext }
 
 /*
  * Tutorials: How to Use Text Components
@@ -155,7 +156,7 @@ object TextSamplerDemo extends SimpleSwingApplication {
       //To get this to work in Eclipse, add /src/main/resources directory to the run
       //configuration classpath.  The file TextSamplerDemoHelp.html is placed in that
       //directory.
-      val helpURL: java.net.URL = getClass().getResource("/scala/swing/examples/tutorials/TextSamplerDemoHelp.html")
+      val helpURL: URL = getClass().getResource("/scala/swing/examples/tutorials/TextSamplerDemoHelp.html")
 
       if (helpURL != null) {
         editorPane.editorKit = new javax.swing.text.html.HTMLEditorKit
@@ -227,22 +228,22 @@ object TextSamplerDemo extends SimpleSwingApplication {
     val `def` = StyleContext.getDefaultStyleContext.getStyle(StyleContext.DEFAULT_STYLE)
     val regular = doc.addStyle("regular", `def`)
     StyleConstants.setFontFamily(`def`, "SansSerif")
-    var s = doc.addStyle("italic", regular)
-    StyleConstants.setItalic(s, true)
-    s = doc.addStyle("bold", regular)
-    StyleConstants.setBold(s, true)
-    s = doc.addStyle("small", regular)
-    StyleConstants.setFontSize(s, 10)
-    s = doc.addStyle("large", regular)
-    StyleConstants.setFontSize(s, 16)
-    s = doc.addStyle("icon", regular)
-    StyleConstants.setAlignment(s, StyleConstants.ALIGN_CENTER)
+    val sItalic = doc.addStyle("italic", regular)
+    StyleConstants.setItalic(sItalic, true)
+    val sBold = doc.addStyle("bold", regular)
+    StyleConstants.setBold(sBold, true)
+    val sSmall = doc.addStyle("small", regular)
+    StyleConstants.setFontSize(sSmall, 10)
+    val sLarge = doc.addStyle("large", regular)
+    StyleConstants.setFontSize(sLarge, 16)
+    val sIcon = doc.addStyle("icon", regular)
+    StyleConstants.setAlignment(sIcon, StyleConstants.ALIGN_CENTER)
     val pigIcon = createImageIcon("/scala/swing/examples/tutorials/images/Pig.gif", "a cute pig")
     if (pigIcon != None) {
-      StyleConstants.setIcon(s, pigIcon.get)
+      StyleConstants.setIcon(sIcon, pigIcon.get)
     }
-    s = doc.addStyle("button", regular)
-    StyleConstants.setAlignment(s, StyleConstants.ALIGN_CENTER)
+    val sButton = doc.addStyle("button", regular)
+    StyleConstants.setAlignment(sButton, StyleConstants.ALIGN_CENTER)
     val soundIcon = createImageIcon("/scala/swing/examples/tutorials/images/sound.gif", "sound icon")
     // button = new Button()
     if (soundIcon != None) {
@@ -254,7 +255,7 @@ object TextSamplerDemo extends SimpleSwingApplication {
     button.margin = new Insets(0, 0, 0, 0)
     // button.setActionCommand(buttonString)
     // button.addActionListener(this)
-    StyleConstants.setComponent(s, button.peer)
+    StyleConstants.setComponent(sButton, button.peer)
   }
 
   def createTextPane(button: Button): TextPane = {

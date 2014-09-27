@@ -52,7 +52,7 @@ import java.awt.{ Dimension, Font }
  */
 class CustomComboBoxDemo extends BorderPanel {
   val petStrings: Array[String] = Array("Bird", "Cat", "Dog", "Rabbit", "Pig")
-  val images: Array[ImageIcon] = new Array[ImageIcon](petStrings.length)
+  val images: Array[Option[ImageIcon]] = new Array[Option[ImageIcon]](petStrings.length)
   val intArray: Array[Int] = new Array[Int](petStrings.length)
   /*
    * Despite its use of EmptyBorder, this panel makes a fine content
@@ -63,10 +63,11 @@ class CustomComboBoxDemo extends BorderPanel {
    * that.
    */
   for (i <- 0 until petStrings.length) {
-    images(i) = CustomComboBoxDemo.createImageIcon("/scala/swing/examples/tutorials/images/" + petStrings(i) + ".gif");
-    if (images(i) != null) {
-      images(i).setDescription(petStrings(i))
+    val oImage = CustomComboBoxDemo.createImageIcon("/scala/swing/examples/tutorials/images/" + petStrings(i) + ".gif")
+    if (oImage.isDefined) {
+      oImage.get.setDescription(petStrings(i))
     }
+    images(i) = oImage
     intArray(i) = i
   }
 
@@ -95,7 +96,7 @@ class CustomComboBoxDemo extends BorderPanel {
       a: Int,
       index: Int) = {
       //Set the icon and text.  If icon was null, say so.
-      component.icon = images(a)
+      component.icon = images(a).get
       val pet = petStrings(a)
       if (component.icon != null) {
         component.text = pet;
@@ -120,12 +121,12 @@ class CustomComboBoxDemo extends BorderPanel {
 object CustomComboBoxDemo extends SimpleSwingApplication {
 
   /** Returns an ImageIcon, or null if the path was invalid. */
-  def createImageIcon(path: String): ImageIcon = {
+  def createImageIcon(path: String): Option[ImageIcon] = {
     val imgURL: URL = getClass().getResource(path)
     if (imgURL != null) {
-      Swing.Icon(imgURL)
+      Some(Swing.Icon(imgURL))
     } else {
-      null
+      None
     }
   }
   

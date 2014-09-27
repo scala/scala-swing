@@ -44,10 +44,10 @@ import java.net.URL
  *   /scala/swing/examples/tutorials/images/middle.gif
  */
 class LabelDemo extends GridPanel(3, 1) {
-  val icon: ImageIcon = LabelDemo.createImageIcon("/scala/swing/examples/tutorials/images/middle.gif",
+  val icon: Option[ImageIcon] = LabelDemo.createImageIcon("/scala/swing/examples/tutorials/images/middle.gif",
         "a pretty but meaningless splat")
   //Create the first label.
-  val label1: Label = new Label("Image and Text", icon, Alignment.Center) {
+  val label1: Label = new Label("Image and Text", icon.get, Alignment.Center) {
     //Set the position of its text, relative to its icon:
     verticalTextPosition = Alignment.Bottom
     horizontalTextPosition = Alignment.Center
@@ -55,7 +55,7 @@ class LabelDemo extends GridPanel(3, 1) {
   
   //Create the other labels.
   val label2 = new Label("Text-Only Label")
-  val label3 = new Label("", icon, Alignment.Center)
+  val label3 = new Label("", icon.get, Alignment.Center)
   
   //Create tool tips, for the heck of it.
   label1.tooltip = "A label containing both image and text"
@@ -68,14 +68,14 @@ class LabelDemo extends GridPanel(3, 1) {
 }
 
 object LabelDemo extends SimpleSwingApplication {
-  /** Returns an ImageIcon, or null if the path was invalid. */
-  def createImageIcon(path: String, description: String): ImageIcon = {
+  /** Returns an ImageIcon option, or None if the path was invalid. */
+  def createImageIcon(path: String, description: String): Option[ImageIcon] = {
     val imgURL: URL = getClass().getResource(path)
     if (imgURL != null) {
       // scala swing has no mechanism for setting the description.
-      new javax.swing.ImageIcon(imgURL, description)
+      Some(new ImageIcon(imgURL, description))
     } else {
-      null
+      None
     }
   }
   lazy val top = new MainFrame() {

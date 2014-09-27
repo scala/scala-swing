@@ -55,7 +55,7 @@ import scala.swing.event.ButtonClicked
  */
 class ScrollDemo extends BoxPanel(Orientation.Horizontal) {
   //Get the image to use.
-  val bee: ImageIcon = ScrollDemo.createImageIcon("/scala/swing/examples/tutorials/images/flyingBee.jpg")
+  val bee: ImageIcon = ScrollDemo.createImageIcon("/scala/swing/examples/tutorials/images/flyingBee.jpg").get
 
   //Create the row and column headers.
   val columnView = new Rule(Rule.Horizontal, true);
@@ -118,14 +118,14 @@ class ScrollDemo extends BoxPanel(Orientation.Horizontal) {
 }
 
 object ScrollDemo extends SimpleSwingApplication {
-  /** Returns an ImageIcon, or null if the path was invalid. */
-  def createImageIcon(path: String): ImageIcon = {
+  /** Returns an ImageIcon option, or None if the path was invalid. */
+  def createImageIcon(path: String): Option[ImageIcon] = {
     val imgURL: URL = getClass().getResource(path)
     if (imgURL != null) {
-      // scala swing has no mechanism for setting the description.
-      new javax.swing.ImageIcon(imgURL)
+      // scala swing has no mechanism for setting the description in the peer.
+      Some(new ImageIcon(imgURL))
     } else {
-      null
+      None
     }
   }
 

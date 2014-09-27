@@ -116,7 +116,7 @@ class FrameDemo2 {
           f.iconImage = FrameDemo2.createFDImage()
         } else {
           //get the icon from a file
-          f.iconImage = FrameDemo2.getFDImage()
+          f.iconImage = FrameDemo2.getFDImage().get
         }
       }
     }
@@ -282,13 +282,13 @@ object FrameDemo2 extends SimpleSwingApplication {
     bi
   }
 
-  // Returns an Image or null.
-  def getFDImage(): Image = {
+  // Returns an Image Option or None.
+  def getFDImage(): Option[Image] = {
     val imgURL: URL = getClass().getResource("/scala/swing/examples/tutorials/images/FD.jpg");
     if (imgURL != null) {
-      return new ImageIcon(imgURL).getImage();
+      return Some(new ImageIcon(imgURL).getImage)
     } else {
-      return null;
+      return None
     }
   }
 

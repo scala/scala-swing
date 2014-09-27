@@ -58,7 +58,7 @@ class ComboBoxDemo extends BorderPanel {
   val imgIcon = ComboBoxDemo.createImageIcon("/scala/swing/examples/tutorials/images/"
     + petList.selection.item + ".gif")
   val picture = new Label() {
-    icon = imgIcon
+    icon = if (imgIcon.isDefined) imgIcon.get else Swing.EmptyIcon
     font = font.deriveFont(Font.ITALIC)
     horizontalAlignment = Alignment.Center
     //The preferred size is hard-coded to be the width of the
@@ -79,7 +79,7 @@ class ComboBoxDemo extends BorderPanel {
 
   def updateLabel(s: String): Unit = {
     val ic = ComboBoxDemo.createImageIcon("/scala/swing/examples/tutorials/images/" + s + ".gif")
-    picture.icon = ic
+    picture.icon = if (ic.isDefined) imgIcon.get else Swing.EmptyIcon
   }
 }
 
@@ -91,12 +91,12 @@ object ComboBoxDemo extends SimpleSwingApplication {
   val pigString = "Pig"
 
   /** Returns an ImageIcon, or null if the path was invalid. */
-  def createImageIcon(path: String): ImageIcon = {
+  def createImageIcon(path: String): Option[ImageIcon] = {
     val imgURL: URL = getClass().getResource(path)
     if (imgURL != null) {
-      Swing.Icon(imgURL)
+      Some(Swing.Icon(imgURL))
     } else {
-      null
+      None
     }
   }
   lazy val top = new MainFrame() {

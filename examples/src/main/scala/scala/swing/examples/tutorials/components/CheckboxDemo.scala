@@ -143,11 +143,11 @@ class CheckboxDemo extends BorderPanel {
   def updatePicture(): Unit = {
     //Get the icon corresponding to the image.
     val s = choices.toString()
-    val icon: ImageIcon = CheckboxDemo.createImageIcon(
+    val icon: Option[ImageIcon] = CheckboxDemo.createImageIcon(
       "/scala/swing/examples/tutorials/images/geek/geek-"
         + choices.toString()
         + ".gif")
-    pictureLabel.icon = icon
+    pictureLabel.icon = if (icon.isDefined) icon.get else Swing.EmptyIcon
     pictureLabel.tooltip = choices.toString()
     if (icon == null) {
       pictureLabel.text = "Missing Image"
@@ -158,13 +158,13 @@ class CheckboxDemo extends BorderPanel {
 }
 
 object CheckboxDemo extends SimpleSwingApplication {
-  /** Returns an ImageIcon, or null if the path was invalid. */
-  def createImageIcon(path: String): ImageIcon = {
+  /** Returns an ImageIcon, or None if the path was invalid. */
+  def createImageIcon(path: String): Option[ImageIcon] = {
     val imgURL: URL = getClass().getResource(path)
     if (imgURL != null) {
-      Swing.Icon(imgURL)
+      Some(Swing.Icon(imgURL))
     } else {
-      null
+      None
     }
   }
   lazy val top = new MainFrame() {

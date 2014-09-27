@@ -85,7 +85,7 @@ class RadioButtonDemo extends BorderPanel {
     + RadioButtonDemo.birdString
     + ".gif")
   val picture = new Label() {
-    icon = imgIcon
+    icon = imgIcon.get
     //The preferred size is hard-coded to be the width of the
     //widest image and the height of the tallest image.
     //A real program would compute this.
@@ -121,7 +121,7 @@ class RadioButtonDemo extends BorderPanel {
   }
   
   def getPictureIcon(gifName: String): ImageIcon = {
-    RadioButtonDemo.createImageIcon("/scala/swing/examples/tutorials/images/" + gifName + ".gif")
+    RadioButtonDemo.createImageIcon("/scala/swing/examples/tutorials/images/" + gifName + ".gif").get
   }
 }
 
@@ -132,13 +132,13 @@ object RadioButtonDemo extends SimpleSwingApplication {
   val rabbitString = "Rabbit"
   val pigString = "Pig"
 
-  /** Returns an ImageIcon, or null if the path was invalid. */
-  def createImageIcon(path: String): ImageIcon = {
+  /** Returns an ImageIcon option, or None if the path was invalid. */
+  def createImageIcon(path: String): Option[ImageIcon] = {
     val imgURL: URL = getClass().getResource(path)
     if (imgURL != null) {
-      Swing.Icon(imgURL)
+      Some(Swing.Icon(imgURL))
     } else {
-      null
+      None
     }
   }
   lazy val top = new MainFrame() {

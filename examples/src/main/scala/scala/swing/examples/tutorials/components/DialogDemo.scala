@@ -50,7 +50,8 @@ import java.awt.{ Dimension, Font }
  *   /scala/swing/examples/tutorials/images/middle.gif
  */
 class DialogDemo(val frame: Frame) extends BorderPanel {
-  val icon: ImageIcon = DialogDemo.createImageIcon("/scala/swing/examples/tutorials/images/middle.gif")
+  val oImage = DialogDemo.createImageIcon("/scala/swing/examples/tutorials/images/middle.gif")
+  val icon: ImageIcon = if (oImage.isDefined) oImage.get else null
   val simpleDialogDesc = "Some simple message dialogs"
   val iconDesc = "A JOptionPane has its choice of icons"
   val moreDialogDesc = "Some more dialogs"
@@ -483,13 +484,13 @@ class DialogDemo(val frame: Frame) extends BorderPanel {
 }
 
 object DialogDemo extends SimpleSwingApplication {
-  /** Returns an ImageIcon, or null if the path was invalid. */
-  def createImageIcon(path: String): ImageIcon = {
+  /** Returns an ImageIcon, or None if the path was invalid. */
+  def createImageIcon(path: String): Option[ImageIcon] = {
     val imgURL: URL = getClass().getResource(path)
     if (imgURL != null) {
-      Swing.Icon(imgURL)
+      Some(Swing.Icon(imgURL))
     } else {
-      null
+      None
     }
   }
 

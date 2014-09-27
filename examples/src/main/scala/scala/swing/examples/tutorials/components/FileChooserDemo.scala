@@ -34,6 +34,7 @@ import scala.swing._
 import scala.swing.event._
 
 import java.io.File
+import java.net.URL
 
 /*
  * Tutorial: How to Use File Choosers
@@ -71,7 +72,7 @@ object FileChooserDemo extends SimpleSwingApplication {
   //Create the open button.  We use the image from the JLF
   //Graphics Repository (but we extracted it from the jar).
   val openButton = new Button("Open a File...")
-  val openIconURL:java.net.URL = getClass().getResource("/scala/swing/examples/tutorials/images/Open16.gif")
+  val openIconURL: URL = getClass().getResource("/scala/swing/examples/tutorials/images/Open16.gif")
   if (openIconURL != null) {
     openButton.icon = Swing.Icon(openIconURL)
   }
@@ -79,7 +80,7 @@ object FileChooserDemo extends SimpleSwingApplication {
   //Create the save button.  We use the image from the JLF
   //Graphics Repository (but we extracted it from the jar).
   val saveButton = new Button("Save a File...")
-  val saveIconURL:java.net.URL = getClass().getResource("/scala/swing/examples/tutorials/images/Save16.gif")
+  val saveIconURL: URL = getClass().getResource("/scala/swing/examples/tutorials/images/Save16.gif")
   if (saveIconURL != null) {
     saveButton.icon = Swing.Icon(saveIconURL)
   }

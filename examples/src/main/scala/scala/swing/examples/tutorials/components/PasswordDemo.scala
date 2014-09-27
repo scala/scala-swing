@@ -71,16 +71,7 @@ object PasswordDemo extends SimpleSwingApplication {
    */
   def isPasswordCorrect(input: Array[Char]): Boolean = {
     val correctPassword = Array[Char]('b', 'u', 'g', 'a', 'b', 'o', 'o')
-
-    val isCorrect = if (input.length != correctPassword.length) {
-      false;
-    } else {
-      var same = true
-      for (i <- 0 until input.length) {
-        same &= input(i) == correctPassword(i)
-      }
-      same
-    }
+    val isCorrect = input.deep == correctPassword.deep
 
     //Zero out the password.
     // Arrays.fill(correctPassword,'0');

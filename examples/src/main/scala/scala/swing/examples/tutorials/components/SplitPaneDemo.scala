@@ -79,12 +79,13 @@ class SplitPaneDemo extends FlowPanel {
   
   //Renders the selected image
    def updateLabel (name: String): Unit = {
-        val icon: ImageIcon = SplitPaneDemo.createImageIcon("/scala/swing/examples/tutorials/images/" + name + ".gif");
-        picture.icon = icon
-        if  (icon != null) {
+        val icon: Option[ImageIcon] = SplitPaneDemo.createImageIcon("/scala/swing/examples/tutorials/images/" + name + ".gif")
+        if  (icon.isDefined) {
             picture.text = null
+            picture.icon = icon.get
         } else {
             picture.text = "Image not found"
+            picture.icon = null
         }
     }
    
@@ -99,14 +100,14 @@ class SplitPaneDemo extends FlowPanel {
 }
 
 object SplitPaneDemo extends SimpleSwingApplication {
-  /** Returns an ImageIcon, or null if the path was invalid. */
-  def createImageIcon(path: String): ImageIcon = {
+  /** Returns an ImageIcon option, or NOne if the path was invalid. */
+  def createImageIcon(path: String): Option[ImageIcon] = {
     val imgURL: URL = getClass().getResource(path)
     if (imgURL != null) {
       // scala swing has no mechanism for setting the description.
-      new javax.swing.ImageIcon(imgURL)
+      Some(new ImageIcon(imgURL))
     } else {
-      null
+      None
     }
   }
 

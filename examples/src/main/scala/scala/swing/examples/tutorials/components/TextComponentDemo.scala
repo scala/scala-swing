@@ -342,7 +342,7 @@ class TextComponentDemo extends MainFrame {
   //The following two methods allow us to find an
   //action provided by the editor kit by its name.
   def createActionTable(textComponent: TextComponent): HashMap[String, javax.swing.Action] = {
-    var hm = new HashMap[String, javax.swing.Action]()
+    val hm = new HashMap[String, javax.swing.Action]()
     for (a <- textComponent.peer.getActions()) {
       val s = a.getValue(javax.swing.Action.NAME).asInstanceOf[String]
       hm.put(s, a)

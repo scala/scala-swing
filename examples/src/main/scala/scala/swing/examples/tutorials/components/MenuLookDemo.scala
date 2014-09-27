@@ -74,7 +74,7 @@ class MenuLookDemo extends BorderPanel {
     }
     menu.contents += menuItem1
     //         
-    val icon: ImageIcon = MenuLookDemo.createImageIcon("/scala/swing/examples/tutorials/images/middle.gif")
+    val icon: ImageIcon = MenuLookDemo.createImageIcon("/scala/swing/examples/tutorials/images/middle.gif").get
     val menuItem2 = new MenuItem("Both text and icon") {
       icon = icon
       mnemonic = Key.B
@@ -170,13 +170,13 @@ class MenuLookDemo extends BorderPanel {
 }
 
 object MenuLookDemo extends SimpleSwingApplication {
-  /** Returns an ImageIcon, or null if the path was invalid. */
-  def createImageIcon(path: String): ImageIcon = {
+  /** Returns an ImageIcon option, or None if the path was invalid. */
+  def createImageIcon(path: String): Option[ImageIcon] = {
     val imgURL: URL = getClass().getResource(path)
     if (imgURL != null) {
-      Swing.Icon(imgURL)
+      Some(Swing.Icon(imgURL))
     } else {
-      null
+      None
     }
   }
   
