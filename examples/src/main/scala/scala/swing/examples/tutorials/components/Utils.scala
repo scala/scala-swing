@@ -55,7 +55,7 @@ class Utils {
     } else None
   }
 
-  /** Returns an ImageIcon, or null if the path was invalid. */
+  /** Returns an ImageIcon option, or None if the path was invalid. */
   def createImageIcon(path: String): Option[ImageIcon] = {
     val imgURL: java.net.URL = getClass().getResource(path)
     if (imgURL != null) {
