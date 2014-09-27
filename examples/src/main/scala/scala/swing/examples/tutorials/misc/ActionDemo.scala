@@ -65,21 +65,21 @@ class ActionDemo extends BorderPanel {
   val leftAction = new LeftAction()
   class LeftAction extends Action("Go left") {
     override def apply(): Unit = {}
-    icon = ActionDemo.createNavigationIcon("Back24")
+    icon = ActionDemo.createNavigationIcon("Back24").get
     mnemonic = new Integer(java.awt.event.KeyEvent.VK_L)
     peer.putValue(javax.swing.Action.SHORT_DESCRIPTION, "This is the left button.")
     // peer.putValue(javax.swing.Action.MNEMONIC_KEY, mnemonic)
   }
   val middleAction = new Action("Do something") {
     override def apply(): Unit = {}
-    icon = ActionDemo.createNavigationIcon("Up24")
+    icon = ActionDemo.createNavigationIcon("Up24").get
     mnemonic = new Integer(java.awt.event.KeyEvent.VK_M)
     peer.putValue(javax.swing.Action.SHORT_DESCRIPTION, "This is the middle button.")
     // peer.putValue(javax.swing.Action.MNEMONIC_KEY, mnemonic)
   }
   val rightAction = new Action("Go right")  {
     override def apply(): Unit = {}
-    icon = ActionDemo.createNavigationIcon("Forward24")
+    icon = ActionDemo.createNavigationIcon("Forward24").get
     mnemonic = new Integer(java.awt.event.KeyEvent.VK_R)
     peer.putValue(javax.swing.Action.SHORT_DESCRIPTION, "This is the right button.")
     // peer.putValue(javax.swing.Action.MNEMONIC_KEY, mnemonic)
@@ -174,16 +174,15 @@ class ActionDemo extends BorderPanel {
 }
 
 object ActionDemo extends SimpleSwingApplication {
-  /** Returns an ImageIcon, or null if the path was invalid. */
-  def createNavigationIcon(imageName: String): ImageIcon = {
+  /** Returns an ImageIcon option, or None if the path was invalid. */
+  def createNavigationIcon(imageName: String): Option[ImageIcon] = {
     val imgLocation = "/toolbarButtonGraphics/navigation/" + imageName + ".gif"
     val imageURL: URL = getClass().getResource(imgLocation)
-
     if (imageURL == null) {
       System.err.println("Resource not found: " + imgLocation)
-      return null
+      return None
     } else {
-      return new ImageIcon(imageURL)
+      return Some(new ImageIcon(imageURL))
     }
   }
 
