@@ -31,6 +31,7 @@
 package scala.swing.examples.tutorials.misc
 
 import scala.swing._
+import scala.util.control.NonFatal
 
 /*
  * Tutorial: How to Use the Focus System
@@ -92,14 +93,7 @@ object FocusConceptsDemo extends SimpleSwingApplication {
     //UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
     javax.swing.UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
   } catch {
-    case ex: javax.swing.UnsupportedLookAndFeelException =>
-      ex.printStackTrace()
-    case ex: IllegalAccessException =>
-      ex.printStackTrace()
-    case ex: InstantiationException =>
-      ex.printStackTrace()
-    case ex: ClassNotFoundException =>
-      ex.printStackTrace()
+    case NonFatal(ex) => ex.printStackTrace()
   }
   /* Turn off metal's use of bold fonts */
   javax.swing.UIManager.put("swing.boldMetal", false);
