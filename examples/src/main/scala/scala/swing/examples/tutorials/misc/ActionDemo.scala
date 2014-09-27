@@ -31,9 +31,9 @@
 package scala.swing.examples.tutorials.misc
 
 import scala.swing._
-import scala.swing.event.ButtonClicked
+import scala.swing.event.{ ActionEvent, ButtonClicked, KeyEvent }
 import java.awt.Dimension
-import java.awt.event.{ ActionEvent, ActionListener, KeyEvent }
+//import java.awt.event.{ ActionEvent, ActionListener, KeyEvent }
 import java.net.URL
 import javax.swing.{ ImageIcon, JToolBar }
 
@@ -63,43 +63,34 @@ class ActionDemo extends BorderPanel {
 
   //Create the actions shared by the toolbar and menu.
   val leftAction = new LeftAction()
-  class LeftAction extends Action("Go left") with ActionListener {
+  class LeftAction extends Action("Go left") {
     override def apply(): Unit = {}
     icon = ActionDemo.createNavigationIcon("Back24")
-    mnemonic = new Integer(KeyEvent.VK_L)
+    mnemonic = new Integer(java.awt.event.KeyEvent.VK_L)
     peer.putValue(javax.swing.Action.SHORT_DESCRIPTION, "This is the left button.")
     // peer.putValue(javax.swing.Action.MNEMONIC_KEY, mnemonic)
-    override def actionPerformed(e: ActionEvent): Unit = {
-      displayResult("Action for first button/menu item", e);
-    }
   }
-  val middleAction = new Action("Do something") with ActionListener {
+  val middleAction = new Action("Do something") {
     override def apply(): Unit = {}
     icon = ActionDemo.createNavigationIcon("Up24")
-    mnemonic = new Integer(KeyEvent.VK_M)
+    mnemonic = new Integer(java.awt.event.KeyEvent.VK_M)
     peer.putValue(javax.swing.Action.SHORT_DESCRIPTION, "This is the middle button.")
     // peer.putValue(javax.swing.Action.MNEMONIC_KEY, mnemonic)
-    override def actionPerformed(e: ActionEvent): Unit = {
-      displayResult("Action for second button/menu item", e);
-    }
   }
-  val rightAction = new Action("Go right") with ActionListener {
+  val rightAction = new Action("Go right")  {
     override def apply(): Unit = {}
     icon = ActionDemo.createNavigationIcon("Forward24")
-    mnemonic = new Integer(KeyEvent.VK_R)
+    mnemonic = new Integer(java.awt.event.KeyEvent.VK_R)
     peer.putValue(javax.swing.Action.SHORT_DESCRIPTION, "This is the right button.")
     // peer.putValue(javax.swing.Action.MNEMONIC_KEY, mnemonic)
-    override def actionPerformed(e: ActionEvent): Unit = {
-      displayResult("Action for third button/menu item", e);
-    }
   }
-
-  def displayResult(actionDescription: String, e: ActionEvent): Unit = {
+  
+  def displayResult(actionDescription: String, source: String): Unit = {
     val newline = "\n"
     val s: String = "Action event detected: " +
       actionDescription +
       newline +
-      "    Event source: " + e.getSource() +
+      "    Event source: " + source +
       newline;
     textArea.append(s);
   }
@@ -114,12 +105,20 @@ class ActionDemo extends BorderPanel {
     actions(0) = leftAction
     actions(1) = middleAction
     actions(2) = rightAction
-    for (i <- 0 until actions.length) {
-      mainMenu.contents += new MenuItem(actions(i)) {
-        icon = Swing.EmptyIcon
-      }
+    val mi0 =  new MenuItem(actions(0)) { icon = Swing.EmptyIcon }
+    val mi1 =  new MenuItem(actions(1)) { icon = Swing.EmptyIcon }
+    val mi2 =  new MenuItem(actions(2)) { icon = Swing.EmptyIcon }
+    mainMenu.contents += mi0
+    mainMenu.contents += mi1
+    mainMenu.contents += mi2
+    listenTo(mi0)
+    listenTo(mi1)
+    listenTo(mi2)
+    reactions += {
+      case ButtonClicked(`mi0`) => displayResult("Action for first button/menu item", "Menu Item 1")
+      case ButtonClicked(`mi1`) => displayResult("Action for second button/menu item", "Menu Item 2")
+      case ButtonClicked(`mi2`) => displayResult("Action for third button/menu item", "Menu Item 3")
     }
-
     //Set up the  menu bar.
     menuBar.contents += mainMenu
     menuBar.contents += createAbleMenu()
@@ -142,6 +141,14 @@ class ActionDemo extends BorderPanel {
     toolBar.contents += button2
     toolBar.contents += button3
     layout(toolBar) = BorderPanel.Position.North
+    listenTo(button1)
+    listenTo(button2)
+    listenTo(button3)
+    reactions += {
+      case ButtonClicked(`button1`) => displayResult("Action for first button/menu item", "Toolbar button 1")
+      case ButtonClicked(`button2`) => displayResult("Action for second button/menu item", "Toolbar button 2")
+      case ButtonClicked(`button3`) => displayResult("Action for third button/menu item", "Toolbar button 3")
+    }
   }
 
   def createAbleMenu(): Menu = {
@@ -173,8 +180,7 @@ object ActionDemo extends SimpleSwingApplication {
     val imageURL: URL = getClass().getResource(imgLocation)
 
     if (imageURL == null) {
-      System.err.println("Resource not found: "
-        + imgLocation)
+      System.err.println("Resource not found: " + imgLocation)
       return null
     } else {
       return new ImageIcon(imageURL)
@@ -189,8 +195,4 @@ object ActionDemo extends SimpleSwingApplication {
     demo.createToolBar()
     contents = demo
   }
-}
-
-class ToolBar extends scala.swing.Component with SequentialContainer.Wrapper {
-  override lazy val peer: JToolBar = new JToolBar with SuperMixin
 }
