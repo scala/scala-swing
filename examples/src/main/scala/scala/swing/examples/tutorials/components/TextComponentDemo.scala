@@ -30,15 +30,14 @@
  */
 package scala.swing.examples.tutorials.components
 
-
 import scala.collection.mutable.HashMap
 import scala.swing._
 import scala.swing.event.CaretUpdate
 import java.awt.{ Color, Dimension, Event, Insets }
 import java.awt.event.KeyEvent
 import javax.swing.{ InputMap, KeyStroke, SwingUtilities, UIManager }
-import javax.swing.event.{DocumentEvent, DocumentListener, UndoableEditEvent, UndoableEditListener}
-import javax.swing.text.{AbstractDocument, BadLocationException, DefaultEditorKit, Document, SimpleAttributeSet, StyleConstants, StyledDocument, StyledEditorKit}
+import javax.swing.event.{ DocumentEvent, DocumentListener, UndoableEditEvent, UndoableEditListener }
+import javax.swing.text.{ AbstractDocument, BadLocationException, DefaultEditorKit, Document, SimpleAttributeSet, StyleConstants, StyledDocument, StyledEditorKit }
 import javax.swing.undo.UndoManager
 
 /*
@@ -62,7 +61,7 @@ class TextComponentDemo extends MainFrame {
 
   //Create the text pane and configure it.
   val textPane: TextPane = new TextPane()
-  textPane.peer.setCaretPosition(0)
+  textPane.caret.position = 0
   textPane.peer.setMargin(new Insets(5, 5, 5, 5))
   val styledDoc: StyledDocument = textPane.styledDocument
   val doc: AbstractDocument = styledDoc.asInstanceOf[AbstractDocument]
@@ -70,7 +69,7 @@ class TextComponentDemo extends MainFrame {
 
   val scrollPane = new ScrollPane(textPane)
   scrollPane.preferredSize = new Dimension(200, 200)
-  
+
   val undoAction = new UndoAction()
   val redoAction = new RedoAction()
 
@@ -109,10 +108,10 @@ class TextComponentDemo extends MainFrame {
 
   //Put the initial text into the text pane.
   initDocument()
-  textPane.peer.setCaretPosition(0)
+  textPane.caret.position = 0
 
   //Start watching for undoable edits and caret changes.
-  listenTo(this)
+  listenTo(textPane.caret)
   doc.addUndoableEditListener(new MyUndoableEditListener())
   reactions += {
     case CaretUpdate(textPane) =>
@@ -121,9 +120,9 @@ class TextComponentDemo extends MainFrame {
   doc.addDocumentListener(new MyDocumentListener())
 
   override def closeOperation() = {
-    System.exit(0)
+    sys.exit(0)
   }
-  
+
   class MyUndoableEditListener extends UndoableEditListener {
     def undoableEditHappened(e: UndoableEditEvent) {
       undo.addEdit(e.getEdit())
@@ -131,7 +130,7 @@ class TextComponentDemo extends MainFrame {
       redoAction.updateRedoState()
     }
   }
-  
+
   class MyDocumentListener extends DocumentListener {
     def insertUpdate(e: DocumentEvent): Unit = {
       displayEditInfo(e)
@@ -146,10 +145,10 @@ class TextComponentDemo extends MainFrame {
       val document: Document = e.getDocument()
       val changeLength = e.getLength()
       changeLog.append(e.getType.toString() + ":" +
-          changeLength + " character" +
-          (if (changeLength == 1) {". "} else {"s. "}) +
-          " Text length = " + document.getLength() +
-          "." + newline)
+        changeLength + " character" +
+        (if (changeLength == 1) { ". " } else { "s. " }) +
+        " Text length = " + document.getLength() +
+        "." + newline)
     }
   }
 
@@ -172,10 +171,15 @@ class TextComponentDemo extends MainFrame {
   def createEditMenu(): Menu = {
     val menu: Menu = new Menu("Edit") {
       // undoAction = new UndoAction()
-      contents += new MenuItem(undoAction)
+      val undoMenuItem = new MenuItem("Undo")
+      undoMenuItem.peer.setAction(undoAction)
+      contents += undoMenuItem
       //redoAction = new RedoAction()
-      contents += new MenuItem(redoAction)
+      val redoMenuItem = new MenuItem("Redo")
+      redoMenuItem.peer.setAction(redoAction)
+      contents += redoMenuItem
       contents += new Separator()
+      //
       //These actions come from the default editor kit.
       //Get the ones we want and stick them in the menu.
       // cut-to-clipboard
@@ -203,7 +207,7 @@ class TextComponentDemo extends MainFrame {
     }
     menu
   }
-  
+
   def createStyleMenu(): Menu = {
     val menu: Menu = new Menu("Style") {
       val boldAction = new StyledEditorKit.BoldAction()
@@ -308,7 +312,7 @@ class TextComponentDemo extends MainFrame {
     StyleConstants.setForeground(attrs(5), Color.red)
     attrs
   }
-  
+
   //The following two methods allow us to find an
   //action provided by the editor kit by its name.
   def createActionTable(textComponent: TextComponent): HashMap[String, javax.swing.Action] = {
@@ -323,38 +327,57 @@ class TextComponentDemo extends MainFrame {
   def getActionByName(name: String): Option[javax.swing.Action] = {
     actions.get(name)
   }
-  
+
   // javax.swing.event.UndoableEditEvent
   //
-  class UndoAction extends Action("Undo") {
+  class UndoAction extends javax.swing.AbstractAction("Undo") {
+    setEnabled(false)
 
-    def apply = {}
-
-    enabled = false
+    def actionPerformed(e: java.awt.event.ActionEvent): Unit = {
+      try {
+        undo.undo();
+      } catch {
+        case ex: javax.swing.undo.CannotUndoException =>
+          println("Unable to undo: " + ex)
+          ex.printStackTrace()
+      }
+      updateUndoState()
+      redoAction.updateRedoState()
+    }
 
     def updateUndoState(): Unit = {
       if (undo.canUndo()) {
-        enabled = true
-        // putValue(Action.NAME, undo.getUndoPresentationName())
+        setEnabled(true)
+        putValue(javax.swing.Action.NAME, undo.getUndoPresentationName())
       } else {
-        enabled = false
-        // putValue(Action.NAME, "Undo")
+        setEnabled(false)
+        putValue(javax.swing.Action.NAME, "Undo")
       }
     }
   }
 
-  class RedoAction extends Action("Redo") {
-    enabled = false
+  class RedoAction extends javax.swing.AbstractAction("Redo") {
+    setEnabled(false)
 
-    def apply = {}
-
+    def actionPerformed(e: java.awt.event.ActionEvent): Unit = {
+      try {
+        undo.redo()
+      } catch {
+        case ex: javax.swing.undo.CannotUndoException =>
+          println("Unable to undo: " + ex)
+          ex.printStackTrace()
+      }
+      updateRedoState();
+      redoAction.updateRedoState()
+    }
+        
     def updateRedoState(): Unit = {
       if (undo.canRedo()) {
-        enabled = true
-        // putValue(Action.NAME, undo.getRedoPresentationName())
+        setEnabled(true)
+        putValue(javax.swing.Action.NAME, undo.getRedoPresentationName())
       } else {
-        enabled = false
-        // putValue(Action.NAME, "Redo")
+        setEnabled(false)
+        putValue(javax.swing.Action.NAME, "Redo")
       }
     }
   }
