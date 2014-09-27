@@ -31,8 +31,9 @@
 package scala.swing.examples.tutorials.components
 
 import scala.collection.mutable.HashMap
+import scala.concurrent.{ future, Future }
 import scala.swing._
-import scala.swing.event.CaretUpdate
+import scala.swing.event.{ActionEvent, CaretUpdate}
 import java.awt.{ Color, Dimension, Event, Insets }
 import java.awt.event.KeyEvent
 import javax.swing.{ InputMap, KeyStroke, SwingUtilities, UIManager }
@@ -119,10 +120,6 @@ class TextComponentDemo extends MainFrame {
   }
   doc.addDocumentListener(new MyDocumentListener())
 
-  override def closeOperation() = {
-    sys.exit(0)
-  }
-
   class MyUndoableEditListener extends UndoableEditListener {
     def undoableEditHappened(e: UndoableEditEvent) {
       undo.addEdit(e.getEdit())
@@ -170,13 +167,42 @@ class TextComponentDemo extends MainFrame {
 
   def createEditMenu(): Menu = {
     val menu: Menu = new Menu("Edit") {
-      // undoAction = new UndoAction()
-      val undoMenuItem = new MenuItem("Undo")
-      undoMenuItem.peer.setAction(undoAction)
+      val undoMenuItem = new MenuItem(undoAction) {
+        enabled = false
+        reactions += {
+          case scala.swing.event.ButtonClicked(_) => {
+            import scala.concurrent.ExecutionContext.Implicits._
+            val fUndo: Future[Unit] = future {
+              Swing.onEDT {
+            	val actionEvent = new ActionEvent(this)
+              	undoAction.actionPerformed(actionEvent)
+              }
+            }
+            fUndo onComplete {
+              case _ => {}
+            }
+          }
+        }
+      }
       contents += undoMenuItem
-      //redoAction = new RedoAction()
-      val redoMenuItem = new MenuItem("Redo")
-      redoMenuItem.peer.setAction(redoAction)
+      val redoMenuItem = new MenuItem(redoAction) {
+        enabled = false
+        reactions += {
+          case scala.swing.event.ButtonClicked(_) => {
+            import scala.concurrent.ExecutionContext.Implicits._
+            val fRedo: Future[Unit] = future {
+               Swing.onEDT {
+              val actionEvent: ActionEvent = new ActionEvent(this)
+              redoAction.actionPerformed(actionEvent)
+               }
+            }
+            fRedo onComplete {
+              case _ => {}
+            }
+          }
+        }
+      }
+      
       contents += redoMenuItem
       contents += new Separator()
       //
@@ -328,12 +354,10 @@ class TextComponentDemo extends MainFrame {
     actions.get(name)
   }
 
-  // javax.swing.event.UndoableEditEvent
-  //
-  class UndoAction extends javax.swing.AbstractAction("Undo") {
-    setEnabled(false)
-
-    def actionPerformed(e: java.awt.event.ActionEvent): Unit = {
+  class UndoAction extends Action("Undo") {
+    enabled = false
+    def apply() = {}
+    def actionPerformed(e: scala.swing.event.ActionEvent): Unit = {
       try {
         undo.undo();
       } catch {
@@ -347,19 +371,19 @@ class TextComponentDemo extends MainFrame {
 
     def updateUndoState(): Unit = {
       if (undo.canUndo()) {
-        setEnabled(true)
-        putValue(javax.swing.Action.NAME, undo.getUndoPresentationName())
+        enabled = true
+        peer.putValue(javax.swing.Action.NAME, undo.getUndoPresentationName())
       } else {
-        setEnabled(false)
-        putValue(javax.swing.Action.NAME, "Undo")
+        enabled = false
+        peer.putValue(javax.swing.Action.NAME, "Undo")
       }
     }
   }
 
-  class RedoAction extends javax.swing.AbstractAction("Redo") {
-    setEnabled(false)
-
-    def actionPerformed(e: java.awt.event.ActionEvent): Unit = {
+  class RedoAction extends Action("Redo") {
+    enabled = false
+    def apply() = {}
+    def actionPerformed(e: ActionEvent): Unit = {
       try {
         undo.redo()
       } catch {
@@ -368,16 +392,16 @@ class TextComponentDemo extends MainFrame {
           ex.printStackTrace()
       }
       updateRedoState();
-      redoAction.updateRedoState()
+      undoAction.updateUndoState()
     }
-        
+
     def updateRedoState(): Unit = {
       if (undo.canRedo()) {
-        setEnabled(true)
-        putValue(javax.swing.Action.NAME, undo.getRedoPresentationName())
+        enabled = true
+        peer.putValue(javax.swing.Action.NAME, undo.getRedoPresentationName())
       } else {
-        setEnabled(false)
-        putValue(javax.swing.Action.NAME, "Redo")
+        enabled = false
+        peer.putValue(javax.swing.Action.NAME, "Redo")
       }
     }
   }
