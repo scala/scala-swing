@@ -36,7 +36,7 @@ import java.awt.Color
 /**
  * Tutorial: How to Use Borders
  * [[http://docs.oracle.com/javase/tutorial/uiswing/components/border.html]]
- * 
+ *
  * Source code reference:
  * [[http://docs.oracle.com/javase/tutorial/uiswing/examples/components/BorderDemoProject/src/components/BorderDemo.java]]
  *
@@ -45,13 +45,13 @@ import java.awt.Color
  */
 class BorderDemo extends GridPanel(1, 0) {
 
-  private val paneEdge = Swing.EmptyBorder(0, 10, 10, 10)
-  private val blackline = Swing.LineBorder(Color.black)
-  private val raisedetched = Swing.EtchedBorder(Swing.Raised)
-  private val loweredetched = Swing.EtchedBorder(Swing.Lowered)
-  private val raisedbevel = Swing.BeveledBorder(Swing.Raised)
-  private val loweredbevel = Swing.BeveledBorder(Swing.Lowered)
-  private val empty = Swing.EmptyBorder
+  val paneEdge = Swing.EmptyBorder(0, 10, 10, 10)
+  val blackline = Swing.LineBorder(Color.black)
+  val raisedetched = Swing.EtchedBorder(Swing.Raised)
+  val loweredetched = Swing.EtchedBorder(Swing.Lowered)
+  val raisedbevel = Swing.BeveledBorder(Swing.Raised)
+  val loweredbevel = Swing.BeveledBorder(Swing.Lowered)
+  val empty = Swing.EmptyBorder
 
 
   def addCompForBorder(bord: javax.swing.border.Border, description: String): Seq[Component] =
