@@ -246,7 +246,8 @@ class MyFrame extends Frame {
   contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.PAGE_AXIS))
   contentPane.add(Box.createVerticalGlue()) // takes all extra space
   contentPane.add(button.peer)
-  button.peer.setAlignmentX(Component.CENTER_ALIGNMENT) //horizontally centered
+  // button.peer.setAlignmentX(Component.CENTER_ALIGNMENT) //horizontally centered
+  button.xLayoutAlignment = 0.50 // Center
   contentPane.add(Box.createVerticalStrut(5)) //spacer
   //
   listenTo(button)
@@ -264,6 +265,18 @@ class MyFrame extends Frame {
 }
 
 object FrameDemo2 extends SimpleSwingApplication {
+  //Use the Java look and feel.  This needs to be done before the frame is created
+  //so the companion object FrameDemo2 cannot simply extend SimpleSwingApplcation.
+  try {
+    UIManager.setLookAndFeel(
+      UIManager.getCrossPlatformLookAndFeelClassName());
+  } catch {
+    case e: Exception => ;
+  }
+  //Make sure we have nice window decorations.
+  JFrame.setDefaultLookAndFeelDecorated(true);
+  JDialog.setDefaultLookAndFeelDecorated(true);
+
   //Creates an icon-worthy Image from scratch.
   def createFDImage(): Image = {
     //Create a 16x16 pixel image.
@@ -294,26 +307,13 @@ object FrameDemo2 extends SimpleSwingApplication {
 
   lazy val top = new Frame() {
     title = "FrameDemo2"
-    //Use the Java look and feel.  This needs to be done before the frame is created
-    //so the companion object FrameDemo2 cannot simply extend SimpleSwingApplcation.
-    try {
-      UIManager.setLookAndFeel(
-        UIManager.getCrossPlatformLookAndFeelClassName());
-    } catch {
-      case e: Exception => ;
-    }
-    //Make sure we have nice window decorations.
-    JFrame.setDefaultLookAndFeelDecorated(true);
-    JDialog.setDefaultLookAndFeelDecorated(true);
     //Create and set up the content pane.
     val demo = new FrameDemo2();
     //Add components to it.
     val contentPane = peer.getContentPane()
-
   }
   top.contentPane.add(top.demo.createOptionControls(top),
     BorderLayout.CENTER)
   top.contentPane.add(top.demo.createButtonPane(top),
     BorderLayout.PAGE_END)
-  javax.swing.SwingUtilities.updateComponentTreeUI(top.peer)
 }

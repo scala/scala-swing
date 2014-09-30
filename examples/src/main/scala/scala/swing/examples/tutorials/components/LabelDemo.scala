@@ -33,6 +33,7 @@ package scala.swing.examples.tutorials.components
 import scala.swing._
 import javax.swing.ImageIcon
 import java.net.URL
+import javax.swing.UIManager
 /*
  * Tutorial: How to Use Labels
  * http://docs.oracle.com/javase/tutorial/uiswing/components/label.html
@@ -68,6 +69,7 @@ class LabelDemo extends GridPanel(3, 1) {
 }
 
 object LabelDemo extends SimpleSwingApplication {
+  UIManager.put("swing.boldMetal", false)
   /** Returns an ImageIcon option, or None if the path was invalid. */
   def createImageIcon(path: String, description: String): Option[ImageIcon] = {
     val imgURL: URL = getClass().getResource(path)
@@ -81,8 +83,6 @@ object LabelDemo extends SimpleSwingApplication {
   lazy val top = new MainFrame() {
     title = "LabelDemo"
     //Create and set up the content pane.
-    javax.swing.UIManager.put("swing.boldMetal", false)
     contents = new LabelDemo();
   }
-  javax.swing.SwingUtilities.updateComponentTreeUI(top.peer)
 }

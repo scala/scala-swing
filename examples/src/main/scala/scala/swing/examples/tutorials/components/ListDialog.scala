@@ -81,7 +81,8 @@ class ListDialog(frame: Frame, locationComp: Component,
   //
   val listScroller = new ScrollPane(list) {
     preferredSize = new Dimension(250, 80)
-    peer.setAlignmentX(java.awt.Component.LEFT_ALIGNMENT)
+    // peer.setAlignmentX(java.awt.Component.LEFT_ALIGNMENT)
+    xLayoutAlignment = 0.0 // Left
   }
   //
   //Create a container so that we can add a title around

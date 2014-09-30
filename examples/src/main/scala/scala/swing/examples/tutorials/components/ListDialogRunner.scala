@@ -50,16 +50,21 @@ class ListDialogRunner(frame: Frame) extends BoxPanel(Orientation.NoOrientation)
     "Otto", "Ringo", "Rocco", "Rollo")
 
   //Create the labels.
-  val intro = new Label("The chosen name:")
+  val intro = new Label("The chosen name:") {
+    xLayoutAlignment = 0.50 // Center
+  }
   val nameLabel = new Label(names(1)) {
     //Use a wacky font if it exists. If not, this falls
     //back to a font we know exists.
     font = getAFont()
+    xLayoutAlignment = 0.50 // Center
   }
   intro.peer.setLabelFor(nameLabel.peer)
 
   //Create the button.
-  val button = new Button("Pick a new name...")
+  val button = new Button("Pick a new name...") {
+    xLayoutAlignment = 0.50 // Center
+  }
 
   contents += intro
   contents += nameLabel

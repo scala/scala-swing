@@ -440,8 +440,6 @@ class TextComponentDemo extends MainFrame {
 }
 
 object TextComponentDemo extends SimpleSwingApplication {
-  lazy val top = new TextComponentDemo() {
-    javax.swing.UIManager.put("swing.boldMetal", false)
-  }
-  javax.swing.SwingUtilities.updateComponentTreeUI(top.peer)
+  UIManager.put("swing.boldMetal", false)
+  lazy val top = new TextComponentDemo() 
 }

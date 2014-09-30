@@ -32,6 +32,7 @@ package scala.swing.examples.tutorials.components
 
 import scala.swing._
 import scala.swing.event.ButtonClicked
+import javax.swing.UIManager
 
 /*
  * Tutorial: How to Use Buttons, Check Boxes, and Radio Buttons
@@ -108,11 +109,10 @@ class ButtonDemo extends FlowPanel {
 }
 
 object ButtonDemo extends SimpleSwingApplication {
+  UIManager.put("swing.boldMetal", false)
   lazy val top = new MainFrame() {
     title = "ButtonDemo"
-    javax.swing.UIManager.put("swing.boldMetal", false)
     //Create and set up the content pane.
     contents = new ButtonDemo();
   }
-  javax.swing.SwingUtilities.updateComponentTreeUI(top.peer)
 }

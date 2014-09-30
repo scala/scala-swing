@@ -32,6 +32,7 @@ package scala.swing.examples.tutorials.misc
 
 import scala.swing._
 import scala.util.control.NonFatal
+import javax.swing.UIManager
 
 /*
  * Tutorial: How to Use the Focus System
@@ -91,16 +92,15 @@ object FocusConceptsDemo extends SimpleSwingApplication {
   try {
     //UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
     //UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
-    javax.swing.UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
+    UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
   } catch {
     case NonFatal(ex) => ex.printStackTrace()
   }
   /* Turn off metal's use of bold fonts */
-  javax.swing.UIManager.put("swing.boldMetal", false);
+  UIManager.put("swing.boldMetal", false);
   //Create and set up the window.
   lazy val top = new MainFrame() {
     title = "FocusConceptsDemo"
     contents = new FocusConceptsDemo()
   }
-  javax.swing.SwingUtilities.updateComponentTreeUI(top.peer)
 }

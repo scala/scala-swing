@@ -37,7 +37,7 @@ import java.awt.Font
 import java.awt.event.{ ActionEvent, ActionListener }
 import javax.swing.Timer
 import java.net.URL
-import javax.swing.ImageIcon
+import javax.swing.{ImageIcon, UIManager}
 
 /*
  * Tutorial: How to Use Sliders
@@ -62,7 +62,7 @@ class SliderDemo(window: Window) extends BoxPanel(Orientation.Vertical) with Act
 
   val sliderLabel = new Label("Frames Per Second") {
     horizontalAlignment = Alignment.Center
-    xAlignment = Alignment.Center
+    xLayoutAlignment = 0.50 // Center
   }
 
   val framesPerSecond = new Slider {
@@ -81,7 +81,7 @@ class SliderDemo(window: Window) extends BoxPanel(Orientation.Vertical) with Act
 
   val picture = new Label() {
     horizontalAlignment = Alignment.Center
-    xAlignment = Alignment.Center
+    xLayoutAlignment = 0.50 // Center
     Swing.Lowered
     border = Swing.CompoundBorder(
       Swing.BeveledBorder(Swing.Lowered), Swing.EmptyBorder(10, 10, 10, 10))
@@ -170,6 +170,7 @@ class SliderDemo(window: Window) extends BoxPanel(Orientation.Vertical) with Act
 }
 
 object SliderDemo extends SimpleSwingApplication {
+  UIManager.put("swing.boldMetal", false)
   /** Returns an ImageIcon, or null if the path was invalid. */
   def createImageIcon(path: String): ImageIcon = {
     val imgURL: URL = getClass().getResource(path)
@@ -183,11 +184,8 @@ object SliderDemo extends SimpleSwingApplication {
 
   lazy val top = new MainFrame() {
     title = "SliderDemo"
-    javax.swing.UIManager.put("swing.boldMetal", false)
     //Create and set up the content pane.
     contents = new SliderDemo(this);
   }
-  
-  javax.swing.SwingUtilities.updateComponentTreeUI(top.peer)
 }
 

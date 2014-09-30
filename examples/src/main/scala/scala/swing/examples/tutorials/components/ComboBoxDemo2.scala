@@ -65,6 +65,7 @@ class ComboBoxDemo2 extends BoxPanel(Orientation.Vertical) {
     peer.setEditable(true)
     // editable = true
     selection.item = patternExamples(0)
+    xLayoutAlignment = 0.0 // Left
   }
   
   //Create the UI for displaying result.
@@ -84,16 +85,14 @@ class ComboBoxDemo2 extends BoxPanel(Orientation.Vertical) {
   val patternPanel = new BoxPanel(Orientation.Vertical) {
     contents += patternLabel1
     contents += patternLabel2
-    // xAlignment = Alignment.Left
-    peer.setAlignmentX(java.awt.Component.LEFT_ALIGNMENT)
+    xLayoutAlignment = 0.0 // Left
     contents += patternList
   }
 
   val resultPanel = new GridPanel(0,1) {
     contents += resultLabel
     contents += result
-    // xAlignment = Alignment.Left
-    peer.setAlignmentX(java.awt.Component.LEFT_ALIGNMENT)
+    xLayoutAlignment = 0.0 // Left
   }
   
   contents += patternPanel

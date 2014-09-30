@@ -62,8 +62,8 @@ class HtmlDemo extends BoxPanel(Orientation.Horizontal) {
   val scrollPane = new ScrollPane(htmlTextArea)
   val changeTheLabel = new Button("Change the label") {
     mnemonic = Key.C
-    // xAlignment = Alignment.Center
-    peer.setAlignmentX(Component.CENTER_ALIGNMENT)
+    // peer.setAlignmentX(Component.CENTER_ALIGNMENT)
+    xLayoutAlignment = 0.50 // Center
   }
   val theLabel = new Label(initialText) {
     minimumSize = new Dimension(200, 200)
