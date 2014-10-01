@@ -36,12 +36,12 @@ import java.awt.event.{ ActionEvent, ActionListener }
 import java.awt.{ Color, Graphics, Graphics2D, Toolkit }
 import javax.swing.{ ImageIcon, SwingUtilities, SwingWorker, Timer }
 
-/*
+/**
  * Tutorial: How to Make Applets
- * http://docs.oracle.com/javase/tutorial/uiswing/components/applet.html
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/components/applet.html]]
  * 
  * Source code reference:
- * http://docs.oracle.com/javase/tutorial/uiswing/examples/components/TumbleItemProject/src/components/TumbleItem.java
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/examples/components/TumbleItemProject/src/components/TumbleItem.java]]
  * 
  * @author jag
  * @author mem

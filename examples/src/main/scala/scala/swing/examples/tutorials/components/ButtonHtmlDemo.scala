@@ -34,12 +34,12 @@ import scala.swing._
 import scala.swing.event.ButtonClicked
 import java.awt.Font
 
-/*
+/**
  * Tutorial: How to Use Buttons, Check Boxes, and Radio Buttons
- * http://docs.oracle.com/javase/tutorial/uiswing/components/button.html
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/components/button.html]]
  * 
  * Source code reference:
- * http://docs.oracle.com/javase/tutorial/uiswing/examples/components/ButtonHtmlDemoProject/src/components/ButtonHtmlDemo.java
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/examples/components/ButtonHtmlDemoProject/src/components/ButtonHtmlDemo.java]]
  *
  * ButtonHtmlDemo.scala requires the following files:
  *   /scala/swing/examples/tutorials/images/right.gif

@@ -36,12 +36,12 @@ import scala.swing.event._
 import java.io.File
 import java.net.URL
 
-/*
+/**
  * Tutorial: How to Use File Choosers
- * http://docs.oracle.com/javase/tutorial/uiswing/components/filechooser.html
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/components/filechooser.html]]
  * 
  * Source code reference:
- * http://docs.oracle.com/javase/tutorial/uiswing/examples/components/FileChooserDemoProject/src/components/FileChooserDemo.java
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/examples/components/FileChooserDemoProject/src/components/FileChooserDemo.java]]
  * 
  * FileChooserDemo.scala uses these files:
  *   /scala/swing/examples/tutorials/images/Open16.gif

@@ -37,12 +37,12 @@ import scala.swing.event.{ ButtonClicked, Key }
 import javax.swing.ImageIcon
 import java.net.URL
 
-/*
+/**
  * Tutorial: How to Use Buttons, Check Boxes, and Radio Buttons
- * http://docs.oracle.com/javase/tutorial/uiswing/components/button.html
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/components/button.html]]
  * 
  * Source code reference:
- * http://docs.oracle.com/javase/tutorial/uiswing/examples/components/RadioButtonDemoProject/src/components/RadioButtonDemo.java
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/examples/components/RadioButtonDemoProject/src/components/RadioButtonDemo.java]]
  *
  * RadioButtonDemo.scala requires these files:
  *   /scala/swing/examples/tutorials/images/Bird.gif

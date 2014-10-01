@@ -37,15 +37,15 @@ import java.awt.{ Color, Dimension, Font }
 import java.net.URL
 import scala.swing.event.ButtonClicked
 
-/* 
+/**
  * Tutorial: How to Use Scroll Panes
- * http://docs.oracle.com/javase/tutorial/uiswing/components/scrollpane.html
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/components/scrollpane.html]]
  * 
  * Source code references:
- * http://docs.oracle.com/javase/tutorial/uiswing/examples/components/ScrollDemoProject/src/components/ScrollDemo.java
- * http://docs.oracle.com/javase/tutorial/uiswing/examples/components/ScrollDemoProject/src/components/Rule.java
- * http://docs.oracle.com/javase/tutorial/uiswing/examples/components/ScrollDemoProject/src/components/Corner.java
- * http://docs.oracle.com/javase/tutorial/uiswing/examples/components/ScrollDemoProject/src/components/ScrollablePicture.java
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/examples/components/ScrollDemoProject/src/components/ScrollDemo.java]]
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/examples/components/ScrollDemoProject/src/components/Rule.java]]
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/examples/components/ScrollDemoProject/src/components/Corner.java]]
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/examples/components/ScrollDemoProject/src/components/ScrollablePicture.java]]
  *
  * ScrollDemo.scala requires these files:
  *   Rule.scala

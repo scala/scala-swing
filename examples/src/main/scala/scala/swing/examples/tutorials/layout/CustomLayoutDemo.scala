@@ -32,16 +32,16 @@ package scala.swing.examples.tutorials.layout
 
 import scala.swing._
 
-/*
+/**
  * Tutorials: Creating a Custom Layout Manager
- * http://docs.oracle.com/javase/tutorial/uiswing/layout/custom.html
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/layout/custom.html]]
  * 
  * Source code reference:
- * http://docs.oracle.com/javase/tutorial/uiswing/examples/layout/CustomLayoutDemoProject/src/layout/CustomLayoutDemo.java
- * http://docs.oracle.com/javase/tutorial/uiswing/examples/layout/CustomLayoutDemoProject/src/layout/DiagonalLayout.java
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/examples/layout/CustomLayoutDemoProject/src/layout/CustomLayoutDemo.java]]
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/examples/layout/CustomLayoutDemoProject/src/layout/DiagonalLayout.java]]
  * 
- * CustomLayoutDemo.java requires one other file:
- *   DiagonalLayout.java
+ * CustomLayoutDemo.scala requires one other file:
+ *   DiagonalLayout.scala
  */
 class CustomLayoutDemo() extends Panel with SequentialContainer.Wrapper {
   override lazy val peer: javax.swing.JPanel =

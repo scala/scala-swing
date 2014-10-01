@@ -33,13 +33,13 @@ import java.awt.{Dimension, GraphicsConfiguration, Point}
 import scala.swing._
 import scala.swing.event.{ButtonClicked, Key, MouseClicked}
 
-/*
+/**
  * Tutorial: How to Use Buttons, Check Boxes, and Radio Buttons
- * http://docs.oracle.com/javase/tutorial/uiswing/components/button.html
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/components/button.html]]
  * 
  * Source code reference:
- * http://docs.oracle.com/javase/tutorial/uiswing/examples/components/ListDialogRunnerProject/src/components/ListDialogRunner.java
- * http://docs.oracle.com/javase/tutorial/uiswing/examples/components/ListDialogRunnerProject/src/components/ListDialog.java
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/examples/components/ListDialogRunnerProject/src/components/ListDialogRunner.java]]
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/examples/components/ListDialogRunnerProject/src/components/ListDialog.java]]
  */
 /**
  * Use this modal dialog to let the user choose one string from a long

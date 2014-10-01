@@ -37,12 +37,12 @@ import java.awt.Font
 import java.net.URL
 import javax.swing.ImageIcon
 
-/*
+/**
  * Tutorial: How to Use Split Panes
- * http://docs.oracle.com/javase/tutorial/uiswing/components/splitpane.html
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/components/splitpane.html]]
  * 
  * Source code reference:
- * http://docs.oracle.com/javase/tutorial/uiswing/examples/components/SplitPaneDemoProject/src/components/SplitPaneDemo.java
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/examples/components/SplitPaneDemoProject/src/components/SplitPaneDemo.java]]
  */
 //SplitPaneDemo itself is not a visible component.
 class SplitPaneDemo extends FlowPanel {

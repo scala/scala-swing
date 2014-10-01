@@ -31,7 +31,7 @@
 package scala.swing.examples.tutorials.layout
 
 /*
- * 1.2+ version.  Used by CustomLayoutDemo.java.
+ * 1.2+ version.  Used by CustomLayoutDemo.scala.
  */
 
 import java.awt._

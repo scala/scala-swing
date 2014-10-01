@@ -35,12 +35,12 @@ import javax.swing.{ ImageIcon }
 import java.awt.{ Color, Dimension }
 import java.net.URL
 
-/*
+/**
  * Tutorials: How to Use BoxAlignment
- * http://docs.oracle.com/javase/tutorial/uiswing/layout/box.html
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/layout/box.html]]
  *
  * Source code reference:
- * http://docs.oracle.com/javase/tutorial/uiswing/examples/layout/BoxAlignmentDemoProject/src/layout/BoxAlignmentDemo.java
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/examples/layout/BoxAlignmentDemoProject/src/layout/BoxAlignmentDemo.java]]
  *
  * BoxAlignmentDemo.scala requires the following files:
  *   scala/swing/examples/tutorials/images/middle.gif

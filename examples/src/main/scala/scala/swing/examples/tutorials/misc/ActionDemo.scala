@@ -37,17 +37,17 @@ import java.awt.Dimension
 import java.net.URL
 import javax.swing.{ ImageIcon, JToolBar }
 
-/* 
+/** 
  * Tutorials: How to Use Actions
- * http://docs.oracle.com/javase/tutorial/uiswing/misc/action.html
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/misc/action.html]]
  * 
  * The graphics in this application require a download of the Java Look and Feel Graphics
  * Repository from Oracle.
- * http://www.oracle.com/technetwork/java/javasebusiness/downloads/java-archive-downloads-java-client-419417.html#7520-jlf-1.0-oth-JPR
+ * [[http://www.oracle.com/technetwork/java/javasebusiness/downloads/java-archive-downloads-java-client-419417.html#7520-jlf-1.0-oth-JPR]]
  * Accept the user agreement from the site, unzip, and place the jar file contents in your classpath.
  * 
  * Source code references:
- * http://docs.oracle.com/javase/tutorial/uiswing/examples/misc/ActionDemoProject/src/misc/ActionDemo.java
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/examples/misc/ActionDemoProject/src/misc/ActionDemo.java]]
  * 
  * ActionDemo.scala requires the Java Look and Feel jar file jlfgr-1_0.jar.
  */

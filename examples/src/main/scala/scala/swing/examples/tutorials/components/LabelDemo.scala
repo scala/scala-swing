@@ -34,12 +34,13 @@ import scala.swing._
 import javax.swing.ImageIcon
 import java.net.URL
 import javax.swing.UIManager
-/*
+
+/**
  * Tutorial: How to Use Labels
- * http://docs.oracle.com/javase/tutorial/uiswing/components/label.html
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/components/label.html]]
  * 
  * Source code reference:
- * http://docs.oracle.com/javase/tutorial/uiswing/examples/components/LabelDemoProject/src/components/LabelDemo.java
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/examples/components/LabelDemoProject/src/components/LabelDemo.java]]
  * 
  * LabelDemo.scala needs one other file:
  *   /scala/swing/examples/tutorials/images/middle.gif

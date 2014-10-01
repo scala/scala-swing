@@ -34,13 +34,13 @@ import scala.swing._
 import scala.swing.event.ButtonClicked
 import java.awt.Color
 
-/*
+/**
  * Tutorials: How to Use BoxLayout
- * http://docs.oracle.com/javase/tutorial/uiswing/layout/box.html
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/layout/box.html]]
  * 
  * Source code references:
- * http://docs.oracle.com/javase/tutorial/uiswing/examples/layout/BoxLayoutDemo2Project/src/layout/BoxLayoutDemo2.java
- * http://docs.oracle.com/javase/tutorial/uiswing/examples/layout/BoxLayoutDemo2Project/src/layout/BLDComponent.java
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/examples/layout/BoxLayoutDemo2Project/src/layout/BoxLayoutDemo2.java]]
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/examples/layout/BoxLayoutDemo2Project/src/layout/BLDComponent.java]]
  *
  * BoxLayoutDemo2.scala requires BLDComponent.scala.
  */

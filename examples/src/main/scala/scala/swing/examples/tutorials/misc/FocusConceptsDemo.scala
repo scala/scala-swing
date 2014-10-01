@@ -34,12 +34,12 @@ import scala.swing._
 import scala.util.control.NonFatal
 import javax.swing.UIManager
 
-/*
+/**
  * Tutorial: How to Use the Focus System
- * http://docs.oracle.com/javase/tutorial/uiswing/misc/focus.html
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/misc/focus.html]]
  * 
  * Source code reference:
- * http://docs.oracle.com/javase/tutorial/uiswing/examples/misc/FocusConceptsDemoProject/src/misc/FocusConceptsDemo.java
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/examples/misc/FocusConceptsDemoProject/src/misc/FocusConceptsDemo.java]]
  *
  * FocusConceptsDemo.scala requires no other files.
  * 

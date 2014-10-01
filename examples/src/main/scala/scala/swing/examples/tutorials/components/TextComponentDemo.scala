@@ -41,15 +41,15 @@ import javax.swing.event.{ DocumentEvent, DocumentListener, UndoableEditEvent, U
 import javax.swing.text.{ AbstractDocument, BadLocationException, DefaultEditorKit, Document, SimpleAttributeSet, StyleConstants, StyledDocument, StyledEditorKit }
 import javax.swing.undo.UndoManager
 
-/*
+/**
  * Tutorials: How to Use Text Fields
- * http://docs.oracle.com/javase/tutorial/uiswing/components/textfield.html
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/components/textfield.html]]
  * How to Use Actions
- * http://docs.oracle.com/javase/tutorial/uiswing/misc/action.html
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/misc/action.html]]
  * 
  * Source code references:
- * http://docs.oracle.com/javase/tutorial/uiswing/examples/components/TextComponentDemoProject/src/components/TextComponentDemo.java
- * http://docs.oracle.com/javase/tutorial/uiswing/examples/components/TextComponentDemoProject/src/components/DocumentSizeFilter.java
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/examples/components/TextComponentDemoProject/src/components/TextComponentDemo.java]]
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/examples/components/TextComponentDemoProject/src/components/DocumentSizeFilter.java]]
  * 
  * TextComponentDemo.scala requires one additional file:
  *   DocumentSizeFilter.scala

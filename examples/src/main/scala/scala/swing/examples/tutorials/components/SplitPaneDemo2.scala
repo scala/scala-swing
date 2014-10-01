@@ -36,12 +36,12 @@ import scala.swing.event.SelectionChanged
 import java.net.URL
 import javax.swing.ImageIcon
 
-/*
+/**
  * How to Use Split Panes
- * http://docs.oracle.com/javase/tutorial/uiswing/components/splitpane.html
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/components/splitpane.html]]
  * 
  * Source code reference:
- * http://docs.oracle.com/javase/tutorial/uiswing/examples/components/SplitPaneDemo2Project/src/components/SplitPaneDemo2.java
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/examples/components/SplitPaneDemo2Project/src/components/SplitPaneDemo2.java]]
  */
 class SplitPaneDemo2 extends MainFrame {
   title = "SplitPaneDemo2"

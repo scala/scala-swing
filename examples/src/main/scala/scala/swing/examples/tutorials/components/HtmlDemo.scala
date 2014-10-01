@@ -35,14 +35,14 @@ import scala.swing.event.ButtonClicked
 import java.awt.{ Component, Dimension }
 import scala.swing.event.Key
 
-/*
+/**
  * Tutorial: How to Use HTML in Swing Components
- * http://docs.oracle.com/javase/tutorial/uiswing/components/html.html
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/components/html.html]]
  * 
  * Source code reference:
- * http://docs.oracle.com/javase/tutorial/uiswing/examples/components/HtmlDemoProject/src/components/HtmlDemo.java
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/examples/components/HtmlDemoProject/src/components/HtmlDemo.java]]
  *
- * HtmlDemo.java needs no other files.
+ * HtmlDemo.scala needs no other files.
  */
 class HtmlDemo extends BoxPanel(Orientation.Horizontal) {
   val initialText = "<html>\n" +

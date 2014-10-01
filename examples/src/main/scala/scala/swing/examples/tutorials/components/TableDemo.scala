@@ -34,12 +34,12 @@ import scala.swing._
 import scala.swing.event.MouseClicked
 import javax.swing.table.DefaultTableModel
 
-/*
+/**
  * Tutorial: How to Use Tables
- * http://docs.oracle.com/javase/tutorial/uiswing/components/table.html
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/components/table.html]]
  * 
  * Source code reference:
- * http://docs.oracle.com/javase/tutorial/uiswing/examples/components/TableDemoProject/src/components/TableDemo.java
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/examples/components/TableDemoProject/src/components/TableDemo.java]]
  * 
  * TableDemo.scala requires no other files.
  *

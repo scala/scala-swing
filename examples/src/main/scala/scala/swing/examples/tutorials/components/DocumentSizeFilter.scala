@@ -34,7 +34,7 @@ package scala.swing.examples.tutorials.components
 import java.awt.Toolkit
 import javax.swing.text.{ AttributeSet, DocumentFilter }
 
-/* A 1.4 class used by TextComponentDemo.java. */
+/* A 1.4 class used by TextComponentDemo.scala. */
 
 class DocumentSizeFilter(val maxCharacters: Int) extends DocumentFilter {
   val Debug: Boolean = false

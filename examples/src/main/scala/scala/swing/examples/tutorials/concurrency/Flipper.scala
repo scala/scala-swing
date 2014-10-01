@@ -35,12 +35,12 @@ import scala.swing.event.ButtonClicked
 import javax.swing.SwingWorker
 import java.util.Random
 
-/*
+/**
  * Tutorial: Tasks that Have Interim Results
- * http://http://docs.oracle.com/javase/tutorial/uiswing/concurrency/interim.html
+ * [[http://http://docs.oracle.com/javase/tutorial/uiswing/concurrency/interim.html]]
  * 
  * Source code reference:
- * http://docs.oracle.com/javase/tutorial/uiswing/examples/concurrency/FlipperProject/src/concurrency/Flipper.java
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/examples/concurrency/FlipperProject/src/concurrency/Flipper.java]]
  */
 class Flipper extends MainFrame {
   var flipTask: FlipTask = null

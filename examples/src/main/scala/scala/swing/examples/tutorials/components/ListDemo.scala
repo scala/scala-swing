@@ -34,12 +34,13 @@ package scala.swing.examples.tutorials.components
 import scala.swing._
 import scala.swing.event.{ ButtonClicked, EditDone, SelectionChanged, ValueChanged }
 import java.awt.Toolkit
-/*
+
+/**
  * Tutorial: How to Use Lists
- * http://docs.oracle.com/javase/tutorial/uiswing/components/list.html
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/components/list.html]]
  * 
  * Source code reference:
- * http://docs.oracle.com/javase/tutorial/uiswing/examples/components/ListDemoProject/src/components/ListDemo.java
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/examples/components/ListDemoProject/src/components/ListDemo.java]]
  *
  * ListDemo.scala requires no other files.
  */

@@ -37,12 +37,12 @@ import scala.swing.event.ButtonClicked
 import javax.swing.event.{ListSelectionEvent, ListSelectionListener}
 import javax.swing.table.DefaultTableModel
 
-/*
+/**
  * Tutorial: How to Use Tables
- * http://docs.oracle.com/javase/tutorial/uiswing/components/table.html
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/components/table.html]]
  * 
  * Source code reference:
- * http://docs.oracle.com/javase/tutorial/uiswing/examples/components/TableSelectionDemoProject/src/components/TableSelectionDemo.java
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/examples/components/TableSelectionDemoProject/src/components/TableSelectionDemo.java]]
  * 
  * TableSelectionDemo.scala requires no other files.
  */

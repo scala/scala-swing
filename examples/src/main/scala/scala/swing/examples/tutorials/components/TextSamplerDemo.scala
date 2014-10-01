@@ -37,14 +37,14 @@ import java.awt.{ Cursor, Font, Toolkit }
 import java.net.URL
 import javax.swing.text.{ StyleConstants, StyleContext }
 
-/*
+/**
  * Tutorials: How to Use Text Components
- * http://docs.oracle.com/javase/tutorial/uiswing/components/text.html
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/components/text.html]]
  * How to Use Editor Panes and Text Panes
- * http://docs.oracle.com/javase/tutorial/uiswing/components/editorpane.html
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/components/editorpane.html]]
  * 
  * Source code references:
- * http://docs.oracle.com/javase/tutorial/uiswing/examples/components/TextSamplerDemoProject/src/components/TextSamplerDemo.java
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/examples/components/TextSamplerDemoProject/src/components/TextSamplerDemo.java]]
  * 
  * TextSamplerDemo.scala requires the following files:
  *   TextSamplerDemoHelp.html (which references images/dukeWaveRed.gif)

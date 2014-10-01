@@ -34,12 +34,13 @@ package scala.swing.examples.tutorials.components
 import scala.swing._
 import scala.collection.immutable.Range
 import scala.swing.event.{ MouseClicked, TableColumnsSelected, TableRowsSelected }
-/*
+
+/**
  * Tutorial: How to Use Tables
- * http://docs.oracle.com/javase/tutorial/uiswing/components/table.html
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/components/table.html]]
  * 
  * Source code references:
- * http://docs.oracle.com/javase/tutorial/uiswing/examples/components/SimpleTableSelectionDemoProject/src/components/SimpleTableSelectionDemo.java
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/examples/components/SimpleTableSelectionDemoProject/src/components/SimpleTableSelectionDemo.java]]
  * 
  * SimpleTableSelectionDemo.scala requires no other files.
  */

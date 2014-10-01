@@ -32,12 +32,12 @@ package scala.swing.examples.tutorials.components
 
 import scala.swing._
 
-/* 
+/**
  * Tutorial: Using Top-Level Containers
- * http://docs.oracle.com/javase/tutorial/uiswing/components/toplevel.html
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/components/toplevel.html]]
  * 
  * Source code reference:
- * http://docs.oracle.com/javase/tutorial/uiswing/examples/components/TopLevelDemoProject/src/components/TopLevelDemo.java
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/examples/components/TopLevelDemoProject/src/components/TopLevelDemo.java]]
  * 
  * TopLevelDemo.scala requires no other files.
  */

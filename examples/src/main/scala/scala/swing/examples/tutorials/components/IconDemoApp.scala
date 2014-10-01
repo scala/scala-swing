@@ -36,13 +36,13 @@ import java.awt.RenderingHints
 import java.awt.image.BufferedImage
 import javax.swing.{ Icon, ImageIcon, JToolBar, SwingWorker }
 
-/*
+/**
  * Tutorial: How to Use Icons
- * http://docs.oracle.com/javase/tutorial/uiswing/components/icon.html
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/components/icon.html]]
  * 
  * Source code references:
- * http://docs.oracle.com/javase/tutorial/uiswing/examples/components/IconDemoProject/src/components/IconDemoApp.java
- * http://docs.oracle.com/javase/tutorial/uiswing/examples/components/IconDemoProject/src/components/MissingIcon.java
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/examples/components/IconDemoProject/src/components/IconDemoApp.java]]
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/examples/components/IconDemoProject/src/components/MissingIcon.java]]
  *
  * IconDemoApp.scala 
  *   MissingIcon.scala

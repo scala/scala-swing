@@ -33,14 +33,14 @@ package scala.swing.examples.tutorials.components
 import scala.swing._
 import scala.swing.event.EditDone
 
-/* 
+/**
  * Tutorials: How to Use Text Fields
- * http://docs.oracle.com/javase/tutorial/uiswing/components/textfield.html
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/components/textfield.html]]
  * How to Use Text Areas
- * http://docs.oracle.com/javase/tutorial/uiswing/components/textarea.html
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/components/textarea.html]]
  * 
  * Source code references:
- * http://docs.oracle.com/javase/tutorial/uiswing/examples/components/TextDemoProject/src/components/TextDemo.java
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/examples/components/TextDemoProject/src/components/TextDemo.java]]
  * 
  * TextDemo.scala requires no other files.
  */

@@ -37,14 +37,15 @@ import java.awt.Color
 import java.util.Date
 import java.text.SimpleDateFormat
 
-/*
+/**
  * Tutorial: How to Use Combo Boxes
- * http://docs.oracle.com/javase/tutorial/uiswing/components/combobox.html
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/components/combobox.html]]
  * 
  * Source code reference:
- * http://docs.oracle.com/javase/tutorial/uiswing/examples/components/ComboBoxDemo2Project/src/components/ComboBoxDemo2.java
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/examples/components/ComboBoxDemo2Project/src/components/ComboBoxDemo2.java]]
+ *
+ * ComboBoxDemo2.scala requires no other files.
  */
-/* ComboBoxDemo2.java requires no other files. */
 class ComboBoxDemo2 extends BoxPanel(Orientation.Vertical) {
   val patternExamples = Array[String](
     "dd MMMMM yyyy",

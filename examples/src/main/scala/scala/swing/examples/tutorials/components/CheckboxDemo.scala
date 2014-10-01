@@ -37,12 +37,12 @@ import java.awt.Font
 import javax.swing.ImageIcon
 import java.net.URL
 
-/*
+/**
  * Tutorial: How to Use Buttons, Check Boxes, and Radio Buttons
- * http://docs.oracle.com/javase/tutorial/uiswing/components/button.html
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/components/button.html]]
  * 
  * Source code reference:
- * http://docs.oracle.com/javase/tutorial/uiswing/examples/components/CheckBoxDemoProject/src/components/CheckBoxDemo.java
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/examples/components/CheckBoxDemoProject/src/components/CheckBoxDemo.java]]
  *
  * CheckBoxDemo.scala requires 16 image files in the /scala/swing/examples/tutorials/images/geek
  * directory: 

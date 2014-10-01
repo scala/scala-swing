@@ -38,12 +38,12 @@ import java.net.URL
 import javax.swing.ImageIcon
 import java.awt.{ Dimension, Font }
 
-/*
+/**
  * Tutorial: How to Use Dialogs
- * http://docs.oracle.com/javase/tutorial/uiswing/components/dialog.html
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/components/dialog.html]]
  * 
  * Source code reference:
- * http://docs.oracle.com/javase/tutorial/uiswing/examples/components/DialogDemoProject/src/components/DialogDemo.java
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/examples/components/DialogDemoProject/src/components/DialogDemo.java]]
  *
  * DialogDemo.scala requires these files:
  *   CustomDialog.scala

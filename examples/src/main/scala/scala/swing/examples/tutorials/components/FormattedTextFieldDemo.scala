@@ -35,12 +35,12 @@ import java.text.NumberFormat
 import java.awt.Color
 import javax.swing.UIManager
 
-/*
+/**
  * Tutorial: How to Use Formatted Text Fields
- * http://docs.oracle.com/javase/tutorial/uiswing/components/formattedtextfield.html
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/components/formattedtextfield.html]]
  * 
  * Source code reference:
- * http://docs.oracle.com/javase/tutorial/uiswing/examples/components/FormattedTextFieldDemoProject/src/components/FormattedTextFieldDemo.java
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/examples/components/FormattedTextFieldDemoProject/src/components/FormattedTextFieldDemo.java]]
  * 
  * FormattedTextFieldDemo.scala requires no other files.
  *

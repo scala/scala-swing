@@ -35,12 +35,12 @@ import scala.swing.event.ButtonClicked
 import javax.swing.table.DefaultTableModel
 import java.text.MessageFormat
 
-/*
+/**
  * Tutorial: How to Use Tables
- * http://docs.oracle.com/javase/tutorial/uiswing/components/table.html
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/components/table.html]]
  * 
  * Source code reference:
- * http://docs.oracle.com/javase/tutorial/uiswing/examples/components/TablePrintDemoProject/src/components/TablePrintDemo.java
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/examples/components/TablePrintDemoProject/src/components/TablePrintDemo.java]]
  * 
  * TablePrintDemo.scala requires no other files.
  */

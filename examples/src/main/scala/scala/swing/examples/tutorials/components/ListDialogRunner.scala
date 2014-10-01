@@ -35,15 +35,14 @@ import java.awt.GraphicsEnvironment
 import scala.swing._
 import scala.swing.event.ButtonClicked
 
-/*
+/**
  * Tutorial: How to Use Buttons, Check Boxes, and Radio Buttons
- * http://docs.oracle.com/javase/tutorial/uiswing/components/button.html
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/components/button.html]]
  * 
  * Source code reference:
- * http://docs.oracle.com/javase/tutorial/uiswing/examples/components/ListDialogRunnerProject/src/components/ListDialogRunner.java
- * http://docs.oracle.com/javase/tutorial/uiswing/examples/components/ListDialogRunnerProject/src/components/ListDialog.java
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/examples/components/ListDialogRunnerProject/src/components/ListDialogRunner.java]]
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/examples/components/ListDialogRunnerProject/src/components/ListDialog.java]]
  */
-
 class ListDialogRunner(frame: Frame) extends BoxPanel(Orientation.NoOrientation) {
   val names: Array[String] = Array("Arlo", "Cosmo", "Elmo", "Hugo",
     "Jethro", "Laszlo", "Milo", "Nemo",

@@ -35,14 +35,15 @@ import scala.swing.Swing.EmptyIcon
 import scala.swing.event.ColorChanged
 import java.awt.{ Color, Dimension, Font }
 
-/*
+/**
  * Tutorial: How to Use Color Choosers
- * http://docs.oracle.com/javase/tutorial/uiswing/components/colorchooser.html
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/components/colorchooser.html]]
  * 
  * Source code reference:
- * http://docs.oracle.com/javase/tutorial/uiswing/examples/components/ColorChooserDemoProject/src/components/ColorChooserDemo.java
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/examples/components/ColorChooserDemoProject/src/components/ColorChooserDemo.java]]
+ *
+ * ColorChooserDemo.scala requires no other files.
  */
-/* ColorChooserDemo.java requires no other files. */
 class ColorChooserDemo extends BorderPanel {
   //Set up the banner at the top of the window
   val banner = new Label("Welcome to the Tutorial Zone!", EmptyIcon, Alignment.Center) {

@@ -36,12 +36,12 @@ import javax.swing.ImageIcon
 import java.net.URL
 import java.awt.{ Dimension, Font }
 
-/*
+/**
  * Tutorial: How to Use Combo Boxes
- * http://docs.oracle.com/javase/tutorial/uiswing/components/combobox.html
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/components/combobox.html]]
  * 
  * Source code reference:
- * http://docs.oracle.com/javase/tutorial/uiswing/examples/components/CustomComboBoxDemoProject/src/components/CustomComboBoxDemo.java
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/examples/components/CustomComboBoxDemoProject/src/components/CustomComboBoxDemo.java]]
  *
  * CustomComboBoxDemo.scala uses the following files:
  *   /scala/swing/examples/tutorials/images/Bird.gif

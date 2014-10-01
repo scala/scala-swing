@@ -37,13 +37,13 @@ import java.awt.Font
 import java.net.URL
 import javax.swing.ImageIcon
 
-/*
+/**
  * How to Use Split Panes
- * http://docs.oracle.com/javase/tutorial/uiswing/components/splitpane.html
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/components/splitpane.html]]
  * 
  * Source code references:
- * http://docs.oracle.com/javase/tutorial/uiswing/examples/components/SplitPaneDividerDemoProject/src/components/SplitPaneDividerDemo.java
- * http://docs.oracle.com/javase/tutorial/uiswing/examples/components/SplitPaneDividerDemoProject/src/components/SizeDisplayer.java
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/examples/components/SplitPaneDividerDemoProject/src/components/SplitPaneDividerDemo.java]]
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/examples/components/SplitPaneDividerDemoProject/src/components/SizeDisplayer.java]]
  * 
  * SplitPaneDividerDemo.scala requires the following files:
  *   SizeDisplayer.scala

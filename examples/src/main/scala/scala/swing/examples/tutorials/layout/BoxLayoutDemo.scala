@@ -32,12 +32,12 @@ package scala.swing.examples.tutorials.layout
 
 import scala.swing._
 
-/*
+/**
  * Tutorials: How to Use BoxLayout
- * http://docs.oracle.com/javase/tutorial/uiswing/layout/box.html
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/layout/box.html]]
  * 
  * Source code reference:
- * http://docs.oracle.com/javase/tutorial/uiswing/examples/layout/BoxLayoutDemoProject/src/layout/BoxLayoutDemo.java
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/examples/layout/BoxLayoutDemoProject/src/layout/BoxLayoutDemo.java]]
  *
  * BoxLayoutDemo.scala requires no other files.
  */

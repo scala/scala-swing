@@ -37,12 +37,12 @@ import java.awt.{ Dimension, Font }
 import javax.swing.{ BorderFactory, ImageIcon }
 import java.net.URL
 
-/*
+/**
  * Tutorial: How to Use Combo Boxes
- * http://docs.oracle.com/javase/tutorial/uiswing/components/combobox.html
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/components/combobox.html]]
  * 
  * Source code reference:
- * http://docs.oracle.com/javase/tutorial/uiswing/examples/components/ComboBoxDemoProject/src/components/ComboBoxDemo.java
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/examples/components/ComboBoxDemoProject/src/components/ComboBoxDemo.java]]
  */
 class ComboBoxDemo extends BorderPanel {
 

@@ -2,12 +2,12 @@ package scala.swing.examples.tutorials.components
 
 import scala.swing._
 
-/*
+/**
  * Tutorial: How to Use Password Fields
- * http://docs.oracle.com/javase/tutorial/uiswing/components/passwordfield.html
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/components/passwordfield.html]]
  * 
  * Source code reference:
- * http://docs.oracle.com/javase/tutorial/uiswing/examples/components/PasswordDemoProject/src/components/PasswordDemo.java
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/examples/components/PasswordDemoProject/src/components/PasswordDemo.java]]
  *
  * PasswordDemo.scala requires no other files.
  */

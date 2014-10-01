@@ -39,12 +39,12 @@ import javax.swing.Timer
 import java.net.URL
 import javax.swing.{ImageIcon, UIManager}
 
-/*
+/**
  * Tutorial: How to Use Sliders
- * http://docs.oracle.com/javase/tutorial/uiswing/components/slider.html
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/components/slider.html]]
  * 
  * Source code reference:
- * http://docs.oracle.com/javase/tutorial/uiswing/examples/components/SliderDemoProject/src/components/SliderDemo.java
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/examples/components/SliderDemoProject/src/components/SliderDemo.java]]
  * 
  * SliderDemo.scala requires all the files in the /scala/swing/examples/tutorials/images/doggy
  * directory.

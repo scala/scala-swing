@@ -34,16 +34,16 @@ package scala.swing.examples.tutorials.components
 import scala.swing._
 import javax.swing.table.DefaultTableModel
 
-/*
+/**
  * Tutorial: How to Use Tables
- * http://docs.oracle.com/javase/tutorial/uiswing/components/table.html
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/components/table.html]]
  * 
  * Source code references:
- * http://docs.oracle.com/javase/tutorial/uiswing/examples/components/TableFTFEditDemoProject/src/components/TableFTFEditDemo.java
- * http://docs.oracle.com/javase/tutorial/uiswing/examples/components/TableFTFEditDemoProject/src/components/IntegerEditor.java
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/examples/components/TableFTFEditDemoProject/src/components/TableFTFEditDemo.java]]
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/examples/components/TableFTFEditDemoProject/src/components/IntegerEditor.java]]
  * 
  * TableFTFEditDemo.scala requires one other file:
- *   IntegerEditor.java
+ *   IntegerEditor.scala
  *   
  * This is exactly like TableDemo, except that it uses a
  * custom cell editor to validate integer input.

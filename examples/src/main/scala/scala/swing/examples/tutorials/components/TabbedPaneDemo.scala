@@ -35,12 +35,12 @@ import scala.swing._
 import java.net.URL
 import javax.swing.ImageIcon
 
-/*
+/**
  * How to Use Split Panes
- * http://docs.oracle.com/javase/tutorial/uiswing/components/splitpane.html
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/components/splitpane.html]]
  * 
  * Source code reference:
- * http://docs.oracle.com/javase/tutorial/uiswing/examples/components/TabbedPaneDemoProject/src/components/TabbedPaneDemo.java
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/examples/components/TabbedPaneDemoProject/src/components/TabbedPaneDemo.java]]
  * 
  * TabbedPaneDemo.scala requires one additional file:
  *   /scala/swing/examples/tutorials/images/middle.gif.

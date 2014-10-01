@@ -37,12 +37,12 @@ import java.awt.{ BorderLayout, Color, Component, Dimension, Graphics, Image, Po
 import java.awt.image.BufferedImage
 import java.net.URL
 
-/*
+/**
  * Tutorial: How to Make Frames (Main Windows)
- * http://docs.oracle.com/javase/tutorial/uiswing/components/frame.html
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/components/frame.html]]
  * 
  * Source code reference:
- * http://docs.oracle.com/javase/tutorial/uiswing/examples/components/FrameDemo2Project/src/components/FrameDemo2.java
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/examples/components/FrameDemo2Project/src/components/FrameDemo2.java]]
  *
  * FrameDemo2.scala shows off the window decoration features added in
  * 1.4, plus some window positioning code and (optionally)

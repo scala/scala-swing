@@ -34,12 +34,12 @@ import scala.swing._
 import javax.swing.{SwingUtilities, UIManager}
 import java.awt.{ ComponentOrientation, Dimension }
 
-/*
+/**
  * Tutorials: How to Use BorderLayout
- * http://docs.oracle.com/javase/tutorial/uiswing/layout/border.html
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/layout/border.html]]
  * 
  * Source code reference:
- * http://docs.oracle.com/javase/tutorial/uiswing/examples/layout/BorderLayoutDemoProject/src/layout/BorderLayoutDemo.java
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/examples/layout/BorderLayoutDemoProject/src/layout/BorderLayoutDemo.java]]
  */
 class BorderLayoutDemo extends BorderPanel {
   if (BorderLayoutDemo.RightToLeft) {

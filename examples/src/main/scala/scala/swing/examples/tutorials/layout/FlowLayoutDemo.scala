@@ -33,16 +33,16 @@ package scala.swing.examples.tutorials.layout
 import scala.swing._
 import javax.swing.UIManager
 
-/*
+/**
  * Tutorials: Creating a Custom Layout Manager
- * http://docs.oracle.com/javase/tutorial/uiswing/layout/custom.html
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/layout/custom.html]]
  * 
  * Source code reference:
- * http://docs.oracle.com/javase/tutorial/uiswing/examples/layout/CustomLayoutDemoProject/src/layout/CustomLayoutDemo.java
- * http://docs.oracle.com/javase/tutorial/uiswing/examples/layout/CustomLayoutDemoProject/src/layout/DiagonalLayout.java
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/examples/layout/CustomLayoutDemoProject/src/layout/CustomLayoutDemo.java]]
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/examples/layout/CustomLayoutDemoProject/src/layout/DiagonalLayout.java]]
  * 
- * CustomLayoutDemo.java requires one other file:
- *   DiagonalLayout.java
+ * CustomLayoutDemo.scala requires one other file:
+ *   DiagonalLayout.scala
  */
 class FlowLayoutDemo() extends FlowPanel {
 

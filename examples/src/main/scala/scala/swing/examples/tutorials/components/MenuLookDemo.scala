@@ -36,12 +36,12 @@ import java.net.URL
 import javax.swing.{ ImageIcon, KeyStroke }
 import java.awt.event.{ ActionEvent, KeyEvent }
 
-/*
+/**
  * Tutorial: How to Use Menus
- * http://docs.oracle.com/javase/tutorial/uiswing/components/menu.html
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/components/menu.html]]
  * 
  * Source code reference:
- * http://docs.oracle.com/javase/tutorial/uiswing/examples/components/MenuLookDemoProject/src/components/MenuLookDemo.java
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/examples/components/MenuLookDemoProject/src/components/MenuLookDemo.java]]
  *
  * MenuLookDemo.scala requires /scala/swing/examples/tutorials/images/middle.gif.
  *

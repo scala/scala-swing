@@ -33,12 +33,12 @@ package scala.swing.examples.tutorials.components
 
 import scala.swing._
 
-/*
+/**
  * Tutorial: How to Use Menus
- * http://docs.oracle.com/javase/tutorial/uiswing/components/menu.html
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/components/menu.html]]
  * 
  * Source code reference:
- * http://docs.oracle.com/javase/tutorial/uiswing/examples/components/MenuGlueDemoProject/src/components/MenuGlueDemo.java
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/examples/components/MenuGlueDemoProject/src/components/MenuGlueDemo.java]]
  *
  * MenuGlueDemo.scala requires no other files.
  *

@@ -39,12 +39,12 @@ import java.net.URL
 import javax.swing.ImageIcon
 import scala.collection.mutable.HashMap
 
-/*
+/**
  * Tutorial: How to Use Sliders
- * http://docs.oracle.com/javase/tutorial/uiswing/components/slider.html
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/components/slider.html]]
  * 
  * Source code reference:
- * http://docs.oracle.com/javase/tutorial/uiswing/examples/components/SliderDemo2Project/src/components/SliderDemo2.java
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/examples/components/SliderDemo2Project/src/components/SliderDemo2.java]]
  * 
  * SliderDemo2.scala requires all the files in the /scala/swing/examples/tutorials/images/doggy
  * directory.

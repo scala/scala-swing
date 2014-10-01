@@ -38,12 +38,12 @@ import javax.swing.{ ImageIcon, KeyStroke }
 import java.awt.event.{ ActionEvent, KeyEvent }
 import java.awt.Point
 
-/*
+/**
  * Tutorial: How to Use Password Fields
- * http://docs.oracle.com/javase/tutorial/uiswing/components/passwordfield.html
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/components/passwordfield.html]]
  * 
  * Source code reference:
- * http://docs.oracle.com/javase/tutorial/uiswing/examples/components/PopupMenuDemoProject/src/components/PopupMenuDemo.java
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/examples/components/PopupMenuDemoProject/src/components/PopupMenuDemo.java]]
  *
  * PopupMenuDemo.scala requires /scala/swing/examples/tutorials/images/middle.gif.
  *

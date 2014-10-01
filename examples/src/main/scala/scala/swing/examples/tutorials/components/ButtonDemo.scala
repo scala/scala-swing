@@ -34,12 +34,12 @@ import scala.swing._
 import scala.swing.event.ButtonClicked
 import javax.swing.UIManager
 
-/*
+/**
  * Tutorial: How to Use Buttons, Check Boxes, and Radio Buttons
- * http://docs.oracle.com/javase/tutorial/uiswing/components/button.html
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/components/button.html]]
  * 
  * Source code reference:
- * http://docs.oracle.com/javase/tutorial/uiswing/examples/components/ButtonDemoProject/src/components/ButtonDemo.java
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/examples/components/ButtonDemoProject/src/components/ButtonDemo.java]]
  *
  * ButtonDemo.scala requires the following files:
  *   /scala/swing/examples/tutorials/images/right.gif

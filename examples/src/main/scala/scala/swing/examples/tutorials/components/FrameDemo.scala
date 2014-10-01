@@ -33,12 +33,12 @@ package scala.swing.examples.tutorials.components
 import scala.swing._
 import java.awt.Dimension
 
-/*
+/**
  * Tutorial: How to Make Frames (Main Windows)
- * http://docs.oracle.com/javase/tutorial/uiswing/components/frame.html
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/components/frame.html]]
  * 
  * Source code reference:
- * http://docs.oracle.com/javase/tutorial/uiswing/examples/components/FrameDemoProject/src/components/FrameDemo.java
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/examples/components/FrameDemoProject/src/components/FrameDemo.java]]
  *
  * FrameDemo.scala requires no other files.
  */
