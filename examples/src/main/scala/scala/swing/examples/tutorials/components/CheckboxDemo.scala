@@ -34,8 +34,8 @@ import scala.swing._
 import scala.swing.event.ButtonClicked
 import scala.swing.event.Key
 import java.awt.Font
-import javax.swing.ImageIcon
-import java.net.URL
+
+import scala.swing.examples.tutorials.components.ButtonDemo._
 
 /**
  * Tutorial: How to Use Buttons, Check Boxes, and Radio Buttons
@@ -83,21 +83,25 @@ class CheckboxDemo extends BorderPanel {
      */
 
   //Create the check boxes.
-  val chinButton = new CheckBox("Chin")
-  chinButton.mnemonic = Key.C // .VK_C
-  chinButton.selected = true
+  val chinButton = new CheckBox("Chin") {
+    mnemonic = Key.C // .VK_C
+    selected = true
+  }
 
-  val glassesButton = new CheckBox("Glasses")
-  glassesButton.mnemonic = Key.G;
-  glassesButton.selected = true
+  val glassesButton = new CheckBox("Glasses") {
+    mnemonic = Key.G
+    selected = true
+  }
 
-  val hairButton = new CheckBox("Hair")
-  hairButton.mnemonic = Key.H
-  hairButton.selected = true
+  val hairButton = new CheckBox("Hair") {
+    mnemonic = Key.H
+    selected = true
+  }
 
-  val teethButton = new CheckBox("Teeth")
-  teethButton.mnemonic = Key.T
-  teethButton.selected = true
+  val teethButton = new CheckBox("Teeth") {
+    mnemonic = Key.T
+    selected = true
+  }
 
   //Indicates what's on the geek.
   val choices: StringBuffer = new StringBuffer("cght")
@@ -125,34 +129,31 @@ class CheckboxDemo extends BorderPanel {
   listenTo(hairButton)
   listenTo(teethButton)
 
+
+  def changeState( idx:Int, checkBox: CheckBox, label:Char ): Unit = {
+    choices.setCharAt(idx, if (checkBox.selected) label else '-' )
+    updatePicture()
+  }
+
   reactions += {
-    case ButtonClicked(`chinButton`) =>
-      choices.setCharAt(0, if (!chinButton.selected) '-' else 'c')
-      updatePicture()
-    case ButtonClicked(`glassesButton`) =>
-      choices.setCharAt(1, if (!glassesButton.selected) '-' else 'g')
-      updatePicture()
-    case ButtonClicked(`hairButton`) =>
-      choices.setCharAt(2, if (!hairButton.selected) '-' else 'h')
-      updatePicture()
-    case ButtonClicked(`teethButton`) =>
-      choices.setCharAt(3, if (!teethButton.selected) '-' else 't')
-      updatePicture()
+    case ButtonClicked(`chinButton`) => changeState(0, chinButton, 'c')
+    case ButtonClicked(`glassesButton`) => changeState(1, glassesButton, 'g')
+    case ButtonClicked(`hairButton`) => changeState(2, hairButton, 'h')
+    case ButtonClicked(`teethButton`) => changeState(3, teethButton, 't')
   }
 
   def updatePicture(): Unit = {
+    pictureLabel.tooltip = choices.toString
+
     //Get the icon corresponding to the image.
-    val s = choices.toString()
-    val icon: Option[ImageIcon] = CheckboxDemo.createImageIcon(
-      "/scala/swing/examples/tutorials/images/geek/geek-"
-        + choices.toString()
-        + ".gif")
-    pictureLabel.icon = if (icon.isDefined) icon.get else Swing.EmptyIcon
-    pictureLabel.tooltip = choices.toString()
-    if (icon == null) {
-      pictureLabel.text = "Missing Image"
-    } else {
-      pictureLabel.text = null
+    createImageIcon( s"/scala/swing/examples/tutorials/images/geek/geek-$choices.gif") match {
+      case Some( icon ) =>
+        pictureLabel.icon = icon
+        pictureLabel.text = null
+      case None =>
+        pictureLabel.icon = Swing.EmptyIcon
+        pictureLabel.text = "Missing Image"
+
     }
   }
 }
@@ -165,6 +166,6 @@ object CheckboxDemo extends SimpleSwingApplication {
   lazy val top = new MainFrame() {
     title = "CheckboxDemo"
     //Create and set up the content pane.
-    contents = new CheckboxDemo();
+    contents = new CheckboxDemo()
   }
 }

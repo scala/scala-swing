@@ -34,7 +34,6 @@ import scala.swing._
 import scala.swing.event.ButtonClicked
 import scala.swing.TabbedPane.Page
 import javax.swing.border.Border
-import java.net.URL
 import javax.swing.ImageIcon
 import java.awt.{ Dimension, Font }
 
@@ -85,128 +84,75 @@ class DialogDemo(val frame: Frame) extends BorderPanel {
   }
   /** Creates the panel shown by the first tab. */
   private def createSimpleDialogBox(): BorderPanel = {
-    val numButtons = 4
-    val radioButtons: Array[RadioButton] = new Array[RadioButton](numButtons)
 
     val showItButton: Button = new Button("Show it!")
 
-    val defaultMessageCommand = "default"
-    val yesNoCommand = "yesno"
-    val yeahNahCommand = "yeahnah"
-    val yncCommand = "ync"
+    val defaultMessageCommandButton =new RadioButton("OK (in the L&F's words)") { selected = true }
+    val yesNoCommandButton = new RadioButton("Yes/No (in the L&F's words)")
+    val yeahNahCommandButton = new RadioButton("Yes/No (in the programmer's words)")
+    val yncCommandButton = new RadioButton("Yes/No/Cancel (in the programmer's words)")
+
+    val radioButtons:Array[RadioButton] = Array(
+      defaultMessageCommandButton,
+      yesNoCommandButton,
+      yeahNahCommandButton,
+      yncCommandButton
+      )
 
     val group: ButtonGroup = new ButtonGroup() {
-
+      radioButtons.foreach( buttons += _  )
     }
 
-    radioButtons(0) = new RadioButton("OK (in the L&F's words)") {
-      selected = true
-    }
-
-    // radioButtons[0].setActionCommand(defaultMessageCommand)
-
-    radioButtons(1) = new RadioButton("Yes/No (in the L&F's words)")
-    // radioButtons[1].setActionCommand(yesNoCommand)
-
-    radioButtons(2) = new RadioButton("Yes/No "
-      + "(in the programmer's words)")
-    // radioButtons[2].setActionCommand(yeahNahCommand)
-
-    radioButtons(3) = new RadioButton("Yes/No/Cancel "
-      + "(in the programmer's words)")
-    // radioButtons[3].setActionCommand(yncCommand)
-
-    val defaultMessageCommandButton = radioButtons(0)
-    val yesNoCommandButton = radioButtons(1)
-    val yeahNahCommandButton = radioButtons(2)
-    val yncCommandButton = radioButtons(3)
-
-    for (i <- 0 until numButtons) {
-      group.buttons += radioButtons(i)
-    }
-
-    var actionCommand = defaultMessageCommand
     listenTo(showItButton)
-    listenTo(defaultMessageCommandButton)
-    listenTo(yesNoCommandButton)
-    listenTo(yeahNahCommandButton)
-    listenTo(yncCommandButton)
-    reactions += {
-      case ButtonClicked(`defaultMessageCommandButton`) =>
-        actionCommand = defaultMessageCommand
-      case ButtonClicked(`yesNoCommandButton`) =>
-        actionCommand = yesNoCommand
-      case ButtonClicked(`yeahNahCommandButton`) =>
-        actionCommand = yeahNahCommand
-      case ButtonClicked(`yncCommandButton`) =>
-        actionCommand = yncCommand
-      case ButtonClicked(`showItButton`) =>
-        actionCommand match {
-          //ok dialog
-          case "default" =>
-            val command: String = defaultMessageCommand
-            Dialog.showMessage(this,
-              "Eggs aren't supposed to be green.")
-          //yes/no dialog
-          case "yesno" =>
-            val n = Dialog.showConfirmation(
-              this, "Would you like green eggs and ham?",
-              "An Inane Question",
-              Dialog.Options.YesNo)
 
-            if (n == Dialog.Result.Yes) {
-              setLabel("Ewww!");
-            } else if (n == Dialog.Result.No) {
-              setLabel("Me neither!");
-            } else {
-              setLabel("Come on -- tell me!");
-            }
-          //yes/no (not in those words)
-          case "yeahnah" =>
-            val options: Array[String] = Array("Yes, please", "No way!")
-            val n = Dialog.showOptions(this,
-              "Would you like green eggs and ham?",
-              "A Silly Question",
-              Dialog.Options.YesNo,
-              Dialog.Message.Question,
-              Swing.EmptyIcon,
-              options,
-              0)
-            if (n == Dialog.Result.Yes) {
-              setLabel("You're kidding!")
-            } else if (n == Dialog.Result.No) {
-              setLabel("I don't like them, either.")
-            } else {
-              setLabel("Come on -- 'fess up!")
-            }
-          //yes/no/cancel (not in those words)
-          case "ync" =>
-            val options: Array[String] = Array("Yes, please",
-              "No, thanks",
-              "No eggs, no ham!")
-            val n = Dialog.showOptions(this,
-              "Would you like some green eggs to go "
-                + "with that ham?",
-              "A Silly Question",
-              Dialog.Options.YesNoCancel,
-              Dialog.Message.Question,
-              null,
-              options,
-              2)
-            if (n == Dialog.Result.Yes) {
-              setLabel("Here you go: green eggs and ham!")
-            } else if (n == Dialog.Result.No) {
-              setLabel("OK, just the ham, then.")
-            } else if (n == Dialog.Result.Cancel) {
-              setLabel("Well, I'm certainly not going to eat them!")
-            } else {
-              setLabel("Please tell me what you want!")
-            }
+    reactions += {
+
+      case ButtonClicked(`showItButton`) if group.selected == Some(defaultMessageCommandButton) =>
+        Dialog.showMessage(this, "Eggs aren't supposed to be green.")
+
+      case ButtonClicked(`showItButton`) if group.selected == Some(yesNoCommandButton)  =>
+         Dialog.showConfirmation(
+          this, "Would you like green eggs and ham?",
+          "An Inane Question",
+          Dialog.Options.YesNo) match {
+           case Dialog.Result.Yes => setLabel("Ewww!")
+           case Dialog.Result.No => setLabel("Me neither!")
+           case _ => setLabel("Come on -- tell me!")
+         }
+
+
+
+      case ButtonClicked(`showItButton`) if group.selected == Some(yeahNahCommandButton)  =>
+        Dialog.showOptions(this,
+          "Would you like green eggs and ham?",
+          "A Silly Question",
+          Dialog.Options.YesNo,
+          Dialog.Message.Question,
+          Swing.EmptyIcon,
+          Array("Yes, please", "No way!"),
+          0) match {
+
+          case Dialog.Result.Yes => setLabel("You're kidding!")
+          case Dialog.Result.No => setLabel("I don't like them, either.")
+          case _ => setLabel("Come on -- 'fess up!")
+        }
+
+      case ButtonClicked(`showItButton`) if group.selected == Some(yncCommandButton)  =>
+        Dialog.showOptions(this,
+          "Would you like some green eggs to go with that ham?",
+          "A Silly Question",
+          Dialog.Options.YesNoCancel,
+          Dialog.Message.Question,
+          null,
+          Array("Yes, please", "No, thanks", "No eggs, no ham!"),
+          2) match {
+          case Dialog.Result.Yes => setLabel("Here you go: green eggs and ham!")
+          case Dialog.Result.No => setLabel("OK, just the ham, then.")
+          case Dialog.Result.Cancel => setLabel("Well, I'm certainly not going to eat them!")
+          case _ => setLabel("Please tell me what you want!")
         }
     }
-    createPane(simpleDialogDesc + ":",
-      radioButtons,
-      showItButton)
+    createPane(simpleDialogDesc + ":", radioButtons, showItButton)
   }
 
   /**
@@ -214,25 +160,17 @@ class DialogDemo(val frame: Frame) extends BorderPanel {
    * to create a pane containing a description, a single column
    * of radio buttons, and the Show it! button.
    */
-  private def createPane(description: String,
-    radioButtons: Array[RadioButton],
-    showButton: Button): BorderPanel = {
+  private def createPane(description: String, radioButtons: Array[RadioButton], showButton: Button): BorderPanel = {
 
-    val numChoices = radioButtons.length
-    val label = new Label(description)
     val box: BoxPanel = new BoxPanel(Orientation.Vertical) {
-      contents += label
+      contents +=  new Label(description)
+      radioButtons.foreach( contents += _ )
     }
 
-    for (i <- 0 until numChoices) {
-      box.contents += radioButtons(i);
-    }
-
-    val pane = new BorderPanel() {
+    new BorderPanel() {
       layout(box) = BorderPanel.Position.North
       layout(showButton) = BorderPanel.Position.South
     }
-    pane
   }
 
   /**
@@ -253,11 +191,11 @@ class DialogDemo(val frame: Frame) extends BorderPanel {
       grid.xLayoutAlignment = 0.0f
       contents += grid
     }
-    val pane = new BorderPanel() {
+
+    new BorderPanel() {
       layout(box) = BorderPanel.Position.North
       layout(showButton) = BorderPanel.Position.South
     }
-    pane
   }
   /*
      * Creates the panel shown by the 3rd tab.
@@ -266,225 +204,184 @@ class DialogDemo(val frame: Frame) extends BorderPanel {
      * kind of dialog, as well.
      */
   def createIconDialogBox(): BorderPanel = {
-    val numButtons = 6
-    val radioButtons: Array[RadioButton] = new Array[RadioButton](numButtons)
-    val plainCommand = "plain"
-    val infoCommand = "info"
-    val questionCommand = "question"
-    val errorCommand = "error"
-    val warningCommand = "warning"
-    val customCommand = "custom"
-    radioButtons(0) = new RadioButton("Plain (no icon)") {
-      selected = true
-    }
-    val plainCommandButton = radioButtons(0)
-    radioButtons(1) = new RadioButton("Information icon")
-    val infoCommandButton = radioButtons(1)
-    radioButtons(2) = new RadioButton("Question icon")
-    val questionCommandButton = radioButtons(2)
-    radioButtons(3) = new RadioButton("Error icon")
-    val errorCommandButton = radioButtons(3)
-    radioButtons(4) = new RadioButton("Warning icon")
-    val warningCommandButton = radioButtons(4)
-    radioButtons(5) = new RadioButton("Custom icon")
-    val customCommandButton = radioButtons(5)
+    val plainCommandButton = new RadioButton("Plain (no icon)") { selected = true }
+    val infoCommandButton = new RadioButton("Information icon")
+    val questionCommandButton = new RadioButton("Question icon")
+    val errorCommandButton = new RadioButton("Error icon")
+    val warningCommandButton = new RadioButton("Warning icon")
+    val customCommandButton = new RadioButton("Custom icon")
+
+    val radioButtons = Array(
+      plainCommandButton,
+      infoCommandButton,
+      questionCommandButton,
+      errorCommandButton,
+      warningCommandButton,
+      customCommandButton
+    )
 
     val group: ButtonGroup = new ButtonGroup() {
-      for (i <- 0 until numButtons) {
-        buttons += radioButtons(i)
-      }
+      radioButtons.foreach( buttons += _ )
     }
     val showItButton = new Button("Show it!")
-    var actionCommand = plainCommand
-    listenTo(plainCommandButton)
-    listenTo(infoCommandButton)
-    listenTo(questionCommandButton)
-    listenTo(errorCommandButton)
-    listenTo(warningCommandButton)
-    listenTo(customCommandButton)
+
     listenTo(showItButton)
+
     reactions += {
-      case ButtonClicked(`plainCommandButton`) => actionCommand = plainCommand
-      case ButtonClicked(`infoCommandButton`) => actionCommand = infoCommand
-      case ButtonClicked(`questionCommandButton`) => actionCommand = questionCommand
-      case ButtonClicked(`errorCommandButton`) => actionCommand = errorCommand
-      case ButtonClicked(`warningCommandButton`) => actionCommand = warningCommand
-      case ButtonClicked(`customCommandButton`) => actionCommand = customCommand
-      case ButtonClicked(`showItButton`) =>
-        actionCommand match {
-          //no icon
-          case "plain" =>
+      case ButtonClicked(`showItButton`) if group.selected == Some(plainCommandButton) =>
             Dialog.showMessage(this,
               "Eggs aren't supposed to be green.",
               "A plain message",
               Dialog.Message.Plain)
-          //information icon
-          case "info" =>
+
+      case ButtonClicked(`showItButton`) if group.selected == Some(infoCommandButton) =>
             Dialog.showMessage(this,
               "Eggs aren't supposed to be green.",
               "Inane informational dialog",
               Dialog.Message.Info)
-          //question icon
-          case "question" =>
+
+      case ButtonClicked(`showItButton`) if group.selected == Some(questionCommandButton) =>
             Dialog.showMessage(this,
               "You shouldn't use a message dialog " +
                 "(like this)\n" +
                 "for a question, OK?",
               "Inane question",
               Dialog.Message.Question)
-          //error icon
-          case "error" =>
+
+      case ButtonClicked(`showItButton`) if group.selected == Some(errorCommandButton) =>
             Dialog.showMessage(this,
               "Eggs aren't supposed to be green.",
               "Inane error",
               Dialog.Message.Error)
-          //warning icon
-          case "warning" =>
+
+      case ButtonClicked(`showItButton`) if group.selected == Some(warningCommandButton)  =>
             Dialog.showMessage(this,
               "Eggs aren't supposed to be green.",
               "Inane warning",
               Dialog.Message.Warning)
-          //custom icon
-          case "custom" =>
+
+      case ButtonClicked(`showItButton`) if group.selected == Some(customCommandButton)  =>
             Dialog.showMessage(this,
               "Eggs aren't supposed to be green.",
               "Inane custom dialog",
               Dialog.Message.Info,
               icon)
-        }
-    }
+      }
+
     create2ColPane(iconDesc + ":", radioButtons, showItButton)
   }
 
   /** Creates the panel shown by the second tab. */
   private def createFeatureDialogBox(): BorderPanel = {
-    val numButtons = 5
-    val radioButtons: Array[RadioButton] = new Array[RadioButton](numButtons)
-    val pickOneCommand = "pickone"
-    val textEnteredCommand = "textfield"
-    val nonAutoCommand = "nonautooption"
-    val customOptionCommand = "customoption"
-    val nonModalCommand = "nonmodal"
-    radioButtons(0) = new RadioButton("Pick one of several choices") {
-      selected = true
-    }
-    val pickOneCommandButton = radioButtons(0)
-    radioButtons(1) = new RadioButton("Enter some text")
-    val textEnteredCommandButton = radioButtons(1)
-    radioButtons(2) = new RadioButton("Non-auto-closing dialog")
-    val nonAutoCommandButton = radioButtons(2)
-    radioButtons(3) = new RadioButton("Input-validating dialog " +
-      "(with custom message area)")
-    val customOptionCommandButton = radioButtons(3)
-    radioButtons(4) = new RadioButton("Non-modal dialog")
-    val nonModalCommandButton = radioButtons(4)
+//    val pickOneCommand = "pickone"
+//    val textEnteredCommand = "textfield"
+//    val nonAutoCommand = "nonautooption"
+//    val customOptionCommand = "customoption"
+//    val nonModalCommand = "nonmodal"
+
+    val pickOneCommandButton = new RadioButton("Pick one of several choices") { selected = true }
+
+    val textEnteredCommandButton = new RadioButton("Enter some text")
+    val nonAutoCommandButton = new RadioButton("Non-auto-closing dialog")
+    val customOptionCommandButton = new RadioButton("Input-validating dialog (with custom message area)")
+    val nonModalCommandButton = new RadioButton("Non-modal dialog")
+
+    val radioButtons = Array(
+      pickOneCommandButton,
+      textEnteredCommandButton,
+      nonAutoCommandButton,
+      customOptionCommandButton,
+      nonModalCommandButton
+    )
 
     val group: ButtonGroup = new ButtonGroup() {
-      for (i <- 0 until numButtons) {
-        buttons += radioButtons(i)
-      }
+      radioButtons.foreach( buttons += _ )
     }
+
     val showItButton = new Button("Show it!")
-    var actionCommand = pickOneCommand
-    listenTo(pickOneCommandButton)
-    listenTo(textEnteredCommandButton)
-    listenTo(nonAutoCommandButton)
-    listenTo(customOptionCommandButton)
-    listenTo(nonModalCommandButton)
+
     listenTo(showItButton)
+
     reactions += {
-      case ButtonClicked(`pickOneCommandButton`) => actionCommand = pickOneCommand
-      case ButtonClicked(`textEnteredCommandButton`) => actionCommand = textEnteredCommand
-      case ButtonClicked(`nonAutoCommandButton`) => actionCommand = nonAutoCommand
-      case ButtonClicked(`customOptionCommandButton`) => actionCommand = customOptionCommand
-      case ButtonClicked(`nonModalCommandButton`) => actionCommand = nonModalCommand
-      case ButtonClicked(`showItButton`) =>
-        actionCommand match {
-          //pick one of many
-          case "pickone" =>
-            val possibilities = Array("ham", "spam", "yam")
-            val s: Option[String] = Dialog.showInput[String](this,
-              "Complete the sentence:\n" +
-                "\"Green eggs and...\"",
-              "Customized Dialog",
-              Dialog.Message.Plain,
-              icon,
-              possibilities,
-              "ham")
-            if (s.isDefined && s.get.length > 0) {
-              setLabel("Green eggs and..." + s.get + "!")
-            } else {
-              setLabel("Come on, finish the sentence!")
-            }
-          //text input
-          case "textfield" =>
-            val s: Option[String] = Dialog.showInput[String](this,
-              "Complete the sentence:\n" +
-                "\"Green eggs and...\"",
-              "Customized Dialog",
-              Dialog.Message.Plain,
-              icon,
-              Nil,
-              "ham")
-            if (s.isDefined && s.get.length > 0) {
-              setLabel("Green eggs and..." + s.get + "!")
-            } else {
-              setLabel("Come on, finish the sentence!")
-            }
-          //non-auto-closing dialog
-          case "nonautooption" =>
-            setLabel("Not supported.")
-          //non-auto-closing dialog with custom message area
-          //NOTE: if you don't intend to check the input,
-          //then just use showInputDialog instead.
-          case "customoption" =>
-            setLabel("Not supported.")
-          //non-modal dialog
-          case "nonmodal" =>
-            val dialog = new Dialog(frame, frame.peer.getGraphicsConfiguration()) {
-              title = "A Non-Modal Dialog"
-
-              val label: Label = new Label("<html><p align=center>" +
-                "This is a non-modal dialog.<br>" +
-                "You can have one or more of these up<br>" +
-                "and still use the main window.") {
-                horizontalAlignment = Alignment.Center
-                val myFont = font
-                font = myFont.deriveFont(Font.PLAIN, 14.0f)
-              }
-              val closeButton: Button = new Button("Close")
-
-              val closePanel = new BoxPanel(Orientation.Horizontal) {
-                contents += Swing.HGlue
-                contents += closeButton
-                border = Swing.EmptyBorder(0, 0, 5, 5)
-              }
-
-              val contentPane: BorderPanel = new BorderPanel() {
-                layout(label) = BorderPanel.Position.Center
-                layout(closePanel) = BorderPanel.Position.South
-                opaque = true
-              }
-              contents = contentPane
-              listenTo(closeButton)
-              reactions += {
-                case ButtonClicked(`closeButton`) =>
-                  visible = false
-                  dispose()
-              }
-            }
-            dialog.size = new Dimension(300, 150)
-            dialog.peer.setLocationRelativeTo(frame.peer)
-            dialog.visible = true
+      case ButtonClicked(`showItButton`) if group.selected == Some(pickOneCommandButton)    =>
+        Dialog.showInput[String](this,
+          "Complete the sentence:\n" +
+            "\"Green eggs and...\"",
+          "Customized Dialog",
+          Dialog.Message.Plain,
+          icon,
+          Array("ham", "spam", "yam"),
+          "ham") match {
+          case Some(msg) if msg.length > 1 => setLabel(s"Green eggs and...$msg!")
+          case _ => setLabel("Come on, finish the sentence!")
         }
-    }
+
+      case ButtonClicked(`showItButton`) if group.selected == Some(textEnteredCommandButton) =>
+        Dialog.showInput[String](this,
+          "Complete the sentence:\n" +
+            "\"Green eggs and...\"",
+          "Customized Dialog",
+          Dialog.Message.Plain,
+          icon,
+          Nil,
+          "ham") match {
+          case Some(msg) if msg.length > 1 => setLabel(s"Green eggs and...$msg!")
+          case _ => setLabel("Come on, finish the sentence!")
+        }
+
+      case ButtonClicked(`showItButton`) if group.selected == Some(nonAutoCommandButton) =>
+          setLabel("Not supported.")
+        //non-auto-closing dialog with custom message area
+        //NOTE: if you don't intend to check the input,
+        //then just use showInputDialog instead.
+
+      case ButtonClicked(`showItButton`) if group.selected == Some(customOptionCommandButton) =>
+          setLabel("Not supported.")
+
+      case ButtonClicked(`showItButton`) if group.selected == Some(nonModalCommandButton) =>
+        val dialog = new Dialog(frame, frame.peer.getGraphicsConfiguration) {
+          title = "A Non-Modal Dialog"
+
+          val label: Label = new Label("<html><p align=center>" +
+            "This is a non-modal dialog.<br>" +
+            "You can have one or more of these up<br>" +
+            "and still use the main window.") {
+            horizontalAlignment = Alignment.Center
+            font = font.deriveFont(Font.PLAIN, 14.0f)
+          }
+          val closeButton: Button = new Button("Close")
+
+          val closePanel = new BoxPanel(Orientation.Horizontal) {
+            contents += Swing.HGlue
+            contents += closeButton
+            border = Swing.EmptyBorder(0, 0, 5, 5)
+          }
+
+          val contentPane: BorderPanel = new BorderPanel() {
+            layout(label) = BorderPanel.Position.Center
+            layout(closePanel) = BorderPanel.Position.South
+            opaque = true
+          }
+          contents = contentPane
+          listenTo(closeButton)
+          reactions += {
+            case ButtonClicked(`closeButton`) =>
+              visible = false
+              dispose()
+          }
+        }
+        dialog.size = new Dimension(300, 150)
+        dialog.peer.setLocationRelativeTo(frame.peer)
+        dialog.visible = true
+      }
     createPane(moreDialogDesc + ":", radioButtons, showItButton)
   }
 
 }
 
 object DialogDemo extends SimpleSwingApplication {
-  /** Returns an ImageIcon, or None if the path was invalid. */
+
+  /** Returns an ImageIcon option, or None if the path was invalid. */
   def createImageIcon(path: String): Option[javax.swing.ImageIcon] = {
     Option(resourceFromClassloader(path)).map(imgURL => Swing.Icon(imgURL))
   }
@@ -492,6 +389,6 @@ object DialogDemo extends SimpleSwingApplication {
   lazy val top = new MainFrame() {
     title = "DialogDemo"
     //Create and set up the content pane.
-    contents = new DialogDemo(this);
+    contents = new DialogDemo(this)
   }
 }

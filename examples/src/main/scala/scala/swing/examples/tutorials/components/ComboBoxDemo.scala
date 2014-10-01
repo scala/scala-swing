@@ -32,10 +32,10 @@
 package scala.swing.examples.tutorials.components
 
 import scala.swing._
-import scala.swing.event.{ SelectionChanged }
+import scala.swing.event.SelectionChanged
 import java.awt.{ Dimension, Font }
-import javax.swing.{ BorderFactory, ImageIcon }
-import java.net.URL
+import javax.swing.BorderFactory
+
 
 /**
  * Tutorial: How to Use Combo Boxes
@@ -55,10 +55,10 @@ class ComboBoxDemo extends BorderPanel {
   }
 
   //Set up the picture label.
-  val imgIcon = ComboBoxDemo.createImageIcon("/scala/swing/examples/tutorials/images/"
-    + petList.selection.item + ".gif")
+  val imgIcon = ComboBoxDemo.createImageIcon(s"/scala/swing/examples/tutorials/images/${petList.selection.item}.gif")
+
   val picture = new Label() {
-    icon = if (imgIcon.isDefined) imgIcon.get else Swing.EmptyIcon
+    icon = imgIcon.getOrElse( Swing.EmptyIcon )
     font = font.deriveFont(Font.ITALIC)
     horizontalAlignment = Alignment.Center
     //The preferred size is hard-coded to be the width of the
@@ -78,25 +78,20 @@ class ComboBoxDemo extends BorderPanel {
   }
 
   def updateLabel(s: String): Unit = {
-    val ic = ComboBoxDemo.createImageIcon("/scala/swing/examples/tutorials/images/" + s + ".gif")
-    picture.icon = if (ic.isDefined) imgIcon.get else Swing.EmptyIcon
+    picture.icon =
+      ComboBoxDemo.createImageIcon("/scala/swing/examples/tutorials/images/" + s + ".gif").getOrElse( Swing.EmptyIcon )
   }
 }
 
 object ComboBoxDemo extends SimpleSwingApplication {
-  val birdString = "Bird"
-  val catString = "Cat"
-  val dogString = "Dog"
-  val rabbitString = "Rabbit"
-  val pigString = "Pig"
 
-  /** Returns an ImageIcon, or null if the path was invalid. */
-  def createImageIcon(path: String): Option[javax.swing.ImageIcon] = {
+  /** Returns an ImageIcon option, or None if the path was invalid. */
+  def createImageIcon(path: String ): Option[javax.swing.ImageIcon] =
     Option(resourceFromClassloader(path)).map(imgURL => Swing.Icon(imgURL))
-  }
+
   lazy val top = new MainFrame() {
     title = "ComboBoxDemo"
     //Create and set up the content pane.
-    contents = new ComboBoxDemo();
+    contents = new ComboBoxDemo()
   }
 }

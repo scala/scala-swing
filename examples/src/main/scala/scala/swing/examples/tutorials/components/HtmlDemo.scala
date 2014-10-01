@@ -62,8 +62,7 @@ class HtmlDemo extends BoxPanel(Orientation.Horizontal) {
   val scrollPane = new ScrollPane(htmlTextArea)
   val changeTheLabel = new Button("Change the label") {
     mnemonic = Key.C
-    // peer.setAlignmentX(Component.CENTER_ALIGNMENT)
-    xLayoutAlignment = 0.50 // Center
+    xLayoutAlignment = Component.CENTER_ALIGNMENT
   }
   val theLabel = new Label(initialText) {
     minimumSize = new Dimension(200, 200)
@@ -101,6 +100,6 @@ object HtmlDemo extends SimpleSwingApplication {
   lazy val top = new MainFrame() {
     title = "HtmlDemo"
     //Create and set up the content pane.
-    contents = new HtmlDemo();
+    contents = new HtmlDemo()
   }
 }

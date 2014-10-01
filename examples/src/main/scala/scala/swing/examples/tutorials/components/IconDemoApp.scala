@@ -31,10 +31,9 @@
 package scala.swing.examples.tutorials.components
 
 import scala.swing._
-import java.net.URL
 import java.awt.RenderingHints
 import java.awt.image.BufferedImage
-import javax.swing.{ Icon, ImageIcon, JToolBar, SwingWorker }
+import javax.swing.{ Icon, ImageIcon }
 
 /**
  * Tutorial: How to Use Icons
@@ -64,7 +63,6 @@ import javax.swing.{ Icon, ImageIcon, JToolBar, SwingWorker }
  * /scala/swing/examples/tutorials/images/sunw05.jpg <br>
  *
  * @author Collin Fagan
- * @date 7/25/2007
  * @version 2.0
  */
 class IconDemoApp extends MainFrame {
@@ -76,7 +74,7 @@ class IconDemoApp extends MainFrame {
    * List of all the descriptions of the image files. These correspond one to
    * one with the image file names
    */
-  private val imageFileNames = Array[String]("sunw01.jpg", "sunw02.jpg",
+  private val imageFileNames = Array[String]( "sunw01.jpg", "sunw02.jpg",
     "sunw03.jpg", "sunw04.jpg", "sunw05.jpg")
 
   private val imageCaptions = Array[String]("Original SUNW Logo", "The Clocktower",
@@ -106,63 +104,37 @@ class IconDemoApp extends MainFrame {
   // this centers the frame on the screen
   // setLocationRelativeTo(null)
 
-  // start the image loading SwingWorker in a background thread
-  loadImages.execute()
-
-  /**
-   * SwingWorker class that loads the images a background thread and calls publish
-   * when a new one is ready to be displayed.
-   *
-   * We use Unit as the first SwingWroker param as we do not need to return
-   * anything from doInBackground().
-   */
-  def loadImages(): SwingWorker[Unit, ThumbnailAction] =
-    new SwingWorker[Unit, ThumbnailAction]() {
-      /**
-       * Creates full size and thumbnail versions of the target image files.
-       */
-      override protected def doInBackground(): Unit = {
-        println("doInBackground")
-        for (i <- 0 until imageCaptions.length) {
-          val iconOption: Option[ImageIcon] = IconDemoApp.createImageIcon(imagedir + imageFileNames(i), imageCaptions(i))
-
-          val thumbAction: ThumbnailAction =
-            if (iconOption.isDefined) {
-              val thumbnailIcon: ImageIcon = new ImageIcon(getScaledImage(iconOption.get.getImage(), 32, 32))
-              new ThumbnailAction(iconOption.get, thumbnailIcon, imageCaptions(i))
-            } else {
-              // the image failed to load for some reason
-              // so load a placeholder instead
-              new ThumbnailAction(placeholderIcon, placeholderIcon, imageCaptions(i))
-            }
-          publish(thumbAction);
-        }
-      }
-
-      /**
-       * Process all loaded images.
-       */
-      override def process(chunks: java.util.List[ThumbnailAction]): Unit = {
-        println("process")
-        val it: java.util.Iterator[ThumbnailAction] = chunks.iterator()
-        while (it.hasNext()) {
-          val thumbAction = it.next()
-          val thumbButton = new Button(thumbAction);
-          // add the new button BEFORE the last glue
-          // this centers the buttons in the toolbar
-          buttonBar.contents.dropRight(1)
-          buttonBar.contents += new Button(thumbAction)
-          buttonBar.contents += Swing.Glue
-        }
-      }
-
-      /**
-       * Done.
-       */
-      override def done(): Unit = {
-        println("Done")
-      }
+  def loadImage( fileName:String, caption: String ): Option[ThumbnailAction] = {
+    IconDemoApp.createImageIcon(imagedir + fileName) match {
+      case Some(img) =>
+        val thumbnailIcon = new ImageIcon(getScaledImage(img.getImage, 32, 32))
+        Some(new ThumbnailAction(img, thumbnailIcon, caption, photographLabel))
+      case None =>
+        Some(new ThumbnailAction(placeholderIcon, placeholderIcon, caption, photographLabel))
     }
+  }
+
+  import scala.concurrent._
+  import scala.concurrent.ExecutionContext.Implicits.global
+
+  val f:Future[List[Option[ThumbnailAction]]] = Future {
+    imageCaptions.zip(imageFileNames).map {
+      case (cap, file) => loadImage(file, cap)
+    }.toList
+  }
+
+  f.onSuccess{
+    case thumbs:List[Option[ThumbnailAction]] =>
+      buttonBar.contents.dropRight(1)
+      thumbs.foreach{ thumbAction => {
+        thumbAction.foreach { ta =>
+          buttonBar.contents += new Button(ta)
+        }
+      }}
+      buttonBar.contents += Swing.Glue
+
+  }
+
 
   /**
    * Resizes an image using a Graphics2D object backed by a BufferedImage.
@@ -173,47 +145,41 @@ class IconDemoApp extends MainFrame {
    */
   private def getScaledImage(srcImg: Image, w: Int, h: Int): Image = {
     val resizedImg = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB)
-    val g2: Graphics2D = resizedImg.createGraphics();
-    g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-    g2.drawImage(srcImg, 0, 0, w, h, null);
-    g2.dispose();
-    resizedImg;
+    val g2: Graphics2D = resizedImg.createGraphics()
+    g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR)
+    g2.drawImage(srcImg, 0, 0, w, h, null)
+    g2.dispose()
+    resizedImg
   }
 }
 
 object IconDemoApp extends SimpleSwingApplication {
-  def createImageIcon(path: String, description: String): Option[javax.swing.ImageIcon] = {
-    val icon = Option(resourceFromClassloader(path)).map(imgURL => Swing.Icon(imgURL))
-    if (icon.isDefined) { icon.get.setDescription(description); icon } else None
+
+  def createImageIcon(path: String): Option[javax.swing.ImageIcon] = {
+    Option(resourceFromClassloader(path)).map(imgURL => Swing.Icon(imgURL))
   }
   
   lazy val top = new IconDemoApp() {
-    title = "IconDemoApp"
+    title = "Icon Demo: Please Select an Image"
   }
 }
 
 /**
- * @param Icon - The full size photo to show in the button.
- * @param Icon - The thumbnail to show in the button.
- * @param String - The description of the icon.
+ * @param photo - The full size photo to show in the button.
+ * @param thumb - The thumbnail to show in the button.
+ * @param desc - The description of the icon.
  */
-class ThumbnailAction(photo: Icon, thumb: Icon, desc: String) extends Action(desc) {
-  /**
-   * The icon if the full image we want to display.
-   */
-  private val displayPhoto: Icon = photo
-
-  // The LARGE_ICON_KEY is the key for setting the
+class ThumbnailAction(photo: Icon, thumb: Icon, desc: String, photographLabel:Label) extends Action("") {
   // icon when an Action is applied to a butt
-  peer.putValue(javax.swing.Action.SHORT_DESCRIPTION, desc)
+  toolTip = desc
 
   // The short description becomes the tooltip of a button.
-  peer.putValue(javax.swing.Action.LARGE_ICON_KEY, thumb)
+  icon = thumb
 
-  def apply() {}
+  def apply(): Unit = {
+    photographLabel.icon = photo
+    IconDemoApp.top.title = s"Icon Demo: $desc"
+  }
 }
 
 
-class ToolBar extends scala.swing.Component with SequentialContainer.Wrapper {
-  override lazy val peer: JToolBar = new JToolBar with SuperMixin
-}

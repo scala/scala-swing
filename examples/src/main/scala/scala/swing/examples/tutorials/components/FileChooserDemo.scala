@@ -34,7 +34,6 @@ import scala.swing._
 import scala.swing.event._
 
 import java.io.File
-import java.net.URL
 
 /**
  * Tutorial: How to Use File Choosers
@@ -47,12 +46,12 @@ import java.net.URL
  *   /scala/swing/examples/tutorials/images/Open16.gif
  *   /scala/swing/examples/tutorials/images/Save16.gif
  */
-object FileChooserDemo extends SimpleSwingApplication {
-  private val newline = "\n"
+class FileChooserDemo extends BorderPanel {
 
-  val log = new TextArea(5, 20)
-  log.peer.setMargin(new Insets(5, 5, 5, 5))
-  log.editable = false
+  val log = new TextArea(5, 20) {
+    peer.setMargin(new Insets(5, 5, 5, 5))
+    editable = false
+  }
   val logScrollPane = new ScrollPane(log)
 
   //Create a file chooser
@@ -71,56 +70,64 @@ object FileChooserDemo extends SimpleSwingApplication {
 
   //Create the open button.  We use the image from the JLF
   //Graphics Repository (but we extracted it from the jar).
-  val openButton = new Button("Open a File...")
-  val openIconURL: URL = getClass().getResource("/scala/swing/examples/tutorials/images/Open16.gif")
-  if (openIconURL != null) {
-    openButton.icon = Swing.Icon(openIconURL)
+  val openButton = new Button("Open a File...") {
+    FileChooserDemo.createImageIcon("/scala/swing/examples/tutorials/images/Open16.gif").foreach( icn =>
+      icon = icn
+    )
   }
-  
+
   //Create the save button.  We use the image from the JLF
   //Graphics Repository (but we extracted it from the jar).
-  val saveButton = new Button("Save a File...")
-  val saveIconURL: URL = getClass().getResource("/scala/swing/examples/tutorials/images/Save16.gif")
-  if (saveIconURL != null) {
-    saveButton.icon = Swing.Icon(saveIconURL)
+  val saveButton = new Button("Save a File...") {
+    FileChooserDemo.createImageIcon("/scala/swing/examples/tutorials/images/Save16.gif").foreach( icn =>
+      icon = icn
+    )
   }
-  
+
   //For layout purposes, put the buttons in a separate panel
   val buttonPanel = new FlowPanel() {
     contents += openButton
     contents += saveButton
   }
   
-  lazy val top = new MainFrame {
-    title = "FileChooserDemo"
-    val bp = new BorderPanel {
-      layout(buttonPanel) = BorderPanel.Position.North
-      layout(logScrollPane) = BorderPanel.Position.Center
-    }
-    contents = bp
-    listenTo(openButton)
-    listenTo(saveButton)
-    val prefix = "You typed \""
-    reactions += {
-      case ButtonClicked(`openButton`) =>
-        if (fc.showOpenDialog(buttonPanel) == FileChooser.Result.Approve) {
+  layout(buttonPanel) = BorderPanel.Position.North
+  layout(logScrollPane) = BorderPanel.Position.Center
+
+  listenTo(openButton)
+  listenTo(saveButton)
+
+  reactions += {
+    case ButtonClicked(`openButton`) =>
+      fc.showOpenDialog(buttonPanel) match {
+        case FileChooser.Result.Approve =>
           val file: File = fc.selectedFile
           //This is where a real application would open the file.
-          log.append("Opening: " + file.getName() + "." + newline)
-        }
-        else {
-          log.append("Open command cancelled by user." + newline)
-        }
-      case ButtonClicked(`saveButton`) =>
-        if (fc.showOpenDialog(buttonPanel) == FileChooser.Result.Approve) {
+          log.append(s"Opening: ${file.getName}.\n" )
+        case _ =>
+          log.append("Open command cancelled by user.\n")
+      }
+
+
+    case ButtonClicked(`saveButton`) =>
+      fc.showSaveDialog(buttonPanel) match {
+        case FileChooser.Result.Approve =>
           val file: File = fc.selectedFile
           //This is where a real application would save the file.
-          log.append("Saving: " + file.getName() + "." + newline)
-        }
-        else {
-          log.append("Save command cancelled by user." + newline)
-        }
-    }
+          log.append(s"Saving: ${file.getName}.\n")
+        case _ =>
+          log.append("Save command cancelled by user.\n")
+      }
   }
 
+}
+
+object FileChooserDemo extends SimpleSwingApplication {
+  def createImageIcon(path: String ): Option[javax.swing.ImageIcon] =
+    Option(resourceFromClassloader(path)).map(imgURL => Swing.Icon(imgURL))
+
+  lazy val top = new MainFrame() {
+    title = "FileChooserDemo"
+    //Create and set up the content pane.
+    contents = new FileChooserDemo()
+  }
 }

@@ -111,6 +111,6 @@ object ButtonHtmlDemo extends SimpleSwingApplication {
   lazy val top = new MainFrame() {
     title = "ButtonHtmlDemo"
     //Create and set up the content pane.
-    contents = new ButtonHtmlDemo();
+    contents = new ButtonHtmlDemo()
   }
 }

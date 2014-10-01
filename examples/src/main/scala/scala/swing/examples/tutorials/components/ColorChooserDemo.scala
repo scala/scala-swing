@@ -41,12 +41,10 @@ import java.awt.{ Color, Dimension, Font }
  * 
  * Source code reference:
  * [[http://docs.oracle.com/javase/tutorial/uiswing/examples/components/ColorChooserDemoProject/src/components/ColorChooserDemo.java]]
- *
- * ColorChooserDemo.scala requires no other files.
  */
 class ColorChooserDemo extends BorderPanel {
   //Set up the banner at the top of the window
-  val banner = new Label("Welcome to the Tutorial Zone!", EmptyIcon, Alignment.Center) {
+  val banner = new Label("Welcome to the Scala-Swing Zone!", EmptyIcon, Alignment.Center) {
     foreground = Color.yellow
     background = Color.blue
     opaque = true
@@ -75,6 +73,6 @@ object ColorChooserDemo extends SimpleSwingApplication {
   lazy val top = new MainFrame() {
     title = "ColorChooserDemo"
     //Create and set up the content pane.
-    contents = new ColorChooserDemo();
+    contents = new ColorChooserDemo()
   }
 }

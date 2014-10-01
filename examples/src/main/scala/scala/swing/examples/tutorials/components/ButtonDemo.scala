@@ -47,28 +47,28 @@ import javax.swing.UIManager
  *   /scala/swing/examples/tutorials/images/left.gif
  */
 class ButtonDemo extends FlowPanel {
-  val leftButtonIcon = ButtonDemo.createImageIcon("/scala/swing/examples/tutorials/images/right.gif").get
-  val middleButtonIcon = ButtonDemo.createImageIcon("/scala/swing/examples/tutorials/images/middle.gif").get
-  val rightButtonIcon = ButtonDemo.createImageIcon("/scala/swing/examples/tutorials/images/left.gif").get
-  //
+  val leftButtonIcon = ButtonDemo.createImageIcon("/scala/swing/examples/tutorials/images/right.gif")
+  val middleButtonIcon = ButtonDemo.createImageIcon("/scala/swing/examples/tutorials/images/middle.gif")
+  val rightButtonIcon = ButtonDemo.createImageIcon("/scala/swing/examples/tutorials/images/left.gif")
+
   val disable: Button = new Button("Disable middle button") {
-    icon = leftButtonIcon
+    leftButtonIcon.foreach(  icon = _)
     verticalTextPosition = Alignment.Center
     horizontalTextPosition = Alignment.Leading
     mnemonic = event.Key.D
     tooltip = "Click this button to disable the middle button."
   }
-  //
+
   val middle: Button = new Button("Middle button") {
-    icon = middleButtonIcon
+    middleButtonIcon.foreach(  icon = _ )
     verticalTextPosition = Alignment.Bottom
     horizontalTextPosition = Alignment.Center
     mnemonic = event.Key.M
     tooltip = "This middle button does nothing when you click it."
   }
-  //
+
   val enable: Button = new Button("Enable middle button") {
-    icon = rightButtonIcon
+    rightButtonIcon.foreach( icon = _  )
     enabled = false
     mnemonic = event.Key.E
     tooltip = "Click this button to enable the middle button."
@@ -82,8 +82,8 @@ class ButtonDemo extends FlowPanel {
   listenTo(enable)
 
   reactions += {
-    case ButtonClicked(`enable`) => enableMiddle
-    case ButtonClicked(`disable`) => disableMiddle
+    case ButtonClicked(`enable`) => enableMiddle()
+    case ButtonClicked(`disable`) => disableMiddle()
   }
 
   def enableMiddle(): Unit = {
@@ -91,7 +91,8 @@ class ButtonDemo extends FlowPanel {
     middle.enabled = true
     disable.enabled = true
   }
-  def disableMiddle(): Unit = {
+
+  def disableMiddle(): Unit  = {
     enable.enabled = true
     middle.enabled = false
     disable.enabled = false

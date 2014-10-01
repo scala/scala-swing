@@ -33,7 +33,6 @@ package scala.swing.examples.tutorials.components
 
 import scala.swing._
 import javax.swing.ImageIcon
-import java.net.URL
 import java.awt.{ Dimension, Font }
 
 /**
@@ -52,8 +51,8 @@ import java.awt.{ Dimension, Font }
  */
 class CustomComboBoxDemo extends BorderPanel {
   val petStrings: Array[String] = Array("Bird", "Cat", "Dog", "Rabbit", "Pig")
-  val images: Array[Option[ImageIcon]] = new Array[Option[ImageIcon]](petStrings.length)
-  val intArray: Array[Int] = new Array[Int](petStrings.length)
+//  val images: Array[Option[ImageIcon]] = new Array[Option[ImageIcon]](petStrings.length)
+  val intArray: Array[Int] = (0 until petStrings.length ).toArray
   /*
    * Despite its use of EmptyBorder, this panel makes a fine content
    * pane because the empty border just increases the panel's size
@@ -62,14 +61,11 @@ class CustomComboBoxDemo extends BorderPanel {
    * opaque (which it is by default); adding a border doesn't change
    * that.
    */
-  for (i <- 0 until petStrings.length) {
-    val oImage = CustomComboBoxDemo.createImageIcon("/scala/swing/examples/tutorials/images/" + petStrings(i) + ".gif")
-    if (oImage.isDefined) {
-      oImage.get.setDescription(petStrings(i))
-    }
-    images(i) = oImage
-    intArray(i) = i
-  }
+
+  val images:Array[Option[ImageIcon]]  = petStrings.map( pet => {
+    val oImage = CustomComboBoxDemo.createImageIcon(s"/scala/swing/examples/tutorials/images/$pet.gif")
+    oImage.map( img =>  {img.setDescription(pet); img} )
+  })
 
   //Create the combo box.
   val petList = new ComboBox[Int](intArray) {
@@ -79,7 +75,7 @@ class CustomComboBoxDemo extends BorderPanel {
   }
 
   //Lay out the demo.
-  layout(petList) = BorderPanel.Position.North
+  layout(petList) = BorderPanel.Position.Center
   border = Swing.EmptyBorder(20, 20, 20, 20)
 
   class ComboBoxRenderer extends ListView.AbstractRenderer[Int, Label](new Label("")) {
@@ -89,30 +85,23 @@ class CustomComboBoxDemo extends BorderPanel {
      * to the selected value and returns the label, set up
      * to display the text and image.
      */
-    def configure(
-      listMe: ListView[_],
-      isSelected: Boolean,
-      cellHasFocus: Boolean,
-      a: Int,
-      index: Int) = {
+    def configure( listMe: ListView[_], isSelected: Boolean, cellHasFocus: Boolean, a: Int, index: Int): Unit = {
       //Set the icon and text.  If icon was null, say so.
-      component.icon = images(a).get
-      val pet = petStrings(a)
-      if (component.icon != null) {
-        component.text = pet;
-        component.font = listMe.font
-      } else {
-        setUhOhText(pet + " (no image available)",
-          listMe.font)
+      images(a) match {
+        case Some( icon ) =>
+          component.icon = icon
+          component.text = petStrings(a)
+          component.font = listMe.font
+        case None =>  setUhOhText( s"${petStrings(a)} (no image available)",  listMe.font)
       }
     }
 
     //Set the font and text when no image was found.
-    def setUhOhText(uhOhText: String, normalFont: Font) = {
+    def setUhOhText(uhOhText: String, normalFont: Font): Unit = {
       if (!uhOhFont.isDefined) { //lazily create this font
         uhOhFont = Some(normalFont.deriveFont(Font.ITALIC))
       }
-      component.font = uhOhFont.get
+      component.font = uhOhFont.getOrElse( normalFont )
       component.text = uhOhText
     }
   }
@@ -127,8 +116,11 @@ object CustomComboBoxDemo extends SimpleSwingApplication {
   
   lazy val top = new MainFrame() {
     title = "CustomComboBoxDemo"
+
     //Create and set up the content pane.
-    contents = new CustomComboBoxDemo();
+    val newContentPane = new CustomComboBoxDemo()
+    newContentPane.opaque = true
+    contents = newContentPane
   }
 
 }

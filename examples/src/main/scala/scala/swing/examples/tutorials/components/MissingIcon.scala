@@ -44,7 +44,6 @@ import javax.swing.Icon
  * icon from an external location.
  *
  * @author Collin Fagan
- * @date 7/25/2007
  */
 class MissingIcon extends Icon {
 
@@ -71,12 +70,8 @@ class MissingIcon extends Icon {
     g2d.dispose()
   }
 
-  def getIconWidth(): Int = {
-    width
-  }
+  override def getIconWidth: Int = width
 
-  def getIconHeight(): Int = {
-    height
-  }
+  override def getIconHeight: Int = height
 
 }

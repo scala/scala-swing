@@ -37,14 +37,15 @@ import java.awt.Color
 import java.util.Date
 import java.text.SimpleDateFormat
 
+
+import scala.util.{Try, Failure, Success}
+
 /**
  * Tutorial: How to Use Combo Boxes
  * [[http://docs.oracle.com/javase/tutorial/uiswing/components/combobox.html]]
  * 
  * Source code reference:
  * [[http://docs.oracle.com/javase/tutorial/uiswing/examples/components/ComboBoxDemo2Project/src/components/ComboBoxDemo2.java]]
- *
- * ComboBoxDemo2.scala requires no other files.
  */
 class ComboBoxDemo2 extends BoxPanel(Orientation.Vertical) {
   val patternExamples = Array[String](
@@ -85,14 +86,14 @@ class ComboBoxDemo2 extends BoxPanel(Orientation.Vertical) {
   val patternPanel = new BoxPanel(Orientation.Vertical) {
     contents += patternLabel1
     contents += patternLabel2
-    xLayoutAlignment = 0.0 // Left
+    xLayoutAlignment =  java.awt.Component.LEFT_ALIGNMENT
     contents += patternList
   }
 
   val resultPanel = new GridPanel(0,1) {
     contents += resultLabel
     contents += result
-    xLayoutAlignment = 0.0 // Left
+    xLayoutAlignment = java.awt.Component.LEFT_ALIGNMENT
   }
   
   contents += patternPanel
@@ -102,21 +103,20 @@ class ComboBoxDemo2 extends BoxPanel(Orientation.Vertical) {
   
   listenTo(patternList.selection)
   reactions += {
-    case SelectionChanged(`patternList`) => // currentPattern = patternList.selection.item
-    reformat()
+    case SelectionChanged(`patternList`) => reformat()
   }
   
   def reformat(): Unit = {
-    val today = new Date()
-    val formatter = new SimpleDateFormat(patternList.selection.item)
-    try {
-      val dateString = formatter.format(today)
-      result.foreground = Color.black
-      result.text = dateString
-    }
-    catch {
-      case iae: IllegalArgumentException => result.foreground = Color.red
-        result.text = "Error: " + iae.getMessage()
+    Try {
+      val today = new Date()
+      val formatter = new SimpleDateFormat(patternList.selection.item)
+      formatter.format(today)
+    } match {
+      case Success( dateString) =>
+        result.foreground = Color.black
+        result.text = dateString
+      case Failure( err ) =>
+        result.text = s"Error: ${err.getMessage}"
     }
   }
 }
@@ -125,6 +125,6 @@ object ComboBoxDemo2 extends SimpleSwingApplication {
   lazy val top = new MainFrame() {
     title = "ComboBoxDemo2"
     //Create and set up the content pane.
-    contents = new ComboBoxDemo2();
+    contents = new ComboBoxDemo2()
   }
 }

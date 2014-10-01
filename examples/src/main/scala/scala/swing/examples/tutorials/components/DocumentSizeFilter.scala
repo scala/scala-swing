@@ -44,10 +44,10 @@ class DocumentSizeFilter(val maxCharacters: Int) extends DocumentFilter {
     //the contents too long. Another option would be
     //to truncate the inserted string so the contents
     //would be exactly maxCharacters in length.
-    if ((fb.getDocument().getLength() + str.length) <= maxCharacters) {
+    if ((fb.getDocument.getLength + str.length) <= maxCharacters) {
       super.insertString(fb, offs, str, a)
     } else {
-      Toolkit.getDefaultToolkit().beep()
+      Toolkit.getDefaultToolkit.beep()
     }
   }
 
@@ -59,10 +59,10 @@ class DocumentSizeFilter(val maxCharacters: Int) extends DocumentFilter {
     //the contents too long. Another option would be
     //to truncate the replacement string so the contents
     //would be exactly maxCharacters in length.
-    if ((fb.getDocument().getLength() + str.length - length) <= maxCharacters) {
+    if ((fb.getDocument.getLength + str.length - length) <= maxCharacters) {
       super.replace(fb, offs, length, str, a)
     } else {
-      Toolkit.getDefaultToolkit().beep()
+      Toolkit.getDefaultToolkit.beep()
     }
   }
 }
