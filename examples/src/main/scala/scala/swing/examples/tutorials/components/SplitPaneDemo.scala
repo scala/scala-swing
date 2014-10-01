@@ -37,14 +37,7 @@ import java.awt.Font
 import java.net.URL
 import javax.swing.ImageIcon
 
-/**
- * Tutorial: How to Use Split Panes
- * [[http://docs.oracle.com/javase/tutorial/uiswing/components/splitpane.html]]
- * 
- * Source code reference:
- * [[http://docs.oracle.com/javase/tutorial/uiswing/examples/components/SplitPaneDemoProject/src/components/SplitPaneDemo.java]]
- */
-//SplitPaneDemo itself is not a visible component.
+//SplitPaneDemo itself is not a visible component.  It is used by SplitPaneDemo2.scala.
 class SplitPaneDemo extends FlowPanel {
   val imageNames: Array[String] = Array("Bird", "Cat", "Dog", "Rabbit", "Pig",
     "dukeWaveRed", "kathyCosmo", "left", "middle", "right", "stickerface")
@@ -61,7 +54,8 @@ class SplitPaneDemo extends FlowPanel {
   val pictureScrollPane = new ScrollPane(picture)
 
   //Create a split pane with the two scroll panes in it.
-  val splitPane = new SplitPane(Orientation.Horizontal, listScrollPane, pictureScrollPane) {
+  //Use Orientation.Vertical to get a left/right split pane
+  val splitPane = new SplitPane(Orientation.Vertical, listScrollPane, pictureScrollPane) {
     oneTouchExpandable = true
     dividerLocation = 150
   }

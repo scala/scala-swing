@@ -42,6 +42,10 @@ import javax.swing.ImageIcon
  * 
  * Source code reference:
  * [[http://docs.oracle.com/javase/tutorial/uiswing/examples/components/SplitPaneDemo2Project/src/components/SplitPaneDemo2.java]]
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/examples/components/SplitPaneDemoProject/src/components/SplitPaneDemo.java]]
+ *
+ * SplitPaneDemo2.scala uses
+ *   SplitPaneDemo.scala
  */
 class SplitPaneDemo2 extends MainFrame {
   title = "SplitPaneDemo2"
@@ -63,8 +67,9 @@ class SplitPaneDemo2 extends MainFrame {
   }
   
   //Create a split pane and put "top" (a split pane)
-        //and JLabel instance in it.
-  val splitPane = new SplitPane(Orientation.Vertical, top, label) {
+  //and JLabel instance in it.
+  //Use Orientation.Horizontal to get a top/bottom split pane.
+  val splitPane = new SplitPane(Orientation.Horizontal, top, label) {
     oneTouchExpandable = true
     dividerLocation = 180
   }

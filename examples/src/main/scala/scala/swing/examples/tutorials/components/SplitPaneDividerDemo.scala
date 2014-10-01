@@ -64,7 +64,7 @@ class SplitPaneDividerDemo extends BorderPanel {
   }
   sd2.setMinimumSize(new Dimension(30,30))
   
-  val splitPane = new SplitPane(Orientation.Horizontal, sd1, sd2) {
+  val splitPane = new SplitPane(Orientation.Vertical, sd1, sd2) {
     resizeWeight = 0.5
     oneTouchExpandable = true
     continuousLayout = true
