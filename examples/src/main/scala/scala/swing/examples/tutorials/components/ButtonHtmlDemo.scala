@@ -47,9 +47,9 @@ import java.awt.Font
  *   /scala/swing/examples/tutorials/images/left.gif
  */
 class ButtonHtmlDemo extends FlowPanel {
-  val leftButtonIcon = createImageIcon("/scala/swing/examples/tutorials/images/right.gif").get
-  val middleButtonIcon = createImageIcon("/scala/swing/examples/tutorials/images/middle.gif").get
-  val rightButtonIcon = createImageIcon("/scala/swing/examples/tutorials/images/left.gif").get
+  val leftButtonIcon = ButtonHtmlDemo.createImageIcon("/scala/swing/examples/tutorials/images/right.gif").get
+  val middleButtonIcon = ButtonHtmlDemo.createImageIcon("/scala/swing/examples/tutorials/images/middle.gif").get
+  val rightButtonIcon = ButtonHtmlDemo.createImageIcon("/scala/swing/examples/tutorials/images/left.gif").get
   //
   val disable: Button = new Button("<html><center><b><u>D</u>isable</b><br>" +
                          "<font color=#ffffdd>middle button</font>") {
@@ -102,19 +102,12 @@ class ButtonHtmlDemo extends FlowPanel {
     middle.enabled = false
     disable.enabled = false
   }
-  def createImageIcon(path: String): Option[javax.swing.ImageIcon] = {
-    val imgURL: java.net.URL = getClass().getResource(path)
-    val img: Option[javax.swing.ImageIcon] = if (imgURL != null) {
-      Some(Swing.Icon(imgURL))
-    } else {
-      None
-    }
-    img
-  }
-
 }
 
 object ButtonHtmlDemo extends SimpleSwingApplication {
+  def createImageIcon(path: String): Option[javax.swing.ImageIcon] = {
+    Option(resourceFromClassloader(path)).map(imgURL => Swing.Icon(imgURL))
+  }
   lazy val top = new MainFrame() {
     title = "ButtonHtmlDemo"
     //Create and set up the content pane.

@@ -47,9 +47,9 @@ import javax.swing.UIManager
  *   /scala/swing/examples/tutorials/images/left.gif
  */
 class ButtonDemo extends FlowPanel {
-  val leftButtonIcon = createImageIcon("/scala/swing/examples/tutorials/images/right.gif").get
-  val middleButtonIcon = createImageIcon("/scala/swing/examples/tutorials/images/middle.gif").get
-  val rightButtonIcon = createImageIcon("/scala/swing/examples/tutorials/images/left.gif").get
+  val leftButtonIcon = ButtonDemo.createImageIcon("/scala/swing/examples/tutorials/images/right.gif").get
+  val middleButtonIcon = ButtonDemo.createImageIcon("/scala/swing/examples/tutorials/images/middle.gif").get
+  val rightButtonIcon = ButtonDemo.createImageIcon("/scala/swing/examples/tutorials/images/left.gif").get
   //
   val disable: Button = new Button("Disable middle button") {
     icon = leftButtonIcon
@@ -96,19 +96,14 @@ class ButtonDemo extends FlowPanel {
     middle.enabled = false
     disable.enabled = false
   }
-  def createImageIcon(path: String): Option[javax.swing.ImageIcon] = {
-    val imgURL: java.net.URL = getClass().getResource(path)
-    val img: Option[javax.swing.ImageIcon] = if (imgURL != null) {
-      Some(Swing.Icon(imgURL))
-    } else {
-      None
-    }
-    img
-  }
+
 
 }
 
 object ButtonDemo extends SimpleSwingApplication {
+  def createImageIcon(path: String): Option[javax.swing.ImageIcon] = {
+    Option(resourceFromClassloader(path)).map(imgURL => Swing.Icon(imgURL))
+  }
   UIManager.put("swing.boldMetal", false)
   lazy val top = new MainFrame() {
     title = "ButtonDemo"

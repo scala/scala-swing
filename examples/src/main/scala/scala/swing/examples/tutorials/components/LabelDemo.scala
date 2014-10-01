@@ -71,14 +71,9 @@ class LabelDemo extends GridPanel(3, 1) {
 object LabelDemo extends SimpleSwingApplication {
   UIManager.put("swing.boldMetal", false)
   /** Returns an ImageIcon option, or None if the path was invalid. */
-  def createImageIcon(path: String, description: String): Option[ImageIcon] = {
-    val imgURL: URL = getClass().getResource(path)
-    if (imgURL != null) {
-      // scala swing has no mechanism for setting the description.
-      Some(new ImageIcon(imgURL, description))
-    } else {
-      None
-    }
+  def createImageIcon(path: String, description: String): Option[javax.swing.ImageIcon] = {
+    val icon = Option(resourceFromClassloader(path)).map(imgURL => Swing.Icon(imgURL))
+    if (icon.isDefined) { icon.get.setDescription(description); icon } else None
   }
   lazy val top = new MainFrame() {
     title = "LabelDemo"

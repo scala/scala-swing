@@ -182,15 +182,9 @@ class IconDemoApp extends MainFrame {
 }
 
 object IconDemoApp extends SimpleSwingApplication {
-  def createImageIcon(path: String,
-    description: String): Option[ImageIcon] = {
-    val imgURL: URL = getClass().getResource(path)
-    if (imgURL != null) {
-      Some(new ImageIcon(imgURL, description))
-    } else {
-      System.err.println("Couldn't find file: " + path);
-      None
-    }
+  def createImageIcon(path: String, description: String): Option[javax.swing.ImageIcon] = {
+    val icon = Option(resourceFromClassloader(path)).map(imgURL => Swing.Icon(imgURL))
+    if (icon.isDefined) { icon.get.setDescription(description); icon } else None
   }
   
   lazy val top = new IconDemoApp() {

@@ -170,16 +170,10 @@ class SliderDemo2(window: Window) extends BorderPanel with ActionListener {
 
 object SliderDemo2 extends SimpleSwingApplication {
   /** Returns an ImageIcon option, or None if the path was invalid. */
-  def createImageIcon(path: String): Option[ImageIcon] = {
-    val imgURL: URL = getClass().getResource(path)
-    if (imgURL != null) {
-      // scala swing has no mechanism for setting the description in the peer.
-      Some(new ImageIcon(imgURL))
-    } else {
-      None
-    }
+  def createImageIcon(path: String): Option[javax.swing.ImageIcon] = {
+    Option(resourceFromClassloader(path)).map(imgURL => Swing.Icon(imgURL))
   }
-
+  
   lazy val top = new MainFrame() {
     title = "SliderDemo2"
     javax.swing.UIManager.put("swing.boldMetal", false)

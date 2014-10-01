@@ -171,13 +171,8 @@ class MenuLookDemo extends BorderPanel {
 
 object MenuLookDemo extends SimpleSwingApplication {
   /** Returns an ImageIcon option, or None if the path was invalid. */
-  def createImageIcon(path: String): Option[ImageIcon] = {
-    val imgURL: URL = getClass().getResource(path)
-    if (imgURL != null) {
-      Some(Swing.Icon(imgURL))
-    } else {
-      None
-    }
+  def createImageIcon(path: String): Option[javax.swing.ImageIcon] = {
+    Option(resourceFromClassloader(path)).map(imgURL => Swing.Icon(imgURL))
   }
   
   lazy val top = new MainFrame() {

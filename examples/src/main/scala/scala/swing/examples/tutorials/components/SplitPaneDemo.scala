@@ -101,14 +101,8 @@ class SplitPaneDemo extends FlowPanel {
 
 object SplitPaneDemo extends SimpleSwingApplication {
   /** Returns an ImageIcon option, or NOne if the path was invalid. */
-  def createImageIcon(path: String): Option[ImageIcon] = {
-    val imgURL: URL = getClass().getResource(path)
-    if (imgURL != null) {
-      // scala swing has no mechanism for setting the description.
-      Some(new ImageIcon(imgURL))
-    } else {
-      None
-    }
+  def createImageIcon(path: String): Option[javax.swing.ImageIcon] = {
+    Option(resourceFromClassloader(path)).map(imgURL => Swing.Icon(imgURL))
   }
 
   lazy val top = new MainFrame() {

@@ -286,13 +286,8 @@ object TextSamplerDemo extends SimpleSwingApplication {
   }
 
   private def createImageIcon(path: String, description: String): Option[javax.swing.ImageIcon] = {
-    val imgURL: java.net.URL = getClass().getResource(path)
-    val img: Option[javax.swing.ImageIcon] = if (imgURL != null) {
-      Some(new javax.swing.ImageIcon(imgURL, description))
-    } else {
-      None
-    }
-    img
+    val icon = Option(resourceFromClassloader(path)).map(imgURL => Swing.Icon(imgURL))
+    if (icon.isDefined) { icon.get.setDescription(description); icon } else None
   }
 }
 

@@ -152,14 +152,8 @@ class BoxAlignmentDemo extends BorderPanel {
 
 object BoxAlignmentDemo extends SimpleSwingApplication {
   /** Returns an ImageIcon option, or None if the path was invalid. */
-  def createImageIcon(path: String): Option[ImageIcon] = {
-    val imgURL: URL = getClass().getResource(path)
-    if (imgURL != null) {
-      Some(new ImageIcon(imgURL))
-    } else {
-      System.err.println("Couldn't find file: " + path)
-      return None
-    }
+  def createImageIcon(path: String): Option[javax.swing.ImageIcon] = {
+    Option(resourceFromClassloader(path)).map(imgURL => Swing.Icon(imgURL))
   }
 
   //Create and set up the window.

@@ -81,14 +81,8 @@ class TabbedPaneDemo extends GridPanel(1, 1) {
 
 object TabbedPaneDemo extends SimpleSwingApplication  {
   /** Returns an ImageIcon, or null if the path was invalid. */
-  def createImageIcon(path: String): Option[ImageIcon] = {
-    val imgURL: URL = getClass().getResource(path)
-    if (imgURL != null) {
-      // scala swing has no mechanism for setting the description.
-      Some(new ImageIcon(imgURL))
-    } else {
-      None
-    }
+  def createImageIcon(path: String): Option[javax.swing.ImageIcon] = {
+    Option(resourceFromClassloader(path)).map(imgURL => Swing.Icon(imgURL))
   }
   
   lazy val top = new MainFrame() {

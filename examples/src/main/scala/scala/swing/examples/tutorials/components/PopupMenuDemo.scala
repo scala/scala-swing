@@ -237,13 +237,8 @@ class PopupMenuDemo extends BorderPanel {
 
 object PopupMenuDemo extends SimpleSwingApplication {
   /** Returns an ImageIcon option, or None if the path was invalid. */
-  def createImageIcon(path: String): Option[ImageIcon] = {
-    val imgURL: URL = getClass().getResource(path)
-    if (imgURL != null) {
-      Some(Swing.Icon(imgURL))
-    } else {
-      None
-    }
+  def createImageIcon(path: String): Option[javax.swing.ImageIcon] = {
+    Option(resourceFromClassloader(path)).map(imgURL => Swing.Icon(imgURL))
   }
   /**
    * Create the GUI and show it.

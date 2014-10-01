@@ -155,9 +155,9 @@ class SliderDemo(window: Window) extends BoxPanel(Orientation.Vertical) with Act
   def updatePicture(frameNum: Int): Unit = {
     //Get the image if we haven't already.
     if (images(frameNumber) == null) {
-      images(frameNumber) = SliderDemo.createImageIcon("/scala/swing/examples/tutorials/images/doggy/T"
-        + frameNumber
-        + ".gif");
+      images(frameNumber) = SliderDemo.createImageIcon("/scala/swing/examples/tutorials/images/doggy/T" +
+        frameNumber +
+        ".gif").get;
     }
 
     //Set the image.
@@ -172,14 +172,8 @@ class SliderDemo(window: Window) extends BoxPanel(Orientation.Vertical) with Act
 object SliderDemo extends SimpleSwingApplication {
   UIManager.put("swing.boldMetal", false)
   /** Returns an ImageIcon, or null if the path was invalid. */
-  def createImageIcon(path: String): ImageIcon = {
-    val imgURL: URL = getClass().getResource(path)
-    if (imgURL != null) {
-      // scala swing has no mechanism for setting the description.
-      new javax.swing.ImageIcon(imgURL)
-    } else {
-      null
-    }
+  def createImageIcon(path: String): Option[javax.swing.ImageIcon] = {
+    Option(resourceFromClassloader(path)).map(imgURL => Swing.Icon(imgURL))
   }
 
   lazy val top = new MainFrame() {
