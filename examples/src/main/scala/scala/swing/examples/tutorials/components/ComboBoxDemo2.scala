@@ -62,8 +62,7 @@ class ComboBoxDemo2 extends BoxPanel(Orientation.Vertical) {
   val patternLabel1 = new Label("Enter the pattern string or")
   val patternLabel2 = new Label("select one from the list:")
   val patternList = new ComboBox[String](patternExamples) {
-    peer.setEditable(true)
-    // editable = true
+    makeEditable()
     selection.item = patternExamples(0)
     xLayoutAlignment = 0.0 // Left
   }
