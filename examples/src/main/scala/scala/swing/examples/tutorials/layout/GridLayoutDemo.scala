@@ -32,70 +32,66 @@ package scala.swing.examples.tutorials.layout
 
 import scala.swing._
 import scala.swing.event.ButtonClicked
-import java.awt.ComponentOrientation
 import javax.swing.UIManager
+import java.awt.Dimension
 
 /**
- * Tutorials: How to Use FlowLayout
- * [[http://docs.oracle.com/javase/tutorial/uiswing/layout/flow.html]]
- * 
+ * Tutorials: How to Use GridLayout
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/layout/grid.html]]
+ *
  * Source code reference:
- * [[http://docs.oracle.com/javase/tutorial/uiswing/examples/layout/FlowLayoutDemoProject/src/layout/FlowLayoutDemo.java]]
- * 
- * FlowLayoutDemo.scala requires no other files
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/examples/layout/GridLayoutDemoProject/src/layout/GridLayoutDemo.java]]
  */
-class FlowLayoutDemo extends BorderPanel {
-  val RtoL = "Right to left"
-  val LtoR = "Left to right"
-  val controls: FlowPanel = new FlowPanel()
-  val applyButton = new Button("Apply component orientation")
-  val compsToExperiment = new FlowPanel(FlowPanel.Alignment.Trailing)()
-  val LtoRbutton = new RadioButton(LtoR) { selected = true }
-  val RtoLbutton = new RadioButton(RtoL)
-  
-  //Add buttons to the experiment layout
-  compsToExperiment.contents += new Button("Button 1")
-  compsToExperiment.contents += new Button("Button 2")
-  compsToExperiment.contents += new Button("Button 3")
-  compsToExperiment.contents += new Button("Long Named Button 4")
-  compsToExperiment.contents += new Button("5")
-  
-  //Left to right component orientation is selected by default
-  compsToExperiment.peer.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT)
-  
-  //Add controls to set up the component orientation in the experiment layout
-  val group = new ButtonGroup() {
-    buttons += LtoRbutton
-    buttons += RtoLbutton
-  }
-  controls.contents += LtoRbutton
-  controls.contents += RtoLbutton
-  controls.contents += applyButton
-  
-  layout(compsToExperiment) = BorderPanel.Position.Center
+class GridLayoutDemo extends BorderPanel {
+  private val gapList = Array("0", "10", "15", "20")
+  private val maxGap = 20
+  val horGapComboBox = new ComboBox(gapList)
+  val verGapComboBox = new ComboBox(gapList)
+  val applyButton = new Button("Apply gaps")
+  val compsToExperiment = new GridPanel(0, 2)
+  val controls = new GridPanel(2, 3)
+  //Set up components preferred size
+  val b = new Button("Just fake button")
+  val buttonSize = b.preferredSize
+  compsToExperiment.preferredSize =
+    new Dimension((buttonSize.getWidth() * 2.5).toInt + maxGap,
+      (buttonSize.getHeight() * 3.5).toInt + maxGap * 2)
+
+  //Add buttons to experiment with Grid Layout
+  compsToExperiment.contents += new Label("Horizontal gap:")
+  compsToExperiment.contents += new Label("Vertical gap:")
+  compsToExperiment.contents += new Label(" ")
+  compsToExperiment.contents += horGapComboBox
+  compsToExperiment.contents += verGapComboBox
+  compsToExperiment.contents += applyButton
+  layout(compsToExperiment) = BorderPanel.Position.North
   layout(controls) = BorderPanel.Position.South
-  
+
   listenTo(applyButton)
   reactions += {
     case ButtonClicked(`applyButton`) =>
-      if (LtoRbutton.selected) {
-        compsToExperiment.peer.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT)
-      }
-      else {
-        compsToExperiment.peer.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT)
-      }
-      compsToExperiment.peer.validate()
-      compsToExperiment.peer.repaint()
+      //Get the horizontal gap value
+      val horGap = horGapComboBox.selection.item
+      //Get the vertical gap value
+      val verGap = verGapComboBox.selection.item
+      //Set up the horizontal gap value
+      compsToExperiment.hGap = horGap.toInt
+      //Set up the vertical gap value
+      compsToExperiment.vGap = verGap.toInt
+      //Set up the layout of the buttons
+      compsToExperiment.peer.getLayout().layoutContainer(compsToExperiment.peer)
   }
 }
 
-object FlowLayoutDemo extends SimpleSwingApplication {
+object GridLayoutDemo extends SimpleSwingApplication {
   /* Use an appropriate Look and Feel */
   UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel")
-  /* Turn off metal's use of bold fonts */
+  /* Turn off metal's use bold fonts */
   UIManager.put("swing.boldMetal", false)
-  lazy val top = new MainFrame() {
-    title = "FlowLayoutDemo"
-    contents = new FlowLayoutDemo()
+  //Create and set up the window.
+  lazy val top = new MainFrame {
+    title = "GridLayoutDemo"
+    resizable = false
+    contents = new GridLayoutDemo()
   }
 }
