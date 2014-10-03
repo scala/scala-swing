@@ -50,19 +50,19 @@ class ListDialogRunner(frame: Frame) extends BoxPanel(Orientation.NoOrientation)
 
   //Create the labels.
   val intro = new Label("The chosen name:") {
-    xLayoutAlignment = 0.50 // Center
+    xLayoutAlignment = java.awt.Component.CENTER_ALIGNMENT
   }
   val nameLabel = new Label(names(1)) {
     //Use a wacky font if it exists. If not, this falls
     //back to a font we know exists.
     font = getAFont()
-    xLayoutAlignment = 0.50 // Center
+    xLayoutAlignment = java.awt.Component.CENTER_ALIGNMENT
   }
   intro.peer.setLabelFor(nameLabel.peer)
 
   //Create the button.
   val button = new Button("Pick a new name...") {
-    xLayoutAlignment = 0.50 // Center
+    xLayoutAlignment = java.awt.Component.CENTER_ALIGNMENT
   }
 
   contents += intro

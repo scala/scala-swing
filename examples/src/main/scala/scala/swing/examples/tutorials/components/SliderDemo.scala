@@ -62,7 +62,7 @@ class SliderDemo(window: Window) extends BoxPanel(Orientation.Vertical) with Act
 
   val sliderLabel = new Label("Frames Per Second") {
     horizontalAlignment = Alignment.Center
-    xLayoutAlignment = 0.50 // Center
+    xLayoutAlignment = java.awt.Component.CENTER_ALIGNMENT
   }
 
   val framesPerSecond = new Slider {
@@ -81,7 +81,7 @@ class SliderDemo(window: Window) extends BoxPanel(Orientation.Vertical) with Act
 
   val picture = new Label() {
     horizontalAlignment = Alignment.Center
-    xLayoutAlignment = 0.50 // Center
+    xLayoutAlignment = java.awt.Component.CENTER_ALIGNMENT
     Swing.Lowered
     border = Swing.CompoundBorder(
       Swing.BeveledBorder(Swing.Lowered), Swing.EmptyBorder(10, 10, 10, 10))

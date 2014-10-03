@@ -65,7 +65,7 @@ class TablePrintDemo extends BoxPanel(Orientation.Vertical) {
   //Add a print button.
   val printButton = new Button("Print") {
     // peer.setAlignmentX(0.5f)
-    xLayoutAlignment = 0.50 // Center
+    xLayoutAlignment = java.awt.Component.CENTER_ALIGNMENT
   }
 
   //Add the scroll pane to this panel.

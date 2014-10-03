@@ -74,15 +74,13 @@ class ListDialog(frame: Frame, locationComp: Component,
     }
     selection.intervalMode = ListView.IntervalMode.SingleInterval
   }
-  // Setting the selection mode of the peer does not have an effect.
   list.peer.setLayoutOrientation(javax.swing.JList.HORIZONTAL_WRAP)
   val lSelect = list.selection
   defaultButton = setButton
   //
   val listScroller = new ScrollPane(list) {
     preferredSize = new Dimension(250, 80)
-    // peer.setAlignmentX(java.awt.Component.LEFT_ALIGNMENT)
-    xLayoutAlignment = 0.0 // Left
+    xLayoutAlignment = java.awt.Component.LEFT_ALIGNMENT
   }
   //
   //Create a container so that we can add a title around
@@ -117,9 +115,6 @@ class ListDialog(frame: Frame, locationComp: Component,
   listenTo(cancelButton)
   listenTo(list.mouse.clicks)
 //  listenTo(list.selection)
-  //Getting the selections out of the ListView is problematic.  I can't figure out a way to get
-  //it to work.  There are no demos available that use ListViews and actually consume the choices
-  //made with the list.  Maybe it is a broken component?
   reactions += {
     case ButtonClicked(`setButton`) => 
       setValue(list.listData(list.selection.leadIndex))

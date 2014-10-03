@@ -246,8 +246,7 @@ class MyFrame extends Frame {
   contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.PAGE_AXIS))
   contentPane.add(Box.createVerticalGlue()) // takes all extra space
   contentPane.add(button.peer)
-  // button.peer.setAlignmentX(Component.CENTER_ALIGNMENT) //horizontally centered
-  button.xLayoutAlignment = 0.50 // Center
+  button.xLayoutAlignment = java.awt.Component.CENTER_ALIGNMENT
   contentPane.add(Box.createVerticalStrut(5)) //spacer
   //
   listenTo(button)

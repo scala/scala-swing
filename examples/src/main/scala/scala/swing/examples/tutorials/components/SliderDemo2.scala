@@ -81,7 +81,7 @@ class SliderDemo2(window: Window) extends BorderPanel with ActionListener {
 
   val picture = new Label() {
     horizontalAlignment = Alignment.Center
-    xLayoutAlignment = 0.50 // Center
+    xLayoutAlignment = java.awt.Component.CENTER_ALIGNMENT
     Swing.Lowered
     border = Swing.CompoundBorder(
       Swing.BeveledBorder(Swing.Lowered), Swing.EmptyBorder(10, 10, 10, 10))
