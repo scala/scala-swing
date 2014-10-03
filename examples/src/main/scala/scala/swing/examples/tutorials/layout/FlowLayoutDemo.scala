@@ -85,7 +85,7 @@ class FlowLayoutDemo extends BorderPanel {
         compsToExperiment.peer.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT)
       }
       compsToExperiment.peer.validate()
-      compsToExperiment.peer.repaint()
+      compsToExperiment.repaint()
   }
 }
 
