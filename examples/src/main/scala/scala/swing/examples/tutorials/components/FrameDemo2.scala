@@ -77,21 +77,11 @@ class FrameDemo2 {
 
   //Create a new MyFrame object and show it.
   def showNewWindow(): Unit = {
-    val frame: Option[Frame] = if (noDecorations) None else Some(new MyFrame())
-
     //Take care of the no window decorations case.
     //NOTE: Unless you really need the functionality
     //provided by JFrame, you would usually use a
     //Window or JWindow instead of an undecorated JFrame.
-
-    //Undecorated frames are not supported by scala swing.  Setting the Frame's
-    //JFrame peer to be undecorated causes Swing to throw a java.awt.IllegalComponentStateException
-    //with the message "The frame is displayable."
-    //
-    //if (noDecorations) {
-    //  frame.peer.setUndecorated(true);
-    //}
-
+    val frame: Option[Frame] = if (noDecorations) Some(new MyFrameUndecorated()) else Some(new MyFrame())
     //Set window location.
     if (frame.isDefined) {
       val f = frame.get
@@ -123,7 +113,7 @@ class FrameDemo2 {
   }
 
   // Create the window-creation controls that go in the main window.
-  def createOptionControls(frame: Frame): Box = {
+  def createOptionControls(frame: Frame): BoxPanel = {
     val label1 = new Label("Decoration options for subsequently created frames:")
     val bg1 = new ButtonGroup()
     val label2 = new Label("Icon options:")
@@ -163,22 +153,20 @@ class FrameDemo2 {
     bg2.buttons += rb6
 
     //Add everything to a container.
-    val box = Box.createVerticalBox()
-    box.add(label1.peer)
-    box.add(Swing.VStrut(5).peer) // spacer
-    box.add(rb1.peer)
-    box.add(rb2.peer)
-    box.add(rb3.peer)
-    //
-    box.add(Swing.VStrut(15).peer) // spacer
-    box.add(label2.peer)
-    box.add(Swing.VStrut(5).peer) // spacer
-    box.add(rb4.peer)
-    box.add(rb5.peer)
-    box.add(rb6.peer)
-
-    //Add some breathing room.
-    box.setBorder(Swing.EmptyBorder(10, 10, 10, 10))
+    val box = new BoxPanel(Orientation.Vertical) {
+      border = Swing.EmptyBorder(10, 10, 10, 10)
+      contents += label1
+      contents += Swing.VStrut(5) // spacer
+      contents += rb1
+      contents += rb2
+      contents += rb3
+      contents += Swing.VStrut(15)
+      contents += label2
+      contents += Swing.VStrut(5)
+      contents += rb4
+      contents += rb5
+      contents += rb6
+    }
 
     frame.listenTo(rb1)
     frame.listenTo(rb2)
@@ -195,13 +183,8 @@ class FrameDemo2 {
         JFrame.setDefaultLookAndFeelDecorated(false)
       case ButtonClicked(`rb3`) =>
         noDecorations = true
-        //Undecorated frames are not supported by scala swing.  Setting the Frame's
-        //JFrame peer to be undecorated causes Swing to throw a java.awt.IllegalComponentStateException
-        //with the message "The frame is displayable."
-        //
         // No need to set the default look and feel decorated property to false.
         // JFrame.setDefaultLookAndFeelDecorated(false)
-        println("Undecorated frames are not supported by Scala Swing.")
       case ButtonClicked(`rb4`) => specifyIcon = false
       case ButtonClicked(`rb5`) =>
         specifyIcon = true
@@ -215,7 +198,7 @@ class FrameDemo2 {
   }
 
   //Create the button that goes in the main window.
-  def createButtonPane(frame: Frame): javax.swing.JComponent = {
+  def createButtonPane(frame: Frame): FlowPanel = {
     val button = new Button("New window")
     defaultButton = button
 
@@ -229,7 +212,7 @@ class FrameDemo2 {
       border = Swing.EmptyBorder(5, 5, 5, 5)
       contents += button
     }
-    pane.peer
+    pane
   }
 
 }
@@ -238,16 +221,45 @@ class MyFrame extends Frame {
   title = "A window"
 
   //This button lets you close even an undecorated window.
-  val button = new Button("Close window")
+  val button = new Button("Close window") {
+    xLayoutAlignment = java.awt.Component.CENTER_ALIGNMENT
+  }
 
   //Place the button near the bottom of the window.
-  //Undecorated windows are not supported in scala swing.  Go to the peer.
-  val contentPane: java.awt.Container = peer.getContentPane()
-  contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.PAGE_AXIS))
-  contentPane.add(Box.createVerticalGlue()) // takes all extra space
-  contentPane.add(button.peer)
-  button.xLayoutAlignment = java.awt.Component.CENTER_ALIGNMENT
-  contentPane.add(Box.createVerticalStrut(5)) //spacer
+  contents = new BoxPanel(Orientation.Vertical) {
+    contents += Swing.VGlue
+    contents += button
+    contents += Swing.VStrut(5)
+  }
+  //
+  listenTo(button)
+  reactions += {
+    case ButtonClicked(`button`) =>
+      visible = false
+      dispose()
+  }
+  preferredSize = new Dimension(150, 150)
+  pack()
+  visible = true
+  override def closeOperation() = {
+    close
+  }
+}
+
+class MyFrameUndecorated extends Frame with RichWindow.Undecorated {
+  visible = false
+    //This button lets you close even an undecorated window.
+  val button = new Button("Close window") {
+    xLayoutAlignment = java.awt.Component.CENTER_ALIGNMENT
+  }
+
+  //Place the button near the bottom of the window.
+  //Undecorated windows are not supported in scala swing.
+  contents = new BoxPanel(Orientation.Vertical) {
+    contents += Swing.VGlue
+    contents += button
+    contents += Swing.VStrut(5)
+  }
   //
   listenTo(button)
   reactions += {
@@ -307,13 +319,11 @@ object FrameDemo2 extends SimpleSwingApplication {
     JDialog.setDefaultLookAndFeelDecorated(true);
     //Create and set up the content pane.
     val demo = new FrameDemo2();
-    //Add components to it.
-    val contentPane = peer.getContentPane()
-
   }
-  top.contentPane.add(top.demo.createOptionControls(top),
-    BorderLayout.CENTER)
-  top.contentPane.add(top.demo.createButtonPane(top),
-    BorderLayout.PAGE_END)
+  val bp: BorderPanel = new BorderPanel() {
+      layout(top.demo.createOptionControls(top)) = BorderPanel.Position.Center
+      layout(top.demo.createButtonPane(top)) = BorderPanel.Position.South
+  }
+  top.contents = bp
   javax.swing.SwingUtilities.updateComponentTreeUI(top.peer)
 }
