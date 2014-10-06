@@ -380,11 +380,8 @@ class DialogDemo(val frame: Frame) extends BorderPanel {
 }
 
 object DialogDemo extends SimpleSwingApplication {
-
-  /** Returns an ImageIcon option, or None if the path was invalid. */
-  def createImageIcon(path: String): Option[javax.swing.ImageIcon] = {
+  def createImageIcon(path: String): Option[javax.swing.ImageIcon] =
     Option(resourceFromClassloader(path)).map(imgURL => Swing.Icon(imgURL))
-  }
 
   lazy val top = new MainFrame() {
     title = "DialogDemo"

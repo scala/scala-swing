@@ -36,13 +36,12 @@ import scala.swing.event.SelectionChanged
 import java.awt.{ Dimension, Font }
 import javax.swing.BorderFactory
 
-
-/**
+/*
  * Tutorial: How to Use Combo Boxes
  * [[http://docs.oracle.com/javase/tutorial/uiswing/components/combobox.html]]
  * 
  * Source code reference:
- * [[http://docs.oracle.com/javase/tutorial/uiswing/examples/components/ComboBoxDemoProject/src/components/ComboBoxDemo.java]]
+ * http://docs.oracle.com/javase/tutorial/uiswing/examples/components/ComboBoxDemoProject/src/components/ComboBoxDemo.java
  */
 class ComboBoxDemo extends BorderPanel {
 
@@ -78,14 +77,14 @@ class ComboBoxDemo extends BorderPanel {
   }
 
   def updateLabel(s: String): Unit = {
-    picture.icon =
-      ComboBoxDemo.createImageIcon("/scala/swing/examples/tutorials/images/" + s + ".gif").getOrElse( Swing.EmptyIcon )
+    val ic = ComboBoxDemo.createImageIcon(s"/scala/swing/examples/tutorials/images/$s.gif")
+    picture.icon = imgIcon.getOrElse( Swing.EmptyIcon )
   }
 }
 
 object ComboBoxDemo extends SimpleSwingApplication {
 
-  /** Returns an ImageIcon option, or None if the path was invalid. */
+  /** Returns an ImageIcon, or null if the path was invalid. */
   def createImageIcon(path: String ): Option[javax.swing.ImageIcon] =
     Option(resourceFromClassloader(path)).map(imgURL => Swing.Icon(imgURL))
 

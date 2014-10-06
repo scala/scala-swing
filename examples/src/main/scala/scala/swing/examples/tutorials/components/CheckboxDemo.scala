@@ -35,11 +35,10 @@ import scala.swing.event.ButtonClicked
 import scala.swing.event.Key
 import java.awt.Font
 
-import scala.swing.examples.tutorials.components.ButtonDemo._
 
 /**
  * Tutorial: How to Use Buttons, Check Boxes, and Radio Buttons
- * [[http://docs.oracle.com/javase/tutorial/uiswing/components/button.html]]
+ * http://docs.oracle.com/javase/tutorial/uiswing/components/button.html
  * 
  * Source code reference:
  * [[http://docs.oracle.com/javase/tutorial/uiswing/examples/components/CheckBoxDemoProject/src/components/CheckBoxDemo.java]]
@@ -50,7 +49,7 @@ import scala.swing.examples.tutorials.components.ButtonDemo._
  * geek-cg--.gif, ..., geek-cght.gif.
  */
 class CheckboxDemo extends BorderPanel {
-  /*
+     /**
      * Four accessory choices provide for 16 different
      * combinations. The image for each combination is
      * contained in a separate image file whose name indicates
@@ -146,7 +145,7 @@ class CheckboxDemo extends BorderPanel {
     pictureLabel.tooltip = choices.toString
 
     //Get the icon corresponding to the image.
-    createImageIcon( s"/scala/swing/examples/tutorials/images/geek/geek-$choices.gif") match {
+    CheckboxDemo.createImageIcon( s"/scala/swing/examples/tutorials/images/geek/geek-$choices.gif") match {
       case Some( icon ) =>
         pictureLabel.icon = icon
         pictureLabel.text = null

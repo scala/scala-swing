@@ -66,7 +66,6 @@ class ComboBoxDemo2 extends BoxPanel(Orientation.Vertical) {
   val patternList = new ComboBox[String](patternExamples) {
     makeEditable()
     selection.item = patternExamples(0)
-    xLayoutAlignment = 0.0 // Left
   }
   
   //Create the UI for displaying result.

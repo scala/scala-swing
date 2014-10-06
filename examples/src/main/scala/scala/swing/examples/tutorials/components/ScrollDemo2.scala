@@ -36,12 +36,12 @@ import scala.swing.event.MouseReleased
 import javax.swing.SwingUtilities
 import java.awt.{Color, Dimension, Graphics2D, Rectangle}
 
-/**
+/* 
  * Tutorial: How to Use Scroll Panes
- * [[http://docs.oracle.com/javase/tutorial/uiswing/components/scrollpane.html]]
+ * http://docs.oracle.com/javase/tutorial/uiswing/components/scrollpane.html
  * 
  * Source code references:
- * [[http://docs.oracle.com/javase/tutorial/uiswing/examples/components/ScrollDemo2Project/src/components/ScrollDemo2.java]]
+ * http://docs.oracle.com/javase/tutorial/uiswing/examples/components/ScrollDemo2Project/src/components/ScrollDemo2.java
  *
  * ScrollDemo2.scala requires no other files.
  */

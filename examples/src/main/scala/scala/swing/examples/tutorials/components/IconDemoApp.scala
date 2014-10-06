@@ -154,11 +154,9 @@ class IconDemoApp extends MainFrame {
 }
 
 object IconDemoApp extends SimpleSwingApplication {
-
-  def createImageIcon(path: String): Option[javax.swing.ImageIcon] = {
+  def createImageIcon(path: String): Option[javax.swing.ImageIcon] =
     Option(resourceFromClassloader(path)).map(imgURL => Swing.Icon(imgURL))
-  }
-  
+
   lazy val top = new IconDemoApp() {
     title = "Icon Demo: Please Select an Image"
   }

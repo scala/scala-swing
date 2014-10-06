@@ -45,8 +45,6 @@ import java.awt.Toolkit
  * ListDemo.scala requires no other files.
  */
 class ListDemo extends BorderPanel {
-  private val hireString = "Hire"
-  private val fireString = "Fire"
 
   private val listModel: Array[String] = Array("Jane Doe", "John Smith", "Kathy Green")
 
@@ -59,13 +57,20 @@ class ListDemo extends BorderPanel {
   }
 
   val listScrollPane: ScrollPane = new ScrollPane(listMe)
-  val hireButton: Button = new Button(hireString) {
+
+  val hireButton: Button = new Button("Hire") {
     enabled = false
-    // actionCommand = hireString
+    reactions += {
+      case ButtonClicked(_) => hireListenerMethod()
+    }
   }
-  val fireButton: Button = new Button(fireString) {
-    // actionComand = fireString
+
+  val fireButton: Button = new Button("Fire") {
+    reactions += {
+      case ButtonClicked(_) => fireListenerMethod()
+    }
   }
+
   val employeeName: TextField = new TextField(10)
   // employeeName.peer.getDocument().addDocumentListener(hireListener);
   val nameSelected: String = listModel(initiallySelected)
@@ -87,28 +92,22 @@ class ListDemo extends BorderPanel {
   layout(buttonPane) = BorderPanel.Position.South
 
   listenTo(listMe.selection)
-  listenTo(fireButton)
   listenTo(employeeName)
-  listenTo(hireButton)
 
   reactions += {
-    case ButtonClicked(`fireButton`) =>
-      fireListenerMethod()
     case EditDone(`employeeName`) =>
-      hireListenerMethod()
-    case ButtonClicked(`hireButton`) =>
       hireListenerMethod()
     case SelectionChanged(`listMe`) =>
       fireButton.enabled = listMe.selection.leadIndex >= 0
     case ValueChanged(`employeeName`) =>
       hireButton.enabled = employeeName.text.trim().length > 0
   }
+
   //This method tests for string equality. You could certainly
   //get more sophisticated about the algorithm.  For example,
   //you might want to ignore white space and capitalization.
-  def alreadyInList(name: String): Boolean = {
-    listMe.listData.contains(name);
-  }
+  def alreadyInList(name: String): Boolean = listMe.listData.contains(name)
+
   def fireListenerMethod(): Unit = {
     //This method can be called only if
     //there's a valid selection
@@ -126,24 +125,19 @@ class ListDemo extends BorderPanel {
         //removed item in last position
         index -= 1
       }
-      listMe.selectIndices(index);
-      listMe.ensureIndexIsVisible(index);
+      listMe.selectIndices(index)
+      listMe.ensureIndexIsVisible(index)
     }
   }
   def hireListenerMethod(): Unit = {
     val nameSelected: String = employeeName.text
     //User didn't type in a unique name...
     if (nameSelected.equals("") || alreadyInList(nameSelected)) {
-      Toolkit.getDefaultToolkit().beep()
+      Toolkit.getDefaultToolkit.beep()
       employeeName.requestFocusInWindow()
       employeeName.selectAll()
     } else {
-      var index: Int = listMe.selection.leadIndex //get selected index
-      if (index == -1) { //no selection, so insert at beginning
-        index = 0
-      } else { //add after the selected item
-        index += 1
-      }
+      val index: Int = listMe.selection.leadIndex + 1 //get selected index
 
       val (x: Seq[String], y: Seq[String]) = listMe.listData.splitAt(index)
       val z = employeeName.text +: y
@@ -166,6 +160,6 @@ object ListDemo extends SimpleSwingApplication {
   lazy val top = new MainFrame() {
     title = "ListDemo"
     //Create and set up the content pane.
-    contents = new ListDemo();
+    contents = new ListDemo()
   }
 }

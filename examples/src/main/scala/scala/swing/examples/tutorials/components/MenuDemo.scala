@@ -36,12 +36,12 @@ import java.net.URL
 import javax.swing.{ ImageIcon, KeyStroke }
 import java.awt.event.{ ActionEvent, KeyEvent }
 
-/**
+/*
  * Tutorial: How to Use Menus
- * [[http://docs.oracle.com/javase/tutorial/uiswing/components/menu.html]]
+ * http://docs.oracle.com/javase/tutorial/uiswing/components/menu.html
  * 
  * Source code reference:
- * [[http://docs.oracle.com/javase/tutorial/uiswing/examples/components/MenuDemoProject/src/components/MenuDemo.java]]
+ * http://docs.oracle.com/javase/tutorial/uiswing/examples/components/MenuDemoProject/src/components/MenuDemo.java
  *
  * MenuDemo.scala requires /scala/swing/examples/tutorials/images/middle.gif.
  *
@@ -201,8 +201,13 @@ class MenuDemo extends BorderPanel {
 
 object MenuDemo extends SimpleSwingApplication {
   /** Returns an ImageIcon icon, or None if the path was invalid. */
-  def createImageIcon(path: String): Option[javax.swing.ImageIcon] = {
-    Option(resourceFromClassloader(path)).map(imgURL => Swing.Icon(imgURL))
+  def createImageIcon(path: String): Option[ImageIcon] = {
+    val imgURL: URL = getClass().getResource(path)
+    if (imgURL != null) {
+      Some(Swing.Icon(imgURL))
+    } else {
+      None
+    }
   }
   lazy val top = new MainFrame() {
     title = "MenuDemo"

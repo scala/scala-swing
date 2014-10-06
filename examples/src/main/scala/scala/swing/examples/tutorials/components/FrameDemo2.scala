@@ -37,12 +37,12 @@ import java.awt.{ BorderLayout, Color, Component, Dimension, Graphics, Image, Po
 import java.awt.image.BufferedImage
 import java.net.URL
 
-/**
+/*
  * Tutorial: How to Make Frames (Main Windows)
- * [[http://docs.oracle.com/javase/tutorial/uiswing/components/frame.html]]
+ * http://docs.oracle.com/javase/tutorial/uiswing/components/frame.html
  * 
  * Source code reference:
- * [[http://docs.oracle.com/javase/tutorial/uiswing/examples/components/FrameDemo2Project/src/components/FrameDemo2.java]]
+ * http://docs.oracle.com/javase/tutorial/uiswing/examples/components/FrameDemo2Project/src/components/FrameDemo2.java
  *
  * FrameDemo2.scala shows off the window decoration features added in
  * 1.4, plus some window positioning code and (optionally)
@@ -264,18 +264,6 @@ class MyFrame extends Frame {
 }
 
 object FrameDemo2 extends SimpleSwingApplication {
-  //Use the Java look and feel.  This needs to be done before the frame is created
-  //so the companion object FrameDemo2 cannot simply extend SimpleSwingApplcation.
-  try {
-    UIManager.setLookAndFeel(
-      UIManager.getCrossPlatformLookAndFeelClassName());
-  } catch {
-    case e: Exception => ;
-  }
-  //Make sure we have nice window decorations.
-  JFrame.setDefaultLookAndFeelDecorated(true);
-  JDialog.setDefaultLookAndFeelDecorated(true);
-
   //Creates an icon-worthy Image from scratch.
   def createFDImage(): Image = {
     //Create a 16x16 pixel image.
@@ -306,13 +294,26 @@ object FrameDemo2 extends SimpleSwingApplication {
 
   lazy val top = new Frame() {
     title = "FrameDemo2"
+    //Use the Java look and feel.  This needs to be done before the frame is created
+    //so the companion object FrameDemo2 cannot simply extend SimpleSwingApplcation.
+    try {
+      UIManager.setLookAndFeel(
+        UIManager.getCrossPlatformLookAndFeelClassName());
+    } catch {
+      case e: Exception => ;
+    }
+    //Make sure we have nice window decorations.
+    JFrame.setDefaultLookAndFeelDecorated(true);
+    JDialog.setDefaultLookAndFeelDecorated(true);
     //Create and set up the content pane.
     val demo = new FrameDemo2();
     //Add components to it.
     val contentPane = peer.getContentPane()
+
   }
   top.contentPane.add(top.demo.createOptionControls(top),
     BorderLayout.CENTER)
   top.contentPane.add(top.demo.createButtonPane(top),
     BorderLayout.PAGE_END)
+  javax.swing.SwingUtilities.updateComponentTreeUI(top.peer)
 }

@@ -48,17 +48,19 @@ class SimpleTableSelectionDemo extends GridPanel(1, 0) {
   private val Debug = true
   private val AllowColumnSelection = false
   private val AllowRowSelection = true
+
   val columnNames: Array[String] = Array("First Name",
     "Last Name",
     "Sport",
     "# of Years",
     "Vegetarian")
+
   val data: Array[Array[Any]] = new Array[Array[Any]](5)
-  data(0) = Array("Kathy", "Smith", "Snowboarding", new Integer(5), false)
-  data(1) = Array("John", "Doe", "Rowing", new Integer(3), true)
-  data(2) = Array("Sue", "Black", "Knitting", new Integer(2), false)
-  data(3) = Array("Jane", "White", "Speed reading", new Integer(20), true)
-  data(4) = Array("Joe", "Brown", "Pool", new Integer(10), false)
+  data(0) = Array("Kathy", "Smith", "Snowboarding", 5, false)
+  data(1) = Array("John", "Doe", "Rowing", 3, true)
+  data(2) = Array("Sue", "Black", "Knitting", 2, false)
+  data(3) = Array("Jane", "White", "Speed reading", 20, true)
+  data(4) = Array("Joe", "Brown", "Pool", 10, false)
 
   val table = new Table(data, columnNames) {
     preferredViewportSize = new Dimension(500, 70)
@@ -89,14 +91,12 @@ class SimpleTableSelectionDemo extends GridPanel(1, 0) {
   }
 
   if (AllowColumnSelection) { // false by default
-    if (AllowRowSelection ||
-        table.selection.elementMode == Table.ElementMode.Row) {
+    if (AllowRowSelection || table.selection.elementMode == Table.ElementMode.Row) {
       //We allow both row and column selection, which
       //implies that we *really* want to allow individual
       //cell selection.
       table.selection.elementMode = Table.ElementMode.Cell
-    }
-    else if (table.selection.elementMode == Table.ElementMode.None) {
+    } else if (table.selection.elementMode == Table.ElementMode.None) {
       table.selection.elementMode = Table.ElementMode.Column
     }
     listenTo(table.selection)
@@ -104,12 +104,8 @@ class SimpleTableSelectionDemo extends GridPanel(1, 0) {
       case TableColumnsSelected(`table`, range: Range, adjusting: Boolean) =>
         //Ignore extra messages.
         if (!adjusting) {
-          if (range.isEmpty) {
-            println("No rows are selected.")
-          } else {
-            val selectedColumn = range.head
-            println("Column " + selectedColumn + " is now selected.")
-          }
+          if (range.isEmpty) println("No rows are selected.")
+          else println(s"Column ${range.head} is now selected.")
         }
     }
   }
@@ -128,7 +124,7 @@ class SimpleTableSelectionDemo extends GridPanel(1, 0) {
 
   private def printDebugData(table: Table): Unit = {
     val numRows = table.rowCount
-    val numCols = table.peer.getColumnCount()
+    val numCols = table.peer.getColumnCount
     val model: javax.swing.table.TableModel = table.model
 
     println("Value of data: ")

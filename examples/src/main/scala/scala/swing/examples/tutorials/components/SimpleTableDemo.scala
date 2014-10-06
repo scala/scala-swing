@@ -32,7 +32,6 @@ package scala.swing.examples.tutorials.components
 
 import scala.swing._
 import scala.swing.event.MouseClicked
-import scala.swing.event.MouseClicked
 /*
  * Tutorial: How to Use Tables
  * [[http://docs.oracle.com/javase/tutorial/uiswing/components/table.html]]
@@ -50,11 +49,11 @@ class SimpleTableDemo extends GridPanel(1, 0) {
     "# of Years",
     "Vegetarian")
   val data: Array[Array[Any]] = new Array[Array[Any]](5)
-  data(0) = Array("Kathy", "Smith", "Snowboarding", new Integer(5), false)
-  data(1) = Array("John", "Doe", "Rowing", new Integer(3), true)
-  data(2) = Array("Sue", "Black", "Knitting", new Integer(2), false)
-  data(3) = Array("Jane", "White", "Speed reading", new Integer(20), true)
-  data(4) = Array("Joe", "Brown", "Pool", new Integer(10), false)
+  data(0) = Array("Kathy", "Smith", "Snowboarding", 5, false)
+  data(1) = Array("John", "Doe", "Rowing", 3, true)
+  data(2) = Array("Sue", "Black", "Knitting", 2, false)
+  data(3) = Array("Jane", "White", "Speed reading", 20, true)
+  data(4) = Array("Joe", "Brown", "Pool", 10, false)
 
   val table = new Table(data, columnNames) {
     preferredViewportSize = new Dimension(500, 70)
@@ -75,7 +74,7 @@ class SimpleTableDemo extends GridPanel(1, 0) {
 
   private def printDebugData(table: Table): Unit = {
     val numRows = table.rowCount
-    val numCols = table.peer.getColumnCount()
+    val numCols = table.peer.getColumnCount
     val model: javax.swing.table.TableModel = table.model
 
     println("Value of data: ")

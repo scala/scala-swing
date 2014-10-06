@@ -36,7 +36,6 @@ import scala.swing.event.{ ValueChanged, WindowDeiconified, WindowIconified }
 import java.awt.Font
 import java.awt.event.{ ActionEvent, ActionListener }
 import javax.swing.Timer
-import java.net.URL
 import javax.swing.{ImageIcon, UIManager}
 
 /**
@@ -51,12 +50,12 @@ import javax.swing.{ImageIcon, UIManager}
  */
 class SliderDemo(window: Window) extends BoxPanel(Orientation.Vertical) with ActionListener {
   //Set up animation parameters.
-  val FpsMin = 0;
-  val FpsMax = 30;
-  val FpsInit = 15; //initial frames per second
+  val FpsMin = 0
+  val FpsMax = 30
+  val FpsInit = 15 //initial frames per second
   var frameNumber = 0
   val NumFrames = 14
-  val images = new Array[ImageIcon](NumFrames)
+  val images = new Array[Option[ImageIcon]](NumFrames)
   var frozen = false
   var delay = 1000 / FpsInit
 
@@ -94,10 +93,10 @@ class SliderDemo(window: Window) extends BoxPanel(Orientation.Vertical) with Act
   border = Swing.EmptyBorder(10, 10, 10, 10)
 
   //Set up a timer that calls this object's action handler.
-  val timer = new Timer(delay, this);
-  timer.setInitialDelay(delay * 7); //We pause animation twice per cycle
+  val timer = new Timer(delay, this)
+  timer.setInitialDelay(delay * 7) //We pause animation twice per cycle
   //by restarting the timer
-  timer.setCoalesce(true);
+  timer.setCoalesce(true)
 
   listenTo(framesPerSecond)
   listenTo(window)
@@ -106,7 +105,7 @@ class SliderDemo(window: Window) extends BoxPanel(Orientation.Vertical) with Act
       if (!framesPerSecond.adjusting) {
         val fps: Int = framesPerSecond.value
         if (fps == 0) {
-          if (!frozen) stopAnimation();
+          if (!frozen) stopAnimation()
         } else {
           delay = 1000 / fps
           timer.setDelay(delay)
@@ -124,29 +123,24 @@ class SliderDemo(window: Window) extends BoxPanel(Orientation.Vertical) with Act
 
   def startAnimation(): Unit = {
     //Start (or restart) animating!
-    timer.start();
-    frozen = false;
+    timer.start()
+    frozen = false
   }
 
   def stopAnimation(): Unit = {
     //Stop the animating thread.
-    timer.stop();
-    frozen = true;
+    timer.stop()
+    frozen = true
   }
 
   //Called when the Timer fires.
   def actionPerformed(e: ActionEvent): Unit = {
     //Advance the animation frame.
-    if (frameNumber == (NumFrames - 1)) {
-      frameNumber = 0
-    } else {
-      frameNumber += 1
-    }
+    frameNumber = if (frameNumber == (NumFrames - 1)) 0 else frameNumber + 1
 
     updatePicture(frameNumber); //display the next picture
 
-    if (frameNumber == (NumFrames - 1)
-      || frameNumber == (NumFrames / 2 - 1)) {
+    if (frameNumber == (NumFrames - 1) || frameNumber == (NumFrames / 2 - 1)) {
       timer.restart()
     }
   }
@@ -155,16 +149,13 @@ class SliderDemo(window: Window) extends BoxPanel(Orientation.Vertical) with Act
   def updatePicture(frameNum: Int): Unit = {
     //Get the image if we haven't already.
     if (images(frameNumber) == null) {
-      images(frameNumber) = SliderDemo.createImageIcon("/scala/swing/examples/tutorials/images/doggy/T" +
-        frameNumber +
-        ".gif").get;
+      images(frameNumber) = SliderDemo.createImageIcon(s"/scala/swing/examples/tutorials/images/doggy/T$frameNumber.gif")
     }
 
     //Set the image.
-    if (images(frameNumber) != null) {
-      picture.icon = images(frameNumber)
-    } else { //image not found
-      picture.text = "image #" + frameNumber + " not found"
+    images(frameNumber) match {
+      case Some( frm ) => picture.icon = frm
+      case None => picture.text = s"image #$frameNumber not found"
     }
   }
 }
@@ -179,7 +170,7 @@ object SliderDemo extends SimpleSwingApplication {
   lazy val top = new MainFrame() {
     title = "SliderDemo"
     //Create and set up the content pane.
-    contents = new SliderDemo(this);
+    contents = new SliderDemo(this)
   }
 }
 

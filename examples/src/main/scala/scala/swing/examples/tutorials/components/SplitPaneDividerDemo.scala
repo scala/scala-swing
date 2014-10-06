@@ -34,8 +34,6 @@ package scala.swing.examples.tutorials.components
 import scala.swing._
 import scala.swing.event.ButtonClicked
 import java.awt.Font
-import java.net.URL
-import javax.swing.ImageIcon
 
 /**
  * How to Use Split Panes
@@ -52,14 +50,14 @@ import javax.swing.ImageIcon
  */
 class SplitPaneDividerDemo extends BorderPanel {
   font = new Font("Serif", Font.ITALIC, 24)
-  val icon1 = SplitPaneDividerDemo.createImageIcon("/scala/swing/examples/tutorials/images/Cat.gif").get
-  val sd1 = new SizeDisplayer("left", icon1) {
+  val icon1 = SplitPaneDividerDemo.createImageIcon("/scala/swing/examples/tutorials/images/Cat.gif")
+  val sd1 = new SizeDisplayer("left", icon1.orNull) {
     font = font
   }
   sd1.setMinimumSize(new Dimension(30,30))
   
-  val icon2 = SplitPaneDividerDemo.createImageIcon("/scala/swing/examples/tutorials/images/Dog.gif").get
-  val sd2 = new SizeDisplayer("right", icon2) {
+  val icon2 = SplitPaneDividerDemo.createImageIcon("/scala/swing/examples/tutorials/images/Dog.gif")
+  val sd2 = new SizeDisplayer("right", icon2.orNull) {
     font = font
   }
   sd2.setMinimumSize(new Dimension(30,30))
@@ -82,7 +80,7 @@ class SplitPaneDividerDemo extends BorderPanel {
     reactions += {
       case ButtonClicked(`reset`) => splitPane.resetToPreferredSizes()
     }
-    return panel
+    panel
   }
 }
 

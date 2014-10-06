@@ -29,7 +29,17 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 package scala.swing.examples.tutorials.components
-import java.awt.{Dimension, GraphicsConfiguration, Point}
+
+import java.awt.Dimension
+import java.awt.Font
+import java.awt.Point
+import java.awt._
+import scala.swing.Button
+import scala.swing.Component
+import scala.swing.Dialog
+import scala.swing.Frame
+import scala.swing.Label
+import scala.swing.ScrollPane
 import scala.swing._
 import scala.swing.event.{ButtonClicked, Key, MouseClicked}
 
@@ -57,10 +67,9 @@ import scala.swing.event.{ButtonClicked, Key, MouseClicked}
  * </pre>
  */
 class ListDialog(frame: Frame, locationComp: Component,
-  labelText: String, title: String, data: Array[String],
-  initialValue: String, longValue: String) extends Dialog(
-  frame: Window,
-  frame.peer.getGraphicsConfiguration: GraphicsConfiguration) {
+    labelText: String, title: String, data: Array[String],
+    initialValue: String, longValue: String) extends Dialog( frame, frame.peer.getGraphicsConfiguration) {
+
   // Must be a modal dialog.  Otherwise the showDialog call will return
   // immediately and the value returned will not reflect the user's
   // selections.
@@ -75,6 +84,7 @@ class ListDialog(frame: Frame, locationComp: Component,
     selection.intervalMode = ListView.IntervalMode.SingleInterval
   }
   list.peer.setLayoutOrientation(javax.swing.JList.HORIZONTAL_WRAP)
+
   val lSelect = list.selection
   defaultButton = setButton
   //
@@ -110,23 +120,20 @@ class ListDialog(frame: Frame, locationComp: Component,
 
   //Initialize values.
   setValue(initialValue)
+
   // Events
   listenTo(setButton)
   listenTo(cancelButton)
   listenTo(list.mouse.clicks)
-//  listenTo(list.selection)
   reactions += {
     case ButtonClicked(`setButton`) => 
       setValue(list.listData(list.selection.leadIndex))
       visible = false
-    case ButtonClicked(`cancelButton`) => 
+    case ButtonClicked(`cancelButton`) =>
       setValue(initialValue)
       visible = false
-//    case SelectionChanged(`list`) =>
-//      println("SelectionChanged")
-//      println(list.selection.leadIndex)
     case MouseClicked(source: Component, point: Point, modifiers: Key.Modifiers,
-      clicks: Int, triggersPopup: Boolean) => if (clicks == 2) setButton.doClick
+      clicks: Int, triggersPopup: Boolean) => if (clicks == 2) setButton.doClick()
   }
   //
   pack()
@@ -151,14 +158,95 @@ object ListDialog {
    * dialog should appear.
    */
   def showDialog(frameComp: Frame, locationComp: Component,
-    labelText: String,
-    title: String,
-    possibleValues: Array[String],
-    initialValue: String,
-    longValue: String): String = {
+      labelText: String,
+      title: String,
+      possibleValues: Array[String],
+      initialValue: String,
+      longValue: String): String = {
     val dialog = new ListDialog(frameComp, locationComp,
       labelText, title, possibleValues, initialValue, longValue)
     dialog.visible = true
     value
+  }
+}
+
+
+class ListDialogRunner(frame: Frame) extends BoxPanel(Orientation.NoOrientation) {
+  val names: Array[String] = Array("Arlo", "Cosmo", "Elmo", "Hugo",
+    "Jethro", "Laszlo", "Milo", "Nemo",
+    "Otto", "Ringo", "Rocco", "Rollo")
+
+  //Create the labels.
+  val intro = new Label("The chosen name:")
+  val nameLabel = new Label(names(1)) {
+    //Use a wacky font if it exists. If not, this falls
+    //back to a font we know exists.
+    font = getAFont
+  }
+  intro.peer.setLabelFor(nameLabel.peer)
+
+  //Create the button.
+  val button = new Button("Pick a new name...") {
+
+  }
+
+  listenTo(button)
+  reactions += {
+    case ButtonClicked(`button`) =>
+      nameLabel.text = ListDialog.showDialog(
+        frame,
+        button,
+        "Baby names ending in 0:",
+        "Name chooser",
+        names.asInstanceOf[Array[String]],
+        nameLabel.text,
+        "Cosmo  ")
+
+
+  }
+
+
+  contents += intro
+  contents += nameLabel
+  contents += button
+
+
+  def getAFont: Font = {
+    //initial strings of desired fonts
+    val desiredFonts = Array[String]("French Script", "FrenchScript", "Bitstream Vera Sans")
+    //Search for all installed font families.  The first
+    //call may take a while on some systems with hundreds of
+    //installed fonts, so if possible execute it in idle time,
+    //and certainly not in a place that delays painting of
+    //the UI (for example, when bringing up a menu).
+    //
+    //In systems with malformed fonts, this code might cause
+    //serious problems; use the latest JRE in this case. (You'll
+    //see the same problems if you use Swing's HTML support or
+    //anything else that searches for all fonts.)  If this call
+    //causes problems for you under  the latest JRE, please let
+    //us know.
+    val gEnv: GraphicsEnvironment =
+      GraphicsEnvironment.getLocalGraphicsEnvironment
+    val existingFamilyNames: Array[String] = gEnv.getAvailableFontFamilyNames
+    val chosenFonts: Array[Font] =
+      for {
+        desiredFont <- desiredFonts
+        existingFamilyName <- existingFamilyNames
+        if existingFamilyName.startsWith(desiredFont)
+      } yield new Font(existingFamilyName, Font.PLAIN, 30)
+    if (chosenFonts.nonEmpty) {
+      chosenFonts(0)
+    } else {
+      new Font("Serif", Font.ITALIC, 36)
+    }
+  }
+}
+
+object ListDialogRunner extends SimpleSwingApplication {
+  lazy val top = new MainFrame() {
+    title = "Name That Baby"
+    //Create and set up the content pane.
+    contents = new ListDialogRunner(this)
   }
 }

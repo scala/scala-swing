@@ -12,54 +12,53 @@ import scala.swing._
  * PasswordDemo.scala requires no other files.
  */
 class PasswordDemo(val controllingFrame: Frame) extends FlowPanel {
-  private val OK = "ok"
-  private val Help = "help"
   val passwordField = new PasswordField(10)
   val label = new Label("Enter the password: ")
-  label.peer.setLabelFor(passwordField.peer)
+//  label.peer.setLabelFor(passwordField.peer)
 
   val buttonPane = createButtonPanel()
-  val textPane = new FlowPanel()
-  textPane.contents += label
-  textPane.contents += passwordField
-  //
-  contents += textPane
-  contents += buttonPane
+  val textPane = new FlowPanel() {
+    contents += label
+    contents += passwordField
+  }
 
   def createButtonPanel(): GridPanel = {
-    val p = new GridPanel(0, 1)
-    val okButton = new Button(Action("OK") {
-      val input: Array[Char] = passwordField.password
-      if (PasswordDemo.isPasswordCorrect(input)) {
-        Dialog.showMessage(p,
-          "Success! You typed the right password.",
-          "Passord Success", Dialog.Message.Info, Swing.EmptyIcon)
-      } else {
-        Dialog.showMessage(p,
-          "Invalid password. Try again.",
-          "Error Message",
-          Dialog.Message.Error, Swing.EmptyIcon)
-      }
-      //Zero out the possible password, for security.
-      for (i <- 0 until input.length) {
-        input(i) = '0'
-      }
-      passwordField.selectAll()
-      passwordField.requestFocusInWindow()
-    })
-    val helpButton = new Button(Action("Help") {
-      Dialog.showMessage(p,
+    new GridPanel(0, 1) {
+      val okButton = new Button(Action("OK") {
+        val input: Array[Char] = passwordField.password
+        if (PasswordDemo.isPasswordCorrect(input)) {
+          Dialog.showMessage(this,
+            "Success! You typed the right password.",
+            "Passord Success", Dialog.Message.Info, Swing.EmptyIcon)
+        } else {
+          Dialog.showMessage(this,
+            "Invalid password. Try again.",
+            "Error Message",
+            Dialog.Message.Error, Swing.EmptyIcon)
+        }
+        //Zero out the possible password, for security.
+        for (i <- 0 until input.length) {
+          input(i) = '0'
+        }
+        passwordField.selectAll()
+        passwordField.requestFocusInWindow()
+      })
+
+      val helpButton = new Button(Action("Help") {
+        Dialog.showMessage(this,
           "You can get the password by searching this example's\n"
-              + "source code for the string \"correctPassword\".\n"
-              + "Or look at the section How to Use Password Fields in\n"
-              + "the components section of The Java Tutorial.",
+            + "source code for the string \"correctPassword\".\n"
+            + "Or look at the section How to Use Password Fields in\n"
+            + "the components section of The Java Tutorial.",
           "Passord Help", Dialog.Message.Info, Swing.EmptyIcon)
-    })
-    p.contents += okButton
-    p.contents += helpButton
-    listenTo(okButton)
-    listenTo(helpButton)
-    p
+      })
+
+      contents += okButton
+      contents += helpButton
+
+      listenTo(okButton)
+      listenTo(helpButton)
+    }
   }
 }
 
@@ -77,7 +76,7 @@ object PasswordDemo extends SimpleSwingApplication {
     // Arrays.fill(correctPassword,'0');
     for (i <- 0 until correctPassword.length)
       correctPassword.update(i, '0')
-    isCorrect;
+    isCorrect
   }
   lazy val top = new MainFrame() {
     title = "PasswordDemo"

@@ -38,12 +38,12 @@ import javax.swing.{ ImageIcon, KeyStroke }
 import java.awt.event.{ ActionEvent, KeyEvent }
 import java.awt.Point
 
-/**
+/*
  * Tutorial: How to Use Password Fields
- * [[http://docs.oracle.com/javase/tutorial/uiswing/components/passwordfield.html]]
+ * http://docs.oracle.com/javase/tutorial/uiswing/components/passwordfield.html
  * 
  * Source code reference:
- * [[http://docs.oracle.com/javase/tutorial/uiswing/examples/components/PopupMenuDemoProject/src/components/PopupMenuDemo.java]]
+ * http://docs.oracle.com/javase/tutorial/uiswing/examples/components/PopupMenuDemoProject/src/components/PopupMenuDemo.java
  *
  * PopupMenuDemo.scala requires /scala/swing/examples/tutorials/images/middle.gif.
  *
@@ -237,8 +237,13 @@ class PopupMenuDemo extends BorderPanel {
 
 object PopupMenuDemo extends SimpleSwingApplication {
   /** Returns an ImageIcon option, or None if the path was invalid. */
-  def createImageIcon(path: String): Option[javax.swing.ImageIcon] = {
-    Option(resourceFromClassloader(path)).map(imgURL => Swing.Icon(imgURL))
+  def createImageIcon(path: String): Option[ImageIcon] = {
+    val imgURL: URL = getClass().getResource(path)
+    if (imgURL != null) {
+      Some(Swing.Icon(imgURL))
+    } else {
+      None
+    }
   }
   /**
    * Create the GUI and show it.

@@ -33,14 +33,13 @@ package scala.swing.examples.tutorials.components
 import scala.swing._
 import java.text.NumberFormat
 import java.awt.Color
-import javax.swing.UIManager
 
-/**
+/*
  * Tutorial: How to Use Formatted Text Fields
- * [[http://docs.oracle.com/javase/tutorial/uiswing/components/formattedtextfield.html]]
+ * http://docs.oracle.com/javase/tutorial/uiswing/components/formattedtextfield.html
  * 
  * Source code reference:
- * [[http://docs.oracle.com/javase/tutorial/uiswing/examples/components/FormattedTextFieldDemoProject/src/components/FormattedTextFieldDemo.java]]
+ * http://docs.oracle.com/javase/tutorial/uiswing/examples/components/FormattedTextFieldDemoProject/src/components/FormattedTextFieldDemo.java
  * 
  * FormattedTextFieldDemo.scala requires no other files.
  *
@@ -162,10 +161,11 @@ class FormattedTextFieldDemo extends BorderPanel {
 }
 
 object FormattedTextFieldDemo extends SimpleSwingApplication {
-  UIManager.put("swing.boldMetal", false)
   lazy val top = new MainFrame() {
     title = "FormattedTextFieldDemo"
     //Create and set up the content pane.
-    contents = new FormattedTextFieldDemo()
+    javax.swing.UIManager.put("swing.boldMetal", false)
+    contents = new FormattedTextFieldDemo();
   }
+  javax.swing.SwingUtilities.updateComponentTreeUI(top.peer)
 }

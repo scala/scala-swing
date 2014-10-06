@@ -33,6 +33,7 @@ package scala.swing.examples.tutorials.components
 
 import scala.swing._
 import javax.swing.ImageIcon
+import java.net.URL
 import java.awt.{ Dimension, Font }
 
 /**
@@ -109,11 +110,9 @@ class CustomComboBoxDemo extends BorderPanel {
 
 object CustomComboBoxDemo extends SimpleSwingApplication {
 
-  /** Returns an ImageIcon, or null if the path was invalid. */
-  def createImageIcon(path: String): Option[javax.swing.ImageIcon] = {
+  def createImageIcon(path: String): Option[javax.swing.ImageIcon] =
     Option(resourceFromClassloader(path)).map(imgURL => Swing.Icon(imgURL))
-  }
-  
+
   lazy val top = new MainFrame() {
     title = "CustomComboBoxDemo"
 

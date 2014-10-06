@@ -45,23 +45,22 @@ import scala.swing._
  * @author ges
  * @author kwalrath
  */
-/* MenuGlueDemo.scala requires no other files. */
 class MenuGlueDemo extends MainFrame {
   def createMenuBar(): MenuBar = {
-    val menuBar = new MenuBar();
-    menuBar.contents += createMenu("Menu 1")
-    menuBar.contents += createMenu("Menu 2")
-    menuBar.contents += Swing.HGlue
-    menuBar.contents += createMenu("Menu 3")
-    menuBar;
+    new MenuBar() {
+      contents += createMenu("Menu 1")
+      contents += createMenu("Menu 2")
+      contents += Swing.HGlue
+      contents += createMenu("Menu 3")
+    }
   }
 
   def createMenu(title: String): Menu = {
-    val m = new Menu(title);
-    m.contents += new MenuItem("Menu item #1 in " + title)
-    m.contents += new MenuItem("Menu item #2 in " + title)
-    m.contents += new MenuItem("Menu item #3 in " + title)
-    m;
+    new Menu(title) {
+      contents += new MenuItem(s"Menu item #1 in $title")
+      contents += new MenuItem(s"Menu item #2 in $title")
+      contents += new MenuItem(s"Menu item #3 in $title")
+    }
   }
 }
 
