@@ -106,10 +106,10 @@ class ListDialog(frame: Frame, locationComp: Component,
   }
   
   val buttonPane = new BoxPanel(Orientation.Horizontal) {
-    border = Swing.EmptyBorder(0, 10, 10, 10)
+    border = Swing.EmptyBorder(10, 10, 10, 10)
     contents += Swing.HGlue
     contents += cancelButton
-    contents += Swing.HGlue
+    contents += Swing.RigidBox(new Dimension(10, 0))
     contents += setButton
   }
 
@@ -127,7 +127,7 @@ class ListDialog(frame: Frame, locationComp: Component,
   listenTo(list.mouse.clicks)
   reactions += {
     case ButtonClicked(`setButton`) => 
-      setValue(list.listData(list.selection.leadIndex))
+      if (list.selection.leadIndex >= 0) setValue(list.listData(list.selection.leadIndex))
       visible = false
     case ButtonClicked(`cancelButton`) =>
       setValue(initialValue)
@@ -177,17 +177,20 @@ class ListDialogRunner(frame: Frame) extends BoxPanel(Orientation.NoOrientation)
     "Otto", "Ringo", "Rocco", "Rollo")
 
   //Create the labels.
-  val intro = new Label("The chosen name:")
+  val intro = new Label("The chosen name:") {
+    xLayoutAlignment = java.awt.Component.CENTER_ALIGNMENT
+  }
   val nameLabel = new Label(names(1)) {
     //Use a wacky font if it exists. If not, this falls
     //back to a font we know exists.
     font = getAFont
+    xLayoutAlignment = java.awt.Component.CENTER_ALIGNMENT
   }
   intro.peer.setLabelFor(nameLabel.peer)
 
   //Create the button.
   val button = new Button("Pick a new name...") {
-
+	xLayoutAlignment = java.awt.Component.CENTER_ALIGNMENT
   }
 
   listenTo(button)
@@ -205,9 +208,13 @@ class ListDialogRunner(frame: Frame) extends BoxPanel(Orientation.NoOrientation)
 
   }
 
-
+  border = Swing.EmptyBorder(20, 20, 10, 20)
+  //Add the labels to the content pane.
   contents += intro
+  contents += Swing.VStrut(5)
   contents += nameLabel
+  //Add a vertical spacer that also guarantees us a minimum width:
+  contents += Swing.RigidBox(new Dimension(150, 10))
   contents += button
 
 
