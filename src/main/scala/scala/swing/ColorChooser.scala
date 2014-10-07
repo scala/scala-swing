@@ -11,7 +11,8 @@
 package scala.swing
 
 import javax.swing.JColorChooser
-import event._
+import scala.swing.event._
+import scala.swing.Swing._
 
 /**
  * Wrapper for JColorChooser. Publishes  `ColorChanged` events, when the color selection changes.
@@ -21,7 +22,7 @@ import event._
  * @see javax.swing.JColorChooser
  */
 object ColorChooser {
-  def showDialog(parent: Component, title: String, color: Color): scala.Option[Color] = {
+  def showDialog(parent: PeerContainer, title: String, color: scala.swing.Color): scala.Option[Color] = {
     toOption[Color](javax.swing.JColorChooser.showDialog(parent.peer, title, color))
   }
 }
