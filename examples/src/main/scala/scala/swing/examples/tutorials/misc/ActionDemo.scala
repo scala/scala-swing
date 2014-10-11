@@ -31,11 +31,10 @@
 package scala.swing.examples.tutorials.misc
 
 import scala.swing._
-import scala.swing.event.{ ActionEvent, ButtonClicked, KeyEvent }
+import scala.swing.event.ButtonClicked
 import java.awt.Dimension
-//import java.awt.event.{ ActionEvent, ActionListener, KeyEvent }
 import java.net.URL
-import javax.swing.{ ImageIcon, JToolBar }
+import javax.swing.ImageIcon
 
 /** 
  * Tutorials: How to Use Actions
@@ -44,12 +43,10 @@ import javax.swing.{ ImageIcon, JToolBar }
  * The graphics in this application require a download of the Java Look and Feel Graphics
  * Repository from Oracle.
  * [[http://www.oracle.com/technetwork/java/javasebusiness/downloads/java-archive-downloads-java-client-419417.html#7520-jlf-1.0-oth-JPR]]
- * Accept the user agreement from the site, unzip, and place the jar file contents in your classpath.
+ * Accept the user agreement from the site, unzip, and place the jar file contents in your classpath.  The jar file is named jlfgr-1_0.jar.
  * 
  * Source code references:
  * [[http://docs.oracle.com/javase/tutorial/uiswing/examples/misc/ActionDemoProject/src/misc/ActionDemo.java]]
- * 
- * ActionDemo.scala requires the Java Look and Feel jar file jlfgr-1_0.jar.
  */
 class ActionDemo extends BorderPanel {
   //Create a scrolled text area.
@@ -98,16 +95,10 @@ class ActionDemo extends BorderPanel {
 
     //Create the first menu.
     val mainMenu = new Menu("Menu")
-    val actions = new Array[Action](3)
-    actions(0) = leftAction
-    actions(1) = middleAction
-    actions(2) = rightAction
-    val mi0 =  new MenuItem(actions(0)) { icon = Swing.EmptyIcon }
-    val mi1 =  new MenuItem(actions(1)) { icon = Swing.EmptyIcon }
-    val mi2 =  new MenuItem(actions(2)) { icon = Swing.EmptyIcon }
-    mainMenu.contents += mi0
-    mainMenu.contents += mi1
-    mainMenu.contents += mi2
+    val mi0 =  new MenuItem(leftAction)
+    val mi1 =  new MenuItem(middleAction)
+    val mi2 =  new MenuItem(rightAction)
+    mainMenu.contents ++= Seq(mi0, mi1, mi2)
     listenTo(mi0)
     listenTo(mi1)
     listenTo(mi2)
@@ -177,9 +168,9 @@ object ActionDemo extends SimpleSwingApplication {
     val imageURL: URL = getClass().getResource(imgLocation)
     if (imageURL == null) {
       System.err.println("Resource not found: " + imgLocation)
-      return None
+      None
     } else {
-      return Some(new ImageIcon(imageURL))
+      Some(new ImageIcon(imageURL))
     }
   }
 
