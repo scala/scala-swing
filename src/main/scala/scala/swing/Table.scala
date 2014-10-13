@@ -150,6 +150,7 @@ class Table extends Component with Scrollable.Wrapper {
   def rowHeight_=(x: Int) = peer.setRowHeight(x)
 
   def rowCount = peer.getRowCount
+  def columnCount = peer.getColumnCount
 
   def model = peer.getModel()
   def model_=(x: TableModel) = {
@@ -168,6 +169,10 @@ class Table extends Component with Scrollable.Wrapper {
   def gridColor_=(color: Color) = peer.setGridColor(color)
 
   def preferredViewportSize_=(dim: Dimension) = peer.setPreferredScrollableViewportSize(dim)
+  
+  def fillsViewportHeight = peer.getFillsViewportHeight()
+  def fillsViewportHeight_=(b: Boolean) = peer.setFillsViewportHeight(b)
+  
   //1.6: def fillsViewportHeight: Boolean = peer.getFillsViewportHeight
   //def fillsViewportHeight_=(b: Boolean) = peer.setFillsViewportHeight(b)
 
@@ -299,6 +304,21 @@ class Table extends Component with Scrollable.Wrapper {
   def selectionForeground_=(c: Color) = peer.setSelectionForeground(c)
   def selectionBackground: Color = peer.getSelectionBackground
   def selectionBackground_=(c: Color) = peer.setSelectionBackground(c)
+  
+  def print(): Boolean = print(JTable.PrintMode.FIT_WIDTH)
+  def print(printMode: JTable.PrintMode): Boolean = print(printMode, null, null)
+  def print(printMode: JTable.PrintMode, headerFormat: java.text.MessageFormat, footerFormat: java.text.MessageFormat): Boolean =
+    print(printMode, headerFormat, footerFormat, true, null, false, null)
+  def print(printMode: JTable.PrintMode, headerFormat: java.text.MessageFormat,
+    footerFormat: java.text.MessageFormat, showPrintDialog: Boolean, attr: javax.print.attribute.PrintRequestAttributeSet,
+    interactive: Boolean, service: javax.print.PrintService): Boolean =
+    peer.print(printMode, headerFormat, footerFormat, showPrintDialog, attr, interactive, service)
+    
+  def selectionModel: javax.swing.ListSelectionModel = peer.getSelectionModel
+  def columnModel: javax.swing.table.TableColumnModel = peer.getColumnModel
+  def defaultEditor[A](columnClass: Class[A]): javax.swing.table.TableCellEditor = peer.getDefaultEditor(columnClass)
+  def defaultEditor_=[A](columnClass: Class[A], editor: javax.swing.table.TableCellEditor) =
+    peer.setDefaultEditor(columnClass, editor)
 
   protected val modelListener = new TableModelListener {
     def tableChanged(e: TableModelEvent) = publish(
