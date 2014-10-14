@@ -66,7 +66,7 @@ class TableFTFEditDemo extends GridPanel(1, 0) {
   //If we didn't want this editor to be used for other
   //Integer columns, we'd do this:
   // table.columnModel.getColumn(3).setCellEditor(
-  //   new IntegerEditor(0, 100));
+  //   new IntegerEditor(0, 100))
 
   //Add the scroll pane to this panel.
   contents += scrollPane
@@ -87,7 +87,7 @@ class TableFTFEditDemo extends GridPanel(1, 0) {
     override def getRowCount(): Int = { if (data == null) 0 else data.length }
     override def getColumnName(col: Int): String = { columnNames(col) }
     override def getColumnClass(c: Int): Class[_] = {
-      getValueAt(0, c).getClass();
+      getValueAt(0, c).getClass()
     }
     override def getValueAt(row: Int, col: Int): Object = {
       col match {
@@ -104,10 +104,7 @@ class TableFTFEditDemo extends GridPanel(1, 0) {
      */
     override def setValueAt(value: Object, row: Int, col: Int): Unit = {
       if (Debug) {
-        println("Setting value at " + row + "," + col +
-          " to " + value +
-          " (an instance of " +
-          value.getClass() + ")")
+        println(s"Setting value at $row,$col to $value (an instance of ${value.getClass()})")
       }
       data(row)(col) = value
       fireTableCellUpdated(row, col)
@@ -123,7 +120,7 @@ class TableFTFEditDemo extends GridPanel(1, 0) {
 
       println("Value of data: ")
       for (i <- 0 until numRows) {
-        System.out.print("    row " + i + ":")
+        print("    row " + i + ":")
         for (j <- 0 until numCols) {
           print("  " + model.getValueAt(i, j))
         }

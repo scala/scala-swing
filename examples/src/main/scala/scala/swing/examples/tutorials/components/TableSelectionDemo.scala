@@ -55,7 +55,7 @@ class TableSelectionDemo extends BoxPanel(Orientation.Vertical) {
   table.fillsViewportHeight = true
   table.selectionModel.addListSelectionListener(new RowListener())
   table.columnModel.getSelectionModel().
-    addListSelectionListener(new ColumnListener());
+    addListSelectionListener(new ColumnListener())
   //Create the scroll pane and add the table to it.
   val scrollPane = new ScrollPane(table)
 
@@ -154,16 +154,16 @@ class TableSelectionDemo extends BoxPanel(Orientation.Vertical) {
     output.append("Lead: %d, %d. ".format(
       table.selectionModel.getLeadSelectionIndex(),
       table.columnModel.getSelectionModel().
-        getLeadSelectionIndex()));
-    output.append("Rows:");
+        getLeadSelectionIndex()))
+    output.append("Rows:")
     for (c: Int <- table.selection.rows) {
       output.append(" " + c.asInstanceOf[Int])
     }
-    output.append(". Columns:");
+    output.append(". Columns:")
     for (c: Int <- table.selection.columns) {
       output.append(" " + c.asInstanceOf[Int])
     }
-    output.append(".\n");
+    output.append(".\n")
   }
 
   class RowListener extends ListSelectionListener {
@@ -201,7 +201,7 @@ class TableSelectionDemo extends BoxPanel(Orientation.Vertical) {
     override def getRowCount(): Int = { if (data == null) 0 else data.length }
     override def getColumnName(col: Int): String = { columnNames(col) }
     override def getColumnClass(c: Int): Class[_] = {
-      getValueAt(0, c).getClass();
+      getValueAt(0, c).getClass()
     }
     override def getValueAt(row: Int, col: Int): Object = {
       col match {
@@ -220,9 +220,9 @@ class TableSelectionDemo extends BoxPanel(Orientation.Vertical) {
       //Note that the data/cell address is constant,
       //no matter where the cell appears onscreen.
       if (col < 2) {
-        false;
+        false
       } else {
-        true;
+        true
       }
     }
 

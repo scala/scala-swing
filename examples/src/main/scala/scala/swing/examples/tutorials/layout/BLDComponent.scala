@@ -78,7 +78,7 @@ class BLDComponent(alignmentX: Float, hue: Float, shortSideSize: Int,
     g.drawString(alignmentX.toString, 3, height - 3);
 
     if (printSize) {
-      System.out.println("BLDComponent " + name + ": size is "
+      println("BLDComponent " + name + ": size is "
         + width + "x" + height
         + "; preferred size is "
         + preferredSize.getWidth() + "x"

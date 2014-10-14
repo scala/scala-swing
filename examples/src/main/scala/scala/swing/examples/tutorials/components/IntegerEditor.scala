@@ -115,7 +115,7 @@ class IntegerEditor(min: Int, max: Int) extends DefaultCellEditor(new JFormatted
         integerFormat.parseObject(o.toString)
       } catch {
         case exc: ParseException => {
-          System.err.println("getCellEditorValue: can't parse o: " + o)
+          Console.err.println(s"getCellEditorValue: can't parse o: ${o}")
           null
         }
       }
