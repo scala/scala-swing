@@ -32,6 +32,7 @@ class TextComponent extends Component with Publisher {
   override lazy val peer: JTextComponent = new JTextComponent with SuperMixin {}
   def text: String = peer.getText
   def text_=(t: String) = peer.setText(t)
+  def document: Document = peer.getDocument()
 
   class Caret extends Publisher {
     def dot: Int = peer.getCaret.getDot
@@ -48,7 +49,7 @@ class TextComponent extends Component with Publisher {
     def color_=(c: Color) = peer.setCaretColor(c)
     def position: Int = peer.getCaretPosition
     def position_=(p: Int) = peer.setCaretPosition(p)
-
+    
     peer.addCaretListener {
       new CaretListener {
         def caretUpdate(e: CaretEvent) { publish(CaretUpdate(TextComponent.this)) }
