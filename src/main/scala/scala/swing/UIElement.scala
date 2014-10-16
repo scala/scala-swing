@@ -8,7 +8,7 @@
 
 package scala.swing
 
-import java.awt.Cursor
+import java.awt.{Cursor, GraphicsConfiguration}
 import event._
 import scala.ref._
 import java.util.WeakHashMap
@@ -112,6 +112,8 @@ trait UIElement extends Proxy with LazyPublisher {
   def repaint(rect: Rectangle) { peer.repaint(rect.x, rect.y, rect.width, rect.height) }
   def ignoreRepaint: Boolean = peer.getIgnoreRepaint
   def ignoreRepaint_=(b: Boolean) { peer.setIgnoreRepaint(b) }
+  
+  def graphicsConfiguration: GraphicsConfiguration = peer.getGraphicsConfiguration()
 
   protected def onFirstSubscribe() {
     peer.addComponentListener(new java.awt.event.ComponentListener {

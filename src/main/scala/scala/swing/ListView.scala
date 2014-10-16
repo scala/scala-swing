@@ -238,6 +238,9 @@ class ListView[A] extends Component {
   def selectionBackground: Color = peer.getSelectionBackground
   def selectionBackground_=(c: Color) = peer.setSelectionBackground(c)
 
+  def layoutOrientation: Int = peer.getLayoutOrientation
+  def layoutOrientation_=(layoutOrientation: Int) = peer.setLayoutOrientation(layoutOrientation)
+  
   def selectIndices(ind: Int*) = peer.setSelectedIndices(ind.toArray)
 
   peer.getModel.addListDataListener(new ListDataListener {
