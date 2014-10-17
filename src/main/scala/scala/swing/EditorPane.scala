@@ -10,6 +10,7 @@ package scala.swing
 
 import javax.swing._
 import javax.swing.text._
+import java.net.URL
 
 /**
  * A text component that allows multiline text input and display.
@@ -25,4 +26,9 @@ class EditorPane(contentType0: String, text0: String) extends TextComponent {
 
 	def editorKit: EditorKit = peer.getEditorKit
 	def editorKit_=(k: EditorKit) = peer.setEditorKit(k)
+	
+	def page: URL = peer.getPage()
+	def page_=(page: URL) = peer.setPage(page)
+	def page_=(page: String) = peer.setPage(page)
+	
 }
