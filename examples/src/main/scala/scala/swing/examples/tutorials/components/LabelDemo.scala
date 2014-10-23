@@ -69,7 +69,7 @@ class LabelDemo extends GridPanel(3, 1) {
 }
 
 object LabelDemo extends SimpleSwingApplication {
-  UIManager.put("swing.boldMetal", false)
+  //TD UIManager.put("swing.boldMetal", false)
   /** Returns an ImageIcon option, or None if the path was invalid. */
   def createImageIcon(path: String, desc:String ): Option[javax.swing.ImageIcon] =
     Option(resourceFromClassloader(path)).map(imgURL => Swing.Icon(imgURL))
@@ -77,7 +77,7 @@ object LabelDemo extends SimpleSwingApplication {
   lazy val top = new MainFrame() {
     title = "LabelDemo"
     //Create and set up the content pane.
-    javax.swing.UIManager.put("swing.boldMetal", false)
+    //TD javax.swing.UIManager.put("swing.boldMetal", false)
     contents = new LabelDemo()
   }
 }

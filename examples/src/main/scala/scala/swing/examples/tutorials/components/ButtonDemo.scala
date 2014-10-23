@@ -104,7 +104,7 @@ object ButtonDemo extends SimpleSwingApplication {
 
   lazy val top = new MainFrame() {
     title = "ButtonDemo"
-    javax.swing.UIManager.put("swing.boldMetal", false)
+    //TD javax.swing.UIManager.put("swing.boldMetal", false)
 
     contents = new ButtonDemo()
   }

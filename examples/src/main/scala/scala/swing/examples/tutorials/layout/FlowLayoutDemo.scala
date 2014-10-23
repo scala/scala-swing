@@ -54,11 +54,13 @@ class FlowLayoutDemo extends BorderPanel {
   val RtoLbutton = new RadioButton(RtoL)
   
   //Add buttons to the experiment layout
-  compsToExperiment.contents += new Button("Button 1")
-  compsToExperiment.contents += new Button("Button 2")
-  compsToExperiment.contents += new Button("Button 3")
-  compsToExperiment.contents += new Button("Long Named Button 4")
-  compsToExperiment.contents += new Button("5")
+  val buttonSeq = Seq[Button](
+      new Button("Button 1"),
+      new Button("Button 2"),
+      new Button("Button 3"),
+      new Button("Long Named Button 4"),
+      new Button("5") )
+  compsToExperiment.contents ++= buttonSeq
   
   //Left to right component orientation is selected by default
   compsToExperiment.componentOrientation = ComponentOrientation.LEFT_TO_RIGHT
@@ -78,22 +80,19 @@ class FlowLayoutDemo extends BorderPanel {
   listenTo(applyButton)
   reactions += {
     case ButtonClicked(`applyButton`) =>
-      if (LtoRbutton.selected) {
-        compsToExperiment.componentOrientation = ComponentOrientation.LEFT_TO_RIGHT
-      }
-      else {
-        compsToExperiment.componentOrientation = ComponentOrientation.RIGHT_TO_LEFT
-      }
-      compsToExperiment.peer.validate()
+      compsToExperiment.componentOrientation = 
+        if (LtoRbutton.selected) ComponentOrientation.LEFT_TO_RIGHT
+        else ComponentOrientation.RIGHT_TO_LEFT
+      compsToExperiment.validate()
       compsToExperiment.repaint()
   }
 }
 
 object FlowLayoutDemo extends SimpleSwingApplication {
   /* Use an appropriate Look and Feel */
-  UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel")
+  //TD UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel")
   /* Turn off metal's use of bold fonts */
-  UIManager.put("swing.boldMetal", false)
+  //TD UIManager.put("swing.boldMetal", false)
   lazy val top = new MainFrame() {
     title = "FlowLayoutDemo"
     contents = new FlowLayoutDemo()

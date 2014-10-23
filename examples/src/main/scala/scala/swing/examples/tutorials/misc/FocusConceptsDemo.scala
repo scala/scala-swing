@@ -89,15 +89,15 @@ class FocusConceptsDemo extends BorderPanel {
 object FocusConceptsDemo extends SimpleSwingApplication {
 
   /* Use an appropriate Look and Feel */
-  try {
-    //UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-    //UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
-    UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
-  } catch {
-    case NonFatal(ex) => ex.printStackTrace()
-  }
+  //TD try {
+  //   // UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+  //   //UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
+  //   UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
+  // } catch {
+  //   case NonFatal(ex) => ex.printStackTrace()
+  // }
   /* Turn off metal's use of bold fonts */
-  UIManager.put("swing.boldMetal", false);
+  //TD UIManager.put("swing.boldMetal", false);
   //Create and set up the window.
   lazy val top = new MainFrame() {
     title = "FocusConceptsDemo"

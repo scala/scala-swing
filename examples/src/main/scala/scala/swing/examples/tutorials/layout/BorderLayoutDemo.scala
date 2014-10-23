@@ -31,7 +31,7 @@
 package scala.swing.examples.tutorials.layout
 
 import scala.swing._
-import javax.swing.{SwingUtilities, UIManager}
+import javax.swing.UIManager
 import java.awt.{ ComponentOrientation, Dimension }
 
 /**
@@ -63,9 +63,9 @@ class BorderLayoutDemo extends BorderPanel {
 object BorderLayoutDemo extends SimpleSwingApplication {
   val RightToLeft = true
   /* Use an appropriate Look and Feel */
-  UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel")
+  // UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel")
   /* Turn off metal's use bold fonts */
-  UIManager.put("swing.boldMetal", false)
+  //TD UIManager.put("swing.boldMetal", false)
   //Create and set up the window.
   lazy val top = new MainFrame {
     title = "BorderLayoutDemo"
