@@ -161,7 +161,7 @@ class SliderDemo(window: Window) extends BoxPanel(Orientation.Vertical) with Act
 }
 
 object SliderDemo extends SimpleSwingApplication {
-  UIManager.put("swing.boldMetal", false)
+  //TD UIManager.put("swing.boldMetal", false)
   /** Returns an ImageIcon, or null if the path was invalid. */
   def createImageIcon(path: String): Option[javax.swing.ImageIcon] = {
     Option(resourceFromClassloader(path)).map(imgURL => Swing.Icon(imgURL))

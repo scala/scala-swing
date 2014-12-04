@@ -28,56 +28,47 @@
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package scala.swing.examples.tutorials.components
+package scala.swing.examples.tutorials.layout
 
 import scala.swing._
-import javax.swing.ImageIcon
 import javax.swing.UIManager
+import java.awt.{ ComponentOrientation, Dimension }
 
 /**
- * Tutorial: How to Use Labels
- * [[http://docs.oracle.com/javase/tutorial/uiswing/components/label.html]]
+ * Tutorials: How to Use BorderLayout
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/layout/border.html]]
  * 
  * Source code reference:
- * [[http://docs.oracle.com/javase/tutorial/uiswing/examples/components/LabelDemoProject/src/components/LabelDemo.java]]
- * 
- * LabelDemo.scala needs one other file:
- *   /scala/swing/examples/tutorials/images/middle.gif
+ * [[http://docs.oracle.com/javase/tutorial/uiswing/examples/layout/BorderLayoutDemoProject/src/layout/BorderLayoutDemo.java]]
  */
-class LabelDemo extends GridPanel(3, 1) {
-  val icon: Option[ImageIcon] = LabelDemo.createImageIcon("/scala/swing/examples/tutorials/images/middle.gif",
-        "a pretty but meaningless splat")
-  //Create the first label.
-  val label1: Label = new Label("Image and Text", icon.get, Alignment.Center) {
-    //Set the position of its text, relative to its icon:
-    verticalTextPosition = Alignment.Bottom
-    horizontalTextPosition = Alignment.Center
+class BorderLayoutDemo extends BorderPanel {
+  if (BorderLayoutDemo.RightToLeft) {
+    componentOrientation = ComponentOrientation.RIGHT_TO_LEFT
   }
+  val button1 = new Button("Button 1 (PAGE_START)")
+  val button2 = new Button("Button 2 (CENTER)") {
+    preferredSize = new Dimension(200, 100)
+  }
+  val button3 = new Button("Button 3 (LINE_START)")
+  val button4 = new Button("Long-Named Button 4 (LINE_END)")
+  val button5 = new Button("5 (PAGE_END)")
   
-  //Create the other labels.
-  val label2 = new Label("Text-Only Label")
-  val label3 = new Label("", icon.get, Alignment.Center)
-  
-  //Create tool tips, for the heck of it.
-  label1.tooltip = "A label containing both image and text"
-  label2.tooltip = "A label containing only text"
-  label3.tooltip = "A label containing only an image"
-    
-  contents += label1
-  contents += label2
-  contents += label3
+  layout(button1) = BorderPanel.Position.North
+  layout(button2) = BorderPanel.Position.Center
+  layout(button3) = BorderPanel.Position.West
+  layout(button4) = BorderPanel.Position.East
+  layout(button5) = BorderPanel.Position.South
 }
 
-object LabelDemo extends SimpleSwingApplication {
+object BorderLayoutDemo extends SimpleSwingApplication {
+  val RightToLeft = true
+  /* Use an appropriate Look and Feel */
+  // UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel")
+  /* Turn off metal's use bold fonts */
   //TD UIManager.put("swing.boldMetal", false)
-  /** Returns an ImageIcon option, or None if the path was invalid. */
-  def createImageIcon(path: String, desc:String ): Option[javax.swing.ImageIcon] =
-    Option(resourceFromClassloader(path)).map(imgURL => Swing.Icon(imgURL))
-
-  lazy val top = new MainFrame() {
-    title = "LabelDemo"
-    //Create and set up the content pane.
-    //TD javax.swing.UIManager.put("swing.boldMetal", false)
-    contents = new LabelDemo()
+  //Create and set up the window.
+  lazy val top = new MainFrame {
+    title = "BorderLayoutDemo"
+    contents = new BorderLayoutDemo()
   }
 }
