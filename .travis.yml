@@ -9,7 +9,7 @@ env:
     - secure: "g/d6gjq6g+t5ieI6DwOiL5k8XJ/ethlZ1ZZDA/uvOsCfkIu0MBL2cYGmwQ0gcBNBQ/02wZjXnTIgMhFhYLcgHtnicAjy+53fhjCYcTM6A61DCPhJ6txOjEEPrpnlqbvKauw0WuVGT8Kd52bhaMXPCE2GOWgPe+bJfDUTHSm86dw="
 
 script:
-  - admin/build.sh
+  - sbt ++$TRAVIS_SCALA_VERSION clean update compile test
 scala:
   - 2.11.0
 jdk:

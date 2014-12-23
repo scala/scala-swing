@@ -32,6 +32,9 @@ build.properties
 /.cache
 /.idea
 /.settings
+/examples/.classpath
+/examples/.project
+scala-swing.iml
 
 # bak files produced by ./cleanup-commit
 *.bak

@@ -191,6 +191,17 @@ class ComboBox[A](items: Seq[A]) extends Component with Publisher {
   */
   def editable: Boolean = peer.isEditable
 
+
+  /**
+   * Maximum number of rows to display without scrolling
+   */
+  def maximumRowCount: Int = peer.getMaximumRowCount
+
+  /**
+   * Maximum number of rows to display without scrolling
+   */
+  def maximumRowCount_=(c:Int): Unit = peer.setMaximumRowCount(c)
+
   /**
    * Makes this combo box editable. In order to do so, this combo needs an
    * editor which is supplied by the implicit argument. For default

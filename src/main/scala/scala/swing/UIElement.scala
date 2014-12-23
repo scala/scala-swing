@@ -8,7 +8,7 @@
 
 package scala.swing
 
-import java.awt.Cursor
+import java.awt.{ComponentOrientation, Cursor}
 import event._
 import scala.ref._
 import java.util.WeakHashMap
@@ -88,9 +88,12 @@ trait UIElement extends Proxy with LazyPublisher {
   def maximumSize_=(x: Dimension) = peer setMaximumSize x
   def preferredSize = peer.getPreferredSize
   def preferredSize_=(x: Dimension) = peer setPreferredSize x
+  def componentOrientation = peer.getComponentOrientation
+  def componentOrientation_=(x: ComponentOrientation) = peer setComponentOrientation x
 
   def font: Font = peer.getFont
   def font_=(f: Font) = peer setFont f
+
 
   def locationOnScreen = peer.getLocationOnScreen
   def location = peer.getLocation
@@ -108,6 +111,7 @@ trait UIElement extends Proxy with LazyPublisher {
   def showing: Boolean = peer.isShowing
   def displayable: Boolean = peer.isDisplayable
 
+  def validate() { peer.validate }
   def repaint() { peer.repaint }
   def repaint(rect: Rectangle) { peer.repaint(rect.x, rect.y, rect.width, rect.height) }
   def ignoreRepaint: Boolean = peer.getIgnoreRepaint

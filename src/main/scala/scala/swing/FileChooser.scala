@@ -37,18 +37,37 @@ object FileChooser {
 /**
  * Used to open file dialogs.
  *
- * @see [[javax.swing.JFileChooser]]
+ * @see  [[http://docs.oracle.com/javase/7/docs/api/javax/swing/JFileChooser.html javax.swing.JFileChooser]]
  */
 class FileChooser(dir: File) {
-  import FileChooser._
+  import scala.swing.FileChooser._
   lazy val peer: JFileChooser = new JFileChooser(dir)
 
   def this() = this(null)
 
-  import Swing._
-  def showOpenDialog(over: Component): Result.Value = Result(peer.showOpenDialog(nullPeer(over)))
-  def showSaveDialog(over: Component): Result.Value = Result(peer.showSaveDialog(nullPeer(over)))
-  def showDialog(over: Component, approveText: String): Result.Value = Result(peer.showDialog(nullPeer(over), approveText))
+  import scala.swing.Swing._
+
+  /**
+   * Display a dialog box to select an "Open File" file.
+   * @param over Parent container -  [[scala.swing.Component Component]], [[scala.swing.Frame Frame]] or [[scala.swing.Dialog Dialog]]
+   * @return a [[scala.swing.FileChooser.Result Result]] value based how dialog was closed.
+   */
+  def showOpenDialog(over: PeerContainer): Result.Value = Result(peer.showOpenDialog(nullPeer(over)))
+
+  /**
+   * Display a dialog box to select a "Save File" file.
+   * @param over Parent container -  [[scala.swing.Component Component]], [[scala.swing.Frame Frame]] or [[scala.swing.Dialog Dialog]]
+   * @return a [[scala.swing.FileChooser.Result Result]] value based how dialog was closed.
+   */
+  def showSaveDialog(over: PeerContainer): Result.Value = Result(peer.showSaveDialog(nullPeer(over)))
+
+  /**
+   * Display a dialog box to select a file.
+   * @param over Parent container -  [[scala.swing.Component Component]], [[scala.swing.Frame Frame]] or [[scala.swing.Dialog Dialog]]
+   * @param approveText Text for the 'ok' or 'approve' button.
+   * @return a [[scala.swing.FileChooser.Result Result]] value based how dialog was closed.
+   */
+  def showDialog(over: PeerContainer, approveText: String): Result.Value = Result(peer.showDialog(nullPeer(over), approveText))
 
   def controlButtonsAreShown: Boolean = peer.getControlButtonsAreShown
   def controlButtonsAreShown_=(b: Boolean) { peer.setControlButtonsAreShown(b) }
