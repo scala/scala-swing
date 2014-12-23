@@ -2,7 +2,7 @@ language: scala
 
 env:
   global:
-    - PUBLISH_JDK=openjdk7 # admin/build.sh only publishes when running on this jdk
+    - PUBLISH_JDK=openjdk6 # admin/build.sh only publishes when running on this jdk
 # Don't commit sensitive files, instead commit a version encrypted with $SECRET,
 # this environment variable is encrypted with this repo's private key and stored below:
 # (See http://docs.travis-ci.com/user/environment-variables/#Secure-Variables.)
@@ -11,16 +11,12 @@ env:
 script:
   - admin/build.sh
 scala:
-  - 2.11.1
-
+  - 2.11.0
 jdk:
-  - openjdk7
-  - oraclejdk7
-
+  - openjdk6
 notifications:
   email:
     - adriaan.moors@typesafe.com
-    - andy@hicks.net
 
 # if we get weird timeouts, see https://github.com/spray/spray/pull/233
 # 'set concurrentRestrictions in Global += Tags.limit(Tags.Test, 1)'
