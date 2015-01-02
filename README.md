@@ -20,7 +20,8 @@ The widget class hierarchy loosely resembles that of Java Swing. The main differ
   panel.)
    
   The event system. TODO
-  
+
+- For more details see [SIP-8](docs/SIP-8.md)
 
 The library comprises three main packages:
 
