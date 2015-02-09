@@ -12,6 +12,7 @@ script:
   - admin/build.sh
 scala:
   - 2.11.1
+  - 2.10.4
 jdk:
   - openjdk7
   - oraclejdk7
