@@ -1,5 +1,9 @@
-scala-swing (mostly-unsupported) [<img src="https://api.travis-ci.org/scala/scala-swing.png?branch=java7"/>](https://travis-ci.org/scala/scala-swing?branch=java7)
+scala-swing (mostly-unsupported)
 =========
+
+[<img src="https://api.travis-ci.org/scala/scala-swing.png?branch=java7"/>](https://travis-ci.org/scala/scala-swing?branch=java7)
+[![Stories in Ready](https://badge.waffle.io/scala/scala-swing.svg?label=ready&title=Ready)](http://waffle.io/scala/scala-swing)
+[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/scala/scala-swing)
 
 This is now community maintained. If you're interested in helping then contact @adriaanm or @andy1138 
 Questions can asked on the [Google Group](https://groups.google.com/forum/#!forum/scala-swing)
