@@ -6,21 +6,11 @@ name                       := "scala-swing"
 
 version                    := "1.0.2-SNAPSHOT"
 
-scalaVersion               := "2.11.0"
-
-snapshotScalaBinaryVersion := "2.11"
+scalaVersion               := "2.11.6"
 
 // important!! must come here (why?)
 scalaModuleOsgiSettings
 
 OsgiKeys.exportPackage     := Seq(s"scala.swing.*;version=${version.value}")
 
-MimaPlugin.mimaDefaultSettings
-
-MimaKeys.previousArtifact  := Some(organization.value % s"${name.value}_2.11" % "1.0.1")
-
-// run mima during tests
-test in Test := {
-  MimaKeys.reportBinaryIssues.value
-  (test in Test).value
-}
+mimaPreviousVersion := Some("1.0.1")
