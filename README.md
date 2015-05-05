@@ -1,4 +1,4 @@
-scala-swing (unsupported) [<img src="https://api.travis-ci.org/scala/scala-swing.png"/>](https://travis-ci.org/scala/scala-swing)
+scala-swing (unsupported) [<img src="https://img.shields.io/travis/scala/scala-swing.svg"/>](https://travis-ci.org/scala/scala-swing) [<img src="https://img.shields.io/maven-central/v/org.scala-lang.modules/scala-swing_2.11.svg?label=latest%20release%20for%202.11"/>](http://search.maven.org/#search%7Cga%7C1%7Cg%3Aorg.scala-lang.modules%20a%3Ascala-swing_2.11) [<img src="https://img.shields.io/maven-central/v/org.scala-lang.modules/scala-swing_2.12*.svg?label=latest%20release%20for%202.12"/>](http://search.maven.org/#search%7Cga%7C1%7Cg%3Aorg.scala-lang.modules%20a%3Ascala-swing_2.12*)
 =========
 
 We welcome contributions, but do not actively maintain this library.
