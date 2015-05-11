@@ -1,7 +1,9 @@
 scala-swing (mostly-unsupported)
 =========
 
-[<img src="https://api.travis-ci.org/scala/scala-swing.png?branch=java7"/>](https://travis-ci.org/scala/scala-swing?branch=java7)
+[<img src="https://img.shields.io/travis/scala/scala-swing/java7.svg"/>](https://travis-ci.org/scala/scala-swing)
+[<img src="https://img.shields.io/maven-central/v/org.scala-lang.modules/scala-swing_2.11.svg?label=latest%20release%20for%202.11"/>](http://search.maven.org/#search%7Cga%7C1%7Cg%3Aorg.scala-lang.modules%20a%3Ascala-swing_2.11)
+[<img src="https://img.shields.io/maven-central/v/org.scala-lang.modules/scala-swing_2.12*.svg?label=latest%20release%20for%202.12"/>](http://search.maven.org/#search%7Cga%7C1%7Cg%3Aorg.scala-lang.modules%20a%3Ascala-swing_2.12*)
 [![Stories in Ready](https://badge.waffle.io/scala/scala-swing.svg?label=ready&title=Ready)](http://waffle.io/scala/scala-swing)
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/scala/scala-swing)
 
@@ -77,6 +79,22 @@ Versions
 _Reason for different versions can be found at [SI-3634](https://issues.scala-lang.org/browse/SI-3634)_
 
 
-Notes:
+
+ScalaDocs
+---
+
+Documentation for scala-swing included in 2.11.1 is can be found [here](http://www.scala-lang.org/api/2.11.1/scala-swing/#scala.swing.package)
+
+Other version can be found at [http://www.scala-lang.org/documentation/api.html](http://www.scala-lang.org/documentation/api.html) 
+
+
+Current Work
+---
+
+Current changes are being made on the **java7** branch. This is to mainly because of the EOL of java6 and the generification that happened between jdk6 and jdk7 requiring a difference in the source code. This class files are targeted at java6 and will run with all versions upwards. 
+
+<br>
+
+_Notes:_
 
 - Visual appearance of combo boxes using the GTK LaF is broken on JDKs < 1.7b30. This is a Java Swing problem.
