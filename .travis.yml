@@ -1,22 +1,8 @@
 language: scala
 
-env:
-  global:
-    - PUBLISH_JDK=openjdk6 # admin/build.sh only publishes when running on this jdk
-# Don't commit sensitive files, instead commit a version encrypted with $SECRET,
-# this environment variable is encrypted with this repo's private key and stored below:
-# (See http://docs.travis-ci.com/user/environment-variables/#Secure-Variables.)
-    - secure: "g/d6gjq6g+t5ieI6DwOiL5k8XJ/ethlZ1ZZDA/uvOsCfkIu0MBL2cYGmwQ0gcBNBQ/02wZjXnTIgMhFhYLcgHtnicAjy+53fhjCYcTM6A61DCPhJ6txOjEEPrpnlqbvKauw0WuVGT8Kd52bhaMXPCE2GOWgPe+bJfDUTHSm86dw="
+script: sbt clean update test publishLocal
 
-script:
-  - admin/build.sh
-scala:
-  - 2.11.0
-jdk:
-  - openjdk6
+jdk: openjdk6
+
 notifications:
-  email:
-    - adriaan.moors@typesafe.com
-
-# if we get weird timeouts, see https://github.com/spray/spray/pull/233
-# 'set concurrentRestrictions in Global += Tags.limit(Tags.Test, 1)'
+  email: adriaan.moors@typesafe.com
