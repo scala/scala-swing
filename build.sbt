@@ -6,7 +6,9 @@ name                       := "scala-swing"
 
 version                    := "1.0.3-SNAPSHOT"
 
-scalaVersion               := "2.11.6"
+scalaVersion               := crossScalaVersions.value.head
+
+crossScalaVersions         := Seq("2.11.6", "2.12.0-M1", "2.10.5")
 
 // important!! must come here (why?)
 scalaModuleOsgiSettings
