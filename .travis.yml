@@ -2,25 +2,19 @@ language: scala
 
 env:
   global:
-    - PUBLISH_JDK=openjdk7 # admin/build.sh only publishes when running on this jdk
-# Don't commit sensitive files, instead commit a version encrypted with $SECRET,
-# this environment variable is encrypted with this repo's private key and stored below:
-# (See http://docs.travis-ci.com/user/environment-variables/#Secure-Variables.)
-    - secure: "g/d6gjq6g+t5ieI6DwOiL5k8XJ/ethlZ1ZZDA/uvOsCfkIu0MBL2cYGmwQ0gcBNBQ/02wZjXnTIgMhFhYLcgHtnicAjy+53fhjCYcTM6A61DCPhJ6txOjEEPrpnlqbvKauw0WuVGT8Kd52bhaMXPCE2GOWgPe+bJfDUTHSm86dw="
+    - PUBLISH_JDK=oraclejdk8
+    # PGP_PASSPHRASE
+    - secure: "bTGw0loJcnmzNuJG3bjGLs7tfnrWlLb3oi6nBeYUS+coRhKzK4jMN6luuh89gVwIcbFK2nZUkm1s59UZzQA0SMBsdL/Js9Zi6jiUj4NBIVEOzgQxp/vlScF/kF7HxxBji6Gxp/TpqW2MOFxCtWWGBoktuAsufFEhJ47m/cVUZBY="
+    # SONA_USER
+    - secure: "uJEIIJGX+xviY5prNor9WW8JuV4MdQbNvGe6nO4Cwumv8LEXALlpONZrmF5BvEB7HrmB/VUqwDO9utrhN7VPaFhCTnoHuslbSdhdB9Yg/lwD+0FpszvKjjraoWeQqqJuXoml9kmH4kQBIP4RxPTnzocPHRIfVyEOYRnMtydImBA="
+    # SONA_PASS
+    - secure: "SlbOg79Jzzg7QQeVDu8Q+zZM/GRLFZxPjud9DsLCu4tkTVXWHcYn6FaXuOvVsLkgeALT2pM5j6Zcpp6WqyGRJiSkVqVGqM3jXWov+esgSmhu9pIMvVtxmvfiHBXofiKNYax3XCX+hTwCVuh2pEZ5Thy8i+fXVElCCqzcgTnp+DQ="
 
-script:
-  - admin/build.sh
-scala:
-  - 2.11.1
-  - 2.10.4
-jdk:
-  - openjdk7
-  - oraclejdk7
+script: admin/build.sh
+
+jdk: oraclejdk8
 
 notifications:
   email:
     - adriaan.moors@typesafe.com
     - andy@hicks.net
-
-# if we get weird timeouts, see https://github.com/spray/spray/pull/233
-# 'set concurrentRestrictions in Global += Tags.limit(Tags.Test, 1)'
