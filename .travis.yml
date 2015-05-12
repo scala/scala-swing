@@ -4,11 +4,11 @@ env:
   global:
     - PUBLISH_JDK=openjdk6
     # PGP_PASSPHRASE
-    - secure: "bTGw0loJcnmzNuJG3bjGLs7tfnrWlLb3oi6nBeYUS+coRhKzK4jMN6luuh89gVwIcbFK2nZUkm1s59UZzQA0SMBsdL/Js9Zi6jiUj4NBIVEOzgQxp/vlScF/kF7HxxBji6Gxp/TpqW2MOFxCtWWGBoktuAsufFEhJ47m/cVUZBY="
+    - secure: "MIHv2s6njtXubCzbP/eYXszuO/Y3FADYATZpDtOULZmQHcQ8z+sccQHidyq6hvoK9/I2hRUrc5RIelfA7D32tqP7aF3P9Dq1ZdiWqZYmFKUl6wzJMhgWwnT1RA9Nu67PcNLZGwOe7+55zZpWVNbeTKMe05TzUaaGUgApr9wvS0I="
     # SONA_USER
-    - secure: "uJEIIJGX+xviY5prNor9WW8JuV4MdQbNvGe6nO4Cwumv8LEXALlpONZrmF5BvEB7HrmB/VUqwDO9utrhN7VPaFhCTnoHuslbSdhdB9Yg/lwD+0FpszvKjjraoWeQqqJuXoml9kmH4kQBIP4RxPTnzocPHRIfVyEOYRnMtydImBA="
+    - secure: "e3FEhT76+qpmeubxtthmubnuyf5faCZneB1lQE8zv89/NZrD+v6tM8hGWatfiyyswmcaUdukxW/Q3NVlesKiy+cJLgNJ8AImRckKPiPVUYpXcQoc0R1Nyl4DeDyorGE17SslW28frlRU9OutTnZQlOfg4uqCdZuuCdcPV0lnGAU="
     # SONA_PASS
-    - secure: "SlbOg79Jzzg7QQeVDu8Q+zZM/GRLFZxPjud9DsLCu4tkTVXWHcYn6FaXuOvVsLkgeALT2pM5j6Zcpp6WqyGRJiSkVqVGqM3jXWov+esgSmhu9pIMvVtxmvfiHBXofiKNYax3XCX+hTwCVuh2pEZ5Thy8i+fXVElCCqzcgTnp+DQ="
+    - secure: "BLhtiCjcjvwB0lUvfrMa9CSvWDcdGkadAVFFPyuXSU2OQw/RR9dZF3/ZLILf9jHL3pWj/Scp8jWRl40y6sUxihUOXhhxpDCF8UVgnXdDCQf/W7gerRC/+3Zpr3LugVeSEuBgECld6XZnYNst/xbL9GHzEc7kDm7MIfz8nY8Ic7s="
 
 script: admin/build.sh
 
