@@ -16,7 +16,7 @@ scala:
 jdk:
   - openjdk7
   - oraclejdk7
-  
+
 notifications:
   email:
     - adriaan.moors@typesafe.com
