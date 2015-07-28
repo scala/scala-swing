@@ -8,7 +8,7 @@ version                    := "1.0.3-SNAPSHOT"
 
 scalaVersion               := crossScalaVersions.value.head
 
-crossScalaVersions         := Seq("2.11.6", "2.12.0-M1", "2.10.5")
+crossScalaVersions         := Seq("2.11.7")
 
 // important!! must come here (why?)
 scalaModuleOsgiSettings
