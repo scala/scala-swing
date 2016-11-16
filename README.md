@@ -6,7 +6,7 @@
 [![Stories in Ready](https://badge.waffle.io/scala/scala-swing.svg?label=ready&title=Ready)](http://waffle.io/scala/scala-swing)
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/scala/scala-swing)
 
-This is now community maintained. If you're interested in helping then contact @adriaanm or @andy1138.
+This is now community maintained by @andy1138 & @benhutchison. If you're interested in helping then contact them or @adriaanm.
 Questions can asked on the [Google Group](https://groups.google.com/forum/#!forum/scala-swing).
 
 This is a UI library that will wrap most of Java Swing for Scala in a straightforward manner. 
