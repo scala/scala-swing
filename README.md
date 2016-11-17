@@ -4,7 +4,6 @@
 [<img src="https://img.shields.io/maven-central/v/org.scala-lang.modules/scala-swing_2.11.svg?label=latest%20release%20for%202.11"/>](http://search.maven.org/#search%7Cga%7C1%7Cg%3Aorg.scala-lang.modules%20a%3Ascala-swing_2.11)
 [<img src="https://img.shields.io/maven-central/v/org.scala-lang.modules/scala-swing_2.12*.svg?label=latest%20release%20for%202.12"/>](http://search.maven.org/#search%7Cga%7C1%7Cg%3Aorg.scala-lang.modules%20a%3Ascala-swing_2.12*)
 [![Stories in Ready](https://badge.waffle.io/scala/scala-swing.svg?label=ready&title=Ready)](http://waffle.io/scala/scala-swing)
-[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/scala/scala-swing)
 
 This is now community maintained by @andy1138 & @benhutchison. If you're interested in helping then contact them or @adriaanm.
 Questions can asked on the [Google Group](https://groups.google.com/forum/#!forum/scala-swing).
