@@ -4,7 +4,7 @@ scalaModuleSettings
 
 name               := "scala-swing"
 
-version            := "2.0.0-SNAPSHOT"
+version            := "2.0.1-SNAPSHOT"
 
 scalaVersion       := crossScalaVersions.value.head
 
