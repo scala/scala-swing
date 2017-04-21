@@ -1,18 +1,19 @@
-import com.typesafe.tools.mima.plugin.{MimaPlugin, MimaKeys}
-
 scalaModuleSettings
 
-name                       := "scala-swing"
+name    := "scala-swing"
+version := "1.0.3-SNAPSHOT"
 
-version                    := "1.0.3-SNAPSHOT"
+scalaVersionsByJvm := {
+  val vs = List("2.11.11", "2.10.6")
 
-scalaVersion               := crossScalaVersions.value.head
+  // Map[JvmMajorVersion, List[(ScalaVersion, UseForPublishing)]]
+  Map(
+    6 -> vs.map(_ -> true),
+    7 -> vs.map(_ -> false),
+    8 -> vs.map(_ -> false)
+  )
+}
 
-crossScalaVersions         := Seq("2.11.6", "2.12.0-M1", "2.10.5")
-
-// important!! must come here (why?)
-scalaModuleOsgiSettings
-
-OsgiKeys.exportPackage     := Seq(s"scala.swing.*;version=${version.value}")
+OsgiKeys.exportPackage := Seq(s"scala.swing.*;version=${version.value}")
 
 mimaPreviousVersion := Some("1.0.1")
