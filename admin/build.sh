@@ -33,7 +33,7 @@ if [[ "$TRAVIS_TAG" =~ $tagPat ]]; then
       echo "Not publishing $TRAVIS_TAG on Java version $currentJvmVer."
       exit 0
     fi
-    publishScalaVersion='set every scalaVersionsByJvm := Map('$jvmVer' -> List("'$scalaVer'" -> true))'
+    publishScalaVersion='set every ScalaModulePlugin.scalaVersionsByJvm := Map('$jvmVer' -> List("'$scalaVer'" -> true))'
     echo "Releasing $tagVer using Scala $scalaVer on Java version $jvmVer."
   else
     echo "Releasing $tagVer on Java version $currentJvmVer according to 'scalaVersionsByJvm' in build.sbt."

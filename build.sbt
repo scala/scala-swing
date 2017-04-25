@@ -1,3 +1,5 @@
+import ScalaModulePlugin._
+
 scalaModuleSettings
 
 name    := "scala-swing"
@@ -6,7 +8,7 @@ version := "2.0.0-SNAPSHOT"
 scalacOptions      ++= Seq("-deprecation", "-feature")
 
 // Map[JvmMajorVersion, List[(ScalaVersion, UseForPublishing)]]
-scalaVersionsByJvm := Map(
+scalaVersionsByJvm in ThisBuild := Map(
   8 -> List("2.11.11", "2.12.2", "2.13.0-M1").map(_ -> true)
 )
 
