@@ -2,8 +2,9 @@ import ScalaModulePlugin._
 
 scalaModuleSettings
 
-name    := "scala-swing"
-version := "2.0.0-SNAPSHOT"
+name               := "scala-swing"
+
+version            := "2.0.1-SNAPSHOT"
 
 scalacOptions      ++= Seq("-deprecation", "-feature")
 
