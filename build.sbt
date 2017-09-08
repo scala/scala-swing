@@ -6,10 +6,6 @@ name               := "scala-swing"
 
 version            := "2.0.1-SNAPSHOT"
 
-scalaVersion       := crossScalaVersions.value.head
-
-crossScalaVersions := Seq("2.11.8", "2.12.1")
-
 scalacOptions      ++= Seq("-deprecation", "-feature")
 
 // Map[JvmMajorVersion, List[(ScalaVersion, UseForPublishing)]]
