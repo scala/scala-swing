@@ -11,7 +11,12 @@ env:
 
 script: admin/build.sh
 
+addons:
+  apt:
+    packages:
+      - openjdk-6-jdk
+
 jdk: openjdk6
 
 notifications:
-  email: adriaan.moors@typesafe.com
+  email: adriaan.moors@lightbend.com
