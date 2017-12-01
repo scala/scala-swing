@@ -21,21 +21,21 @@ object Action {
    * instead of from its action.
    * In Java Swing, one would use `null` instead of a designated action.
    */
-  case object NoAction extends Action("") { def apply() {} }
+  case object NoAction extends Action("") { def apply(): Unit = () }
 
   object Trigger {
     trait Wrapper extends Action.Trigger {
       def peer: javax.swing.JComponent {
-        def addActionListener(a: ActionListener)
-        def removeActionListener(a: ActionListener)
-        def setAction(a: javax.swing.Action)
+        def addActionListener(a: ActionListener): Unit
+        def removeActionListener(a: ActionListener): Unit
+        def setAction(a: javax.swing.Action): Unit
         def getAction(): javax.swing.Action
       }
 
       // TODO: we need an action cache
       private var _action: Action = Action.NoAction
       def action: Action = _action
-      def action_=(a: Action) { _action = a; peer.setAction(a.peer) }
+      def action_=(a: Action): Unit = { _action = a; peer.setAction(a.peer) }
 
       //1.6: def hideActionText: Boolean = peer.getHideActionText
       //def hideActionText_=(b: Boolean) = peer.setHideActionText(b)
@@ -47,7 +47,7 @@ object Action {
    */
   trait Trigger {
     def action: Action
-    def action_=(a: Action)
+    def action_=(a: Action): Unit
 
     //1.6: def hideActionText: Boolean
     //def hideActionText_=(b: Boolean)
@@ -56,8 +56,8 @@ object Action {
   /**
    * Convenience method to create an action with a given title and body to run.
    */
-  def apply(title: String)(body: =>Unit) = new Action(title) {
-    def apply() { body }
+  def apply(title: String)(body: => Unit): Action = new Action(title) {
+    def apply(): Unit = body
   }
 }
 
@@ -75,41 +75,40 @@ abstract class Action(title0: String) {
   import Swing._
 
   lazy val peer: javax.swing.Action = new javax.swing.AbstractAction(title0) {
-    def actionPerformed(a: java.awt.event.ActionEvent) = apply()
+    def actionPerformed(a: java.awt.event.ActionEvent): Unit = apply()
   }
 
   /**
    * Title is not optional.
    */
   def title: String = ifNull(peer.getValue(javax.swing.Action.NAME),"")
-  def title_=(t: String) { peer.putValue(javax.swing.Action.NAME, t) }
+  def title_=(t: String): Unit = peer.putValue(javax.swing.Action.NAME, t)
 
   /**
    * None if large icon and small icon are not equal.
    */
   def icon: Icon = smallIcon //if(largeIcon == smallIcon) largeIcon else None
-  def icon_=(i: Icon) { /*largeIcon = i;*/ smallIcon = i }
+  def icon_=(i: Icon): Unit = /*largeIcon = i;*/ smallIcon = i
   // 1.6: def largeIcon: Icon = toNoIcon(peer.getValue(javax.swing.Action.LARGE_ICON_KEY).asInstanceOf[Icon])
   // def largeIcon_=(i: Icon) { peer.putValue(javax.swing.Action.LARGE_ICON_KEY, toNullIcon(i)) }
   def smallIcon: Icon = toNoIcon(peer.getValue(javax.swing.Action.SMALL_ICON).asInstanceOf[Icon])
-  def smallIcon_=(i: Icon) { peer.putValue(javax.swing.Action.SMALL_ICON, toNullIcon(i)) }
+  def smallIcon_=(i: Icon): Unit = peer.putValue(javax.swing.Action.SMALL_ICON, toNullIcon(i))
 
   /**
    * For all components.
    */
   def toolTip: String =
     ifNull(peer.getValue(javax.swing.Action.SHORT_DESCRIPTION), "")
-  def toolTip_=(t: String) {
+  def toolTip_=(t: String): Unit =
     peer.putValue(javax.swing.Action.SHORT_DESCRIPTION, t)
-  }
+
   /**
    * Can be used for status bars, for example.
    */
   def longDescription: String =
     ifNull(peer.getValue(javax.swing.Action.LONG_DESCRIPTION), "")
-  def longDescription_=(t: String) {
+  def longDescription_=(t: String): Unit =
     peer.putValue(javax.swing.Action.LONG_DESCRIPTION, t)
-  }
 
   /**
    * Default: java.awt.event.KeyEvent.VK_UNDEFINED, i.e., no mnemonic key.
@@ -117,7 +116,7 @@ abstract class Action(title0: String) {
    */
   def mnemonic: Int = ifNull(peer.getValue(javax.swing.Action.MNEMONIC_KEY),
                              java.awt.event.KeyEvent.VK_UNDEFINED)
-  def mnemonic_=(m: Int) { peer.putValue(javax.swing.Action.MNEMONIC_KEY, m) }
+  def mnemonic_=(m: Int): Unit = peer.putValue(javax.swing.Action.MNEMONIC_KEY, m)
 
   /*/**
    * Indicates which character of the title should be underlined to indicate the mnemonic key.
@@ -134,15 +133,14 @@ abstract class Action(title0: String) {
    */
   def accelerator: Option[KeyStroke] =
     toOption(peer.getValue(javax.swing.Action.ACCELERATOR_KEY))
-  def accelerator_=(k: Option[KeyStroke]) {
+  def accelerator_=(k: Option[KeyStroke]): Unit =
     peer.putValue(javax.swing.Action.ACCELERATOR_KEY, k.orNull)
-  }
 
   /**
    * For all components.
    */
   def enabled: Boolean = peer.isEnabled
-  def enabled_=(b: Boolean) { peer.setEnabled(b) }
+  def enabled_=(b: Boolean): Unit = peer.setEnabled(b)
 
   /*/**
    * Only honored if not <code>None</code>. For various buttons.
@@ -153,5 +151,5 @@ abstract class Action(title0: String) {
                  if (b == None) null else new java.lang.Boolean(b.get))
   }*/
 
-  def apply()
+  def apply(): Unit
 }

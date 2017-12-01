@@ -45,21 +45,20 @@ class PopupMenu extends Component with SequentialContainer.Wrapper with Publishe
   override lazy val peer: JPopupMenu = new JPopupMenu with SuperMixin 
 
   peer.addPopupMenuListener(new PopupMenuListener {
-  	def popupMenuCanceled(e: PopupMenuEvent) {
+  	def popupMenuCanceled(e: PopupMenuEvent): Unit =
   	  publish(PopupMenuCanceled(PopupMenu.this))
-  	}
-  	def popupMenuWillBecomeInvisible(e: PopupMenuEvent) {
+
+  	def popupMenuWillBecomeInvisible(e: PopupMenuEvent): Unit =
   	  publish(PopupMenuWillBecomeInvisible(PopupMenu.this))
-  	}
-  	def popupMenuWillBecomeVisible(e: PopupMenuEvent) {
+
+  	def popupMenuWillBecomeVisible(e: PopupMenuEvent): Unit =
   	  publish(PopupMenuWillBecomeVisible(PopupMenu.this))
-  	}
   })
 
   def show(invoker: Component, x: Int, y: Int): Unit = peer.show(invoker.peer, x, y)
 
   def margin: Insets = peer.getMargin
   def label: String = peer.getLabel
-  def label_=(s: String) { peer.setLabel(s) }
+  def label_=(s: String): Unit = peer.setLabel(s)
 }
 

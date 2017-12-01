@@ -35,16 +35,16 @@ sealed trait RichWindow extends Window {
 
   trait InterfaceMixin extends super.InterfaceMixin {
     def getJMenuBar(): JMenuBar
-    def setJMenuBar(b: JMenuBar)
-    def setUndecorated(b: Boolean)
-    def setTitle(s: String)
+    def setJMenuBar(b: JMenuBar): Unit
+    def setUndecorated(b: Boolean): Unit
+    def setTitle(s: String): Unit
     def getTitle(): String
-    def setResizable(b: Boolean)
+    def setResizable(b: Boolean): Unit
     def isResizable(): Boolean
   }
 
   def title: String = peer.getTitle
-  def title_=(s: String) = peer.setTitle(s)
+  def title_=(s: String): Unit = peer.setTitle(s)
 
   /**
    * The menu bar of this frame or `NoMenuBar` if no menu bar is set.
@@ -57,11 +57,11 @@ sealed trait RichWindow extends Window {
    * Set the current menu bar of this frame. Pass `NoMenuBar` if this frame
    * should not show a menu bar.
    */
-  def menuBar_=(m: MenuBar) =
+  def menuBar_=(m: MenuBar): Unit =
     peer.setJMenuBar(if (m == MenuBar.NoMenuBar) null else m.peer)
 
-  def resizable_=(b: Boolean) { peer.setResizable(b) }
-  def resizable = peer.isResizable
+  def resizable_=(b: Boolean): Unit = peer.setResizable(b)
+  def resizable: Boolean = peer.isResizable
 }
 
 /**
@@ -75,15 +75,15 @@ sealed trait RichWindow extends Window {
 class Frame(gc: java.awt.GraphicsConfiguration = null) extends RichWindow {
   override lazy val peer: JFrame with InterfaceMixin = new JFrame(gc) with InterfaceMixin with SuperMixin
 
-  def iconify() { peer.setExtendedState(peer.getExtendedState | AWTFrame.ICONIFIED) }
-  def uniconify() { peer.setExtendedState(peer.getExtendedState & ~AWTFrame.ICONIFIED) }
+  def iconify(): Unit = { peer.setExtendedState(peer.getExtendedState | AWTFrame.ICONIFIED) }
+  def uniconify(): Unit = { peer.setExtendedState(peer.getExtendedState & ~AWTFrame.ICONIFIED) }
   def iconified: Boolean = (peer.getExtendedState & AWTFrame.ICONIFIED) != 0
-  def maximize() { peer.setExtendedState(peer.getExtendedState | AWTFrame.MAXIMIZED_BOTH) }
-  def unmaximize() { peer.setExtendedState(peer.getExtendedState & ~AWTFrame.MAXIMIZED_BOTH) }
+  def maximize(): Unit = { peer.setExtendedState(peer.getExtendedState | AWTFrame.MAXIMIZED_BOTH) }
+  def unmaximize(): Unit = { peer.setExtendedState(peer.getExtendedState & ~AWTFrame.MAXIMIZED_BOTH) }
   def maximized: Boolean = (peer.getExtendedState & AWTFrame.MAXIMIZED_BOTH) != 0
 
   def iconImage: Image = peer.getIconImage
-  def iconImage_=(i: Image) { peer.setIconImage(i) }
+  def iconImage_=(i: Image): Unit = peer.setIconImage(i)
 }
 
 /**
@@ -96,32 +96,35 @@ object Dialog {
    * The message type of a dialog.
    */
   object Message extends Enumeration {
-    val Error = Value(JOptionPane.ERROR_MESSAGE)
-    val Info = Value(JOptionPane.INFORMATION_MESSAGE)
-    val Warning = Value(JOptionPane.WARNING_MESSAGE)
-    val Question = Value(JOptionPane.QUESTION_MESSAGE)
-    val Plain = Value(JOptionPane.PLAIN_MESSAGE)
+    import JOptionPane._
+    val Error   : Message.Value = Value(ERROR_MESSAGE)
+    val Info    : Message.Value = Value(INFORMATION_MESSAGE)
+    val Warning : Message.Value = Value(WARNING_MESSAGE)
+    val Question: Message.Value = Value(QUESTION_MESSAGE)
+    val Plain   : Message.Value = Value(PLAIN_MESSAGE)
   }
 
   /**
    * The possible answers a user can select.
    */
   object Options extends Enumeration {
-    val Default = Value(JOptionPane.DEFAULT_OPTION)
-    val YesNo = Value(JOptionPane.YES_NO_OPTION)
-    val YesNoCancel = Value(JOptionPane.YES_NO_CANCEL_OPTION)
-    val OkCancel = Value(JOptionPane.OK_CANCEL_OPTION)
+    import JOptionPane._
+    val Default    : Options.Value = Value(DEFAULT_OPTION)
+    val YesNo      : Options.Value = Value(YES_NO_OPTION)
+    val YesNoCancel: Options.Value = Value(YES_NO_CANCEL_OPTION)
+    val OkCancel   : Options.Value = Value(OK_CANCEL_OPTION)
   }
 
   /**
    * The selected result of dialog.
    */
   object Result extends Enumeration {
-    val Yes = Value(JOptionPane.YES_OPTION)
-    val Ok = Yes
-    val No = Value(JOptionPane.NO_OPTION)
-    val Cancel = Value(JOptionPane.CANCEL_OPTION)
-    val Closed = Value(JOptionPane.CLOSED_OPTION)
+    import JOptionPane._
+    val Yes   : Result.Value = Value(YES_OPTION)
+    val Ok    : Result.Value = Value(OK_OPTION)
+    val No    : Result.Value = Value(NO_OPTION)
+    val Cancel: Result.Value = Value(CANCEL_OPTION)
+    val Closed: Result.Value = Value(CLOSED_OPTION)
   }
 
   private def uiString(txt: String) = UIManager.getString(txt)
@@ -168,7 +171,7 @@ object Dialog {
                   message: Any,
                   title: String = uiString("OptionPane.messageDialogTitle"),
                   messageType: Message.Value = Message.Info,
-                  icon: Icon = EmptyIcon) {
+                  icon: Icon = EmptyIcon): Unit = {
     JOptionPane.showMessageDialog(nullPeer(parent), message, title,
       messageType.id, Swing.wrapIcon(icon))
   }
@@ -189,7 +192,7 @@ class Dialog(owner: Window, gc: java.awt.GraphicsConfiguration = null) extends R
 
   def this() = this(null)
 
-  def modal_=(b: Boolean) { peer.setModal(b) }
-  def modal = peer.isModal
+  def modal_=(b: Boolean): Unit = peer.setModal(b)
+  def modal: Boolean = peer.isModal
 }
 

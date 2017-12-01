@@ -21,8 +21,8 @@ class EditorPane(contentType0: String, text0: String) extends TextComponent {
 	def this() = this("text/plain", "")
 
 	def contentType: String = peer.getContentType
-	def contentType_=(t: String) = peer.setContentType(t)
+	def contentType_=(t: String): Unit = peer.setContentType(t)
 
 	def editorKit: EditorKit = peer.getEditorKit
-	def editorKit_=(k: EditorKit) = peer.setEditorKit(k)
+	def editorKit_=(k: EditorKit): Unit = peer.setEditorKit(k)
 }

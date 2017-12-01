@@ -22,13 +22,13 @@ class PasswordField(text0: String, columns0: Int) extends TextField(text0, colum
   def this() = this("")
 
   def echoChar: Char = peer.getEchoChar
-  def echoChar_=(c: Char) = peer.setEchoChar(c)
+  def echoChar_=(c: Char): Unit = peer.setEchoChar(c)
 
   /**
    * The text property should not be used on a password field for
    * security reasons.
    */
   override def text: String = ""
-  override def text_=(s: String) {}
+  override def text_=(s: String): Unit = ()
   def password: Array[Char] = peer.getPassword
 }

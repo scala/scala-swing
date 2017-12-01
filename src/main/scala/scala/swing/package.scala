@@ -4,15 +4,15 @@ package scala
  * Useful imports that don't have wrappers.
  */
 package object swing {
-  type Point = java.awt.Point
-  type Dimension = java.awt.Dimension
-  type Rectangle = java.awt.Rectangle
-  type Insets = java.awt.Insets
+  type Point      = java.awt.Point
+  type Dimension  = java.awt.Dimension
+  type Rectangle  = java.awt.Rectangle
+  type Insets     = java.awt.Insets
 
   type Graphics2D = java.awt.Graphics2D
-  type Color = java.awt.Color
-  type Image = java.awt.Image
-  type Font = java.awt.Font
+  type Color      = java.awt.Color
+  type Image      = java.awt.Image
+  type Font       = java.awt.Font
 
   implicit lazy val reflectiveCalls     = scala.language.reflectiveCalls
   implicit lazy val implicitConversions = scala.language.implicitConversions

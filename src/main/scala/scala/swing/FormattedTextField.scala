@@ -15,10 +15,11 @@ object FormattedTextField {
    * The behavior of a formatted text field when it loses its focus.
    */
   object FocusLostBehavior extends Enumeration {
-    val Commit = Value(JFormattedTextField.COMMIT)
-    val CommitOrRevert = Value(JFormattedTextField.COMMIT_OR_REVERT)
-    val Persist = Value(JFormattedTextField.PERSIST)
-    val Revert = Value(JFormattedTextField.REVERT)
+    import JFormattedTextField._
+    val Commit        : FocusLostBehavior.Value = Value(COMMIT)
+    val CommitOrRevert: FocusLostBehavior.Value = Value(COMMIT_OR_REVERT)
+    val Persist       : FocusLostBehavior.Value = Value(PERSIST)
+    val Revert        : FocusLostBehavior.Value = Value(REVERT)
   }
 }
 
@@ -32,9 +33,9 @@ class FormattedTextField(format: java.text.Format) extends TextComponent {
 
   import FormattedTextField._
 
-  def commitEdit() { peer.commitEdit() }
+  def commitEdit(): Unit = peer.commitEdit()
   def editValid: Boolean = peer.isEditValid
 
   def focusLostBehavior: FocusLostBehavior.Value = FocusLostBehavior(peer.getFocusLostBehavior)
-  def focusLostBehavior_=(b: FocusLostBehavior.Value) { peer.setFocusLostBehavior(b.id) }
+  def focusLostBehavior_=(b: FocusLostBehavior.Value): Unit = peer.setFocusLostBehavior(b.id)
 }

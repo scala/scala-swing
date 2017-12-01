@@ -15,11 +15,12 @@ import javax.swing.JPanel
 
 object FlowPanel {
   object Alignment extends Enumeration {
-    val Leading = Value(FlowLayout.LEADING)
-    val Trailing = Value(FlowLayout.TRAILING)
-    val Left = Value(FlowLayout.LEFT)
-    val Right = Value(FlowLayout.RIGHT)
-    val Center = Value(FlowLayout.CENTER)
+    import FlowLayout._
+    val Leading : Alignment.Value = Value(LEADING)
+    val Trailing: Alignment.Value = Value(TRAILING)
+    val Left    : Alignment.Value = Value(LEFT)
+    val Right   : Alignment.Value = Value(RIGHT)
+    val Center  : Alignment.Value = Value(CENTER)
   }
 }
 
@@ -40,7 +41,7 @@ class FlowPanel(alignment: FlowPanel.Alignment.Value)(contents0: Component*) ext
   private def layoutManager = peer.getLayout.asInstanceOf[java.awt.FlowLayout]
 
   def vGap: Int = layoutManager.getVgap
-  def vGap_=(n: Int) { layoutManager.setVgap(n) }
+  def vGap_=(n: Int): Unit = layoutManager.setVgap(n)
   def hGap: Int = layoutManager.getHgap
-  def hGap_=(n: Int) { layoutManager.setHgap(n) }
+  def hGap_=(n: Int): Unit = layoutManager.setHgap(n)
 }

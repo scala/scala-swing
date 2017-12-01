@@ -10,16 +10,17 @@
 
 package scala.swing
 
-import event.Event
-import scala.collection.mutable.{Buffer, ListBuffer}
+import scala.collection.mutable
+import scala.collection.mutable.ListBuffer
+import scala.swing.event.Event
 
 object Reactions {
   class Impl extends Reactions {
-    private val parts: Buffer[Reaction] = new ListBuffer[Reaction]
-    def isDefinedAt(e: Event) = parts.exists(_ isDefinedAt e)
+    private val parts: mutable.Buffer[Reaction] = new ListBuffer[Reaction]
+    def isDefinedAt(e: Event): Boolean = parts.exists(_ isDefinedAt e)
     def += (r: Reaction): this.type = { parts += r; this }
     def -= (r: Reaction): this.type = { parts -= r; this }
-    def apply(e: Event) {
+    def apply(e: Event): Unit = {
       for (p <- parts) if (p isDefinedAt e) p(e)
     }
   }
@@ -32,9 +33,9 @@ object Reactions {
   trait StronglyReferenced
 
   class Wrapper(listener: Any)(r: Reaction) extends Reaction with StronglyReferenced with Proxy {
-    def self = listener
-    def isDefinedAt(e: Event) = r.isDefinedAt(e)
-    def apply(e: Event) { r(e) }
+    def self: Any = listener
+    def isDefinedAt(e: Event): Boolean = r.isDefinedAt(e)
+    def apply(e: Event): Unit = r(e)
   }
 }
 

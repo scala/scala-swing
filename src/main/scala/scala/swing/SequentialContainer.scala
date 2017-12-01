@@ -10,14 +10,14 @@
 
 package scala.swing
 
-import scala.collection.mutable.Buffer
+import scala.collection.mutable
 
 object SequentialContainer {
   /**
    * Utility trait for wrapping sequential containers.
    */
   trait Wrapper extends SequentialContainer with Container.Wrapper {
-    override val contents: Buffer[Component] = new Content
+    override val contents: mutable.Buffer[Component] = new Content
     //def contents_=(c: Component*)  { contents.clear(); contents ++= c }
   }
 }
@@ -31,6 +31,6 @@ trait SequentialContainer extends Container {
    * The mutable child components of this container. The order matters and
    * usually indicates the layout of the children.
    */
-  override def contents: Buffer[Component]
+  override def contents: mutable.Buffer[Component]
   //def contents_=(c: Component*)
 }

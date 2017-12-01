@@ -10,10 +10,9 @@
 
 package scala.swing
 
-import java.awt.Adjustable._
-
 object Orientation extends Enumeration {
-  val Horizontal = Value(HORIZONTAL)
-  val Vertical = Value(VERTICAL)
-  val NoOrientation = Value(NO_ORIENTATION)
+  import java.awt.Adjustable._
+  val Horizontal   : Orientation.Value = Value(HORIZONTAL)
+  val Vertical     : Orientation.Value = Value(VERTICAL)
+  val NoOrientation: Orientation.Value = Value(NO_ORIENTATION)
 }

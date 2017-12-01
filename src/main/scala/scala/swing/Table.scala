@@ -19,17 +19,18 @@ import scala.collection.mutable
 object Table {
   object AutoResizeMode extends Enumeration {
     import JTable._
-    val Off = Value(AUTO_RESIZE_OFF, "Off")
-    val NextColumn = Value(AUTO_RESIZE_NEXT_COLUMN, "NextColumn")
-    val SubsequentColumns = Value(AUTO_RESIZE_SUBSEQUENT_COLUMNS, "SubsequentColumns")
-    val LastColumn = Value(AUTO_RESIZE_LAST_COLUMN, "LastColumn")
-    val AllColumns = Value(AUTO_RESIZE_ALL_COLUMNS, "AllColumns")
+    val Off              : AutoResizeMode.Value = Value(AUTO_RESIZE_OFF, "Off")
+    val NextColumn       : AutoResizeMode.Value = Value(AUTO_RESIZE_NEXT_COLUMN, "NextColumn")
+    val SubsequentColumns: AutoResizeMode.Value = Value(AUTO_RESIZE_SUBSEQUENT_COLUMNS, "SubsequentColumns")
+    val LastColumn       : AutoResizeMode.Value = Value(AUTO_RESIZE_LAST_COLUMN, "LastColumn")
+    val AllColumns       : AutoResizeMode.Value = Value(AUTO_RESIZE_ALL_COLUMNS, "AllColumns")
   }
 
   object IntervalMode extends Enumeration {
-    val Single = Value(ListSelectionModel.SINGLE_SELECTION)
-    val SingleInterval = Value(ListSelectionModel.SINGLE_INTERVAL_SELECTION)
-    val MultiInterval = Value(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION)
+    import ListSelectionModel._
+    val Single        : IntervalMode.Value = Value(SINGLE_SELECTION)
+    val SingleInterval: IntervalMode.Value = Value(SINGLE_INTERVAL_SELECTION)
+    val MultiInterval : IntervalMode.Value = Value(MULTIPLE_INTERVAL_SELECTION)
   }
   object ElementMode extends Enumeration {
     val Row, Column, Cell, None = Value
@@ -42,7 +43,7 @@ object Table {
    */
   abstract class Renderer[-A] {
     def peer: TableCellRenderer = new TableCellRenderer {
-      def getTableCellRendererComponent(table: JTable, value: AnyRef, isSelected: Boolean, hasFocus: Boolean, row: Int, column: Int) = {
+      def getTableCellRendererComponent(table: JTable, value: AnyRef, isSelected: Boolean, hasFocus: Boolean, row: Int, column: Int): JComponent = {
         componentFor(table match {
           case t: JTableMixin => t.tableWrapper
           case _ => assert(false); null
@@ -61,7 +62,7 @@ object Table {
     /**
      * Standard preconfiguration that is commonly done for any component.
      */
-    def preConfigure(table: Table, isSelected: Boolean, hasFocus: Boolean, a: A, row: Int, column: Int) {
+    def preConfigure(table: Table, isSelected: Boolean, hasFocus: Boolean, a: A, row: Int, column: Int): Unit = {
       if (isSelected) {
         component.background = table.selectionBackground
         component.foreground = table.selectionForeground
@@ -73,7 +74,7 @@ object Table {
     /**
      * Configuration that is specific to the component and this renderer.
      */
-    def configure(table: Table, isSelected: Boolean, hasFocus: Boolean, a: A, row: Int, column: Int)
+    def configure(table: Table, isSelected: Boolean, hasFocus: Boolean, a: A, row: Int, column: Int): Unit
 
     /**
      * Configures the component before returning it.
@@ -90,7 +91,7 @@ object Table {
       this{ a => (null, a.toString) }
     }
 
-    def configure(table: Table, isSelected: Boolean, hasFocus: Boolean, a: A, row: Int, column: Int) {
+    def configure(table: Table, isSelected: Boolean, hasFocus: Boolean, a: A, row: Int, column: Int): Unit = {
       val (icon, text) = convert(a)
       component.icon = icon
       component.text = text
@@ -110,13 +111,13 @@ object Table {
  */
 class Table extends Component with Scrollable.Wrapper {
   override lazy val peer: JTable = new JTable with Table.JTableMixin with SuperMixin {
-    def tableWrapper = Table.this
-    override def getCellRenderer(r: Int, c: Int) = new TableCellRenderer {
-      def getTableCellRendererComponent(table: JTable, value: AnyRef, isSelected: Boolean, hasFocus: Boolean, row: Int, column: Int) =
+    def tableWrapper: Table = Table.this
+    override def getCellRenderer(r: Int, c: Int): TableCellRenderer = new TableCellRenderer {
+      def getTableCellRendererComponent(table: JTable, value: AnyRef, isSelected: Boolean, hasFocus: Boolean, row: Int, column: Int): JComponent =
         Table.this.rendererComponent(isSelected, hasFocus, row, column).peer
     }
-    override def getCellEditor(r: Int, c: Int) = editor(r, c)
-    override def getValueAt(r: Int, c: Int) = Table.this.apply(r,c).asInstanceOf[AnyRef]
+    override def getCellEditor(r: Int, c: Int): TableCellEditor = editor(r, c)
+    override def getValueAt(r: Int, c: Int): AnyRef = Table.this.apply(r,c).asInstanceOf[AnyRef]
   }
   import Table._
 
@@ -124,12 +125,12 @@ class Table extends Component with Scrollable.Wrapper {
   def this(rowData: Array[Array[Any]], columnNames: Seq[_]) = {
     this()
     model = new AbstractTableModel {
-      override def getColumnName(column: Int) = columnNames(column).toString
-      def getRowCount() = rowData.length
-      def getColumnCount() = columnNames.length
+      override def getColumnName(column: Int): String = columnNames(column).toString
+      def getRowCount: Int = rowData.length
+      def getColumnCount: Int = columnNames.length
       def getValueAt(row: Int, col: Int): AnyRef = rowData(row)(col).asInstanceOf[AnyRef]
       override def isCellEditable(row: Int, column: Int) = true
-      override def setValueAt(value: Any, row: Int, col: Int) {
+      override def setValueAt(value: Any, row: Int, col: Int): Unit = {
         rowData(row)(col) = value
         fireTableCellUpdated(row, col)
       }
@@ -138,7 +139,7 @@ class Table extends Component with Scrollable.Wrapper {
   def this(rows: Int, columns: Int) = {
     this()
     model = new DefaultTableModel(rows, columns) {
-      override def setValueAt(value: Any, row: Int, col: Int) {
+      override def setValueAt(value: Any, row: Int, col: Int): Unit = {
         super.setValueAt(value, row, col)
       }
     }
@@ -146,52 +147,52 @@ class Table extends Component with Scrollable.Wrapper {
 
   protected def scrollablePeer = peer
 
-  def rowHeight = peer.getRowHeight
-  def rowHeight_=(x: Int) = peer.setRowHeight(x)
+  def rowHeight: Int = peer.getRowHeight
+  def rowHeight_=(x: Int): Unit = peer.setRowHeight(x)
 
-  def rowCount = peer.getRowCount
+  def rowCount: Int = peer.getRowCount
 
-  def model = peer.getModel()
-  def model_=(x: TableModel) = {
+  def model: TableModel = peer.getModel
+  def model_=(x: TableModel): Unit = {
     peer.setModel(x)
     model.removeTableModelListener(modelListener)
     model.addTableModelListener(modelListener)
   }
 
   def autoResizeMode: AutoResizeMode.Value = AutoResizeMode(peer.getAutoResizeMode)
-  def autoResizeMode_=(x: Table.AutoResizeMode.Value) = peer.setAutoResizeMode(x.id)
+  def autoResizeMode_=(x: Table.AutoResizeMode.Value): Unit = peer.setAutoResizeMode(x.id)
 
-  def showGrid = peer.getShowHorizontalLines && peer.getShowVerticalLines
-  def showGrid_=(grid: Boolean) = peer.setShowGrid(grid)
+  def showGrid: Boolean = peer.getShowHorizontalLines && peer.getShowVerticalLines
+  def showGrid_=(grid: Boolean): Unit = peer.setShowGrid(grid)
 
-  def gridColor = peer.getGridColor
-  def gridColor_=(color: Color) = peer.setGridColor(color)
+  def gridColor: Color = peer.getGridColor
+  def gridColor_=(color: Color): Unit = peer.setGridColor(color)
 
-  def preferredViewportSize_=(dim: Dimension) = peer.setPreferredScrollableViewportSize(dim)
+  def preferredViewportSize_=(dim: Dimension): Unit = peer.setPreferredScrollableViewportSize(dim)
   //1.6: def fillsViewportHeight: Boolean = peer.getFillsViewportHeight
   //def fillsViewportHeight_=(b: Boolean) = peer.setFillsViewportHeight(b)
 
   object selection extends Publisher {
     // TODO: could be a sorted set
-    protected abstract class SelectionSet[A](a: =>Seq[A]) extends mutable.Set[A] {
+    protected abstract class SelectionSet[A](a: => Seq[A]) extends mutable.Set[A] {
       def -=(n: A): this.type
       def +=(n: A): this.type
-      def contains(n: A) = a.contains(n)
-      override def size = a.length
-      def iterator = a.iterator
+      def contains(n: A): Boolean = a.contains(n)
+      override def size: Int = a.length
+      def iterator: Iterator[A] = a.iterator
     }
 
     object rows extends SelectionSet(peer.getSelectedRows) {
-      def -=(n: Int) = { peer.removeRowSelectionInterval(n,n); this }
-      def +=(n: Int) = { peer.addRowSelectionInterval(n,n); this }
+      def -=(n: Int): this.type = { peer.removeRowSelectionInterval(n,n); this }
+      def +=(n: Int): this.type = { peer.addRowSelectionInterval(n,n); this }
 
       def leadIndex: Int = peer.getSelectionModel.getLeadSelectionIndex
       def anchorIndex: Int = peer.getSelectionModel.getAnchorSelectionIndex
     }
 
     object columns extends SelectionSet(peer.getSelectedColumns) {
-      def -=(n: Int) = { peer.removeColumnSelectionInterval(n,n); this }
-      def +=(n: Int) = { peer.addColumnSelectionInterval(n,n); this }
+      def -=(n: Int): this.type = { peer.removeColumnSelectionInterval(n,n); this }
+      def +=(n: Int): this.type = { peer.addColumnSelectionInterval(n,n); this }
 
       def leadIndex: Int = peer.getColumnModel.getSelectionModel.getLeadSelectionIndex
       def anchorIndex: Int = peer.getColumnModel.getSelectionModel.getAnchorSelectionIndex
@@ -199,17 +200,17 @@ class Table extends Component with Scrollable.Wrapper {
 
     def cells: mutable.Set[(Int, Int)] =
       new SelectionSet[(Int, Int)]((for(r <- selection.rows; c <- selection.columns) yield (r,c)).toSeq) { outer =>
-        def -=(n: (Int, Int)) = {
+        def -=(n: (Int, Int)): this.type = {
           peer.removeRowSelectionInterval(n._1,n._1)
           peer.removeColumnSelectionInterval(n._2,n._2)
           this
         }
-        def +=(n: (Int, Int)) = {
+        def +=(n: (Int, Int)): this.type  = {
           peer.addRowSelectionInterval(n._1,n._1)
           peer.addColumnSelectionInterval(n._2,n._2)
           this
         }
-        override def size = peer.getSelectedRowCount * peer.getSelectedColumnCount
+        override def size: Int = peer.getSelectedRowCount * peer.getSelectedColumnCount
       }
 
     /**
@@ -218,30 +219,28 @@ class Table extends Component with Scrollable.Wrapper {
      * but the result is a table that does not produce useful selections.
      */
     def intervalMode: IntervalMode.Value = IntervalMode(peer.getSelectionModel.getSelectionMode)
-    def intervalMode_=(m: IntervalMode.Value) { peer.setSelectionMode(m.id) }
+    def intervalMode_=(m: IntervalMode.Value): Unit = peer.setSelectionMode(m.id)
     def elementMode: ElementMode.Value =
       if(peer.getColumnSelectionAllowed && peer.getRowSelectionAllowed) ElementMode.Cell
       else if(peer.getColumnSelectionAllowed) ElementMode.Column
       else if(peer.getRowSelectionAllowed) ElementMode.Row
       else ElementMode.None
-    def elementMode_=(m: ElementMode.Value) {
+    def elementMode_=(m: ElementMode.Value): Unit = {
       m match {
-        case ElementMode.Cell => peer.setCellSelectionEnabled(true)
+        case ElementMode.Cell   => peer.setCellSelectionEnabled(true)
         case ElementMode.Column => peer.setRowSelectionAllowed(false); peer.setColumnSelectionAllowed(true)
-        case ElementMode.Row => peer.setRowSelectionAllowed(true); peer.setColumnSelectionAllowed(false)
-        case ElementMode.None => peer.setRowSelectionAllowed(false); peer.setColumnSelectionAllowed(false)
+        case ElementMode.Row    => peer.setRowSelectionAllowed(true) ; peer.setColumnSelectionAllowed(false)
+        case ElementMode.None   => peer.setRowSelectionAllowed(false); peer.setColumnSelectionAllowed(false)
       }
     }
 
     peer.getColumnModel.getSelectionModel.addListSelectionListener(new ListSelectionListener {
-      def valueChanged(e: javax.swing.event.ListSelectionEvent) {
+      def valueChanged(e: javax.swing.event.ListSelectionEvent): Unit =
         publish(TableColumnsSelected(Table.this, e.getFirstIndex to e.getLastIndex, e.getValueIsAdjusting))
-      }
     })
     peer.getSelectionModel.addListSelectionListener(new ListSelectionListener {
-      def valueChanged(e: javax.swing.event.ListSelectionEvent) {
+      def valueChanged(e: javax.swing.event.ListSelectionEvent): Unit =
         publish(TableRowsSelected(Table.this, e.getFirstIndex to e.getLastIndex, e.getValueIsAdjusting))
-      }
     })
   }
 
@@ -261,7 +260,7 @@ class Table extends Component with Scrollable.Wrapper {
     }
 
   // TODO: a public API for setting editors
-  protected def editor(row: Int, column: Int) = {
+  protected def editor(row: Int, column: Int): TableCellEditor = {
     val v = apply(row, column).asInstanceOf[AnyRef]
     if (v != null)
       Table.this.peer.getDefaultEditor(v.getClass)
@@ -281,27 +280,27 @@ class Table extends Component with Scrollable.Wrapper {
   //def viewToModelRow(idx: Int) = peer.convertRowIndexToModel(idx)
   //def modelToViewRow(idx: Int) = peer.convertRowIndexToView(idx)
 
-  def viewToModelColumn(idx: Int) = peer.convertColumnIndexToModel(idx)
-  def modelToViewColumn(idx: Int) = peer.convertColumnIndexToView(idx)
+  def viewToModelColumn(idx: Int): Int = peer.convertColumnIndexToModel(idx)
+  def modelToViewColumn(idx: Int): Int = peer.convertColumnIndexToView (idx)
 
 
   /**
    * Change the value of the given cell.
    */
-  def update(row: Int, column: Int, value: Any) { model.setValueAt(value, row, viewToModelColumn(column)) }
+  def update(row: Int, column: Int, value: Any): Unit = model.setValueAt(value, row, viewToModelColumn(column))
 
   /**
    * Visually update the given cell.
    */
-  def updateCell(row: Int, column: Int) = update(row, column, apply(row, column))
+  def updateCell(row: Int, column: Int): Unit = update(row, column, apply(row, column))
 
   def selectionForeground: Color = peer.getSelectionForeground
-  def selectionForeground_=(c: Color) = peer.setSelectionForeground(c)
+  def selectionForeground_=(c: Color): Unit = peer.setSelectionForeground(c)
   def selectionBackground: Color = peer.getSelectionBackground
-  def selectionBackground_=(c: Color) = peer.setSelectionBackground(c)
+  def selectionBackground_=(c: Color): Unit = peer.setSelectionBackground(c)
 
-  protected val modelListener = new TableModelListener {
-    def tableChanged(e: TableModelEvent) = publish(
+  protected val modelListener: TableModelListener = new TableModelListener {
+    def tableChanged(e: TableModelEvent): Unit = publish(
       e.getType match {
         case TableModelEvent.UPDATE =>
           if (e.getFirstRow == 0 && e.getLastRow == Int.MaxValue && e.getColumn == TableModelEvent.ALL_COLUMNS)

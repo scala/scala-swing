@@ -24,40 +24,40 @@ class SplitPane(o: Orientation.Value, left: Component, right: Component) extends
   def this() = this(Orientation.Horizontal)
 
   def contents: Seq[Component] = List(leftComponent, rightComponent)
-  def contents_=(left: Component, right: Component) {
+  def contents_=(left: Component, right: Component): Unit = {
     peer.setLeftComponent(nullPeer(left))
     peer.setRightComponent(nullPeer(right))
   }
 
   def topComponent: Component =
     UIElement.cachedWrapper[Component](peer.getTopComponent.asInstanceOf[javax.swing.JComponent])
-  def topComponent_=(c: Component) { peer.setTopComponent(nullPeer(c)) }
+  def topComponent_=(c: Component): Unit = peer.setTopComponent(nullPeer(c))
   def bottomComponent: Component =
     UIElement.cachedWrapper[Component](peer.getBottomComponent.asInstanceOf[javax.swing.JComponent])
-  def bottomComponent_=(c: Component) { peer.setBottomComponent(nullPeer(c)) }
+  def bottomComponent_=(c: Component): Unit = peer.setBottomComponent(nullPeer(c))
 
   def leftComponent: Component = topComponent
-  def leftComponent_=(c: Component) { topComponent = c }
+  def leftComponent_=(c: Component): Unit = { topComponent = c }
   def rightComponent: Component = bottomComponent
-  def rightComponent_=(c: Component) { bottomComponent = c }
+  def rightComponent_=(c: Component): Unit = { bottomComponent = c }
 
   def dividerLocation: Int = peer.getDividerLocation
-  def dividerLocation_=(n: Int) { peer.setDividerLocation(n) }
+  def dividerLocation_=(n: Int): Unit = peer.setDividerLocation(n)
 
   /*def proportionalDividerLocation: Double =
     if (orientation == Orientation.Vertical) dividerLocation / (size.height - dividerSize)
     else dividerLocation / (size.width - dividerSize)*/
-  def dividerLocation_=(f: Double) { peer.setDividerLocation(f) }
+  def dividerLocation_=(f: Double): Unit = peer.setDividerLocation(f)
 
   def dividerSize: Int = peer.getDividerSize
-  def dividerSize_=(n: Int) { peer.setDividerSize(n) }
+  def dividerSize_=(n: Int): Unit = peer.setDividerSize(n)
   def resizeWeight: Double = peer.getResizeWeight
-  def resizeWeight_=(n: Double) { peer.setResizeWeight(n) }
+  def resizeWeight_=(n: Double): Unit = peer.setResizeWeight(n)
 
-  def resetToPreferredSizes() { peer.resetToPreferredSizes() }
+  def resetToPreferredSizes(): Unit = peer.resetToPreferredSizes()
 
   def oneTouchExpandable: Boolean = peer.isOneTouchExpandable
-  def oneTouchExpandable_=(b: Boolean) { peer.setOneTouchExpandable(b) }
+  def oneTouchExpandable_=(b: Boolean): Unit = peer.setOneTouchExpandable(b)
   def continuousLayout: Boolean = peer.isContinuousLayout
-  def continuousLayout_=(b: Boolean) { peer.setContinuousLayout(b) }
+  def continuousLayout_=(b: Boolean): Unit = peer.setContinuousLayout(b)
 }

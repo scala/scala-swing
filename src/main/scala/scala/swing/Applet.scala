@@ -27,20 +27,20 @@ import javax.swing.JApplet
 abstract class Applet extends JApplet { outer =>
   val ui: UI
 
-  override def init() { ui.init() }
-  override def start() { ui.start() }
-  override def stop() { ui.stop() }
+  override def init (): Unit = ui.init ()
+  override def start(): Unit = ui.start()
+  override def stop (): Unit = ui.stop ()
 
   abstract class UI extends RootPanel {
-    def peer = outer
-    override def contents_=(c: Component) {
+    def peer: Applet = outer
+    override def contents_=(c: Component): Unit = {
       super.contents_=(c)
       peer.validate()
     }
 
-    def init()
-    def start() {}
-    def stop() {}
+    def init (): Unit
+    def start(): Unit = ()
+    def stop (): Unit = ()
   }
 }
 

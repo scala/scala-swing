@@ -25,7 +25,7 @@ object Component {
   def wrap(c: JComponent): Component = {
     val w = UIElement.cachedWrapper[Component](c)
     if (w != null) w
-    else new Component { override lazy val peer = c }
+    else new Component { override lazy val peer: JComponent = c }
   }
 }
 
@@ -49,65 +49,62 @@ abstract class Component extends UIElement {
    * and back. Useful to expose methods that can be customized by overriding.
    */
   protected trait SuperMixin extends JComponent {
-    override def paintComponent(g: Graphics) {
+    override def paintComponent(g: Graphics): Unit =
       Component.this.paintComponent(g.asInstanceOf[Graphics2D])
-    }
-    def __super__paintComponent(g: Graphics) {
-      super.paintComponent(g)
-    }
-    override def paintBorder(g: Graphics) {
-      Component.this.paintBorder(g.asInstanceOf[Graphics2D])
-    }
-    def __super__paintBorder(g: Graphics) {
-      super.paintBorder(g)
-    }
-    override def paintChildren(g: Graphics) {
-      Component.this.paintChildren(g.asInstanceOf[Graphics2D])
-    }
-    def __super__paintChildren(g: Graphics) {
-      super.paintChildren(g)
-    }
 
-    override def paint(g: Graphics) {
+    def __super__paintComponent(g: Graphics): Unit =
+      super.paintComponent(g)
+
+    override def paintBorder(g: Graphics): Unit =
+      Component.this.paintBorder(g.asInstanceOf[Graphics2D])
+
+    def __super__paintBorder(g: Graphics): Unit =
+      super.paintBorder(g)
+
+    override def paintChildren(g: Graphics): Unit =
+      Component.this.paintChildren(g.asInstanceOf[Graphics2D])
+
+    def __super__paintChildren(g: Graphics): Unit =
+      super.paintChildren(g)
+
+    override def paint(g: Graphics): Unit =
       Component.this.paint(g.asInstanceOf[Graphics2D])
-    }
-    def __super__paint(g: Graphics) {
+
+    def __super__paint(g: Graphics): Unit =
       super.paint(g)
-    }
   }
 
   def name: String = peer.getName
-  def name_=(s: String) = peer.setName(s)
+  def name_=(s: String): Unit = peer.setName(s)
 
   /**
    * Used by certain layout managers, e.g., BoxLayout or OverlayLayout to
    * align components relative to each other.
    */
   def xLayoutAlignment: Double = peer.getAlignmentX
-  def xLayoutAlignment_=(x: Double) = peer.setAlignmentX(x.toFloat)
+  def xLayoutAlignment_=(x: Double): Unit = peer.setAlignmentX(x.toFloat)
   def yLayoutAlignment: Double = peer.getAlignmentY
-  def yLayoutAlignment_=(y: Double) = peer.setAlignmentY(y.toFloat)
+  def yLayoutAlignment_=(y: Double): Unit = peer.setAlignmentY(y.toFloat)
 
   def border: Border = peer.getBorder
-  def border_=(b: Border) { peer.setBorder(b) }
+  def border_=(b: Border): Unit = peer.setBorder(b)
 
   def opaque: Boolean = peer.isOpaque
-  def opaque_=(b: Boolean) = peer.setOpaque(b)
+  def opaque_=(b: Boolean): Unit = peer.setOpaque(b)
 
   def enabled: Boolean = peer.isEnabled
-  def enabled_=(b: Boolean) = peer.setEnabled(b)
+  def enabled_=(b: Boolean): Unit = peer.setEnabled(b)
 
   def tooltip: String = peer.getToolTipText
-  def tooltip_=(t: String) = peer.setToolTipText(t)
+  def tooltip_=(t: String): Unit = peer.setToolTipText(t)
 
   def inputVerifier: Component => Boolean = { a =>
     Option(peer.getInputVerifier) forall (_ verify a.peer)
   }
-  def inputVerifier_=(v: Component => Boolean) {
+  def inputVerifier_=(v: Component => Boolean): Unit =
     peer.setInputVerifier(new javax.swing.InputVerifier {
-      def verify(c: javax.swing.JComponent) = v(UIElement.cachedWrapper[Component](c))
+      def verify(c: javax.swing.JComponent): Boolean = v(UIElement.cachedWrapper[Component](c))
     })
-  }
 
   /*def verifyOnTraversal: (Component, Component) => Boolean = { a =>
     peer.getInputVerifier().verify(a.peer)
@@ -126,52 +123,50 @@ abstract class Component extends UIElement {
      * Publishes clicks, presses and releases.
      */
     val clicks: Publisher = new LazyPublisher {
-      lazy val l = new MouseListener {
-        def mouseEntered(e: java.awt.event.MouseEvent) {}
-        def mouseExited(e: java.awt.event.MouseEvent) {}
-        def mouseClicked(e: java.awt.event.MouseEvent) {
+      lazy val l: MouseListener = new MouseListener {
+        def mouseEntered(e: java.awt.event.MouseEvent): Unit = ()
+        def mouseExited(e: java.awt.event.MouseEvent): Unit = ()
+        def mouseClicked(e: java.awt.event.MouseEvent): Unit =
           publish(new MouseClicked(e))
-        }
-        def mousePressed(e: java.awt.event.MouseEvent) {
+
+        def mousePressed(e: java.awt.event.MouseEvent): Unit =
           publish(new MousePressed(e))
-        }
-        def mouseReleased(e: java.awt.event.MouseEvent) {
+
+        def mouseReleased(e: java.awt.event.MouseEvent): Unit =
           publish(new MouseReleased(e))
-        }
       }
 
-      def onFirstSubscribe() = peer.addMouseListener(l)
-      def onLastUnsubscribe() = peer.removeMouseListener(l)
+      def onFirstSubscribe (): Unit = peer.addMouseListener(l)
+      def onLastUnsubscribe(): Unit = peer.removeMouseListener(l)
     }
     /**
      * Publishes enters, exits, moves, and drags.
      */
     val moves: Publisher = new LazyPublisher {
-      lazy val mouseListener = new MouseListener {
-        def mouseEntered(e: java.awt.event.MouseEvent) {
+      lazy val mouseListener: MouseListener = new MouseListener {
+        def mouseEntered(e: java.awt.event.MouseEvent): Unit =
           publish(new MouseEntered(e))
-        }
-        def mouseExited(e: java.awt.event.MouseEvent) {
+
+        def mouseExited(e: java.awt.event.MouseEvent): Unit =
           publish(new MouseExited(e))
-        }
-        def mouseClicked(e: java.awt.event.MouseEvent) {}
-        def mousePressed(e: java.awt.event.MouseEvent) {}
-        def mouseReleased(e: java.awt.event.MouseEvent) {}
+
+        def mouseClicked (e: java.awt.event.MouseEvent): Unit = ()
+        def mousePressed (e: java.awt.event.MouseEvent): Unit = ()
+        def mouseReleased(e: java.awt.event.MouseEvent): Unit = ()
       }
 
-      lazy val mouseMotionListener = new MouseMotionListener {
-        def mouseMoved(e: java.awt.event.MouseEvent) {
+      lazy val mouseMotionListener: MouseMotionListener = new MouseMotionListener {
+        def mouseMoved(e: java.awt.event.MouseEvent): Unit =
           publish(new MouseMoved(e))
-        }
-        def mouseDragged(e: java.awt.event.MouseEvent) {
+
+        def mouseDragged(e: java.awt.event.MouseEvent): Unit =
           publish(new MouseDragged(e))
-        }
       }
-      def onFirstSubscribe() {
+      def onFirstSubscribe(): Unit = {
         peer.addMouseListener(mouseListener)
         peer.addMouseMotionListener(mouseMotionListener)
       }
-      def onLastUnsubscribe() {
+      def onLastUnsubscribe(): Unit = {
         peer.removeMouseListener(mouseListener)
         peer.removeMouseMotionListener(mouseMotionListener)
       }
@@ -182,66 +177,63 @@ abstract class Component extends UIElement {
     val wheel: Publisher = new LazyPublisher {
       // We need to subscribe lazily and unsubscribe, since components in scroll panes capture
       // mouse wheel events if there is a listener installed. See ticket #1442.
-      lazy val l = new MouseWheelListener {
-        def mouseWheelMoved(e: java.awt.event.MouseWheelEvent) {
+      lazy val l: MouseWheelListener = new MouseWheelListener {
+        def mouseWheelMoved(e: java.awt.event.MouseWheelEvent): Unit =
           publish(new MouseWheelMoved(e))
-        }
       }
-      def onFirstSubscribe() = peer.addMouseWheelListener(l)
-      def onLastUnsubscribe() = peer.removeMouseWheelListener(l)
+      def onFirstSubscribe (): Unit = peer.addMouseWheelListener(l)
+      def onLastUnsubscribe(): Unit = peer.removeMouseWheelListener(l)
     }
   }
 
   object keys extends Publisher {
     peer.addKeyListener(new KeyListener {
-      def keyPressed(e: java.awt.event.KeyEvent) { publish(new KeyPressed(e)) }
-      def keyReleased(e: java.awt.event.KeyEvent) { publish(new KeyReleased(e)) }
-      def keyTyped(e: java.awt.event.KeyEvent) { publish(new KeyTyped(e)) }
+      def keyPressed  (e: java.awt.event.KeyEvent): Unit = publish(new KeyPressed(e))
+      def keyReleased (e: java.awt.event.KeyEvent): Unit = publish(new KeyReleased(e))
+      def keyTyped    (e: java.awt.event.KeyEvent): Unit = publish(new KeyTyped(e))
     })
   }
 
   def focusable: Boolean = peer.isFocusable
-  def focusable_=(b: Boolean) = peer.setFocusable(b)
-  def requestFocus() = peer.requestFocus()
-  def requestFocusInWindow() = peer.requestFocusInWindow()
+  def focusable_=(b: Boolean): Unit = peer.setFocusable(b)
+  def requestFocus(): Unit = peer.requestFocus()
+  def requestFocusInWindow(): Boolean = peer.requestFocusInWindow()
   def hasFocus: Boolean = peer.isFocusOwner
 
-  protected override def onFirstSubscribe() {
-    super.onFirstSubscribe
+  protected override def onFirstSubscribe(): Unit = {
+    super.onFirstSubscribe()
     // TODO: deprecated, remove after 2.8
     peer.addComponentListener(new java.awt.event.ComponentListener {
-      def componentHidden(e: java.awt.event.ComponentEvent) {
+      def componentHidden(e: java.awt.event.ComponentEvent): Unit =
         publish(UIElementHidden(Component.this))
-      }
-      def componentShown(e: java.awt.event.ComponentEvent) {
+
+      def componentShown(e: java.awt.event.ComponentEvent): Unit =
         publish(UIElementShown(Component.this))
-      }
-      def componentMoved(e: java.awt.event.ComponentEvent) {
+
+      def componentMoved(e: java.awt.event.ComponentEvent): Unit =
         publish(UIElementMoved(Component.this))
-      }
-      def componentResized(e: java.awt.event.ComponentEvent) {
+
+      def componentResized(e: java.awt.event.ComponentEvent): Unit =
         publish(UIElementResized(Component.this))
-      }
     })
 
     peer.addFocusListener(new java.awt.event.FocusListener {
-      def other(e: java.awt.event.FocusEvent) = e.getOppositeComponent match {
+      def other(e: java.awt.event.FocusEvent): Option[Component] = e.getOppositeComponent match {
         case c: JComponent => Some(UIElement.cachedWrapper[Component](c))
         case _ => None
       }
 
-      def focusGained(e: java.awt.event.FocusEvent) {
+      def focusGained(e: java.awt.event.FocusEvent): Unit =
         publish(FocusGained(Component.this, other(e), e.isTemporary))
-      }
-      def focusLost(e: java.awt.event.FocusEvent) {
+
+      def focusLost(e: java.awt.event.FocusEvent): Unit =
         publish(FocusLost(Component.this, other(e), e.isTemporary))
-      }
     })
 
     peer.addPropertyChangeListener(new java.beans.PropertyChangeListener {
-      def propertyChange(e: java.beans.PropertyChangeEvent) {
+      def propertyChange(e: java.beans.PropertyChangeEvent): Unit =
         e.getPropertyName match {
-          case "font" => publish(FontChanged(Component.this))
+          case "font"       => publish(FontChanged      (Component.this))
           case "background" => publish(BackgroundChanged(Component.this))
           case "foreground" => publish(ForegroundChanged(Component.this))
           case _ =>
@@ -254,42 +246,37 @@ abstract class Component extends UIElement {
           case "focusTraversalPolicy" =>
           case "focusCycleRoot" =>*/
         }
-      }
     })
   }
 
-  def revalidate() { peer.revalidate() }
+  def revalidate(): Unit = peer.revalidate()
 
   /**
    * For custom painting, users should usually override this method.
    */
-  protected def paintComponent(g: Graphics2D) {
+  protected def paintComponent(g: Graphics2D): Unit =
     peer match {
       case peer: SuperMixin => peer.__super__paintComponent(g)
       case _ =>
     }
-  }
 
-  protected def paintBorder(g: Graphics2D) {
+  protected def paintBorder(g: Graphics2D): Unit =
     peer match {
       case peer: SuperMixin => peer.__super__paintBorder(g)
       case _ =>
     }
-  }
 
-  protected def paintChildren(g: Graphics2D) {
+  protected def paintChildren(g: Graphics2D): Unit =
     peer match {
       case peer: SuperMixin => peer.__super__paintChildren(g)
       case _ =>
     }
-  }
 
-  def paint(g: Graphics2D) {
+  def paint(g: Graphics2D): Unit =
     peer match {
       case peer: SuperMixin => peer.__super__paint(g)
       case _ => peer.paint(g)
     }
-  }
 
-  override def toString = "scala.swing wrapper " + peer.toString
+  override def toString: String = "scala.swing wrapper " + peer.toString
 }

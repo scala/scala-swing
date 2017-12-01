@@ -10,8 +10,7 @@
 
 package scala.swing
 
-import event._
-import scala.collection.mutable.Buffer
+import scala.swing.event._
 
 object Container {
   /**
@@ -25,27 +24,26 @@ object Container {
     def contents: Seq[Component] = _contents
 
     protected class Content extends BufferWrapper[Component] {
-      override def clear() { peer.removeAll() }
+      override def clear(): Unit = peer.removeAll()
       override def remove(n: Int): Component = {
         val c = peer.getComponent(n)
         peer.remove(n)
         UIElement.cachedWrapper[Component](c)
       }
-      protected def insertAt(n: Int, c: Component) { peer.add(c.peer, n) }
+      protected def insertAt(n: Int, c: Component): Unit = peer.add(c.peer, n)
       def +=(c: Component): this.type = { peer.add(c.peer) ; this }
-      def length = peer.getComponentCount
-      def apply(n: Int) = UIElement.cachedWrapper[Component](peer.getComponent(n))
+      def length: Int = peer.getComponentCount
+      def apply(n: Int): Component = UIElement.cachedWrapper[Component](peer.getComponent(n))
     }
 
     peer.addContainerListener(new java.awt.event.ContainerListener {
-      def componentAdded(e: java.awt.event.ContainerEvent) {
+      def componentAdded(e: java.awt.event.ContainerEvent): Unit =
         publish(ComponentAdded(Wrapper.this,
           UIElement.cachedWrapper[Component](e.getChild.asInstanceOf[javax.swing.JComponent])))
-      }
-      def componentRemoved(e: java.awt.event.ContainerEvent) {
+
+      def componentRemoved(e: java.awt.event.ContainerEvent): Unit =
         publish(ComponentRemoved(Wrapper.this,
           UIElement.cachedWrapper[Component](e.getChild.asInstanceOf[javax.swing.JComponent])))
-      }
     })
   }
 }

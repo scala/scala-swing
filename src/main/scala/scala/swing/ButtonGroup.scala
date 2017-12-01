@@ -22,17 +22,17 @@ class ButtonGroup(initialButtons: AbstractButton*) {
   val buttons: mutable.Set[AbstractButton] = new mutable.Set[AbstractButton] {
     def -=(b: AbstractButton): this.type = { peer.remove(b.peer); this }
     def +=(b: AbstractButton): this.type = { peer.add(b.peer); this }
-    def contains(b: AbstractButton) = this.iterator.contains(b)
-    override def size = peer.getButtonCount
+    def contains(b: AbstractButton): Boolean = this.iterator.contains(b)
+    override def size: Int = peer.getButtonCount
     def iterator: Iterator[AbstractButton] = new Iterator[AbstractButton] {
       val enum = peer.getElements
-      def next = UIElement.cachedWrapper[AbstractButton](enum.nextElement)
-      def hasNext = enum.hasMoreElements
+      def next: AbstractButton = UIElement.cachedWrapper[AbstractButton](enum.nextElement)
+      def hasNext: Boolean = enum.hasMoreElements
     }
   }
   buttons ++= initialButtons
 
   //1.6: def deselectAll() { peer.clearSelection }
   def selected: Option[AbstractButton] = buttons.find(_.selected)
-  def select(b: AbstractButton) { peer.setSelected(b.peer.getModel, true) }
+  def select(b: AbstractButton): Unit = peer.setSelected(b.peer.getModel, true)
 }

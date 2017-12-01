@@ -22,7 +22,7 @@ abstract class SimpleSwingApplication extends SwingApplication {
   /**
    * Calls `top`, packs the frame, and displays it.
    */
-  override def startup(args: Array[String]) {
+  override def startup(args: Array[String]): Unit = {
     val t = top
     if (t.size == new Dimension(0,0)) t.pack()
     t.visible = true

@@ -12,30 +12,32 @@ import java.awt.{GridBagConstraints, GridBagLayout}
 
 object GridBagPanel {
   object Fill extends Enumeration {
-    val None = Value(GridBagConstraints.NONE)
-    val Horizontal = Value(GridBagConstraints.HORIZONTAL)
-    val Vertical = Value(GridBagConstraints.VERTICAL)
-    val Both = Value(GridBagConstraints.BOTH)
+    import GridBagConstraints._
+    val None          : Fill.Value    = Value(NONE)
+    val Horizontal    : Fill.Value    = Value(HORIZONTAL)
+    val Vertical      : Fill.Value    = Value(VERTICAL)
+    val Both          : Fill.Value    = Value(BOTH)
   }
   object Anchor extends Enumeration {
-    val North = Value(GridBagConstraints.NORTH)
-    val NorthEast = Value(GridBagConstraints.NORTHEAST)
-    val East = Value(GridBagConstraints.EAST)
-    val SouthEast = Value(GridBagConstraints.SOUTHEAST)
-    val South = Value(GridBagConstraints.SOUTH)
-    val SouthWest = Value(GridBagConstraints.SOUTHWEST)
-    val West = Value(GridBagConstraints.WEST)
-    val NorthWest = Value(GridBagConstraints.NORTHWEST)
-    val Center = Value(GridBagConstraints.CENTER)
+    import GridBagConstraints._
+    val North         : Anchor.Value  = Value(NORTH)
+    val NorthEast     : Anchor.Value  = Value(NORTHEAST)
+    val East          : Anchor.Value  = Value(EAST)
+    val SouthEast     : Anchor.Value  = Value(SOUTHEAST)
+    val South         : Anchor.Value  = Value(SOUTH)
+    val SouthWest     : Anchor.Value  = Value(SOUTHWEST)
+    val West          : Anchor.Value  = Value(WEST)
+    val NorthWest     : Anchor.Value  = Value(NORTHWEST)
+    val Center        : Anchor.Value  = Value(CENTER)
 
-    val PageStart = Value(GridBagConstraints.PAGE_START)
-    val PageEnd = Value(GridBagConstraints.PAGE_END)
-    val LineStart = Value(GridBagConstraints.LINE_START)
-    val LineEnd = Value(GridBagConstraints.LINE_END)
-    val FirstLineStart = Value(GridBagConstraints.FIRST_LINE_START)
-    val FirstLineEnd = Value(GridBagConstraints.FIRST_LINE_END)
-    val LastLineStart = Value(GridBagConstraints.LAST_LINE_START)
-    val LastLineEnd = Value(GridBagConstraints.LAST_LINE_END)
+    val PageStart     : Anchor.Value  = Value(PAGE_START)
+    val PageEnd       : Anchor.Value  = Value(PAGE_END)
+    val LineStart     : Anchor.Value  = Value(LINE_START)
+    val LineEnd       : Anchor.Value  = Value(LINE_END)
+    val FirstLineStart: Anchor.Value  = Value(FIRST_LINE_START)
+    val FirstLineEnd  : Anchor.Value  = Value(FIRST_LINE_END)
+    val LastLineStart : Anchor.Value  = Value(LAST_LINE_START)
+    val LastLineEnd   : Anchor.Value  = Value(LAST_LINE_END)
   }
 }
 
@@ -76,38 +78,38 @@ class GridBagPanel extends Panel with LayoutContainer {
                                   ipadx, ipady))
     def this() = this(new GridBagConstraints())
     def gridx: Int = peer.gridx
-    def gridx_=(x: Int) { peer.gridx = x }
+    def gridx_=(x: Int): Unit = { peer.gridx = x }
     def gridy: Int = peer.gridy
-    def gridy_=(y: Int) { peer.gridy = y }
+    def gridy_=(y: Int): Unit = { peer.gridy = y }
     def grid: (Int, Int) = (gridx, gridy)
-    def grid_=(c: (Int, Int)) = {
+    def grid_=(c: (Int, Int)): Unit = {
       gridx = c._1
       gridy = c._2
     }
 
     def gridwidth: Int = peer.gridwidth
-    def gridwidth_=(w: Int) { peer.gridwidth = w }
+    def gridwidth_=(w: Int): Unit = { peer.gridwidth = w }
     def gridheight: Int = peer.gridheight
-    def gridheight_=(h: Int) { peer.gridheight = h }
+    def gridheight_=(h: Int): Unit = { peer.gridheight = h }
     def weightx: Double = peer.weightx
-    def weightx_=(x: Double) { peer.weightx = x }
+    def weightx_=(x: Double): Unit = { peer.weightx = x }
     def weighty: Double = peer.weighty
-    def weighty_=(y: Double) { peer.weighty = y }
+    def weighty_=(y: Double): Unit = { peer.weighty = y }
     def anchor: Anchor.Value = Anchor(peer.anchor)
-    def anchor_=(a: Anchor.Value) { peer.anchor = a.id }
+    def anchor_=(a: Anchor.Value): Unit = { peer.anchor = a.id }
     def fill: Fill.Value = Fill(peer.fill)
-    def fill_=(f: Fill.Value) { peer.fill = f.id }
+    def fill_=(f: Fill.Value): Unit = { peer.fill = f.id }
     def insets: Insets = peer.insets
-    def insets_=(i: Insets) { peer.insets = i }
+    def insets_=(i: Insets): Unit = { peer.insets = i }
     def ipadx: Int = peer.ipadx
-    def ipadx_=(x: Int) { peer.ipadx = x }
+    def ipadx_=(x: Int): Unit = { peer.ipadx = x }
     def ipady: Int = peer.ipady
-    def ipady_=(y: Int) { peer.ipady = y }
+    def ipady_=(y: Int): Unit = { peer.ipady = y }
   }
 
   protected def constraintsFor(comp: Component) =
     new Constraints(layoutManager.getConstraints(comp.peer))
 
   protected def areValid(c: Constraints): (Boolean, String) = (true, "")
-  protected def add(c: Component, l: Constraints) { peer.add(c.peer, l.peer) }
+  protected def add(c: Component, l: Constraints): Unit = peer.add(c.peer, l.peer)
 }

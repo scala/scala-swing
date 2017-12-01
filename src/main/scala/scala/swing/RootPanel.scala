@@ -28,7 +28,7 @@ trait RootPanel extends Container {
       List(UIElement.cachedWrapper[Component](c))
     }
 
-  def contents_=(c: Component) {
+  def contents_=(c: Component): Unit = {
     if (peer.getContentPane.getComponentCount > 0) {
       val old = peer.getContentPane.getComponent(0)
       peer.getContentPane.remove(old)
