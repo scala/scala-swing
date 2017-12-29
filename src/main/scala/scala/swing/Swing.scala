@@ -10,34 +10,34 @@
 
 package scala.swing
 
+import java.awt
 import java.awt.event._
-import javax.swing.event._
 import javax.swing.border._
-import javax.swing.{JComponent, Icon, BorderFactory, SwingUtilities}
-
+import javax.swing.event._
+import javax.swing.{BorderFactory, Icon, JComponent, SwingUtilities}
 
 /**
  * Helpers for this package.
  */
 object Swing {
-  protected[swing] type PeerContainer = {def peer:java.awt.Container}
+  protected[swing] type PeerContainer = {def peer: awt.Container}
 
   protected[swing] def toNoIcon(i: Icon): Icon = if(i == null) EmptyIcon else i
   protected[swing] def toNullIcon(i: Icon): Icon = if(i == EmptyIcon) null else i
-  protected[swing] def nullPeer(c: PeerContainer) = if (c != null) c.peer else null
+  protected[swing] def nullPeer(c: PeerContainer): awt.Container = if (c != null) c.peer else null
 
   implicit def pair2Dimension(p: (Int, Int)): Dimension = new Dimension(p._1, p._2)
   implicit def pair2Point(p: (Int, Int)): Point = new Point(p._1, p._2)
   implicit def pair2Point(p: (Int, Int, Int, Int)): Rectangle = new Rectangle(p._1, p._2, p._3, p._4)
 
-  @inline final def Runnable(@inline block: =>Unit) = new Runnable {
-    def run = block
+  @inline final def Runnable(@inline block: => Unit): Runnable = new Runnable {
+    def run(): Unit = block
   }
-  final def ChangeListener(f: ChangeEvent => Unit) = new ChangeListener {
-    def stateChanged(e: ChangeEvent) { f(e) }
+  final def ChangeListener(f: ChangeEvent => Unit): ChangeListener = new ChangeListener {
+    def stateChanged(e: ChangeEvent): Unit = f(e)
   }
-  final def ActionListener(f: ActionEvent => Unit) = new ActionListener {
-    def actionPerformed(e: ActionEvent) { f(e) }
+  final def ActionListener(f: ActionEvent => Unit): ActionListener = new ActionListener {
+    def actionPerformed(e: ActionEvent): Unit = f(e)
   }
 
   def Box(min: Dimension, pref: Dimension, max: Dimension) = new Component {
@@ -73,27 +73,27 @@ object Swing {
   case object EmptyIcon extends Icon {
     def getIconHeight: Int = 0
     def getIconWidth: Int = 0
-    def paintIcon(c: java.awt.Component, g: java.awt.Graphics, x: Int, y: Int) {}
+    def paintIcon(c: java.awt.Component, g: java.awt.Graphics, x: Int, y: Int): Unit = ()
   }
 
   def unwrapIcon(icon: Icon): Icon = if (icon == null) EmptyIcon else icon
   def wrapIcon(icon: Icon): Icon = if (icon == EmptyIcon) null else icon
 
-  def EmptyBorder = BorderFactory.createEmptyBorder()
-  def EmptyBorder(weight: Int) =
+  def EmptyBorder: Border = BorderFactory.createEmptyBorder()
+  def EmptyBorder(weight: Int): Border  =
     BorderFactory.createEmptyBorder(weight, weight, weight, weight)
-  def EmptyBorder(top: Int, left: Int, bottom: Int, right: Int) =
+  def EmptyBorder(top: Int, left: Int, bottom: Int, right: Int): Border  =
     BorderFactory.createEmptyBorder(top, left, bottom, right)
 
-  def LineBorder(c: Color) = BorderFactory.createLineBorder(c)
-  def LineBorder(c: Color, weight: Int) = BorderFactory.createLineBorder(c, weight)
+  def LineBorder(c: Color): Border  = BorderFactory.createLineBorder(c)
+  def LineBorder(c: Color, weight: Int): Border  = BorderFactory.createLineBorder(c, weight)
 
-  def BeveledBorder(kind: Embossing) = BorderFactory.createBevelBorder(kind.bevelPeer)
-  def BeveledBorder(kind: Embossing, highlight: Color, shadow: Color) =
+  def BeveledBorder(kind: Embossing): Border  = BorderFactory.createBevelBorder(kind.bevelPeer)
+  def BeveledBorder(kind: Embossing, highlight: Color, shadow: Color): Border  =
     BorderFactory.createBevelBorder(kind.bevelPeer, highlight, shadow)
   def BeveledBorder(kind: Embossing,
               highlightOuter: Color, highlightInner: Color,
-              shadowOuter: Color, shadowInner: Color) =
+              shadowOuter: Color, shadowInner: Color): Border  =
     BorderFactory.createBevelBorder(kind.bevelPeer,
           highlightOuter, highlightInner,
           shadowOuter, shadowInner)
@@ -103,40 +103,40 @@ object Swing {
     def etchPeer: Int
   }
   case object Lowered extends Embossing {
-    def bevelPeer = BevelBorder.LOWERED
-    def etchPeer = javax.swing.border.EtchedBorder.LOWERED
+    def bevelPeer: Int = BevelBorder.LOWERED
+    def etchPeer: Int = javax.swing.border.EtchedBorder.LOWERED
   }
   case object Raised extends Embossing {
-    def bevelPeer = BevelBorder.RAISED
-    def etchPeer = javax.swing.border.EtchedBorder.RAISED
+    def bevelPeer: Int = BevelBorder.RAISED
+    def etchPeer: Int = javax.swing.border.EtchedBorder.RAISED
   }
 
-  def EtchedBorder = BorderFactory.createEtchedBorder()
-  def EtchedBorder(kind: Embossing) =
+  def EtchedBorder: Border = BorderFactory.createEtchedBorder()
+  def EtchedBorder(kind: Embossing): Border =
     BorderFactory.createEtchedBorder(kind.etchPeer)
-  def EtchedBorder(kind: Embossing, highlight: Color, shadow: Color) =
+  def EtchedBorder(kind: Embossing, highlight: Color, shadow: Color): Border =
     BorderFactory.createEtchedBorder(kind.etchPeer, highlight, shadow)
 
-  def MatteBorder(top: Int, left: Int, bottom: Int, right: Int, color: Color) =
+  def MatteBorder(top: Int, left: Int, bottom: Int, right: Int, color: Color): MatteBorder =
     BorderFactory.createMatteBorder(top, left, bottom, right, color)
-  def MatteBorder(top: Int, left: Int, bottom: Int, right: Int, icon: Icon) =
+  def MatteBorder(top: Int, left: Int, bottom: Int, right: Int, icon: Icon): MatteBorder =
     BorderFactory.createMatteBorder(top, left, bottom, right, icon)
 
-  def CompoundBorder(outside: Border, inside: Border) =
+  def CompoundBorder(outside: Border, inside: Border): CompoundBorder =
     BorderFactory.createCompoundBorder(outside, inside)
 
-  def TitledBorder(border: Border, title: String) =
+  def TitledBorder(border: Border, title: String): TitledBorder =
     BorderFactory.createTitledBorder(border, title)
 
   /**
    * Schedule the given code to be executed on the Swing event dispatching
    * thread (EDT). Returns immediately.
    */
-  @inline final def onEDT(op: =>Unit) = SwingUtilities invokeLater Runnable(op)
+  @inline final def onEDT(op: => Unit): Unit = SwingUtilities invokeLater Runnable(op)
 
   /**
    * Schedule the given code to be executed on the Swing event dispatching
    * thread (EDT). Blocks until after the code has been run.
    */
-  @inline final def onEDTWait(op: =>Unit) = SwingUtilities invokeAndWait Runnable(op)
+  @inline final def onEDTWait(op: => Unit): Unit = SwingUtilities invokeAndWait Runnable(op)
 }

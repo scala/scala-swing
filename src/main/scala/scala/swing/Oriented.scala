@@ -20,7 +20,7 @@ object Oriented {
      */
     protected type OrientedMixin = {
       def getOrientation(): Int
-      def setOrientation(n: Int)
+      def setOrientation(n: Int): Unit
     }
     def orientation: Orientation.Value = Orientation(peer.getOrientation)
   }

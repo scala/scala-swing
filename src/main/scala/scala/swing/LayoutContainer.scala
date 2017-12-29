@@ -43,7 +43,7 @@ trait LayoutContainer extends Container.Wrapper {
    * held components in order to maintain layout consistency. See `BorderPanel`
    * for an example.
    */
-  protected def add(comp: Component, c: Constraints)
+  protected def add(comp: Component, c: Constraints): Unit
 
   /**
    * A map of components to the associated layout constraints.
@@ -57,13 +57,17 @@ trait LayoutContainer extends Container.Wrapper {
   def layout: mutable.Map[Component, Constraints] = new mutable.Map[Component, Constraints] {
     def -= (c: Component): this.type = { _contents -= c; this }
     def += (cl: (Component, Constraints)): this.type = { update(cl._1, cl._2); this }
-    override def update (c: Component, l: Constraints) {
+
+    override def update(c: Component, l: Constraints): Unit = {
       val (v, msg) = areValid(l)
       if (!v) throw new IllegalArgumentException(msg)
       add(c, l)
     }
+
     def get(c: Component) = Option(constraintsFor(c))
-    override def size = peer.getComponentCount
+
+    override def size: Int = peer.getComponentCount
+
     def iterator: Iterator[(Component, Constraints)] =
       peer.getComponents.iterator.map { c =>
         val comp = UIElement.cachedWrapper[Component](c.asInstanceOf[JComponent])

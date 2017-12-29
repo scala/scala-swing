@@ -8,14 +8,16 @@
 
 package scala.swing
 
-import java.awt.{ComponentOrientation, Cursor}
-import event._
+import java.awt.{ComponentOrientation, Cursor, Toolkit}
+import java.util
+import java.util.Locale
+
 import scala.ref._
-import java.util.WeakHashMap
+import scala.swing.event._
 
 object UIElement {
   private val ClientKey = "scala.swingWrapper"
-  private[this] val wrapperCache = new WeakHashMap[java.awt.Component, WeakReference[UIElement]]
+  private[this] val wrapperCache = new util.WeakHashMap[java.awt.Component, WeakReference[UIElement]]
 
   private def cache(e: UIElement) = e.peer match {
     case p: javax.swing.JComponent => p.putClientProperty(ClientKey, e)
@@ -78,60 +80,59 @@ trait UIElement extends Proxy with LazyPublisher {
   UIElement.cache(this)
 
   def foreground: Color = peer.getForeground
-  def foreground_=(c: Color) = peer setForeground c
+  def foreground_=(c: Color): Unit = peer setForeground c
   def background: Color = peer.getBackground
-  def background_=(c: Color) = peer setBackground c
+  def background_=(c: Color): Unit = peer setBackground c
 
-  def minimumSize = peer.getMinimumSize
-  def minimumSize_=(x: Dimension) = peer setMinimumSize x
-  def maximumSize = peer.getMaximumSize
-  def maximumSize_=(x: Dimension) = peer setMaximumSize x
-  def preferredSize = peer.getPreferredSize
-  def preferredSize_=(x: Dimension) = peer setPreferredSize x
-  def componentOrientation = peer.getComponentOrientation
-  def componentOrientation_=(x: ComponentOrientation) = peer setComponentOrientation x
+  def minimumSize: Dimension = peer.getMinimumSize
+  def minimumSize_=(x: Dimension): Unit = peer setMinimumSize x
+  def maximumSize: Dimension = peer.getMaximumSize
+  def maximumSize_=(x: Dimension): Unit = peer setMaximumSize x
+  def preferredSize: Dimension = peer.getPreferredSize
+  def preferredSize_=(x: Dimension): Unit = peer setPreferredSize x
+  def componentOrientation: ComponentOrientation = peer.getComponentOrientation
+  def componentOrientation_=(x: ComponentOrientation): Unit = peer setComponentOrientation x
 
   def font: Font = peer.getFont
-  def font_=(f: Font) = peer setFont f
+  def font_=(f: Font): Unit = peer setFont f
 
 
-  def locationOnScreen = peer.getLocationOnScreen
-  def location = peer.getLocation
-  def bounds = peer.getBounds
-  def size = peer.getSize
+  def locationOnScreen: Point = peer.getLocationOnScreen
+  def location: Point = peer.getLocation
+  def bounds: Rectangle = peer.getBounds
+  def size: Dimension = peer.getSize
 
-  def locale = peer.getLocale
-  def toolkit = peer.getToolkit
+  def locale: Locale = peer.getLocale
+  def toolkit: Toolkit = peer.getToolkit
 
   def cursor: Cursor = peer.getCursor
-  def cursor_=(c: Cursor) { peer.setCursor(c) }
+  def cursor_=(c: Cursor): Unit = peer.setCursor(c)
 
   def visible: Boolean = peer.isVisible
-  def visible_=(b: Boolean) { peer.setVisible(b) }
+  def visible_=(b: Boolean): Unit = peer.setVisible(b)
   def showing: Boolean = peer.isShowing
   def displayable: Boolean = peer.isDisplayable
 
-  def validate() { peer.validate }
-  def repaint() { peer.repaint }
-  def repaint(rect: Rectangle) { peer.repaint(rect.x, rect.y, rect.width, rect.height) }
+  def validate(): Unit = peer.validate()
+  def repaint(): Unit = peer.repaint()
+  def repaint(rect: Rectangle): Unit = peer.repaint(rect.x, rect.y, rect.width, rect.height)
   def ignoreRepaint: Boolean = peer.getIgnoreRepaint
-  def ignoreRepaint_=(b: Boolean) { peer.setIgnoreRepaint(b) }
+  def ignoreRepaint_=(b: Boolean): Unit = peer.setIgnoreRepaint(b)
 
-  protected def onFirstSubscribe() {
+  protected def onFirstSubscribe(): Unit = {
     peer.addComponentListener(new java.awt.event.ComponentListener {
-      def componentHidden(e: java.awt.event.ComponentEvent) {
+      def componentHidden(e: java.awt.event.ComponentEvent): Unit =
         publish(UIElementHidden(UIElement.this))
-      }
-      def componentShown(e: java.awt.event.ComponentEvent) {
+
+      def componentShown(e: java.awt.event.ComponentEvent): Unit =
         publish(UIElementShown(UIElement.this))
-      }
-      def componentMoved(e: java.awt.event.ComponentEvent) {
+
+      def componentMoved(e: java.awt.event.ComponentEvent): Unit =
         publish(UIElementMoved(UIElement.this))
-      }
-      def componentResized(e: java.awt.event.ComponentEvent) {
+
+      def componentResized(e: java.awt.event.ComponentEvent): Unit =
         publish(UIElementResized(UIElement.this))
-      }
     })
   }
-  protected def onLastUnsubscribe() {}
+  protected def onLastUnsubscribe(): Unit = ()
 }

@@ -22,5 +22,5 @@ class CheckBox(text: String) extends ToggleButton {
   def this() = this("")
 
   def borderPaintedFlat: Boolean = peer.isBorderPaintedFlat
-  def borderPaintedFlat_=(flat: Boolean) { peer.setBorderPaintedFlat(flat) }
+  def borderPaintedFlat_=(flat: Boolean): Unit = peer.setBorderPaintedFlat(flat)
 }

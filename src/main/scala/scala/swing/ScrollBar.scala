@@ -10,8 +10,7 @@
 
 package scala.swing
 
-import javax.swing.{JScrollBar, BoundedRangeModel}
-import java.awt.event.{AdjustmentListener}
+import javax.swing.JScrollBar
 
 object ScrollBar {
   def wrap(c: JScrollBar): ScrollBar = {
@@ -24,8 +23,8 @@ object ScrollBar {
 class ScrollBar extends Component with Orientable.Wrapper with Adjustable.Wrapper {
 	override lazy val peer: JScrollBar = new JScrollBar with SuperMixin
 
-	def valueIsAjusting = peer.getValueIsAdjusting
-	def valueIsAjusting_=(b : Boolean) = peer.setValueIsAdjusting(b)
+	def valueIsAjusting: Boolean = peer.getValueIsAdjusting
+	def valueIsAjusting_=(b : Boolean): Unit = peer.setValueIsAdjusting(b)
 
 	// TODO: can we find a better interface?
 	//def setValues(value: Int = this.value, visible: Int = visibleAmount,

@@ -19,18 +19,20 @@ object FileChooser {
    * `"open"` for instance.
    */
   object Result extends Enumeration {
-    val Cancel = Value(JFileChooser.CANCEL_OPTION)
-    val Approve = Value(JFileChooser.APPROVE_OPTION)
-    val Error = Value(JFileChooser.ERROR_OPTION)
+    import JFileChooser._
+    val Cancel : Result.Value = Value(CANCEL_OPTION)
+    val Approve: Result.Value = Value(APPROVE_OPTION)
+    val Error  : Result.Value = Value(ERROR_OPTION)
   }
 
   /**
    * The kind of elements a user can select in a file dialog.
    */
   object SelectionMode extends Enumeration {
-    val FilesOnly = Value(JFileChooser.FILES_ONLY)
-    val DirectoriesOnly = Value(JFileChooser.DIRECTORIES_ONLY)
-    val FilesAndDirectories = Value(JFileChooser.FILES_AND_DIRECTORIES)
+    import JFileChooser._
+    val FilesOnly          : SelectionMode.Value = Value(FILES_ONLY)
+    val DirectoriesOnly    : SelectionMode.Value = Value(DIRECTORIES_ONLY)
+    val FilesAndDirectories: SelectionMode.Value = Value(FILES_AND_DIRECTORIES)
   }
 }
 
@@ -70,36 +72,36 @@ class FileChooser(dir: File) {
   def showDialog(over: PeerContainer, approveText: String): Result.Value = Result(peer.showDialog(nullPeer(over), approveText))
 
   def controlButtonsAreShown: Boolean = peer.getControlButtonsAreShown
-  def controlButtonsAreShown_=(b: Boolean) { peer.setControlButtonsAreShown(b) }
+  def controlButtonsAreShown_=(b: Boolean): Unit = peer.setControlButtonsAreShown(b)
 
   def title: String = peer.getDialogTitle
-  def title_=(t: String) { peer.setDialogTitle(t) }
+  def title_=(t: String): Unit = peer.setDialogTitle(t)
 
   def accessory: Component = UIElement.cachedWrapper[Component](peer.getAccessory)
-  def accessory_=(c: Component) { peer.setAccessory(c.peer) }
+  def accessory_=(c: Component): Unit = peer.setAccessory(c.peer)
 
   def fileHidingEnabled: Boolean = peer.isFileHidingEnabled
-  def fileHidingEnabled_=(b: Boolean) { peer.setFileHidingEnabled(b) }
+  def fileHidingEnabled_=(b: Boolean): Unit = peer.setFileHidingEnabled(b)
   def fileSelectionMode: SelectionMode.Value = SelectionMode(peer.getFileSelectionMode)
-  def fileSelectionMode_=(s: SelectionMode.Value) { peer.setFileSelectionMode(s.id) }
+  def fileSelectionMode_=(s: SelectionMode.Value): Unit = peer.setFileSelectionMode(s.id)
   def fileFilter: FileFilter = peer.getFileFilter
-  def fileFilter_=(f: FileFilter) { peer setFileFilter f }
+  def fileFilter_=(f: FileFilter): Unit = peer setFileFilter f
 
   def selectedFile: File = peer.getSelectedFile
-  def selectedFile_=(file: File) { peer.setSelectedFile(file) }
+  def selectedFile_=(file: File): Unit = peer.setSelectedFile(file)
   def selectedFiles: Seq[File] = peer.getSelectedFiles
-  def selectedFiles_=(files: File*) { peer.setSelectedFiles(files.toArray) }
+  def selectedFiles_=(files: File*): Unit = peer.setSelectedFiles(files.toArray)
 
   def multiSelectionEnabled: Boolean = peer.isMultiSelectionEnabled
-  def multiSelectionEnabled_=(b: Boolean) { peer.setMultiSelectionEnabled(b) }
+  def multiSelectionEnabled_=(b: Boolean): Unit = peer.setMultiSelectionEnabled(b)
 
-  def iconFor(f: File) = peer.getIcon(f)
-  def descriptionFor(f: File) = peer.getDescription(f)
-  def nameFor(f: File) = peer.getName(f)
-  def typeDescriptionFor(f: File) = peer.getTypeDescription(f)
-  def traversable(f: File) = peer.isTraversable(f)
+  def iconFor(f: File): Icon = peer.getIcon(f)
+  def descriptionFor(f: File): String = peer.getDescription(f)
+  def nameFor(f: File): String = peer.getName(f)
+  def typeDescriptionFor(f: File): String = peer.getTypeDescription(f)
+  def traversable(f: File): Boolean = peer.isTraversable(f)
 
-  def acceptAllFileFilter = peer.getAcceptAllFileFilter
+  def acceptAllFileFilter: FileFilter = peer.getAcceptAllFileFilter
 
   /*peer.addPropertyChangeListener(new java.beans.PropertyChangeListener {
     def propertyChange(e: java.beans.PropertyChangeEvent) {

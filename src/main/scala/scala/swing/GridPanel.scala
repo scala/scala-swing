@@ -40,12 +40,12 @@ class GridPanel(rows0: Int, cols0: Int) extends Panel with SequentialContainer.W
   private def layoutManager = peer.getLayout.asInstanceOf[java.awt.GridLayout]
 
   def rows: Int = layoutManager.getRows
-  def rows_=(n: Int) { layoutManager.setRows(n) }
+  def rows_=(n: Int): Unit = layoutManager.setRows(n)
   def columns: Int = layoutManager.getColumns
-  def columns_=(n: Int) { layoutManager.setColumns(n) }
+  def columns_=(n: Int): Unit = layoutManager.setColumns(n)
 
   def vGap: Int = layoutManager.getVgap
-  def vGap_=(n: Int) { layoutManager.setVgap(n) }
+  def vGap_=(n: Int): Unit = layoutManager.setVgap(n)
   def hGap: Int = layoutManager.getHgap
-  def hGap_=(n: Int) { layoutManager.setHgap(n) }
+  def hGap_=(n: Int): Unit = layoutManager.setHgap(n)
 }

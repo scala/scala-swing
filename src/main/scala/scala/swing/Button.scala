@@ -30,5 +30,5 @@ class Button(text0: String) extends AbstractButton with Publisher {
   def defaultButton: Boolean = peer.isDefaultButton
 
   def defaultCapable: Boolean = peer.isDefaultCapable
-  def defaultCapable_=(capable: Boolean) { peer.setDefaultCapable(capable) }
+  def defaultCapable_=(capable: Boolean): Unit = peer.setDefaultCapable(capable)
 }

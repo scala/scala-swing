@@ -13,7 +13,7 @@ package scala.swing
 object Scrollable {
   trait Wrapper extends Scrollable {
     protected def scrollablePeer: javax.swing.Scrollable
-    def preferredViewportSize = scrollablePeer.getPreferredScrollableViewportSize
+    def preferredViewportSize: Dimension = scrollablePeer.getPreferredScrollableViewportSize
 
     def tracksViewportHeight: Boolean = scrollablePeer.getScrollableTracksViewportHeight
     def tracksViewportWidth: Boolean = scrollablePeer.getScrollableTracksViewportWidth

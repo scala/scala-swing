@@ -10,8 +10,6 @@
 
 package scala.swing
 
-import javax.swing.SwingConstants._
-
 /**
  * Horizontal and vertical alignments. We sacrifice a bit of type-safety
  * for simplicity here.
@@ -19,14 +17,15 @@ import javax.swing.SwingConstants._
  * @see javax.swing.SwingConstants
  */
 object Alignment extends Enumeration {
-  val Left = Value(LEFT)
-  val Right = Value(RIGHT)
-  val Center = Value(CENTER)
-  val Top = Value(TOP)
-  val Bottom = Value(BOTTOM)
+  import javax.swing.SwingConstants._
+  val Left    : Alignment.Value = Value(LEFT)
+  val Right   : Alignment.Value = Value(RIGHT)
+  val Center  : Alignment.Value = Value(CENTER)
+  val Top     : Alignment.Value = Value(TOP)
+  val Bottom  : Alignment.Value = Value(BOTTOM)
   //1.6: val Baseline = Value(BASELINE)
 
-  val Leading = Value(LEADING)
-  val Trailing = Value(TRAILING)
+  val Leading : Alignment.Value = Value(LEADING)
+  val Trailing: Alignment.Value = Value(TRAILING)
 }
 

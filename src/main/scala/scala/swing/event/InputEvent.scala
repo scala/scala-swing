@@ -15,6 +15,6 @@ trait InputEvent extends ComponentEvent {
   def peer: java.awt.event.InputEvent
   def when: Long = peer.getWhen
   def modifiers: Key.Modifiers
-  def consume() { peer.consume() }
+  def consume(): Unit = peer.consume()
   def consumed: Boolean = peer.isConsumed
 }

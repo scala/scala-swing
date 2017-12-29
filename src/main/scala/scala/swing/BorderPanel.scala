@@ -17,18 +17,22 @@ object BorderPanel {
    * The position of a component in a <code>BorderPanel</code>
    */
   object Position extends Enumeration {
-    val North = Value(BorderLayout.NORTH)
-    val South = Value(BorderLayout.SOUTH)
-    val West = Value(BorderLayout.WEST)
-    val East = Value(BorderLayout.EAST)
-    val Center = Value(BorderLayout.CENTER)
+    import BorderLayout._
+    val North : Position.Value = Value(NORTH)
+    val South : Position.Value = Value(SOUTH)
+    val West  : Position.Value = Value(WEST)
+    val East  : Position.Value = Value(EAST)
+    val Center: Position.Value = Value(CENTER)
   }
-  private[swing] def wrapPosition(s: String): Position.Value = s match {
-    case BorderLayout.NORTH => Position.North
-    case BorderLayout.SOUTH => Position.South
-    case BorderLayout.WEST => Position.West
-    case BorderLayout.EAST => Position.East
-    case BorderLayout.CENTER => Position.Center
+  private[swing] def wrapPosition(s: String): Position.Value = {
+    import BorderLayout._
+    s match {
+      case NORTH   => Position.North
+      case SOUTH   => Position.South
+      case WEST    => Position.West
+      case EAST    => Position.East
+      case CENTER  => Position.Center
+    }
   }
 }
 
@@ -41,16 +45,17 @@ object BorderPanel {
  */
 class BorderPanel extends Panel with LayoutContainer {
   import BorderPanel._
-  def layoutManager = peer.getLayout.asInstanceOf[BorderLayout]
+  def layoutManager: BorderLayout = peer.getLayout.asInstanceOf[BorderLayout]
   override lazy val peer = new javax.swing.JPanel(new BorderLayout) with SuperMixin
 
   type Constraints = Position.Value
 
-  protected def constraintsFor(comp: Component) =
+  protected def constraintsFor(comp: Component): Constraints =
     wrapPosition(layoutManager.getConstraints(comp.peer).asInstanceOf[String])
 
   protected def areValid(c: Constraints): (Boolean, String) = (true, "")
-  protected def add(c: Component, l: Constraints) {
+
+  protected def add(c: Component, l: Constraints): Unit = {
     // we need to remove previous components with the same constraints as the new one,
     // otherwise the layout manager loses track of the old one
     val old = layoutManager.getLayoutComponent(l.toString)

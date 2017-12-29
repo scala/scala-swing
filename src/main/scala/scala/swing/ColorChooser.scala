@@ -33,14 +33,13 @@ class ColorChooser(color0: Color) extends Component  {
   override lazy val peer: JColorChooser =  new JColorChooser(color0) with SuperMixin
 
   peer.getSelectionModel.addChangeListener(new javax.swing.event.ChangeListener {
-    def stateChanged(e: javax.swing.event.ChangeEvent) { 
-      publish(ColorChanged(ColorChooser.this, peer.getColor)) 
-    }
+    def stateChanged(e: javax.swing.event.ChangeEvent): Unit =
+      publish(ColorChanged(ColorChooser.this, peer.getColor))
   })
 
   def color: Color = peer.getColor
-  def color_=(c: Color) = peer.setColor(c)
+  def color_=(c: Color): Unit = peer.setColor(c)
 
   def dragEnabled: Boolean = peer.getDragEnabled
-  def dragEnabled_=(b: Boolean) = peer.setDragEnabled(b)
+  def dragEnabled_=(b: Boolean): Unit = peer.setDragEnabled(b)
 }

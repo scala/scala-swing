@@ -8,27 +8,30 @@
 
 package scala.swing
 
-import scala.collection.mutable.Buffer
-import scala.collection.Iterator
+import scala.collection.{Iterator, mutable}
 
 /**
  * Default partial implementation for buffer adapters.
  */
-protected[swing] abstract class BufferWrapper[A] extends Buffer[A] { outer =>
-  def clear() { for (i <- 0 until length) remove(0) }
-  def update(n: Int, a: A) {
+protected[swing] abstract class BufferWrapper[A] extends mutable.Buffer[A] { outer =>
+  def clear(): Unit = for (_ <- 0 until length) remove(0)
+
+  def update(n: Int, a: A): Unit = {
     remove(n)
     insertAt(n, a)
   }
-  def insertAll(n: Int, elems: Traversable[A]) {
+
+  def insertAll(n: Int, elems: Traversable[A]): Unit = {
     var i = n
     for (el <- elems) {
       insertAt(i, el)
       i += 1
     }
   }
-  protected def insertAt(n: Int, a: A)
+
+  protected def insertAt(n: Int, a: A): Unit
 
   def +=:(a: A): this.type = { insertAt(0, a); this }
-  def iterator = Iterator.range(0,length).map(apply(_))
+
+  def iterator: Iterator[A] = Iterator.range(0,length).map(apply)
 }

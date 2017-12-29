@@ -13,5 +13,5 @@ package scala.swing
  * framework and quits the application when closed.
  */
 class MainFrame(gc: java.awt.GraphicsConfiguration = null) extends Frame(gc) {
-  override def closeOperation() { sys.exit(0) }
+  override def closeOperation(): Unit = sys.exit(0)
 }

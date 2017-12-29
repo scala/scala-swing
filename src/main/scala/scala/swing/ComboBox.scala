@@ -8,9 +8,10 @@
 
 package scala.swing
 
-import event._
-import javax.swing.{ JComponent, JComboBox, JTextField, ComboBoxModel, AbstractListModel, ListCellRenderer }
 import java.awt.event.ActionListener
+import javax.swing.{AbstractListModel, ComboBoxModel, InputVerifier, JComboBox, JComponent, JTextField, ListCellRenderer}
+
+import scala.swing.event._
 
 object ComboBox {
   /**
@@ -23,7 +24,7 @@ object ComboBox {
    */
   trait Editor[A] extends Publisher {
     lazy val comboBoxPeer: javax.swing.ComboBoxEditor = new javax.swing.ComboBoxEditor with Publisher {
-      def addActionListener(l: ActionListener) {
+      def addActionListener(l: ActionListener): Unit =
         this match {
           // TODO case w: Action.Trigger.Wrapper =>
           //  w.peer.addActionListener(l)
@@ -32,24 +33,28 @@ object ComboBox {
                case ActionEvent(c) => l.actionPerformed(new java.awt.event.ActionEvent(c.peer, 0, ""))
             }))
          }
-      }
-      def removeActionListener(l: ActionListener) {
+
+      def removeActionListener(l: ActionListener): Unit =
         this match {
           // TODO case w: Action.Trigger.Wrapper =>
           //  w.peer.removeActionListener(l)
           case _ =>
             this.unsubscribe(new Reactions.Wrapper(l)({ case _ => }))
         }
-      }
+
       def getEditorComponent: JComponent = Editor.this.component.peer
+
       def getItem(): AnyRef = item.asInstanceOf[AnyRef]
-      def selectAll() { startEditing() }
-      def setItem(a: Any) { item = a.asInstanceOf[A] }
+
+      def selectAll(): Unit = startEditing()
+
+      def setItem(a: Any): Unit =
+        item = a.asInstanceOf[A]
     }
     def component: Component
     def item: A
-    def item_=(a: A)
-    def startEditing()
+    def item_=(a: A): Unit
+    def startEditing(): Unit
   }
 
   /**
@@ -74,32 +79,29 @@ object ComboBox {
             throw new IllegalArgumentException("ComboBox not initialized with a proper value, was '" + v + "'.")
         }
       }
-      def addActionListener(l: ActionListener) {
-        editor.addActionListener(l)
-      }
-      def removeActionListener(l: ActionListener) {
-       editor.removeActionListener(l)
-      }
+      def addActionListener(l: ActionListener): Unit = editor.addActionListener(l)
+      def removeActionListener(l: ActionListener): Unit = editor.removeActionListener(l)
 
       def getEditorComponent: JComponent = editor.getEditorComponent.asInstanceOf[JComponent]
-      def selectAll() { editor.selectAll() }
+      def selectAll(): Unit = editor.selectAll()
       def getItem(): AnyRef = { verifier.verify(getEditorComponent); value.asInstanceOf[AnyRef] }
-      def setItem(a: Any) { editor.setItem(a) }
+      def setItem(a: Any): Unit = editor.setItem(a)
 
-      val verifier = new javax.swing.InputVerifier {
+      val verifier: InputVerifier = new InputVerifier {
         // TODO: should chain with potentially existing verifier in editor
-        def verify(c: JComponent) = try {
-          value = string2A(c.asInstanceOf[JTextField].getText)
-          true
-  	    }
-  	    catch {
-          case e: Exception => false
-        }
+        def verify(c: JComponent): Boolean =
+          try {
+            value = string2A(c.asInstanceOf[JTextField].getText)
+            true
+          }
+          catch {
+            case _: Exception => false
+          }
       }
 
-      def textEditor = getEditorComponent.asInstanceOf[JTextField]
+      def textEditor: JTextField = getEditorComponent.asInstanceOf[JTextField]
       textEditor.setInputVerifier(verifier)
-      textEditor.addActionListener(Swing.ActionListener{ a =>
+      textEditor.addActionListener(Swing.ActionListener{ _ =>
         getItem() // make sure our value is updated
         textEditor.setText(a2String(value))
       })
@@ -107,10 +109,10 @@ object ComboBox {
 
     override lazy val comboBoxPeer: javax.swing.ComboBoxEditor = new DelegatedEditor(comboBox.peer.getEditor)
 
-    def component = Component.wrap(comboBoxPeer.getEditorComponent.asInstanceOf[JComponent])
+    def component: Component = Component.wrap(comboBoxPeer.getEditorComponent.asInstanceOf[JComponent])
     def item: A = { comboBoxPeer.asInstanceOf[DelegatedEditor].value }
-    def item_=(a: A) { comboBoxPeer.setItem(a2String(a)) }
-    def startEditing() { comboBoxPeer.selectAll() }
+    def item_=(a: A): Unit = comboBoxPeer.setItem(a2String(a))
+    def startEditing(): Unit = comboBoxPeer.selectAll()
   }
 
   implicit def stringEditor(c: ComboBox[String]): Editor[String] = new BuiltInEditor(c)(s => s, s => s)
@@ -121,16 +123,16 @@ object ComboBox {
   def newConstantModel[A](items: Seq[A]): ComboBoxModel[A] = {
     new AbstractListModel[A] with ComboBoxModel[A] {
       private var selected: A = if (items.isEmpty) null.asInstanceOf[A] else items(0)
-      def getSelectedItem = selected.asInstanceOf[AnyRef]
-      def setSelectedItem(a: Any) {
+      def getSelectedItem: AnyRef = selected.asInstanceOf[AnyRef]
+      def setSelectedItem(a: Any): Unit = {
         if ((selected != null && selected != a) ||
             selected == null && a != null) {
           selected = a.asInstanceOf[A]
           fireContentsChanged(this, -1, -1)
         }
       }
-      def getElementAt(n: Int) = items(n).asInstanceOf[A]
-      def getSize = items.size
+      def getElementAt(n: Int): A = items(n)
+      def getSize: Int = items.size
     }
   }
 
@@ -161,11 +163,11 @@ class ComboBox[A](items: Seq[A]) extends Component with Publisher {
 
   object selection extends Publisher {
     def index: Int = peer.getSelectedIndex
-    def index_=(n: Int) { peer.setSelectedIndex(n) }
+    def index_=(n: Int): Unit = peer.setSelectedIndex(n)
     def item: A = peer.getSelectedItem.asInstanceOf[A]
-    def item_=(a: A) { peer.setSelectedItem(a) }
+    def item_=(a: A): Unit = peer.setSelectedItem(a)
 
-    peer.addActionListener(Swing.ActionListener { e =>
+    peer.addActionListener(Swing.ActionListener { _ =>
       publish(event.SelectionChanged(ComboBox.this))
     })
   }
@@ -183,7 +185,7 @@ class ComboBox[A](items: Seq[A]) extends Component with Publisher {
    * configured. That's Swing's principle of most suprise.
    */
   def renderer: ListView.Renderer[A] = ListView.Renderer.wrap(peer.getRenderer.asInstanceOf[ListCellRenderer[A]])
-  def renderer_=(r: ListView.Renderer[A]) { peer.setRenderer(r.peer) }
+  def renderer_=(r: ListView.Renderer[A]): Unit = peer.setRenderer(r.peer)
 
   /* XXX: currently not safe to expose:
   def editor: ComboBox.Editor[A] =
@@ -207,13 +209,12 @@ class ComboBox[A](items: Seq[A]) extends Component with Publisher {
    * editor which is supplied by the implicit argument. For default
    * editors, see ComboBox companion object.
    */
-  def makeEditable()(implicit editor: ComboBox[A] => ComboBox.Editor[A]) {
+  def makeEditable()(implicit editor: ComboBox[A] => ComboBox.Editor[A]): Unit = {
     peer.setEditable(true)
     peer.setEditor(editor(this).comboBoxPeer)
   }
 
   def prototypeDisplayValue: Option[A] = Option(peer.getPrototypeDisplayValue)
-  def prototypeDisplayValue_=(v: Option[A]) {
+  def prototypeDisplayValue_=(v: Option[A]): Unit =
     peer.setPrototypeDisplayValue(v getOrElse null.asInstanceOf[A])
-  }
 }

@@ -22,13 +22,14 @@ object ScrollPane {
     val Always = new Value(HORIZONTAL_SCROLLBAR_ALWAYS,
                            VERTICAL_SCROLLBAR_ALWAYS)
 
-    def wrap(id: Int) = id match {
-      case HORIZONTAL_SCROLLBAR_AS_NEEDED | VERTICAL_SCROLLBAR_AS_NEEDED => AsNeeded
-      case HORIZONTAL_SCROLLBAR_NEVER | VERTICAL_SCROLLBAR_NEVER => Never
-      case HORIZONTAL_SCROLLBAR_ALWAYS | VERTICAL_SCROLLBAR_ALWAYS => Always
+    def wrap(id: Int): BarPolicy.Value = id match {
+      case HORIZONTAL_SCROLLBAR_AS_NEEDED | VERTICAL_SCROLLBAR_AS_NEEDED  => AsNeeded
+      case HORIZONTAL_SCROLLBAR_NEVER     | VERTICAL_SCROLLBAR_NEVER      => Never
+      case HORIZONTAL_SCROLLBAR_ALWAYS    | VERTICAL_SCROLLBAR_ALWAYS     => Always
     }
+
     class Value(val horizontalPeer: Int, val verticalPeer: Int) extends super.Val {
-      override def id = horizontalPeer
+      override def id: Int = horizontalPeer
     }
   }
 }
@@ -53,7 +54,7 @@ class ScrollPane extends Component with Container {
   /**
    * Sets the single child.
    */
-  def contents_=(c: Component) { peer.setViewportView(c.peer) }
+  def contents_=(c: Component): Unit = peer.setViewportView(c.peer)
 
   /**
    * The component being displayed in this pane's row header.
@@ -64,25 +65,25 @@ class ScrollPane extends Component with Container {
    */
   def rowHeaderView: Option[Component] =
     Option(peer.getRowHeader.getView) map UIElement.cachedWrapper[Component]
-  def rowHeaderView_=(c: Component) = peer.setRowHeaderView(c.peer)
-  def rowHeaderView_=(c: Option[Component]) = peer.setRowHeaderView(c.map(_.peer).orNull)
+  def rowHeaderView_=(c: Component): Unit = peer.setRowHeaderView(c.peer)
+  def rowHeaderView_=(c: Option[Component]): Unit = peer.setRowHeaderView(c.map(_.peer).orNull)
 
   def columnHeaderView: Option[Component] =
     Option(peer.getColumnHeader.getView) map UIElement.cachedWrapper[Component]
-  def columnHeaderView_=(c: Component) = peer.setColumnHeaderView(c.peer)
-  def columnHeaderView_=(c: Option[Component]) = peer.setColumnHeaderView(c.map(_.peer).orNull)
+  def columnHeaderView_=(c: Component): Unit = peer.setColumnHeaderView(c.peer)
+  def columnHeaderView_=(c: Option[Component]): Unit = peer.setColumnHeaderView(c.map(_.peer).orNull)
 
   def viewportView: Option[Component] =
     Option(peer.getViewport.getView) map UIElement.cachedWrapper[Component]
-  def viewportView_=(c: Component) = peer.setViewportView(c.peer)
-  def viewportView_=(c: Option[Component]) = peer.setViewportView(c.map(_.peer).orNull)
+  def viewportView_=(c: Component): Unit = peer.setViewportView(c.peer)
+  def viewportView_=(c: Option[Component]): Unit = peer.setViewportView(c.map(_.peer).orNull)
 
-  def verticalScrollBarPolicy = BarPolicy.wrap(peer.getVerticalScrollBarPolicy)
-  def verticalScrollBarPolicy_=(p: BarPolicy.Value) = peer.setVerticalScrollBarPolicy(p.verticalPeer)
+  def verticalScrollBarPolicy: BarPolicy.Value = BarPolicy.wrap(peer.getVerticalScrollBarPolicy)
+  def verticalScrollBarPolicy_=(p: BarPolicy.Value): Unit = peer.setVerticalScrollBarPolicy(p.verticalPeer)
 
-  def horizontalScrollBarPolicy = BarPolicy.wrap(peer.getHorizontalScrollBarPolicy)
-  def horizontalScrollBarPolicy_=(p: BarPolicy.Value) = peer.setHorizontalScrollBarPolicy(p.horizontalPeer)
+  def horizontalScrollBarPolicy: BarPolicy.Value = BarPolicy.wrap(peer.getHorizontalScrollBarPolicy)
+  def horizontalScrollBarPolicy_=(p: BarPolicy.Value): Unit = peer.setHorizontalScrollBarPolicy(p.horizontalPeer)
 
-  def horizontalScrollBar = ScrollBar.wrap(peer.getHorizontalScrollBar)
-  def verticalScrollBar = ScrollBar.wrap(peer.getVerticalScrollBar)
+  def horizontalScrollBar: ScrollBar = ScrollBar.wrap(peer.getHorizontalScrollBar)
+  def verticalScrollBar: ScrollBar = ScrollBar.wrap(peer.getVerticalScrollBar)
 }

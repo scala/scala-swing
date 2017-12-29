@@ -24,7 +24,7 @@ object SI7597 extends SimpleSwingApplication {
     title = "SI7597 showXXXDialog tests"
     size = new Dimension(900, 200)
 
-    lazy val dialog = aDialog
+    lazy val dialog: Dialog = aDialog
 
     val fileChooserDialog = new FileChooser
     val colorChooser = new ColorChooser
@@ -37,7 +37,7 @@ object SI7597 extends SimpleSwingApplication {
       )
     }
 
-    def fileChooserStyles(rowTitle : String, parent : => PeerContainer) = new FlowPanel {
+    def fileChooserStyles(rowTitle : String, parent : => PeerContainer): FlowPanel = new FlowPanel {
       contents ++= Seq(new Label(s"Parent is $rowTitle"))
 
       contents ++= Seq(
