@@ -123,8 +123,8 @@ class IconDemoApp extends MainFrame {
     }.toList
   }
 
-  f.onSuccess{
-    case thumbs:List[Option[ThumbnailAction]] =>
+  f.foreach {
+    thumbs:List[Option[ThumbnailAction]] =>
       buttonBar.contents.dropRight(1)
       thumbs.foreach{ thumbAction => {
         thumbAction.foreach { ta =>
@@ -132,7 +132,6 @@ class IconDemoApp extends MainFrame {
         }
       }}
       buttonBar.contents += Swing.Glue
-
   }
 
 
