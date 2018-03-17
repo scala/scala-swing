@@ -121,7 +121,7 @@ object Dialog {
   object Result extends Enumeration {
     import JOptionPane._
     val Yes   : Result.Value = Value(YES_OPTION)
-    val Ok    : Result.Value = Value(OK_OPTION)
+    val Ok    : Result.Value = Yes  // N.B. Do not use `Value` because id 0 is already used
     val No    : Result.Value = Value(NO_OPTION)
     val Cancel: Result.Value = Value(CANCEL_OPTION)
     val Closed: Result.Value = Value(CLOSED_OPTION)

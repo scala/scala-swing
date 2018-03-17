@@ -4,7 +4,7 @@ scalaModuleSettings
 
 name               := "scala-swing"
 
-version            := "2.0.2-SNAPSHOT"
+version            := "2.0.3-SNAPSHOT"
 
 scalacOptions      ++= Seq("-deprecation", "-feature")
 
@@ -20,7 +20,13 @@ mimaPreviousVersion := Some("2.0.0")
 // set the prompt (for this build) to include the project id.
 shellPrompt in ThisBuild := { state => Project.extract(state).currentRef.project + "> " }
 
-lazy val swing = project.in( file(".") )
+lazy val swing = project.in(file("."))
+  .settings(
+    libraryDependencies += {
+      val v = if (scalaVersion.value == "2.13.0-M3") "3.0.5-M1" else "3.0.5"
+      "org.scalatest" %% "scalatest" % v % "test"
+    }
+  )
 
 lazy val examples = project.in( file("examples") )
   .dependsOn(swing)
