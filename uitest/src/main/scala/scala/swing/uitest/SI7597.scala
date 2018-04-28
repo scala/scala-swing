@@ -20,7 +20,7 @@ import scala.swing._
  * (expanded to include other showXXXDialog dialogs )
  */
 object SI7597 extends SimpleSwingApplication {
-  def top = new MainFrame {
+  def top: Frame = new MainFrame {
     title = "SI7597 showXXXDialog tests"
     size = new Dimension(900, 200)
 

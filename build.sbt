@@ -4,13 +4,13 @@ scalaModuleSettings
 
 name               := "scala-swing"
 
-version            := "2.0.3-SNAPSHOT"
+version            := "2.0.4-SNAPSHOT"
 
 scalacOptions      ++= Seq("-deprecation", "-feature")
 
 // Map[JvmMajorVersion, List[(ScalaVersion, UseForPublishing)]]
 scalaVersionsByJvm in ThisBuild := Map(
-  8 -> List("2.11.12", "2.12.4", "2.13.0-M3").map(_ -> true)
+  8 -> List("2.11.12", "2.12.6", "2.13.0-M3").map(_ -> true)
 )
 
 OsgiKeys.exportPackage := Seq(s"scala.swing.*;version=${version.value}")
@@ -28,7 +28,7 @@ lazy val swing = project.in(file("."))
     }
   )
 
-lazy val examples = project.in( file("examples") )
+lazy val examples = project.in(file("examples"))
   .dependsOn(swing)
   .settings(
     scalaVersion := (scalaVersion in swing).value,
@@ -36,7 +36,7 @@ lazy val examples = project.in( file("examples") )
     fork := true
   )
 
-lazy val uitest = project.in( file("uitest") )
+lazy val uitest = project.in(file("uitest"))
   .dependsOn(swing)
   .settings(
     scalaVersion := (scalaVersion in swing).value,

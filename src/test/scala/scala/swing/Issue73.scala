@@ -26,5 +26,7 @@ class Issue73 extends FlatSpec with Matchers {
     Table.IntervalMode
     event.Key
     event.Key.Location
+
+    Font.Style
   }
 }
