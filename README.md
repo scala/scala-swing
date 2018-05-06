@@ -86,4 +86,3 @@ Current changes are being made on the `2.0.x` branch.
 ## Known Issues
 
 - Visual appearance of combo boxes using the GTK LaF is broken on JDKs < 1.7b30. This is a Java Swing problem.
-whe
