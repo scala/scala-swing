@@ -5,7 +5,7 @@
 [<img src="https://img.shields.io/maven-central/v/org.scala-lang.modules/scala-swing_2.12.svg?label=latest%20release%20for%202.12"/>](http://search.maven.org/#search%7Cga%7C1%7Cg%3Aorg.scala-lang.modules%20a%3Ascala-swing_2.12)
 [![Stories in Ready](https://badge.waffle.io/scala/scala-swing.svg?label=ready&title=Ready)](http://waffle.io/scala/scala-swing)
 
-This is now community maintained by @andy1138 & @benhutchison. If you're interested in helping then contact them or @adriaanm.
+This is now community maintained by @benhutchison & @Sciss. If you're interested in helping then contact them or @adriaanm.
 
 This is a UI library that will wrap most of Java Swing for Scala in a straightforward manner. 
 The widget class hierarchy loosely resembles that of Java Swing. The main differences are:
@@ -81,8 +81,3 @@ The API documentation for scala-swing can be found at [http://www.scala-lang.org
 ## Current Work
 
 Current changes are being made on the `2.0.x` branch.
-
-
-## Known Issues
-
-- Visual appearance of combo boxes using the GTK LaF is broken on JDKs < 1.7b30. This is a Java Swing problem.
