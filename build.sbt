@@ -12,7 +12,8 @@ scalacOptions      ++= Seq("-deprecation", "-feature")
 scalaVersionsByJvm in ThisBuild := Map(
    8 -> List("2.11.12", "2.12.6", "2.13.0-M3").map(_ -> true),
    9 -> List("2.11.12", "2.12.6", "2.13.0-M3").map(_ -> false),
-  10 -> List("2.11.12", "2.12.6", "2.13.0-M3").map(_ -> false)
+  10 -> List("2.11.12", "2.12.6", "2.13.0-M3").map(_ -> false),
+  11 -> List("2.11.12", "2.12.6", "2.13.0-M3").map(_ -> false)
 )
 
 OsgiKeys.exportPackage := Seq(s"scala.swing.*;version=${version.value}")
