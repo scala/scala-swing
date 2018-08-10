@@ -54,7 +54,7 @@ object TableSelection extends SimpleSwingApplication {
     }
     contents += new ScrollPane(output)
 
-    def outputSelection() {
+    def outputSelection(): Unit = {
       output.append("Lead: " + table.selection.rows.leadIndex + "," +
         table.selection.columns.leadIndex + ". ")
       output.append("Rows:")

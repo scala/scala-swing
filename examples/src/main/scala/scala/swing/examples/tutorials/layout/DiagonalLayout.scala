@@ -55,13 +55,13 @@ class DiagonalLayout(private var vgap: Int) extends LayoutManager {
   }
 
   /* Required by LayoutManager. */
-  def addLayoutComponent(name: String, comp: Component) {
+  def addLayoutComponent(name: String, comp: Component): Unit = {
   }
 
-  def removeLayoutComponent(comp: Component) {
+  def removeLayoutComponent(comp: Component): Unit = {
   }
 
-  private def setSizes(parent: Container) {
+  private def setSizes(parent: Container): Unit = {
     val nComps = parent.getComponentCount
     var d: Dimension = null
     //Reset preferred/minimum width and height.
@@ -117,7 +117,7 @@ class DiagonalLayout(private var vgap: Int) extends LayoutManager {
      * minimumLayoutSize will be called -- in the case
      * of applets, at least, they probably won't be.
      */
-  def layoutContainer(parent: Container) {
+  def layoutContainer(parent: Container): Unit = {
     val insets = parent.getInsets
     val maxWidth = parent.getWidth - (insets.left + insets.right)
     val maxHeight = parent.getHeight - (insets.top + insets.bottom)

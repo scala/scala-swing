@@ -41,11 +41,11 @@ object LinePainting extends SimpleSwingApplication {
     /* records the dragging */
     var path = new geom.GeneralPath
 
-    def lineTo(p: Point) {
+    def lineTo(p: Point): Unit = {
       path.lineTo(p.x, p.y); repaint()
     }
 
-    def moveTo(p: Point) {
+    def moveTo(p: Point): Unit = {
       path.moveTo(p.x, p.y); repaint()
     }
 

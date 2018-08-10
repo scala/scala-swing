@@ -56,7 +56,7 @@ object ComboBoxes extends SimpleSwingApplication {
 
     listenTo(dateBox.selection)
 
-    def reformat() {
+    def reformat(): Unit = {
       try {
         val today = new Date
         val formatter = new SimpleDateFormat(dateBox.selection.item)
@@ -86,7 +86,7 @@ object ComboBoxes extends SimpleSwingApplication {
 
     val iconBox = new ComboBox(icons) {
       renderer = new ListView.AbstractRenderer[Icon, Label](new Label) {
-        def configure(list: ListView[_], isSelected: Boolean, focused: Boolean, icon: Icon, index: Int) {
+        def configure(list: ListView[_], isSelected: Boolean, focused: Boolean, icon: Icon, index: Int): Unit = {
           component.icon = icon
           component.xAlignment = Alignment.Center
           if (isSelected) {

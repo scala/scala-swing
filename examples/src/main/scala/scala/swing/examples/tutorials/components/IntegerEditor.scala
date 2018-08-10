@@ -80,7 +80,7 @@ class IntegerEditor(min: Int, max: Int) extends DefaultCellEditor(new JFormatted
 
   ftf.getActionMap.put("check", new AbstractAction() {
 
-    def actionPerformed(e: ActionEvent) {
+    def actionPerformed(e: ActionEvent): Unit = {
       if (!ftf.isEditValid) {
         if (userSaysRevert()) {
           ftf.postActionEvent()
