@@ -31,7 +31,7 @@ object CelsiusConverter extends SimpleSwingApplication {
       border = Swing.EmptyBorder(5, 5, 5, 5)
       listenTo(convertButton, tempCelsius)
 
-      def convert() {
+      def convert(): Unit = {
         val c = Integer.parseInt(tempCelsius.text)
         val f = c * 9 / 5 + 32
         text = "<html><font color = red>" + f + "</font> Fahrenheit</html>"
