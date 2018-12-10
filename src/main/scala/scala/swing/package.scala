@@ -14,6 +14,8 @@ package object swing {
   type Image      = java.awt.Image
   type Font       = java.awt.Font
 
+  type Seq[A]     = scala.collection.Seq[A]
+
   implicit lazy val reflectiveCalls     = scala.language.reflectiveCalls
   implicit lazy val implicitConversions = scala.language.implicitConversions
 

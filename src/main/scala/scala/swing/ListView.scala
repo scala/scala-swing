@@ -14,6 +14,8 @@ import event._
 import javax.swing._
 import javax.swing.event._
 
+import scala.collection.JavaConverters._
+
 object ListView {
   /**
    * The supported modes of user selections.
@@ -179,9 +181,7 @@ class ListView[A] extends Component {
    * The current item selection.
    */
   object selection extends Publisher {
-    protected abstract class Indices[B](a: => Seq[B]) extends scala.collection.mutable.Set[B] {
-      def -=(n: B): this.type
-      def +=(n: B): this.type
+    protected abstract class Indices[B](a: => Seq[B]) extends scala.collection.mutable.Set[B] with MutableSetShim[B] {
       def contains(n: B): Boolean = a.contains(n)
       override def size: Int = a.length
       def iterator: Iterator[B] = a.iterator
@@ -194,16 +194,14 @@ class ListView[A] extends Component {
      * The indices of the currently selected items.
      */
     object indices extends Indices(peer.getSelectedIndices) {
-      def -=(n: Int): this.type = { peer.removeSelectionInterval(n,n); this }
-      def +=(n: Int): this.type = { peer.addSelectionInterval(n,n); this }
+      def subtractOne(n: Int): this.type = { peer.removeSelectionInterval(n,n); this }
+      def addOne(n: Int): this.type = { peer.addSelectionInterval(n,n); this }
     }
 
     /**
      * The currently selected items.
      */
-    object items extends scala.collection.SeqProxy[A] {
-      def self = peer.getSelectedValues.map(_.asInstanceOf[A])
-    }
+    val items: Seq[A] = peer.getSelectedValuesList.asScala
 
     def intervalMode: IntervalMode.Value = IntervalMode(peer.getSelectionModel.getSelectionMode)
     def intervalMode_=(m: IntervalMode.Value): Unit = peer.getSelectionModel.setSelectionMode(m.id)

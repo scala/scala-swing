@@ -10,7 +10,7 @@
 
 package scala.swing
 
-import scala.swing.event._
+import scala.swing.event.{ComponentAdded, ComponentRemoved}
 
 object Container {
   /**
@@ -31,7 +31,7 @@ object Container {
         UIElement.cachedWrapper[Component](c)
       }
       protected def insertAt(n: Int, c: Component): Unit = peer.add(c.peer, n)
-      def +=(c: Component): this.type = { peer.add(c.peer) ; this }
+      def addOne(c: Component): this.type = { peer.add(c.peer) ; this }
       def length: Int = peer.getComponentCount
       def apply(n: Int): Component = UIElement.cachedWrapper[Component](peer.getComponent(n))
     }

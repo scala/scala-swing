@@ -54,9 +54,9 @@ trait LayoutContainer extends Container.Wrapper {
    *
    * also ensures that myComponent is properly added to this container.
    */
-  def layout: mutable.Map[Component, Constraints] = new mutable.Map[Component, Constraints] {
-    def -= (c: Component): this.type = { _contents -= c; this }
-    def += (cl: (Component, Constraints)): this.type = { update(cl._1, cl._2); this }
+  def layout: mutable.Map[Component, Constraints] = new mutable.Map[Component, Constraints] with MutableMapShim[Component, Constraints] {
+    def subtractOne(c: Component): this.type = { _contents -= c; this }
+    def addOne(cl: (Component, Constraints)): this.type = { update(cl._1, cl._2); this }
 
     override def update(c: Component, l: Constraints): Unit = {
       val (v, msg) = areValid(l)

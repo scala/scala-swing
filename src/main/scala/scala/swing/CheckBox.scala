@@ -10,7 +10,7 @@
 
 package scala.swing
 
-import javax.swing._
+import javax.swing.JCheckBox
 
 /**
  * Two state button that can either be checked or unchecked.

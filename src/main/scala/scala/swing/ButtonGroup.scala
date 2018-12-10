@@ -19,9 +19,9 @@ import scala.collection.mutable
 class ButtonGroup(initialButtons: AbstractButton*) {
   val peer: javax.swing.ButtonGroup = new javax.swing.ButtonGroup
 
-  val buttons: mutable.Set[AbstractButton] = new mutable.Set[AbstractButton] {
-    def -=(b: AbstractButton): this.type = { peer.remove(b.peer); this }
-    def +=(b: AbstractButton): this.type = { peer.add(b.peer); this }
+  val buttons: mutable.Set[AbstractButton] = new mutable.Set[AbstractButton] with MutableSetShim[AbstractButton] {
+    override def subtractOne(b: AbstractButton): this.type = { peer.remove(b.peer); this }
+    override def addOne(b: AbstractButton): this.type = { peer.add(b.peer); this }
     def contains(b: AbstractButton): Boolean = this.iterator.contains(b)
     override def size: Int = peer.getButtonCount
     def iterator: Iterator[AbstractButton] = new Iterator[AbstractButton] {

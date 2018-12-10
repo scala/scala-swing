@@ -9,7 +9,7 @@
 package scala.swing
 
 import scala.collection.mutable
-import javax.swing._
+import javax.swing.{JMenu, JMenuBar, JMenuItem, JRadioButtonMenuItem, JCheckBoxMenuItem}
 
 object MenuBar {
   case object NoMenuBar extends MenuBar

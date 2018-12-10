@@ -10,9 +10,9 @@
 
 package scala.swing
 
-import event._
-import javax.swing._
-import java.awt.event._
+import event.EditDone
+import javax.swing.{InputVerifier, JComponent, JTextField}
+import java.awt.event.FocusAdapter
 
 
 /*object TextField {

@@ -10,12 +10,12 @@
 
 package scala.swing
 
-import javax.swing._
-import javax.swing.event._
+import javax.swing.{Icon, JComponent, JTable, ListSelectionModel, RowSorter, SortOrder}
+import javax.swing.event.{ListSelectionListener, TableModelEvent, TableModelListener}
 import javax.swing.table._
 
 import scala.collection.mutable
-import scala.swing.event._
+import scala.swing.event.{TableChanged, TableColumnsSelected, TableRowsAdded, TableRowsRemoved, TableRowsSelected, TableStructureChanged, TableUpdated}
 
 object Table {
   object AutoResizeMode extends Enumeration {
@@ -198,25 +198,23 @@ class Table extends Component with Scrollable.Wrapper {
 
   object selection extends Publisher {
     // TODO: could be a sorted set
-    protected abstract class SelectionSet[A](a: => Seq[A]) extends mutable.Set[A] {
-      def -=(n: A): this.type
-      def +=(n: A): this.type
+    protected abstract class SelectionSet[A](a: => Seq[A]) extends mutable.Set[A] with MutableSetShim[A] {
       def contains(n: A): Boolean = a.contains(n)
       override def size: Int = a.length
       def iterator: Iterator[A] = a.iterator
     }
 
     object rows extends SelectionSet(peer.getSelectedRows) {
-      def -=(n: Int): this.type = { peer.removeRowSelectionInterval(n,n); this }
-      def +=(n: Int): this.type = { peer.addRowSelectionInterval   (n,n); this }
+      def subtractOne(n: Int): this.type = { peer.removeRowSelectionInterval(n,n); this }
+      def addOne(n: Int): this.type = { peer.addRowSelectionInterval   (n,n); this }
 
       def leadIndex  : Int = peer.getSelectionModel.getLeadSelectionIndex
       def anchorIndex: Int = peer.getSelectionModel.getAnchorSelectionIndex
     }
 
     object columns extends SelectionSet(peer.getSelectedColumns) {
-      def -=(n: Int): this.type = { peer.removeColumnSelectionInterval(n,n); this }
-      def +=(n: Int): this.type = { peer.addColumnSelectionInterval   (n,n); this }
+      def subtractOne(n: Int): this.type = { peer.removeColumnSelectionInterval(n,n); this }
+      def addOne(n: Int): this.type = { peer.addColumnSelectionInterval   (n,n); this }
 
       def leadIndex  : Int = peer.getColumnModel.getSelectionModel.getLeadSelectionIndex
       def anchorIndex: Int = peer.getColumnModel.getSelectionModel.getAnchorSelectionIndex
@@ -224,12 +222,12 @@ class Table extends Component with Scrollable.Wrapper {
 
     def cells: mutable.Set[(Int, Int)] =
       new SelectionSet[(Int, Int)]((for(r <- selection.rows; c <- selection.columns) yield (r,c)).toSeq) { outer =>
-        def -=(n: (Int, Int)): this.type = {
+        def subtractOne(n: (Int, Int)): this.type = {
           peer.removeRowSelectionInterval   (n._1,n._1)
           peer.removeColumnSelectionInterval(n._2,n._2)
           this
         }
-        def +=(n: (Int, Int)): this.type  = {
+        def addOne(n: (Int, Int)): this.type  = {
           peer.addRowSelectionInterval   (n._1,n._1)
           peer.addColumnSelectionInterval(n._2,n._2)
           this
