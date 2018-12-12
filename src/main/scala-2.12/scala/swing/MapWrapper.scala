@@ -5,7 +5,7 @@ import scala.collection.mutable
 /**
   * Default partial implementation for set adapters.
   */
-protected[swing] abstract class MapWrapper[K, V] extends mutable.Map[K, V] {
+abstract class MapWrapper[K, V] extends mutable.Map[K, V] {
   // abstract
 
   def addOne      (elem: (K, V)): this.type

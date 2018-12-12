@@ -5,7 +5,7 @@ import scala.collection.mutable
 /**
   * Default partial implementation for set adapters.
   */
-protected[swing] abstract class SetWrapper[A] extends mutable.Set[A] {
+abstract class SetWrapper[A] extends mutable.Set[A] {
   // abstract
 
   def addOne      (elem: A): this.type
