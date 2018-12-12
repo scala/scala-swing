@@ -10,7 +10,7 @@
 
 package scala.swing
 
-import javax.swing._
+import javax.swing.JRadioButton
 
 /**
  * A two state button that is usually used in a <code>ButtonGroup</code>

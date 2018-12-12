@@ -8,7 +8,7 @@
 
 package scala.swing
 
-import javax.swing._
+import javax.swing.JPasswordField
 
 /**
  * A password field, that displays a replacement character for each character in the password.

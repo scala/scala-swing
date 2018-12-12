@@ -9,6 +9,7 @@
 package scala.swing
 
 import javax.swing.JComponent
+
 import scala.collection.mutable
 
 /** A container that associates layout constraints of member type

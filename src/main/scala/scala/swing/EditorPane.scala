@@ -8,11 +8,11 @@
 
 package scala.swing
 
-import javax.swing._
-import javax.swing.text._
+import javax.swing.JEditorPane
+import javax.swing.text.EditorKit
 
 /**
- * A text component that allows multiline text input and display.
+ * A text component that allows multi-line text input and display.
  *
  * @see javax.swing.JEditorPane
  */

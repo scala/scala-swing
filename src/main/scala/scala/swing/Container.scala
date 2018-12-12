@@ -10,7 +10,7 @@
 
 package scala.swing
 
-import scala.swing.event._
+import scala.swing.event.{ComponentAdded, ComponentRemoved}
 
 object Container {
   /**

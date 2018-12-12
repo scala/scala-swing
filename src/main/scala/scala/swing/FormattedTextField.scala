@@ -8,7 +8,7 @@
 
 package scala.swing
 
-import javax.swing._
+import javax.swing.JFormattedTextField
 
 object FormattedTextField {
   /**

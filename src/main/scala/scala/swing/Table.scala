@@ -10,12 +10,12 @@
 
 package scala.swing
 
-import javax.swing._
-import javax.swing.event._
-import javax.swing.table._
+import javax.swing.event.{ListSelectionListener, TableModelEvent, TableModelListener}
+import javax.swing.table.{AbstractTableModel, DefaultTableModel, TableCellEditor, TableCellRenderer, TableModel}
+import javax.swing.{Icon, JComponent, JTable, ListSelectionModel, RowSorter, SortOrder}
 
 import scala.collection.mutable
-import scala.swing.event._
+import scala.swing.event.{TableChanged, TableColumnsSelected, TableRowsAdded, TableRowsRemoved, TableRowsSelected, TableStructureChanged, TableUpdated}
 
 object Table {
   object AutoResizeMode extends Enumeration {

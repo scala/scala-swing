@@ -25,7 +25,7 @@ class ButtonGroup(initialButtons: AbstractButton*) {
     def contains(b: AbstractButton): Boolean = this.iterator.contains(b)
     override def size: Int = peer.getButtonCount
     def iterator: Iterator[AbstractButton] = new Iterator[AbstractButton] {
-      val enum = peer.getElements
+      private val enum = peer.getElements
       def next: AbstractButton = UIElement.cachedWrapper[AbstractButton](enum.nextElement)
       def hasNext: Boolean = enum.hasMoreElements
     }

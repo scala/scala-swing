@@ -9,9 +9,10 @@
 package scala.swing
 
 import java.awt.event.ActionListener
+
 import javax.swing.{AbstractListModel, ComboBoxModel, InputVerifier, JComboBox, JComponent, JTextField, ListCellRenderer}
 
-import scala.swing.event._
+import scala.swing.event.ActionEvent
 
 object ComboBox {
   /**
@@ -44,7 +45,7 @@ object ComboBox {
 
       def getEditorComponent: JComponent = Editor.this.component.peer
 
-      def getItem(): AnyRef = item.asInstanceOf[AnyRef]
+      def getItem: AnyRef = item.asInstanceOf[AnyRef]
 
       def selectAll(): Unit = startEditing()
 
@@ -84,7 +85,7 @@ object ComboBox {
 
       def getEditorComponent: JComponent = editor.getEditorComponent.asInstanceOf[JComponent]
       def selectAll(): Unit = editor.selectAll()
-      def getItem(): AnyRef = { verifier.verify(getEditorComponent); value.asInstanceOf[AnyRef] }
+      def getItem: AnyRef = { verifier.verify(getEditorComponent); value.asInstanceOf[AnyRef] }
       def setItem(a: Any): Unit = editor.setItem(a)
 
       val verifier: InputVerifier = new InputVerifier {

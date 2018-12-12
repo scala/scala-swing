@@ -16,10 +16,10 @@ object Oriented {
 
     /*
      * Need to revert to structural type, since scroll bars are oriented
-     * and these are created by scroll panes. Shouldn't be a bootleneck.
+     * and these are created by scroll panes. Shouldn't be a bottleneck.
      */
     protected type OrientedMixin = {
-      def getOrientation(): Int
+      def getOrientation(): Int // note: must keep empty parentheses for Java compatibility
       def setOrientation(n: Int): Unit
     }
     def orientation: Orientation.Value = Orientation(peer.getOrientation)

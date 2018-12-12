@@ -10,8 +10,9 @@
 
 package scala.swing
 
-import event._
-import javax.swing.{AbstractButton => JAbstractButton, Icon}
+import javax.swing.{Icon, AbstractButton => JAbstractButton}
+
+import scala.swing.event.{ButtonClicked, Key}
 
 /**
  * Base class of all button-like widgets, such as push buttons,

@@ -11,8 +11,7 @@
 package scala.swing
 
 import javax.swing.JPopupMenu
-import javax.swing.event.{PopupMenuListener, PopupMenuEvent}
-import event._
+import javax.swing.event.{PopupMenuEvent, PopupMenuListener}
 
 /**
  * A popup menu.
@@ -46,13 +45,13 @@ class PopupMenu extends Component with SequentialContainer.Wrapper with Publishe
 
   peer.addPopupMenuListener(new PopupMenuListener {
   	def popupMenuCanceled(e: PopupMenuEvent): Unit =
-  	  publish(PopupMenuCanceled(PopupMenu.this))
+  	  publish(event.PopupMenuCanceled(PopupMenu.this))
 
   	def popupMenuWillBecomeInvisible(e: PopupMenuEvent): Unit =
-  	  publish(PopupMenuWillBecomeInvisible(PopupMenu.this))
+  	  publish(event.PopupMenuWillBecomeInvisible(PopupMenu.this))
 
   	def popupMenuWillBecomeVisible(e: PopupMenuEvent): Unit =
-  	  publish(PopupMenuWillBecomeVisible(PopupMenu.this))
+  	  publish(event.PopupMenuWillBecomeVisible(PopupMenu.this))
   })
 
   def show(invoker: Component, x: Int, y: Int): Unit = peer.show(invoker.peer, x, y)

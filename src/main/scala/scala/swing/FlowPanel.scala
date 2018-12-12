@@ -11,6 +11,7 @@
 package scala.swing
 
 import java.awt.FlowLayout
+
 import javax.swing.JPanel
 
 object FlowPanel {
@@ -38,7 +39,7 @@ class FlowPanel(alignment: FlowPanel.Alignment.Value)(contents0: Component*) ext
 
   contents ++= contents0
 
-  private def layoutManager = peer.getLayout.asInstanceOf[java.awt.FlowLayout]
+  private def layoutManager: FlowLayout = peer.getLayout.asInstanceOf[FlowLayout]
 
   def vGap: Int = layoutManager.getVgap
   def vGap_=(n: Int): Unit = layoutManager.setVgap(n)

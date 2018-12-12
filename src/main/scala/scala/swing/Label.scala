@@ -10,8 +10,9 @@
 
 package scala.swing
 
-import javax.swing._
-import scala.swing.Swing._
+import javax.swing.{Icon, JLabel}
+
+import scala.swing.Swing.{EmptyIcon, toNullIcon}
 
 /**
  * A label component that display either a text, an icon, or both.

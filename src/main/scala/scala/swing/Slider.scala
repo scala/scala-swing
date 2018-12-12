@@ -10,8 +10,7 @@
 
 package scala.swing
 
-import javax.swing.{JSlider, JLabel}
-import scala.swing.event._
+import javax.swing.{JLabel, JSlider}
 
 /**
  * Lets users select a value from a given range. Visually, this is represented
@@ -65,6 +64,6 @@ class Slider extends Component with Orientable.Wrapper with Publisher {
 
   peer.addChangeListener(new javax.swing.event.ChangeListener {
     def stateChanged(e: javax.swing.event.ChangeEvent): Unit =
-      publish(new ValueChanged(Slider.this))
+      publish(new event.ValueChanged(Slider.this))
   })
 }

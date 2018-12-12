@@ -8,7 +8,7 @@
 
 package scala.swing
 
-import javax.swing._
+import javax.swing.JTextArea
 
 /**
  * A text component that allows multiline text input and display.

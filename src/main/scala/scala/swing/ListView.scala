@@ -26,7 +26,7 @@ object ListView {
   }
 
   def wrap[A](c: JList[A]): ListView[A] = new ListView[A] {
-    override lazy val peer = c
+    override lazy val peer: JList[A] = c
   }
 
   object Renderer {
@@ -151,7 +151,7 @@ class ListView[A] extends Component {
   }
 
   protected class ModelWrapper[B](val items: Seq[B]) extends AbstractListModel[B] {
-    def getElementAt(n: Int) = items(n)
+    def getElementAt(n: Int): B = items(n)
     def getSize: Int = items.size
   }
 

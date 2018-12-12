@@ -9,8 +9,9 @@
 package scala.swing
 
 import java.io.File
-import javax.swing._
-import javax.swing.filechooser._
+
+import javax.swing.filechooser.FileFilter
+import javax.swing.{Icon, JFileChooser}
 
 object FileChooser {
   /**

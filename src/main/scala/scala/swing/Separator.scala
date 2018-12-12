@@ -10,7 +10,7 @@
 
 package scala.swing
 
-import javax.swing._
+import javax.swing.JSeparator
 
 /**
  * A bar that can be used a separator, most commonly in menus.
