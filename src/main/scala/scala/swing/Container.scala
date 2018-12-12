@@ -30,7 +30,7 @@ object Container {
         UIElement.cachedWrapper[Component](c)
       }
 
-      protected def insertAt(n: Int, c: Component): Unit = peer.add(c.peer, n)
+      override def insert(n: Int, c: Component): Unit = peer.add(c.peer, n)
 
       override def addOne(c: Component): this.type = { peer.add(c.peer) ; this }
 

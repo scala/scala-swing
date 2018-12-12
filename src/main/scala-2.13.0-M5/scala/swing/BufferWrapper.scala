@@ -14,36 +14,41 @@ import scala.collection.{Iterator, mutable}
  * Default partial implementation for buffer adapters.
  */
 protected[swing] abstract class BufferWrapper[A] extends mutable.Buffer[A] {
-  def clear(): Unit = for (_ <- 0 until length) remove(0)
+  override def clear(): Unit = for (_ <- 0 until length) remove(0)
 
-  def update(n: Int, a: A): Unit = {
+  override def update(n: Int, a: A): Unit = {
     remove(n)
-    insertAt(n, a)
+    insert(n, a)
   }
 
-  def insertAll(n: Int, elems: Iterable[A]): Unit = {
-    var i = n
-    for (el <- elems) {
-      insertAt(i, el)
+  override def iterator: Iterator[A] = Iterator.range(0, length).map(apply)
+
+  override def prepend(elem: A): this.type = { insert(0, elem); this }
+
+  override def insertAll(idx: Int, elems: IterableOnce[A]): Unit = {
+    var i = idx
+    for (el <- elems.iterator) {
+      insert(i, el)
       i += 1
     }
   }
 
-  protected def insertAt(n: Int, a: A): Unit
+  override def remove(idx: Int, count: Int): Unit = {
+    require(count >= 0)
+    var n = 0
+    while (n < count) {
+      remove(idx + n)
+      n += 1
+    }
+  }
 
-// XXX TODO: remove
-//  def +=:(a: A): this.type = { insertAt(0, a); this }
-
-  def iterator: Iterator[A] = Iterator.range(0,length).map(apply)
-
-  // XXX TODO
-  def prepend(elem: A): BufferWrapper.this.type = ???
-
-  def insert(idx: Int, elem: A): Unit = ???
-
-  def insertAll(idx: Int, elems: IterableOnce[A]): Unit = ???
-
-  def remove(idx: Int, count: Int): Unit = ???
-
-  def patchInPlace(from: Int, patch: collection.Seq[A], replaced: Int): BufferWrapper.this.type = ???
+  override def patchInPlace(from: Int, patch: Seq[A], replaced: Int): this.type = {
+    if (replaced > 0) {
+      remove(from, replaced)
+    }
+    if (patch.nonEmpty) {
+      insertAll(from, patch)
+    }
+    this
+  }
 }

@@ -18,28 +18,28 @@ protected[swing] abstract class BufferWrapper[A] extends mutable.Buffer[A] {
 
   def addOne(elem: A): this.type
 
-  protected def insertAt(n: Int, a: A): Unit
+  def insert(idx: Int, elem: A): Unit
 
   // impl
 
-  final def +=(elem: A): this.type = addOne(elem)
+  final override def +=(elem: A): this.type = addOne(elem)
 
-  def clear(): Unit = for (_ <- 0 until length) remove(0)
+  override def clear(): Unit = for (_ <- 0 until length) remove(0)
 
-  def update(n: Int, a: A): Unit = {
+  override def update(n: Int, a: A): Unit = {
     remove(n)
-    insertAt(n, a)
+    insert(n, a)
   }
 
-  def insertAll(n: Int, elems: Traversable[A]): Unit = {
+  override def insertAll(n: Int, elems: Traversable[A]): Unit = {
     var i = n
     for (el <- elems) {
-      insertAt(i, el)
+      insert(i, el)
       i += 1
     }
   }
 
-  def +=:(a: A): this.type = { insertAt(0, a); this }
+  override def +=:(a: A): this.type = { insert(0, a); this }
 
-  def iterator: Iterator[A] = Iterator.range(0,length).map(apply)
+  override def iterator: Iterator[A] = Iterator.range(0,length).map(apply)
 }
