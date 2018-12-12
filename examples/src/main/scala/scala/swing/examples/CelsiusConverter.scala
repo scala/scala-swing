@@ -15,7 +15,7 @@ import scala.swing.event._
  * A GUI app to convert celsius to centigrade
  */
 object CelsiusConverter extends SimpleSwingApplication {
-  def top = new MainFrame {
+  def top: Frame = new MainFrame {
     title = "Convert Celsius to Fahrenheit"
     val tempCelsius = new TextField
     val celsiusLabel = new Label {
@@ -42,7 +42,7 @@ object CelsiusConverter extends SimpleSwingApplication {
       }
     }
     contents = new GridPanel(2, 2) {
-      contents.append(tempCelsius, celsiusLabel, convertButton, fahrenheitLabel)
+      contents ++= Seq(tempCelsius, celsiusLabel, convertButton, fahrenheitLabel)
       border = Swing.EmptyBorder(10, 10, 10, 10)
     }
     //defaultButton = Some(convertButton)

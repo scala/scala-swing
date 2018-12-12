@@ -14,7 +14,7 @@ import scala.swing._
  * A simple swing demo.
  */
 object HelloWorld extends SimpleSwingApplication {
-  def top = new MainFrame {
+  def top: Frame = new MainFrame {
     title = "Hello, World!"
     contents = new Button("Click Me!")
   }

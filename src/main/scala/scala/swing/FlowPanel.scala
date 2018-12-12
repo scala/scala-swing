@@ -6,8 +6,6 @@
 **                          |/                                          **
 \*                                                                      */
 
-
-
 package scala.swing
 
 import java.awt.FlowLayout

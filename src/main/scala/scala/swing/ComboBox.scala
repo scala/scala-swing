@@ -116,10 +116,10 @@ object ComboBox {
     def startEditing(): Unit = comboBoxPeer.selectAll()
   }
 
-  implicit def stringEditor(c: ComboBox[String]): Editor[String] = new BuiltInEditor(c)(s => s, s => s)
-  implicit def intEditor(c: ComboBox[Int]): Editor[Int] = new BuiltInEditor(c)(s => s.toInt, s => s.toString)
-  implicit def floatEditor(c: ComboBox[Float]): Editor[Float] = new BuiltInEditor(c)(s => s.toFloat, s => s.toString)
-  implicit def doubleEditor(c: ComboBox[Double]): Editor[Double] = new BuiltInEditor(c)(s => s.toDouble, s => s.toString)
+  implicit def stringEditor (c: ComboBox[String ]): Editor[String ] = new BuiltInEditor(c)(s => s         , s => s)
+  implicit def intEditor    (c: ComboBox[Int    ]): Editor[Int    ] = new BuiltInEditor(c)(s => s.toInt   , s => s.toString)
+  implicit def floatEditor  (c: ComboBox[Float  ]): Editor[Float  ] = new BuiltInEditor(c)(s => s.toFloat , s => s.toString)
+  implicit def doubleEditor (c: ComboBox[Double ]): Editor[Double ] = new BuiltInEditor(c)(s => s.toDouble, s => s.toString)
 
   def newConstantModel[A](items: Seq[A]): ComboBoxModel[A] = {
     new AbstractListModel[A] with ComboBoxModel[A] {
@@ -188,7 +188,7 @@ class ComboBox[A](items: Seq[A]) extends Component with Publisher {
   def renderer: ListView.Renderer[A] = ListView.Renderer.wrap(peer.getRenderer.asInstanceOf[ListCellRenderer[A]])
   def renderer_=(r: ListView.Renderer[A]): Unit = peer.setRenderer(r.peer)
 
-  /* XXX: currently not safe to expose:
+  /* TODO: currently not safe to expose:
   def editor: ComboBox.Editor[A] =
   def editor_=(r: ComboBox.Editor[A]) { peer.setEditor(r.comboBoxPeer) }
   */

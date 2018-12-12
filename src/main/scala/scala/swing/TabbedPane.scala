@@ -6,8 +6,6 @@
 **                          |/                                          **
 \*                                                                      */
 
-
-
 package scala.swing
 
 import javax.swing.JTabbedPane
@@ -93,8 +91,14 @@ class TabbedPane extends Component with Publisher {
       peer.insertTab(t.title, null, t.content.peer, t.tip, n)
     }
 
-    def +=(t: Page): this.type = { t.parent = TabbedPane.this; peer.addTab(t.title, null, t.content.peer, t.tip); this }
+    override def addOne(t: Page): this.type = {
+      t.parent = TabbedPane.this
+      peer.addTab(t.title, null, t.content.peer, t.tip)
+      this
+    }
+
     def length: Int = peer.getTabCount
+
     def apply(n: Int): Page = new Page(TabbedPane.this, peer.getTitleAt(n),
       UIElement.cachedWrapper[Component](peer.getComponentAt(n).asInstanceOf[javax.swing.JComponent]),
       peer.getToolTipTextAt(n))

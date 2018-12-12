@@ -6,8 +6,6 @@
 **                          |/                                          **
 \*                                                                      */
 
-
-
 package scala.swing
 
 import scala.collection.mutable

@@ -9,10 +9,11 @@
 package scala.swing.examples
 
 import java.awt.{Color, Font}
+
+import scala.swing.BorderPanel._
+import scala.swing.Swing._
 import scala.swing._
 import scala.swing.event._
-import scala.swing.Swing._
-import scala.swing.BorderPanel._
 
 /**
  * Demo for ColorChooser.
@@ -21,14 +22,14 @@ import scala.swing.BorderPanel._
  * @author andy@hicks.net
  */
 object ColorChooserDemo extends SimpleSwingApplication {
-  def top = new MainFrame {
+  def top: Frame = new MainFrame {
     title = "ColorChooser Demo"
     size = new Dimension(400, 400)
 
     contents = ui
   }
 
-  val banner = new Label("Welcome to Scala Swing") {
+  val banner: Label = new Label("Welcome to Scala Swing") {
     horizontalAlignment = Alignment.Center
     foreground = Color.yellow
     background = Color.blue
@@ -36,8 +37,8 @@ object ColorChooserDemo extends SimpleSwingApplication {
     font = new Font("SansSerif", Font.BOLD, 24)
   }
 
-  def ui = new BorderPanel {
-    val colorChooser = new ColorChooser {
+  def ui: BorderPanel = new BorderPanel {
+    val colorChooser: ColorChooser = new ColorChooser {
       reactions += {
         case ColorChanged(_, c) =>
           banner.foreground = c
@@ -46,13 +47,13 @@ object ColorChooserDemo extends SimpleSwingApplication {
 
     colorChooser.border = TitledBorder(EtchedBorder, "Choose Text Color")
 
-    val bannerArea = new BorderPanel {
+    val bannerArea: BorderPanel = new BorderPanel {
       layout(banner) = Position.Center
       border = TitledBorder(EtchedBorder, "Banner")
     }
 
     // Display a color selection dialog when button pressed 
-    val selectColor = new Button("Choose Background Color") {
+    val selectColor: Button = new Button("Choose Background Color") {
       reactions += {
         case ButtonClicked(_) =>
           ColorChooser.showDialog(this, "Test", Color.red) match {
@@ -62,8 +63,8 @@ object ColorChooserDemo extends SimpleSwingApplication {
       }
     }
 
-    layout(bannerArea) = Position.North
-    layout(colorChooser) = Position.Center
-    layout(selectColor) = Position.South
+    layout(bannerArea)    = Position.North
+    layout(colorChooser)  = Position.Center
+    layout(selectColor)   = Position.South
   }
 }

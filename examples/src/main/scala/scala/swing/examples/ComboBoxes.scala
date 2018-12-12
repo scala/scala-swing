@@ -8,12 +8,14 @@
 
 package scala.swing.examples
 
-import scala.swing._
-import scala.swing.event._
-import java.util.Date
 import java.awt.Color
 import java.text.SimpleDateFormat
+import java.util.Date
+
 import javax.swing.{Icon, ImageIcon}
+
+import scala.swing._
+import scala.swing.event._
 
 /**
  * Demonstrates how to use combo boxes and custom item renderers.
@@ -24,7 +26,7 @@ object ComboBoxes extends SimpleSwingApplication {
 
   import ComboBox._
 
-  lazy val ui = new FlowPanel {
+  lazy val ui: FlowPanel = new FlowPanel {
     contents += new ComboBox(List(1, 2, 3, 4))
 
     val patterns = List(
@@ -100,10 +102,9 @@ object ComboBoxes extends SimpleSwingApplication {
     contents += iconBox
   }
 
-  def top = new MainFrame {
+  def top: Frame = new MainFrame {
     title = "ComboBoxes Demo"
     contents = ui
   }
-
 }
 

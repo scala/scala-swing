@@ -6,17 +6,17 @@ name               := "scala-swing"
 
 version            := "2.1.0-SNAPSHOT"
 
-scalacOptions      ++= Seq("-deprecation", "-feature")
+scalacOptions in ThisBuild ++= Seq("-deprecation", "-feature")
 
 // Map[JvmMajorVersion, List[(ScalaVersion, UseForPublishing)]]
 scalaVersionsByJvm in ThisBuild := Map(
-   8 -> List("2.11.12", "2.12.6", "2.13.0-M5").map(_ -> true),
-   9 -> List("2.11.12", "2.12.6", "2.13.0-M5").map(_ -> false),
-  10 -> List("2.11.12", "2.12.6", "2.13.0-M5").map(_ -> false),
-  11 -> List("2.11.12", "2.12.6", "2.13.0-M5").map(_ -> false)
+   8 -> List("2.11.12", "2.12.8", "2.13.0-M5").map(_ -> true),
+   9 -> List("2.11.12", "2.12.8", "2.13.0-M5").map(_ -> false),
+  10 -> List("2.11.12", "2.12.8", "2.13.0-M5").map(_ -> false),
+  11 -> List("2.11.12", "2.12.8", "2.13.0-M5").map(_ -> false)
 )
 
-scalaVersion in ThisBuild := "2.12.8"  // for testing
+scalaVersion in ThisBuild := "2.13.0-M5"  // for testing
 
 OsgiKeys.exportPackage := Seq(s"scala.swing.*;version=${version.value}")
 

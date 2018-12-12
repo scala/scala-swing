@@ -6,8 +6,6 @@
 **                          |/                                          **
 \*                                                                      */
 
-
-
 package scala.swing
 
 import java.awt
@@ -27,9 +25,9 @@ object Swing {
   protected[swing] def toNullIcon(i: Icon): Icon = if(i == EmptyIcon) null else i
   protected[swing] def nullPeer(c: PeerContainer): awt.Container = if (c != null) c.peer else null
 
-  implicit def pair2Dimension(p: (Int, Int)): Dimension = new Dimension(p._1, p._2)
-  implicit def pair2Point(p: (Int, Int)): Point = new Point(p._1, p._2)
-  implicit def pair2Point(p: (Int, Int, Int, Int)): Rectangle = new Rectangle(p._1, p._2, p._3, p._4)
+  implicit def pair2Dimension(p: (Int, Int))          : Dimension = new Dimension (p._1, p._2)
+  implicit def pair2Point    (p: (Int, Int))          : Point     = new Point     (p._1, p._2)
+  implicit def pair2Point    (p: (Int, Int, Int, Int)): Rectangle = new Rectangle (p._1, p._2, p._3, p._4)
 
   @inline final def Runnable(@inline block: => Unit): Runnable = new Runnable {
     def run(): Unit = block

@@ -90,7 +90,7 @@ class FileChooser(dir: File) {
 
   def selectedFile: File = peer.getSelectedFile
   def selectedFile_=(file: File): Unit = peer.setSelectedFile(file)
-  def selectedFiles: Seq[File] = peer.getSelectedFiles
+  def selectedFiles: Seq[File] = peer.getSelectedFiles.toSeq
   def selectedFiles_=(files: File*): Unit = peer.setSelectedFiles(files.toArray)
 
   def multiSelectionEnabled: Boolean = peer.isMultiSelectionEnabled

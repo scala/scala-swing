@@ -6,8 +6,6 @@
 **                          |/                                          **
 \*                                                                      */
 
-
-
 package scala.swing
 
 object Oriented {
@@ -22,7 +20,7 @@ object Oriented {
       def getOrientation(): Int // note: must keep empty parentheses for Java compatibility
       def setOrientation(n: Int): Unit
     }
-    def orientation: Orientation.Value = Orientation(peer.getOrientation)
+    def orientation: Orientation.Value = Orientation(peer.getOrientation())
   }
 }
 

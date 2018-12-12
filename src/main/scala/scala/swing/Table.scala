@@ -6,8 +6,6 @@
 **                          |/                                          **
 \*                                                                      */
 
-
-
 package scala.swing
 
 import javax.swing.event.{ListSelectionListener, TableModelEvent, TableModelListener}
@@ -198,25 +196,38 @@ class Table extends Component with Scrollable.Wrapper {
 
   object selection extends Publisher {
     // TODO: could be a sorted set
-    protected abstract class SelectionSet[A](a: => Seq[A]) extends mutable.Set[A] {
-      def -=(n: A): this.type
-      def +=(n: A): this.type
+    protected abstract class SelectionSet[A](a: => Seq[A]) extends SetWrapper[A] {
+      // def -=(n: A): this.type
+      // def +=(n: A): this.type
+
       def contains(n: A): Boolean = a.contains(n)
+
       override def size: Int = a.length
+
       def iterator: Iterator[A] = a.iterator
     }
 
     object rows extends SelectionSet(peer.getSelectedRows) {
-      def -=(n: Int): this.type = { peer.removeRowSelectionInterval(n,n); this }
-      def +=(n: Int): this.type = { peer.addRowSelectionInterval   (n,n); this }
+      override def subtractOne(n: Int): this.type = { peer.removeRowSelectionInterval(n,n); this }
+      override def addOne     (n: Int): this.type = { peer.addRowSelectionInterval   (n,n); this }
+
+      override def clear(): Unit = {
+        val n = peer.getRowCount
+        if (n > 0) peer.removeRowSelectionInterval(0, n - 1)
+      }
 
       def leadIndex  : Int = peer.getSelectionModel.getLeadSelectionIndex
       def anchorIndex: Int = peer.getSelectionModel.getAnchorSelectionIndex
     }
 
     object columns extends SelectionSet(peer.getSelectedColumns) {
-      def -=(n: Int): this.type = { peer.removeColumnSelectionInterval(n,n); this }
-      def +=(n: Int): this.type = { peer.addColumnSelectionInterval   (n,n); this }
+      override def subtractOne(n: Int): this.type = { peer.removeColumnSelectionInterval(n,n); this }
+      override def addOne     (n: Int): this.type = { peer.addColumnSelectionInterval   (n,n); this }
+
+      override def clear(): Unit = {
+        val n = peer.getColumnCount
+        if (n > 0) peer.removeColumnSelectionInterval(0, n - 1)
+      }
 
       def leadIndex  : Int = peer.getColumnModel.getSelectionModel.getLeadSelectionIndex
       def anchorIndex: Int = peer.getColumnModel.getSelectionModel.getAnchorSelectionIndex
@@ -224,16 +235,20 @@ class Table extends Component with Scrollable.Wrapper {
 
     def cells: mutable.Set[(Int, Int)] =
       new SelectionSet[(Int, Int)]((for(r <- selection.rows; c <- selection.columns) yield (r,c)).toSeq) { outer =>
-        def -=(n: (Int, Int)): this.type = {
+        override def subtractOne(n: (Int, Int)): this.type = {
           peer.removeRowSelectionInterval   (n._1,n._1)
           peer.removeColumnSelectionInterval(n._2,n._2)
           this
         }
-        def +=(n: (Int, Int)): this.type  = {
+
+        override def addOne(n: (Int, Int)): this.type  = {
           peer.addRowSelectionInterval   (n._1,n._1)
           peer.addColumnSelectionInterval(n._2,n._2)
           this
         }
+
+        override def clear(): Unit = peer.clearSelection()
+
         override def size: Int = peer.getSelectedRowCount * peer.getSelectedColumnCount
       }
 

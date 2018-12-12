@@ -9,7 +9,7 @@
 package scala.swing.examples
 
 import scala.swing._
-import swing.event._
+import scala.swing.event._
 
 object TableSelection extends SimpleSwingApplication {
   val model = Array(List("Mary", "Campione", "Snowboarding", 5, false).toArray,
@@ -18,8 +18,8 @@ object TableSelection extends SimpleSwingApplication {
     List("Sharon", "Zakhour", "Speed reading", 5, false).toArray,
     List("Philip", "Milne", "Pool", 5, false).toArray)
 
-  lazy val ui = new BoxPanel(Orientation.Vertical) {
-    val table = new Table(model, Array("First Name", "Last Name", "Sport", "# of Years", "Vegetarian")) {
+  lazy val ui: BoxPanel = new BoxPanel(Orientation.Vertical) {
+    val table: Table = new Table(model, Array("First Name", "Last Name", "Sport", "# of Years", "Vegetarian")) {
       preferredViewportSize = new Dimension(500, 70)
     }
     //1.6:table.fillsViewportHeight = true
@@ -36,17 +36,17 @@ object TableSelection extends SimpleSwingApplication {
       b
     }
 
-    val intervalMutex = new ButtonGroup
-    val multiInterval = radio(intervalMutex, "Multiple Interval Selection")
+    val intervalMutex   = new ButtonGroup
+    val multiInterval   = radio(intervalMutex, "Multiple Interval Selection")
     val elementInterval = radio(intervalMutex, "Single Selection")
-    val singleInterval = radio(intervalMutex, "Single Interval Selection")
+    val singleInterval  = radio(intervalMutex, "Single Interval Selection")
     intervalMutex.select(multiInterval)
 
     contents += new Label("Selection Options")
-    val elemMutex = new ButtonGroup
-    val rowSelection = radio(elemMutex, "Row Selection")
+    val elemMutex       = new ButtonGroup
+    val rowSelection    = radio(elemMutex, "Row Selection")
     val columnSelection = radio(elemMutex, "Column Selection")
-    val cellSelection = radio(elemMutex, "Cell Selection")
+    val cellSelection   = radio(elemMutex, "Cell Selection")
     elemMutex.select(rowSelection)
 
     val output = new TextArea(5, 40) {
@@ -96,7 +96,7 @@ object TableSelection extends SimpleSwingApplication {
     }
   }
 
-  def top = new MainFrame {
+  def top: Frame = new MainFrame {
     title = "Table Selection"
     contents = ui
   }

@@ -41,9 +41,6 @@ object Component {
 abstract class Component extends UIElement {
   override lazy val peer: javax.swing.JComponent = new javax.swing.JComponent with SuperMixin {}
 
-  // TODO: what was this used for?
-  // var initP: JComponent = null
-
   /**
    * This trait is used to redirect certain calls from the peer to the wrapper
    * and back. Useful to expose methods that can be customized by overriding.

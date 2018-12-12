@@ -6,8 +6,6 @@
 **                          |/                                          **
 \*                                                                      */
 
-
-
 package scala.swing
 
 import event._
@@ -161,7 +159,7 @@ class ListView[A] extends Component {
      def length: Int = model.getSize
      def iterator: Iterator[A] = new Iterator[A] {
        var idx = 0
-       def next: A = { idx += 1; apply(idx-1) }
+       def next(): A = { idx += 1; apply(idx-1) }
        def hasNext: Boolean = idx < selfSeq.length
      }
      def apply(n: Int): A = model.getElementAt(n)
@@ -179,11 +177,11 @@ class ListView[A] extends Component {
    * The current item selection.
    */
   object selection extends Publisher {
-    protected abstract class Indices[B](a: => Seq[B]) extends scala.collection.mutable.Set[B] {
-      def -=(n: B): this.type
-      def +=(n: B): this.type
+    protected abstract class Indices[B](a: => Seq[B]) extends SetWrapper[B] {
       def contains(n: B): Boolean = a.contains(n)
+
       override def size: Int = a.length
+
       def iterator: Iterator[B] = a.iterator
     }
 
@@ -194,16 +192,20 @@ class ListView[A] extends Component {
      * The indices of the currently selected items.
      */
     object indices extends Indices(peer.getSelectedIndices) {
-      def -=(n: Int): this.type = { peer.removeSelectionInterval(n,n); this }
-      def +=(n: Int): this.type = { peer.addSelectionInterval(n,n); this }
+      override def subtractOne(n: Int): this.type = { peer.removeSelectionInterval(n,n); this }
+      override def addOne     (n: Int): this.type = { peer.addSelectionInterval   (n,n); this }
+
+      override def clear(): Unit = peer.clearSelection()
     }
 
-    /**
-     * The currently selected items.
-     */
-    object items extends scala.collection.SeqProxy[A] {
-      def self = peer.getSelectedValues.map(_.asInstanceOf[A])
-    }
+// XXX TODO
+//    /**
+//     * The currently selected items.
+//     */
+//    object items extends scala.collection.SeqProxy[A] {
+//      def self = peer.getSelectedValues.map(_.asInstanceOf[A])
+//    }
+    def items: Seq[A] = ???
 
     def intervalMode: IntervalMode.Value = IntervalMode(peer.getSelectionModel.getSelectionMode)
     def intervalMode_=(m: IntervalMode.Value): Unit = peer.getSelectionModel.setSelectionMode(m.id)
