@@ -185,27 +185,27 @@ class ListView[A] extends Component {
       def iterator: Iterator[B] = a.iterator
     }
 
-    def leadIndex: Int = peer.getSelectionModel.getLeadSelectionIndex
-    def anchorIndex: Int = peer.getSelectionModel.getAnchorSelectionIndex
+    def leadIndex   : Int = peer.getSelectionModel.getLeadSelectionIndex
+    def anchorIndex : Int = peer.getSelectionModel.getAnchorSelectionIndex
 
     /**
      * The indices of the currently selected items.
      */
     object indices extends Indices(peer.getSelectedIndices) {
-      override def subtractOne(n: Int): this.type = { peer.removeSelectionInterval(n,n); this }
       override def addOne     (n: Int): this.type = { peer.addSelectionInterval   (n,n); this }
+      override def subtractOne(n: Int): this.type = { peer.removeSelectionInterval(n,n); this }
 
       override def clear(): Unit = peer.clearSelection()
     }
 
-// XXX TODO
-//    /**
-//     * The currently selected items.
-//     */
-//    object items extends scala.collection.SeqProxy[A] {
-//      def self = peer.getSelectedValues.map(_.asInstanceOf[A])
-//    }
-    def items: Seq[A] = ???
+    /**
+     * The currently selected items.
+     */
+    def items: Seq[A] = {
+      // note: we should be using `getSelectedValuesList`, but it would break the Scala 2.11
+      // promise of working with Java 6 (requires Java 7)
+      peer.getSelectedValues.iterator.map(_.asInstanceOf[A]).toSeq
+    }
 
     def intervalMode: IntervalMode.Value = IntervalMode(peer.getSelectionModel.getSelectionMode)
     def intervalMode_=(m: IntervalMode.Value): Unit = peer.getSelectionModel.setSelectionMode(m.id)

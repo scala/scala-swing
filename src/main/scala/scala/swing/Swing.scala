@@ -19,10 +19,10 @@ import javax.swing.{BorderFactory, Icon, ImageIcon, JComponent, SwingUtilities}
  * Helpers for this package.
  */
 object Swing {
-  protected[swing] type PeerContainer = {def peer: awt.Container}
+  protected[swing] type PeerContainer = { def peer: awt.Container }
 
-  protected[swing] def toNoIcon(i: Icon): Icon = if(i == null) EmptyIcon else i
-  protected[swing] def toNullIcon(i: Icon): Icon = if(i == EmptyIcon) null else i
+  protected[swing] def toNoIcon   (i: Icon): Icon = if (i == null) EmptyIcon else i
+  protected[swing] def toNullIcon (i: Icon): Icon = if (i == EmptyIcon) null else i
   protected[swing] def nullPeer(c: PeerContainer): awt.Container = if (c != null) c.peer else null
 
   implicit def pair2Dimension(p: (Int, Int))          : Dimension = new Dimension (p._1, p._2)
@@ -76,7 +76,7 @@ object Swing {
   }
 
   def unwrapIcon(icon: Icon): Icon = if (icon == null) EmptyIcon else icon
-  def wrapIcon(icon: Icon): Icon = if (icon == EmptyIcon) null else icon
+  def wrapIcon  (icon: Icon): Icon = if (icon == EmptyIcon) null else icon
 
   def EmptyBorder: Border = BorderFactory.createEmptyBorder()
   def EmptyBorder(weight: Int): Border  =
