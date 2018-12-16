@@ -23,8 +23,6 @@ class ButtonGroup(initialButtons: AbstractButton*) {
     override def subtractOne(b: AbstractButton): this.type = { peer.remove(b.peer); this }
     override def addOne     (b: AbstractButton): this.type = { peer.add   (b.peer); this }
 
-    override def clear(): Unit = iterator.toList.foreach(remove)
-
     def contains(b: AbstractButton): Boolean = this.iterator.contains(b)
 
     override def size: Int = peer.getButtonCount
