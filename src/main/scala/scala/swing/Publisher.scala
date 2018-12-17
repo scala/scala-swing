@@ -127,48 +127,15 @@ private[swing] trait SingleRefCollection[+A <: AnyRef] extends Iterable[A] { sel
 }
 
 private[swing] class StrongReference[+T <: AnyRef](value: T) extends Reference[T] {
-    private[this] var ref: Option[T] = Some(value)
-    def isValid: Boolean = ref.isDefined
-    def apply(): T = ref.get
-    def get : Option[T] = ref
-    override def toString: String = get.map(_.toString).getOrElse("<deleted>")
-    def clear(): Unit = { ref = None }
-    def enqueue(): Boolean = false
-    def isEnqueued: Boolean = false
-  }
-
-//abstract class RefBuffer[A <: AnyRef] extends BufferWrapper[A] with SingleRefCollection[A] { self =>
-//  protected val underlying: mutable.Buffer[Reference[A]]
-//
-//  def addOne    (el: A): this.type = { purgeReferences(); underlying  += Ref(el)    ; this }
-//  def prependOne(el: A): this.type = { purgeReferences(); Ref(el)     +=: underlying; this }
-//
-//  def remove(el: A): Unit = { underlying -= Ref(el); purgeReferences(); }
-//
-//  def remove(n: Int): A = { val el = apply(n); remove(el); el }
-//
-//  def insertAll(n: Int, iter: Iterable[A]): Unit = {
-//    purgeReferences()
-//    underlying.insertAll(n, iter.view.map(Ref))
-//  }
-//
-//  def update(n: Int, el: A): Unit = { purgeReferences(); underlying(n) = Ref(el) }
-//
-//  def apply(n: Int): A = {
-//    purgeReferences()
-//    var el = underlying(n).get
-//    while (el.isEmpty) {
-//      purgeReferences(); el = underlying(n).get
-//    }
-//    el.get
-//  }
-//
-//  def length: Int = { purgeReferences(); underlying.length }
-//
-//  def clear(): Unit = { underlying.clear(); purgeReferences() }
-//
-//  protected[this] def removeReference(ref: Reference[A]): Unit = { underlying -= ref }
-//}
+  private[this] var ref: Option[T] = Some(value)
+  def isValid: Boolean = ref.isDefined
+  def apply(): T = ref.get
+  def get : Option[T] = ref
+  override def toString: String = get.map(_.toString).getOrElse("<deleted>")
+  def clear(): Unit = { ref = None }
+  def enqueue(): Boolean = false
+  def isEnqueued: Boolean = false
+}
 
 private[swing] abstract class RefSet[A <: AnyRef] extends SetWrapper[A] with SingleRefCollection[A] { self =>
   protected val underlying: mutable.Set[Reference[A]]
