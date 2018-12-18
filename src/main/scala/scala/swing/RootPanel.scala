@@ -8,6 +8,8 @@
 
 package scala.swing
 
+import scala.collection.immutable
+
 /**
  * The root of a component hierarchy. Contains at most one component.
  *
@@ -19,7 +21,7 @@ trait RootPanel extends Container {
   /**
    * At most one component.
    */
-  def contents: Seq[Component] =
+  def contents: immutable.Seq[Component] =
     if (peer.getContentPane.getComponentCount == 0) Nil
     else {
       val c = peer.getContentPane.getComponent(0).asInstanceOf[javax.swing.JComponent]

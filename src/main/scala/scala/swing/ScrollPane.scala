@@ -10,6 +10,8 @@ package scala.swing
 
 import javax.swing.{JScrollPane, ScrollPaneConstants}
 
+import scala.collection.immutable
+
 object ScrollPane {
   object BarPolicy extends Enumeration {
     import ScrollPaneConstants._
@@ -46,7 +48,7 @@ class ScrollPane extends Component with Container {
     this()
     contents = c
   }
-  def contents: Seq[Component] =
+  def contents: immutable.Seq[Component] =
     List(UIElement.cachedWrapper[Component](peer.getViewport.getView.asInstanceOf[javax.swing.JComponent]))
 
   /**

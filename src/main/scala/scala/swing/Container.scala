@@ -19,7 +19,7 @@ object Container {
     override def peer: javax.swing.JComponent
 
     protected val _contents = new Content
-    def contents: Seq[Component] = _contents
+    def contents: scala.collection.Seq[Component] = _contents
 
     protected class Content extends BufferWrapper[Component] {
       override def clear(): Unit = peer.removeAll()
@@ -61,5 +61,5 @@ trait Container extends UIElement {
   /**
    * The child components of this container.
    */
-  def contents: Seq[Component]
+  def contents: scala.collection.Seq[Component]
 }

@@ -121,7 +121,7 @@ object ComboBox {
   implicit def floatEditor  (c: ComboBox[Float  ]): Editor[Float  ] = new BuiltInEditor(c)(s => s.toFloat , s => s.toString)
   implicit def doubleEditor (c: ComboBox[Double ]): Editor[Double ] = new BuiltInEditor(c)(s => s.toDouble, s => s.toString)
 
-  def newConstantModel[A](items: Seq[A]): ComboBoxModel[A] = {
+  def newConstantModel[A](items: scala.collection.Seq[A]): ComboBoxModel[A] = {
     new AbstractListModel[A] with ComboBoxModel[A] {
       private var selected: A = if (items.isEmpty) null.asInstanceOf[A] else items(0)
       def getSelectedItem: AnyRef = selected.asInstanceOf[AnyRef]
@@ -137,7 +137,7 @@ object ComboBox {
     }
   }
 
-  /*def newMutableModel[A, Self](items: Seq[A] with scala.collection.mutable.Publisher[scala.collection.mutable.Message[A], Self]): ComboBoxModel = {
+  /*def newMutableModel[A, Self](items: scala.collection.Seq[A] with scala.collection.mutable.Publisher[scala.collection.mutable.Message[A], Self]): ComboBoxModel = {
     new AbstractListModel with ComboBoxModel {
       private var selected = items(0)
       def getSelectedItem: AnyRef = selected.asInstanceOf[AnyRef]
@@ -147,8 +147,8 @@ object ComboBox {
     }
   }
 
-  def newConstantModel[A](items: Seq[A]): ComboBoxModel = items match {
-    case items: Seq[A] with scala.collection.mutable.Publisher[scala.collection.mutable.Message[A], Self] => newMutableModel
+  def newConstantModel[A](items: scala.collection.Seq[A]): ComboBoxModel = items match {
+    case items: scala.collection.Seq[A] with scala.collection.mutable.Publisher[scala.collection.mutable.Message[A], Self] => newMutableModel
     case _ => newConstantModel(items)
   }*/
 }
@@ -159,7 +159,7 @@ object ComboBox {
  *
  * @see javax.swing.JComboBox
  */
-class ComboBox[A](items: Seq[A]) extends Component with Publisher {
+class ComboBox[A](items: scala.collection.Seq[A]) extends Component with Publisher {
   override lazy val peer: JComboBox[A] = new JComboBox(ComboBox.newConstantModel(items)) with SuperMixin
 
   object selection extends Publisher {

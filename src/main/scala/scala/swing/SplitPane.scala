@@ -10,6 +10,7 @@ package scala.swing
 
 import javax.swing.JSplitPane
 
+import scala.collection.immutable
 import scala.swing.Swing.nullPeer
 
 /**
@@ -25,7 +26,7 @@ class SplitPane(o: Orientation.Value, left: Component, right: Component) extends
   def this(o: Orientation.Value) = this(o, new Component {}, new Component {})
   def this() = this(Orientation.Horizontal)
 
-  def contents: Seq[Component] = List(leftComponent, rightComponent)
+  def contents: immutable.Seq[Component] = List(leftComponent, rightComponent)
   def contents_=(left: Component, right: Component): Unit = {
     peer.setLeftComponent(nullPeer(left))
     peer.setRightComponent(nullPeer(right))

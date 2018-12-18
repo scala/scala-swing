@@ -133,7 +133,7 @@ class Table extends Component with Scrollable.Wrapper {
     *                     by calling `toString` on the elements. The size of this sequence
     *                     must correspond with the inner dimension of `rowData`.
     */
-  def this(rowData: Array[Array[Any]], columnNames: Seq[_]) = {
+  def this(rowData: Array[Array[Any]], columnNames: scala.collection.Seq[_]) = {
     this()
     model = new AbstractTableModel {
       override def getColumnName(column: Int): String = columnNames(column).toString
@@ -196,7 +196,7 @@ class Table extends Component with Scrollable.Wrapper {
 
   object selection extends Publisher {
     // TODO: could be a sorted set
-    protected abstract class SelectionSet[A](a: => Seq[A]) extends SetWrapper[A] {
+    protected abstract class SelectionSet[A](a: => scala.collection.Seq[A]) extends SetWrapper[A] {
       // def -=(n: A): this.type
       // def +=(n: A): this.type
 
