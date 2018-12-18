@@ -13,8 +13,6 @@ import java.io.File
 import javax.swing.filechooser.FileFilter
 import javax.swing.{Icon, JFileChooser}
 
-import scala.collection.immutable
-
 object FileChooser {
   /**
    * The result of a file dialog. The precise meaning of the `Approve`
@@ -92,8 +90,8 @@ class FileChooser(dir: File) {
 
   def selectedFile: File = peer.getSelectedFile
   def selectedFile_=(file: File): Unit = peer.setSelectedFile(file)
-  def selectedFiles: immutable.Seq[File] = peer.getSelectedFiles.toIndexedSeq
-  def selectedFiles_=(files: File*): Unit = peer.setSelectedFiles(files.toArray)
+  def selectedFiles: scala.collection.Seq[File] = peer.getSelectedFiles.toSeq
+  def selectedFiles_=(files: scala.collection.Seq[File]): Unit = peer.setSelectedFiles(files.toArray)
 
   def multiSelectionEnabled: Boolean = peer.isMultiSelectionEnabled
   def multiSelectionEnabled_=(b: Boolean): Unit = peer.setMultiSelectionEnabled(b)
