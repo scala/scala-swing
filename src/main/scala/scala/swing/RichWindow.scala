@@ -8,9 +8,11 @@
 
 package scala.swing
 
-import java.awt.{ Window => AWTWindow, Frame => AWTFrame }
-import javax.swing._
-import Swing._
+import java.awt.{Frame => AWTFrame, Window => AWTWindow}
+
+import javax.swing.{Icon, JDialog, JFrame, JMenuBar, JOptionPane, UIManager}
+
+import scala.swing.Swing.{EmptyIcon, PeerContainer, nullPeer}
 
 object RichWindow {
   /**
@@ -34,13 +36,13 @@ sealed trait RichWindow extends Window {
   def peer: AWTWindow with InterfaceMixin
 
   trait InterfaceMixin extends super.InterfaceMixin {
-    def getJMenuBar(): JMenuBar
+    def getJMenuBar: JMenuBar
     def setJMenuBar(b: JMenuBar): Unit
     def setUndecorated(b: Boolean): Unit
     def setTitle(s: String): Unit
-    def getTitle(): String
+    def getTitle: String
     def setResizable(b: Boolean): Unit
-    def isResizable(): Boolean
+    def isResizable: Boolean
   }
 
   def title: String = peer.getTitle
@@ -144,7 +146,7 @@ object Dialog {
                   optionType: Options.Value = Options.YesNo,
                   messageType: Message.Value = Message.Question,
                   icon: Icon = EmptyIcon,
-                  entries: Seq[Any],
+                  entries: scala.collection.Seq[Any],
                   initial: Int): Result.Value = {
     val r = JOptionPane.showOptionDialog(nullPeer(parent), message, title,
       optionType.id, messageType.id, Swing.wrapIcon(icon),
@@ -157,10 +159,10 @@ object Dialog {
                    title: String = uiString("OptionPane.inputDialogTitle"),
                    messageType: Message.Value = Message.Question,
                    icon: Icon = EmptyIcon,
-                   entries: Seq[A] = Nil,
+                   entries: scala.collection.Seq[A] = Nil,
                    initial: A): Option[A] = {
     val e = if (entries.isEmpty) null
-    else (entries map toAnyRef).toArray
+    else entries.iterator.map(toAnyRef).toArray
     val r = JOptionPane.showInputDialog(nullPeer(parent), message, title,
       messageType.id, Swing.wrapIcon(icon),
       e, initial)

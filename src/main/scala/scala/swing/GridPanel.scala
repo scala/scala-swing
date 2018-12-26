@@ -6,9 +6,9 @@
 **                          |/                                          **
 \*                                                                      */
 
-
-
 package scala.swing
+
+import java.awt.GridLayout
 
 object GridPanel {
   val Adapt = 0
@@ -37,7 +37,7 @@ class GridPanel(rows0: Int, cols0: Int) extends Panel with SequentialContainer.W
   protected def areValid(c: Constraints): (Boolean, String) =
     ((c._1 > 0 && c._2 > 0), "Grid coordinates (row,col) must be >= 1 but where " + c)*/
 
-  private def layoutManager = peer.getLayout.asInstanceOf[java.awt.GridLayout]
+  private def layoutManager: GridLayout = peer.getLayout.asInstanceOf[GridLayout]
 
   def rows: Int = layoutManager.getRows
   def rows_=(n: Int): Unit = layoutManager.setRows(n)

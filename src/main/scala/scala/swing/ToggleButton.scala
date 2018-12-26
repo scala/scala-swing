@@ -8,7 +8,7 @@
 
 package scala.swing
 
-import javax.swing._
+import javax.swing.JToggleButton
 
 /**
  * A two state button with a push button like user interface.

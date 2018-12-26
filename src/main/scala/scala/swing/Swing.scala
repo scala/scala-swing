@@ -6,29 +6,28 @@
 **                          |/                                          **
 \*                                                                      */
 
-
-
 package scala.swing
 
 import java.awt
-import java.awt.event._
-import javax.swing.border._
-import javax.swing.event._
-import javax.swing.{BorderFactory, Icon, JComponent, SwingUtilities}
+import java.awt.event.{ActionEvent, ActionListener}
+
+import javax.swing.border.{BevelBorder, Border, CompoundBorder, MatteBorder, TitledBorder}
+import javax.swing.event.{ChangeEvent, ChangeListener}
+import javax.swing.{BorderFactory, Icon, ImageIcon, JComponent, SwingUtilities}
 
 /**
  * Helpers for this package.
  */
 object Swing {
-  protected[swing] type PeerContainer = {def peer: awt.Container}
+  protected[swing] type PeerContainer = { def peer: awt.Container }
 
-  protected[swing] def toNoIcon(i: Icon): Icon = if(i == null) EmptyIcon else i
-  protected[swing] def toNullIcon(i: Icon): Icon = if(i == EmptyIcon) null else i
+  protected[swing] def toNoIcon   (i: Icon): Icon = if (i == null) EmptyIcon else i
+  protected[swing] def toNullIcon (i: Icon): Icon = if (i == EmptyIcon) null else i
   protected[swing] def nullPeer(c: PeerContainer): awt.Container = if (c != null) c.peer else null
 
-  implicit def pair2Dimension(p: (Int, Int)): Dimension = new Dimension(p._1, p._2)
-  implicit def pair2Point(p: (Int, Int)): Point = new Point(p._1, p._2)
-  implicit def pair2Point(p: (Int, Int, Int, Int)): Rectangle = new Rectangle(p._1, p._2, p._3, p._4)
+  implicit def pair2Dimension(p: (Int, Int))          : Dimension = new Dimension (p._1, p._2)
+  implicit def pair2Point    (p: (Int, Int))          : Point     = new Point     (p._1, p._2)
+  implicit def pair2Point    (p: (Int, Int, Int, Int)): Rectangle = new Rectangle (p._1, p._2, p._3, p._4)
 
   @inline final def Runnable(@inline block: => Unit): Runnable = new Runnable {
     def run(): Unit = block
@@ -40,31 +39,31 @@ object Swing {
     def actionPerformed(e: ActionEvent): Unit = f(e)
   }
 
-  def Box(min: Dimension, pref: Dimension, max: Dimension) = new Component {
-    override lazy val peer = new javax.swing.Box.Filler(min, pref, max)
+  def Box(min: Dimension, pref: Dimension, max: Dimension): Component = new Component {
+    override lazy val peer: JComponent = new javax.swing.Box.Filler(min, pref, max)
   }
-  def HGlue = new Component {
-    override lazy val peer = javax.swing.Box.createHorizontalGlue.asInstanceOf[JComponent]
+  def HGlue: Component = new Component {
+    override lazy val peer: JComponent = javax.swing.Box.createHorizontalGlue.asInstanceOf[JComponent]
   }
-  def VGlue = new Component {
-    override lazy val peer = javax.swing.Box.createVerticalGlue.asInstanceOf[JComponent]
+  def VGlue: Component = new Component {
+    override lazy val peer: JComponent = javax.swing.Box.createVerticalGlue.asInstanceOf[JComponent]
   }
-  def Glue = new Component {
-    override lazy val peer = javax.swing.Box.createGlue.asInstanceOf[JComponent]
+  def Glue: Component = new Component {
+    override lazy val peer: JComponent = javax.swing.Box.createGlue.asInstanceOf[JComponent]
   }
-  def RigidBox(dim: Dimension) = new Component {
-    override lazy val peer = javax.swing.Box.createRigidArea(dim).asInstanceOf[JComponent]
+  def RigidBox(dim: Dimension): Component = new Component {
+    override lazy val peer: JComponent = javax.swing.Box.createRigidArea(dim).asInstanceOf[JComponent]
   }
-  def HStrut(width: Int) = new Component {
-    override lazy val peer = javax.swing.Box.createHorizontalStrut(width).asInstanceOf[JComponent]
+  def HStrut(width: Int): Component = new Component {
+    override lazy val peer: JComponent = javax.swing.Box.createHorizontalStrut(width).asInstanceOf[JComponent]
   }
-  def VStrut(height: Int) = new Component {
-    override lazy val peer = javax.swing.Box.createVerticalStrut(height).asInstanceOf[JComponent]
+  def VStrut(height: Int): Component = new Component {
+    override lazy val peer: JComponent = javax.swing.Box.createVerticalStrut(height).asInstanceOf[JComponent]
   }
 
-  def Icon(image: java.awt.Image) = new javax.swing.ImageIcon(image)
-  def Icon(filename: String) = new javax.swing.ImageIcon(filename)
-  def Icon(url: java.net.URL) = new javax.swing.ImageIcon(url)
+  def Icon(image: java.awt.Image) : ImageIcon = new ImageIcon(image)
+  def Icon(filename: String)      : ImageIcon = new ImageIcon(filename)
+  def Icon(url: java.net.URL)     : ImageIcon = new ImageIcon(url)
 
   /**
    * The empty icon. Use this icon instead of <code>null</code> to indicate
@@ -77,7 +76,7 @@ object Swing {
   }
 
   def unwrapIcon(icon: Icon): Icon = if (icon == null) EmptyIcon else icon
-  def wrapIcon(icon: Icon): Icon = if (icon == EmptyIcon) null else icon
+  def wrapIcon  (icon: Icon): Icon = if (icon == EmptyIcon) null else icon
 
   def EmptyBorder: Border = BorderFactory.createEmptyBorder()
   def EmptyBorder(weight: Int): Border  =

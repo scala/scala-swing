@@ -76,7 +76,7 @@ class ListDemo extends BorderPanel {
   val nameSelected: String = listModel(initiallySelected)
 
   //Create a panel that uses BoxLayout.
-  val buttonPane = new BoxPanel(Orientation.Horizontal) {
+  val buttonPane: BoxPanel = new BoxPanel(Orientation.Horizontal) {
     border = Swing.EmptyBorder(5, 5, 5, 5)
     contents += fireButton
     contents += Swing.HStrut(5)
@@ -157,7 +157,7 @@ class ListDemo extends BorderPanel {
 }
 
 object ListDemo extends SimpleSwingApplication {
-  lazy val top = new MainFrame() {
+  lazy val top: Frame = new MainFrame() {
     title = "ListDemo"
     //Create and set up the content pane.
     contents = new ListDemo()

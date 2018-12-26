@@ -12,14 +12,14 @@ import scala.swing._
 import scala.swing.event._
 
 object CelsiusConverter2 extends SimpleSwingApplication {
-  def newField = new TextField {
+  def newField: TextField = new TextField {
     text = "0"
     columns = 5
     horizontalAlignment = Alignment.Right
   }
 
-  val celsius = newField
-  val fahrenheit = newField
+  val celsius     = newField
+  val fahrenheit  = newField
 
   listenTo(fahrenheit, celsius)
   reactions += {
@@ -38,7 +38,7 @@ object CelsiusConverter2 extends SimpleSwingApplication {
     border = Swing.EmptyBorder(15, 10, 10, 10)
   }
 
-  def top = new MainFrame {
+  def top: Frame = new MainFrame {
     title = "Convert Celsius / Fahrenheit"
     contents = ui
   }

@@ -56,10 +56,10 @@ object Dialogs extends SimpleSwingApplication {
       import BorderPanel._
 
       val mutex = new ButtonGroup
-      val ok = new RadioButton("OK (in the L&F's words)")
-      val ynlf = new RadioButton("Yes/No (in the L&F's words)")
-      val ynp = new RadioButton("Yes/No (in the programmer's words)")
-      val yncp = new RadioButton("Yes/No/Cancel (in the programmer's words)")
+      val ok    = new RadioButton("OK (in the L&F's words)")
+      val ynlf  = new RadioButton("Yes/No (in the L&F's words)")
+      val ynp   = new RadioButton("Yes/No (in the programmer's words)")
+      val yncp  = new RadioButton("Yes/No/Cancel (in the programmer's words)")
       val radios = List(ok, ynlf, ynp, yncp)
       mutex.buttons ++= radios
       mutex.select(ok)
@@ -76,10 +76,10 @@ object Dialogs extends SimpleSwingApplication {
             label.text = showConfirmation(buttons,
               "Would you like green eggs and ham?",
               "An Inane Question") match {
-              case Result.Yes => "Ewww!"
-              case Result.No => "Me neither!"
-              case _ => "Come on -- tell me!"
-            }
+                case Result.Yes => "Ewww!"
+                case Result.No  => "Me neither!"
+                case _          => "Come on -- tell me!"
+              }
           case `ynp` =>
             val options = List("Yes, please",
               "No, thanks",
@@ -89,10 +89,10 @@ object Dialogs extends SimpleSwingApplication {
               "A Silly Question",
               entries = options,
               initial = 2) match {
-              case Result.Yes => "You're kidding!"
-              case Result.No => "I don't like them, either."
-              case _ => "Come on -- 'fess up!"
-            }
+                case Result.Yes => "You're kidding!"
+                case Result.No  => "I don't like them, either."
+                case _          => "Come on -- 'fess up!"
+              }
           case `yncp` =>
             val options = List("Yes, please",
               "No, thanks",
@@ -102,11 +102,11 @@ object Dialogs extends SimpleSwingApplication {
               title = "A Silly Question",
               entries = options,
               initial = 2) match {
-              case Result.Yes => "Here you go: green eggs and ham!"
-              case Result.No => "OK, just the ham, then."
-              case Result.Cancel => "Well, I'm certainly not going to eat them!"
-              case _ => "Please tell me what you want!"
-            }
+                case Result.Yes     => "Here you go: green eggs and ham!"
+                case Result.No      => "OK, just the ham, then."
+                case Result.Cancel  => "Well, I'm certainly not going to eat them!"
+                case _              => "Please tell me what you want!"
+              }
         }
       })) = Position.South
     })
@@ -114,12 +114,12 @@ object Dialogs extends SimpleSwingApplication {
 
       import BorderPanel._
 
-      val mutex = new ButtonGroup
-      val pick = new RadioButton("Pick one of several choices")
-      val enter = new RadioButton("Enter some text")
-      val custom = new RadioButton("Custom")
+      val mutex       = new ButtonGroup
+      val pick        = new RadioButton("Pick one of several choices")
+      val enter       = new RadioButton("Enter some text")
+      val custom      = new RadioButton("Custom")
       val customUndec = new RadioButton("Custom undecorated")
-      val custom2 = new RadioButton("2 custom dialogs")
+      val custom2     = new RadioButton("2 custom dialogs")
       val radios = List(pick, enter, custom, customUndec, custom2)
       mutex.buttons ++= radios
       mutex.select(pick)
@@ -140,7 +140,7 @@ object Dialogs extends SimpleSwingApplication {
               possibilities, "ham")
 
             //If a string was returned, say so.
-            label.text = if ((s != None) && (s.get.length > 0))
+            label.text = if (s.isDefined && (s.get.length > 0))
               "Green eggs and... " + s.get + "!"
             else
               "Come on, finish the sentence!"
@@ -153,7 +153,7 @@ object Dialogs extends SimpleSwingApplication {
               Nil, "ham")
 
             //If a string was returned, say so.
-            label.text = if ((s != None) && (s.get.length > 0))
+            label.text = if (s.isDefined && (s.get.length > 0))
               "Green eggs and... " + s.get + "!"
             else
               "Come on, finish the sentence!"
@@ -191,7 +191,7 @@ object Dialogs extends SimpleSwingApplication {
   }
 
 
-  lazy val top = new MainFrame {
+  lazy val top: Frame = new MainFrame {
     title = "Dialog Demo"
     contents = ui
   }

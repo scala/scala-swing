@@ -13,25 +13,35 @@ import scala.collection.{Iterator, mutable}
 /**
  * Default partial implementation for buffer adapters.
  */
-protected[swing] abstract class BufferWrapper[A] extends mutable.Buffer[A] { outer =>
-  def clear(): Unit = for (_ <- 0 until length) remove(0)
+abstract class BufferWrapper[A] extends mutable.Buffer[A] {
+  // abstract
 
-  def update(n: Int, a: A): Unit = {
+  def addOne(elem: A): this.type
+
+  def insert(idx: Int, elem: A): Unit
+
+  // impl
+
+  type MoreElem[+B] = Traversable[B]
+
+  final override def +=(elem: A): this.type = addOne(elem)
+
+  override def clear(): Unit = for (_ <- 0 until length) remove(0)
+
+  override def update(n: Int, a: A): Unit = {
     remove(n)
-    insertAt(n, a)
+    insert(n, a)
   }
 
-  def insertAll(n: Int, elems: Traversable[A]): Unit = {
+  override def insertAll(n: Int, elems: MoreElem[A]): Unit = {
     var i = n
     for (el <- elems) {
-      insertAt(i, el)
+      insert(i, el)
       i += 1
     }
   }
 
-  protected def insertAt(n: Int, a: A): Unit
+  override def +=:(a: A): this.type = { insert(0, a); this }
 
-  def +=:(a: A): this.type = { insertAt(0, a); this }
-
-  def iterator: Iterator[A] = Iterator.range(0,length).map(apply)
+  override def iterator: Iterator[A] = Iterator.range(0,length).map(apply)
 }

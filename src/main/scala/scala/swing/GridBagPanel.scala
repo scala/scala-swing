@@ -51,7 +51,7 @@ class GridBagPanel extends Panel with LayoutContainer {
   override lazy val peer = new javax.swing.JPanel(new GridBagLayout) with SuperMixin
   import GridBagPanel._
 
-  private def layoutManager = peer.getLayout.asInstanceOf[GridBagLayout]
+  private def layoutManager: GridBagLayout = peer.getLayout.asInstanceOf[GridBagLayout]
 
   /**
    * Convenient conversion from xy-coords given as pairs to
@@ -65,7 +65,7 @@ class GridBagPanel extends Panel with LayoutContainer {
   }
 
   class Constraints(val peer: GridBagConstraints) extends Proxy {
-    def self = peer
+    def self: Any = peer
     def this(gridx: Int, gridy: Int,
              gridwidth: Int, gridheight: Int,
              weightx: Double, weighty: Double,
@@ -107,7 +107,7 @@ class GridBagPanel extends Panel with LayoutContainer {
     def ipady_=(y: Int): Unit = { peer.ipady = y }
   }
 
-  protected def constraintsFor(comp: Component) =
+  protected def constraintsFor(comp: Component): Constraints =
     new Constraints(layoutManager.getConstraints(comp.peer))
 
   protected def areValid(c: Constraints): (Boolean, String) = (true, "")

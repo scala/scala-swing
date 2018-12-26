@@ -12,18 +12,18 @@ import scala.swing._
 import scala.swing.event._
 
 object SwingApp extends SimpleSwingApplication {
-  def top = new MainFrame {
+  def top: Frame = new MainFrame {
     title = "SwingApp"
-    var numclicks = 0
+    var numClicks = 0
 
     object label extends Label {
       val prefix = "Number of button clicks: "
       text = prefix + "0  "
       listenTo(button)
       reactions += {
-        case ButtonClicked(button) =>
-          numclicks = numclicks + 1
-          text = prefix + numclicks
+        case ButtonClicked(_) =>
+          numClicks = numClicks + 1
+          text = prefix + numClicks
       }
     }
 
@@ -32,7 +32,7 @@ object SwingApp extends SimpleSwingApplication {
     }
 
     contents = new FlowPanel {
-      contents.append(button, label)
+      contents ++= Seq(button, label)
       border = Swing.EmptyBorder(5, 5, 5, 5)
     }
   }

@@ -8,8 +8,6 @@
 
 package scala.swing
 
-import event._
-
 import java.awt.Graphics
 import java.awt.event._
 import javax.swing.JComponent
@@ -42,7 +40,6 @@ object Component {
  */
 abstract class Component extends UIElement {
   override lazy val peer: javax.swing.JComponent = new javax.swing.JComponent with SuperMixin {}
-  var initP: JComponent = null
 
   /**
    * This trait is used to redirect certain calls from the peer to the wrapper
@@ -127,13 +124,13 @@ abstract class Component extends UIElement {
         def mouseEntered(e: java.awt.event.MouseEvent): Unit = ()
         def mouseExited(e: java.awt.event.MouseEvent): Unit = ()
         def mouseClicked(e: java.awt.event.MouseEvent): Unit =
-          publish(new MouseClicked(e))
+          publish(new event.MouseClicked(e))
 
         def mousePressed(e: java.awt.event.MouseEvent): Unit =
-          publish(new MousePressed(e))
+          publish(new event.MousePressed(e))
 
         def mouseReleased(e: java.awt.event.MouseEvent): Unit =
-          publish(new MouseReleased(e))
+          publish(new event.MouseReleased(e))
       }
 
       def onFirstSubscribe (): Unit = peer.addMouseListener(l)
@@ -145,10 +142,10 @@ abstract class Component extends UIElement {
     val moves: Publisher = new LazyPublisher {
       lazy val mouseListener: MouseListener = new MouseListener {
         def mouseEntered(e: java.awt.event.MouseEvent): Unit =
-          publish(new MouseEntered(e))
+          publish(new event.MouseEntered(e))
 
         def mouseExited(e: java.awt.event.MouseEvent): Unit =
-          publish(new MouseExited(e))
+          publish(new event.MouseExited(e))
 
         def mouseClicked (e: java.awt.event.MouseEvent): Unit = ()
         def mousePressed (e: java.awt.event.MouseEvent): Unit = ()
@@ -157,10 +154,10 @@ abstract class Component extends UIElement {
 
       lazy val mouseMotionListener: MouseMotionListener = new MouseMotionListener {
         def mouseMoved(e: java.awt.event.MouseEvent): Unit =
-          publish(new MouseMoved(e))
+          publish(new event.MouseMoved(e))
 
         def mouseDragged(e: java.awt.event.MouseEvent): Unit =
-          publish(new MouseDragged(e))
+          publish(new event.MouseDragged(e))
       }
       def onFirstSubscribe(): Unit = {
         peer.addMouseListener(mouseListener)
@@ -179,7 +176,7 @@ abstract class Component extends UIElement {
       // mouse wheel events if there is a listener installed. See ticket #1442.
       lazy val l: MouseWheelListener = new MouseWheelListener {
         def mouseWheelMoved(e: java.awt.event.MouseWheelEvent): Unit =
-          publish(new MouseWheelMoved(e))
+          publish(new event.MouseWheelMoved(e))
       }
       def onFirstSubscribe (): Unit = peer.addMouseWheelListener(l)
       def onLastUnsubscribe(): Unit = peer.removeMouseWheelListener(l)
@@ -188,9 +185,9 @@ abstract class Component extends UIElement {
 
   object keys extends Publisher {
     peer.addKeyListener(new KeyListener {
-      def keyPressed  (e: java.awt.event.KeyEvent): Unit = publish(new KeyPressed(e))
-      def keyReleased (e: java.awt.event.KeyEvent): Unit = publish(new KeyReleased(e))
-      def keyTyped    (e: java.awt.event.KeyEvent): Unit = publish(new KeyTyped(e))
+      def keyPressed  (e: java.awt.event.KeyEvent): Unit = publish(new event.KeyPressed (e))
+      def keyReleased (e: java.awt.event.KeyEvent): Unit = publish(new event.KeyReleased(e))
+      def keyTyped    (e: java.awt.event.KeyEvent): Unit = publish(new event.KeyTyped   (e))
     })
   }
 
@@ -205,16 +202,16 @@ abstract class Component extends UIElement {
     // TODO: deprecated, remove after 2.8
     peer.addComponentListener(new java.awt.event.ComponentListener {
       def componentHidden(e: java.awt.event.ComponentEvent): Unit =
-        publish(UIElementHidden(Component.this))
+        publish(event.UIElementHidden(Component.this))
 
       def componentShown(e: java.awt.event.ComponentEvent): Unit =
-        publish(UIElementShown(Component.this))
+        publish(event.UIElementShown(Component.this))
 
       def componentMoved(e: java.awt.event.ComponentEvent): Unit =
-        publish(UIElementMoved(Component.this))
+        publish(event.UIElementMoved(Component.this))
 
       def componentResized(e: java.awt.event.ComponentEvent): Unit =
-        publish(UIElementResized(Component.this))
+        publish(event.UIElementResized(Component.this))
     })
 
     peer.addFocusListener(new java.awt.event.FocusListener {
@@ -224,18 +221,18 @@ abstract class Component extends UIElement {
       }
 
       def focusGained(e: java.awt.event.FocusEvent): Unit =
-        publish(FocusGained(Component.this, other(e), e.isTemporary))
+        publish(event.FocusGained(Component.this, other(e), e.isTemporary))
 
       def focusLost(e: java.awt.event.FocusEvent): Unit =
-        publish(FocusLost(Component.this, other(e), e.isTemporary))
+        publish(event.FocusLost(Component.this, other(e), e.isTemporary))
     })
 
     peer.addPropertyChangeListener(new java.beans.PropertyChangeListener {
       def propertyChange(e: java.beans.PropertyChangeEvent): Unit =
         e.getPropertyName match {
-          case "font"       => publish(FontChanged      (Component.this))
-          case "background" => publish(BackgroundChanged(Component.this))
-          case "foreground" => publish(ForegroundChanged(Component.this))
+          case "font"       => publish(event.FontChanged      (Component.this))
+          case "background" => publish(event.BackgroundChanged(Component.this))
+          case "foreground" => publish(event.ForegroundChanged(Component.this))
           case _ =>
           /*case "focusable" =>
           case "focusTraversalKeysEnabled" =>

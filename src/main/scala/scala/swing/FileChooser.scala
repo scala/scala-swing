@@ -9,8 +9,9 @@
 package scala.swing
 
 import java.io.File
-import javax.swing._
-import javax.swing.filechooser._
+
+import javax.swing.filechooser.FileFilter
+import javax.swing.{Icon, JFileChooser}
 
 object FileChooser {
   /**
@@ -89,8 +90,8 @@ class FileChooser(dir: File) {
 
   def selectedFile: File = peer.getSelectedFile
   def selectedFile_=(file: File): Unit = peer.setSelectedFile(file)
-  def selectedFiles: Seq[File] = peer.getSelectedFiles
-  def selectedFiles_=(files: File*): Unit = peer.setSelectedFiles(files.toArray)
+  def selectedFiles: scala.collection.Seq[File] = peer.getSelectedFiles.toSeq
+  def selectedFiles_=(files: scala.collection.Seq[File]): Unit = peer.setSelectedFiles(files.toArray)
 
   def multiSelectionEnabled: Boolean = peer.isMultiSelectionEnabled
   def multiSelectionEnabled_=(b: Boolean): Unit = peer.setMultiSelectionEnabled(b)

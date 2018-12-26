@@ -35,8 +35,6 @@ package scala.swing.examples.tutorials.layout
  */
 
 import java.awt._
-//remove if not needed
-import scala.collection.JavaConversions._
 
 class DiagonalLayout(private var vgap: Int) extends LayoutManager {
 
@@ -55,11 +53,9 @@ class DiagonalLayout(private var vgap: Int) extends LayoutManager {
   }
 
   /* Required by LayoutManager. */
-  def addLayoutComponent(name: String, comp: Component): Unit = {
-  }
+  def addLayoutComponent(name: String, comp: Component): Unit = ()
 
-  def removeLayoutComponent(comp: Component): Unit = {
-  }
+  def removeLayoutComponent(comp: Component): Unit = ()
 
   private def setSizes(parent: Container): Unit = {
     val nComps = parent.getComponentCount
@@ -89,11 +85,10 @@ class DiagonalLayout(private var vgap: Int) extends LayoutManager {
   /* Required by LayoutManager. */
   def preferredLayoutSize(parent: Container): Dimension = {
     val dim = new Dimension(0, 0)
-    val nComps = parent.getComponentCount
     setSizes(parent)
-    val insets = parent.getInsets
-    dim.width = preferredWidth + insets.left + insets.right
-    dim.height = preferredHeight + insets.top + insets.bottom
+    val insets  = parent.getInsets
+    dim.width   = preferredWidth  + insets.left + insets.right
+    dim.height  = preferredHeight + insets.top  + insets.bottom
     sizeUnknown = false
     dim
   }
@@ -101,10 +96,9 @@ class DiagonalLayout(private var vgap: Int) extends LayoutManager {
   /* Required by LayoutManager. */
   def minimumLayoutSize(parent: Container): Dimension = {
     val dim = new Dimension(0, 0)
-    val nComps = parent.getComponentCount
-    val insets = parent.getInsets
-    dim.width = minWidth + insets.left + insets.right
-    dim.height = minHeight + insets.top + insets.bottom
+    val insets  = parent.getInsets
+    dim.width   = minWidth  + insets.left + insets.right
+    dim.height  = minHeight + insets.top  + insets.bottom
     sizeUnknown = false
     dim
   }
@@ -118,19 +112,17 @@ class DiagonalLayout(private var vgap: Int) extends LayoutManager {
      * of applets, at least, they probably won't be.
      */
   def layoutContainer(parent: Container): Unit = {
-    val insets = parent.getInsets
-    val maxWidth = parent.getWidth - (insets.left + insets.right)
-    val maxHeight = parent.getHeight - (insets.top + insets.bottom)
-    val nComps = parent.getComponentCount
-    var previousWidth = 0
-    var previousHeight = 0
-    var x = 0
-    var y = insets.top
-    val rowh = 0
-    val start = 0
-    var xFudge = 0
-    var yFudge = 0
-    var oneColumn = false
+    val insets          = parent.getInsets
+    val maxWidth        = parent.getWidth - (insets.left + insets.right)
+    val maxHeight       = parent.getHeight - (insets.top + insets.bottom)
+    val nComps          = parent.getComponentCount
+    var previousWidth   = 0
+    var previousHeight  = 0
+    var x               = 0
+    var y               = insets.top
+    var xFudge          = 0
+    var yFudge          = 0
+    var oneColumn       = false
     // Go through the components' sizes, if neither
     // preferredLayoutSize nor minimumLayoutSize has
     // been called.
@@ -174,7 +166,7 @@ class DiagonalLayout(private var vgap: Int) extends LayoutManager {
     }
   }
 
-  override def toString(): String = {
+  override def toString: String = {
     val str = ""
     getClass.getName + "[vgap=" + vgap + str + "]"
   }

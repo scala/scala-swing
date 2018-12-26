@@ -9,9 +9,10 @@
 package scala.swing
 
 import java.awt.event.ActionListener
+
 import javax.swing.{AbstractListModel, ComboBoxModel, InputVerifier, JComboBox, JComponent, JTextField, ListCellRenderer}
 
-import scala.swing.event._
+import scala.swing.event.ActionEvent
 
 object ComboBox {
   /**
@@ -44,7 +45,7 @@ object ComboBox {
 
       def getEditorComponent: JComponent = Editor.this.component.peer
 
-      def getItem(): AnyRef = item.asInstanceOf[AnyRef]
+      def getItem: AnyRef = item.asInstanceOf[AnyRef]
 
       def selectAll(): Unit = startEditing()
 
@@ -84,7 +85,7 @@ object ComboBox {
 
       def getEditorComponent: JComponent = editor.getEditorComponent.asInstanceOf[JComponent]
       def selectAll(): Unit = editor.selectAll()
-      def getItem(): AnyRef = { verifier.verify(getEditorComponent); value.asInstanceOf[AnyRef] }
+      def getItem: AnyRef = { verifier.verify(getEditorComponent); value.asInstanceOf[AnyRef] }
       def setItem(a: Any): Unit = editor.setItem(a)
 
       val verifier: InputVerifier = new InputVerifier {
@@ -115,12 +116,12 @@ object ComboBox {
     def startEditing(): Unit = comboBoxPeer.selectAll()
   }
 
-  implicit def stringEditor(c: ComboBox[String]): Editor[String] = new BuiltInEditor(c)(s => s, s => s)
-  implicit def intEditor(c: ComboBox[Int]): Editor[Int] = new BuiltInEditor(c)(s => s.toInt, s => s.toString)
-  implicit def floatEditor(c: ComboBox[Float]): Editor[Float] = new BuiltInEditor(c)(s => s.toFloat, s => s.toString)
-  implicit def doubleEditor(c: ComboBox[Double]): Editor[Double] = new BuiltInEditor(c)(s => s.toDouble, s => s.toString)
+  implicit def stringEditor (c: ComboBox[String ]): Editor[String ] = new BuiltInEditor(c)(s => s         , s => s)
+  implicit def intEditor    (c: ComboBox[Int    ]): Editor[Int    ] = new BuiltInEditor(c)(s => s.toInt   , s => s.toString)
+  implicit def floatEditor  (c: ComboBox[Float  ]): Editor[Float  ] = new BuiltInEditor(c)(s => s.toFloat , s => s.toString)
+  implicit def doubleEditor (c: ComboBox[Double ]): Editor[Double ] = new BuiltInEditor(c)(s => s.toDouble, s => s.toString)
 
-  def newConstantModel[A](items: Seq[A]): ComboBoxModel[A] = {
+  def newConstantModel[A](items: scala.collection.Seq[A]): ComboBoxModel[A] = {
     new AbstractListModel[A] with ComboBoxModel[A] {
       private var selected: A = if (items.isEmpty) null.asInstanceOf[A] else items(0)
       def getSelectedItem: AnyRef = selected.asInstanceOf[AnyRef]
@@ -136,7 +137,7 @@ object ComboBox {
     }
   }
 
-  /*def newMutableModel[A, Self](items: Seq[A] with scala.collection.mutable.Publisher[scala.collection.mutable.Message[A], Self]): ComboBoxModel = {
+  /*def newMutableModel[A, Self](items: scala.collection.Seq[A] with scala.collection.mutable.Publisher[scala.collection.mutable.Message[A], Self]): ComboBoxModel = {
     new AbstractListModel with ComboBoxModel {
       private var selected = items(0)
       def getSelectedItem: AnyRef = selected.asInstanceOf[AnyRef]
@@ -146,8 +147,8 @@ object ComboBox {
     }
   }
 
-  def newConstantModel[A](items: Seq[A]): ComboBoxModel = items match {
-    case items: Seq[A] with scala.collection.mutable.Publisher[scala.collection.mutable.Message[A], Self] => newMutableModel
+  def newConstantModel[A](items: scala.collection.Seq[A]): ComboBoxModel = items match {
+    case items: scala.collection.Seq[A] with scala.collection.mutable.Publisher[scala.collection.mutable.Message[A], Self] => newMutableModel
     case _ => newConstantModel(items)
   }*/
 }
@@ -158,7 +159,7 @@ object ComboBox {
  *
  * @see javax.swing.JComboBox
  */
-class ComboBox[A](items: Seq[A]) extends Component with Publisher {
+class ComboBox[A](items: scala.collection.Seq[A]) extends Component with Publisher {
   override lazy val peer: JComboBox[A] = new JComboBox(ComboBox.newConstantModel(items)) with SuperMixin
 
   object selection extends Publisher {
@@ -187,7 +188,7 @@ class ComboBox[A](items: Seq[A]) extends Component with Publisher {
   def renderer: ListView.Renderer[A] = ListView.Renderer.wrap(peer.getRenderer.asInstanceOf[ListCellRenderer[A]])
   def renderer_=(r: ListView.Renderer[A]): Unit = peer.setRenderer(r.peer)
 
-  /* XXX: currently not safe to expose:
+  /* TODO: currently not safe to expose:
   def editor: ComboBox.Editor[A] =
   def editor_=(r: ComboBox.Editor[A]) { peer.setEditor(r.comboBoxPeer) }
   */

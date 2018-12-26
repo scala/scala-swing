@@ -6,13 +6,13 @@
 **                          |/                                          **
 \*                                                                      */
 
-
-
 package scala.swing
 
 import event._
 import javax.swing._
 import javax.swing.event._
+
+import scala.collection.immutable
 
 object ListView {
   /**
@@ -26,7 +26,7 @@ object ListView {
   }
 
   def wrap[A](c: JList[A]): ListView[A] = new ListView[A] {
-    override lazy val peer = c
+    override lazy val peer: JList[A] = c
   }
 
   object Renderer {
@@ -145,30 +145,30 @@ class ListView[A] extends Component {
   import ListView._
   override lazy val peer: JList[A] = new JList[A] with SuperMixin
 
-  def this(items: Seq[A]) = {
+  def this(items: scala.collection.Seq[A]) = {
     this()
     listData = items
   }
 
-  protected class ModelWrapper[B](val items: Seq[B]) extends AbstractListModel[B] {
-    def getElementAt(n: Int) = items(n)
+  protected class ModelWrapper[B](val items: scala.collection.Seq[B]) extends AbstractListModel[B] {
+    def getElementAt(n: Int): B = items(n)
     def getSize: Int = items.size
   }
 
-  def listData: Seq[A] = peer.getModel match {
+  def listData: scala.collection.Seq[A] = peer.getModel match {
     case model: ModelWrapper[a] => model.items
-    case model => new Seq[A] { selfSeq =>
+    case model => new immutable.Seq[A] { selfSeq =>
      def length: Int = model.getSize
      def iterator: Iterator[A] = new Iterator[A] {
        var idx = 0
-       def next: A = { idx += 1; apply(idx-1) }
+       def next(): A = { idx += 1; apply(idx-1) }
        def hasNext: Boolean = idx < selfSeq.length
      }
      def apply(n: Int): A = model.getElementAt(n)
     }
   }
 
-  def listData_=(items: Seq[A]): Unit = {
+  def listData_=(items: scala.collection.Seq[A]): Unit = {
     peer.setModel(new AbstractListModel[A] {
       def getElementAt(n: Int): A = items(n)
       def getSize: Int = items.size
@@ -179,30 +179,35 @@ class ListView[A] extends Component {
    * The current item selection.
    */
   object selection extends Publisher {
-    protected abstract class Indices[B](a: => Seq[B]) extends scala.collection.mutable.Set[B] {
-      def -=(n: B): this.type
-      def +=(n: B): this.type
+    protected abstract class Indices[B](a: => scala.collection.Seq[B]) extends SetWrapper[B] {
       def contains(n: B): Boolean = a.contains(n)
+
       override def size: Int = a.length
+
       def iterator: Iterator[B] = a.iterator
     }
 
-    def leadIndex: Int = peer.getSelectionModel.getLeadSelectionIndex
-    def anchorIndex: Int = peer.getSelectionModel.getAnchorSelectionIndex
+    def leadIndex   : Int = peer.getSelectionModel.getLeadSelectionIndex
+    def anchorIndex : Int = peer.getSelectionModel.getAnchorSelectionIndex
 
     /**
      * The indices of the currently selected items.
      */
     object indices extends Indices(peer.getSelectedIndices) {
-      def -=(n: Int): this.type = { peer.removeSelectionInterval(n,n); this }
-      def +=(n: Int): this.type = { peer.addSelectionInterval(n,n); this }
+      override def addOne     (n: Int): this.type = { peer.addSelectionInterval   (n,n); this }
+      override def subtractOne(n: Int): this.type = { peer.removeSelectionInterval(n,n); this }
+
+      override def clear(): Unit = peer.clearSelection()
     }
 
     /**
      * The currently selected items.
      */
-    object items extends scala.collection.SeqProxy[A] {
-      def self = peer.getSelectedValues.map(_.asInstanceOf[A])
+    def items: immutable.Seq[A] = {
+      // note: we should be using `getSelectedValuesList`, but it would break the Scala 2.11
+      // promise of working with Java 6 (requires Java 7).
+      // Note: in Scala <= 2.12, toSeq might produce a Stream.
+      peer.getSelectedValues.iterator.map(_.asInstanceOf[A]).toIndexedSeq
     }
 
     def intervalMode: IntervalMode.Value = IntervalMode(peer.getSelectionModel.getSelectionMode)

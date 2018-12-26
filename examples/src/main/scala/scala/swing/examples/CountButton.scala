@@ -12,7 +12,7 @@ import scala.swing._
 import scala.swing.event._
 
 object CountButton extends SimpleSwingApplication {
-  def top = new MainFrame {
+  def top: Frame = new MainFrame {
     title = "My Frame"
     contents = new GridPanel(2, 2) {
       hGap = 3
@@ -27,11 +27,11 @@ object CountButton extends SimpleSwingApplication {
       contents += label
 
       listenTo(button)
-      var nclicks = 0
+      var nClicks = 0
       reactions += {
-        case ButtonClicked(b) =>
-          nclicks += 1
-          label.text = "Number of button clicks: " + nclicks
+        case ButtonClicked(_) =>
+          nClicks += 1
+          label.text = "Number of button clicks: " + nClicks
       }
     }
   }

@@ -8,7 +8,10 @@
 
 package scala.swing
 
-import Swing._
+import javax.swing.JSplitPane
+
+import scala.collection.immutable
+import scala.swing.Swing.nullPeer
 
 /**
  * A container with exactly two children. Arranges them side by side, either
@@ -18,12 +21,12 @@ import Swing._
  * @see javax.swing.JSplitPane
  */
 class SplitPane(o: Orientation.Value, left: Component, right: Component) extends Component with Container with Orientable.Wrapper {
-  override lazy val peer: javax.swing.JSplitPane =
+  override lazy val peer: JSplitPane =
     new javax.swing.JSplitPane(o.id, left.peer, right.peer) with SuperMixin
   def this(o: Orientation.Value) = this(o, new Component {}, new Component {})
   def this() = this(Orientation.Horizontal)
 
-  def contents: Seq[Component] = List(leftComponent, rightComponent)
+  def contents: immutable.Seq[Component] = List(leftComponent, rightComponent)
   def contents_=(left: Component, right: Component): Unit = {
     peer.setLeftComponent(nullPeer(left))
     peer.setRightComponent(nullPeer(right))

@@ -6,8 +6,6 @@
 **                          |/                                          **
 \*                                                                      */
 
-
-
 package scala.swing
 
 import javax.swing.JScrollBar
@@ -16,15 +14,15 @@ object ScrollBar {
   def wrap(c: JScrollBar): ScrollBar = {
     val w = UIElement.cachedWrapper[ScrollBar](c)
     if (w != null) w
-    else new ScrollBar { override lazy val peer = c }
+    else new ScrollBar { override lazy val peer: JScrollBar = c }
   }
 }
 
 class ScrollBar extends Component with Orientable.Wrapper with Adjustable.Wrapper {
 	override lazy val peer: JScrollBar = new JScrollBar with SuperMixin
 
-	def valueIsAjusting: Boolean = peer.getValueIsAdjusting
-	def valueIsAjusting_=(b : Boolean): Unit = peer.setValueIsAdjusting(b)
+	def valueIsAdjusting: Boolean = peer.getValueIsAdjusting
+	def valueIsAdjusting_=(b : Boolean): Unit = peer.setValueIsAdjusting(b)
 
 	// TODO: can we find a better interface?
 	//def setValues(value: Int = this.value, visible: Int = visibleAmount,

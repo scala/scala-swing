@@ -9,7 +9,7 @@
 package scala.swing
 
 /**
- * A frame that can be used for main application windows. Shuts down the
+ * A frame that can be used for main application windows. It shuts down the
  * framework and quits the application when closed.
  */
 class MainFrame(gc: java.awt.GraphicsConfiguration = null) extends Frame(gc) {

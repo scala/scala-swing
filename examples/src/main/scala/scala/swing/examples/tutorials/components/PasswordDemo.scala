@@ -14,10 +14,9 @@ import scala.swing._
 class PasswordDemo(val controllingFrame: Frame) extends FlowPanel {
   val passwordField = new PasswordField(10)
   val label = new Label("Enter the password: ")
-//  label.peer.setLabelFor(passwordField.peer)
 
-  val buttonPane = createButtonPanel()
-  val textPane = new FlowPanel() {
+  val buttonPane: Component = createButtonPanel()
+  val textPane  : Component = new FlowPanel {
     contents += label
     contents += passwordField
   }
@@ -37,7 +36,7 @@ class PasswordDemo(val controllingFrame: Frame) extends FlowPanel {
             Dialog.Message.Error, Swing.EmptyIcon)
         }
         //Zero out the possible password, for security.
-        for (i <- 0 until input.length) {
+        for (i <- input.indices) {
           input(i) = '0'
         }
         passwordField.selectAll()
@@ -50,7 +49,7 @@ class PasswordDemo(val controllingFrame: Frame) extends FlowPanel {
             + "source code for the string \"correctPassword\".\n"
             + "Or look at the section How to Use Password Fields in\n"
             + "the components section of The Java Tutorial.",
-          "Passord Help", Dialog.Message.Info, Swing.EmptyIcon)
+          "Password Help", Dialog.Message.Info, Swing.EmptyIcon)
       })
 
       contents += okButton
@@ -70,15 +69,16 @@ object PasswordDemo extends SimpleSwingApplication {
    */
   def isPasswordCorrect(input: Array[Char]): Boolean = {
     val correctPassword = Array[Char]('b', 'u', 'g', 'a', 'b', 'o', 'o')
-    val isCorrect = input.deep == correctPassword.deep
+    val isCorrect = input.sameElements(correctPassword)
 
     //Zero out the password.
     // Arrays.fill(correctPassword,'0');
-    for (i <- 0 until correctPassword.length)
-      correctPassword.update(i, '0')
+    for (i <- correctPassword.indices) {
+      correctPassword(i) = '0'
+    }
     isCorrect
   }
-  lazy val top = new MainFrame() {
+  lazy val top: Frame = new MainFrame() {
     title = "PasswordDemo"
     //Create and set up the content pane.
     contents = new PasswordDemo(this)

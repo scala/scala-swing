@@ -9,15 +9,14 @@
 package scala.swing
 
 import java.awt.{ComponentOrientation, Cursor, Toolkit}
-import java.util
 import java.util.Locale
+import java.{util => ju}
 
-import scala.ref._
-import scala.swing.event._
+import scala.ref.WeakReference
 
 object UIElement {
   private val ClientKey = "scala.swingWrapper"
-  private[this] val wrapperCache = new util.WeakHashMap[java.awt.Component, WeakReference[UIElement]]
+  private[this] val wrapperCache = new ju.WeakHashMap[java.awt.Component, WeakReference[UIElement]]
 
   private def cache(e: UIElement) = e.peer match {
     case p: javax.swing.JComponent => p.putClientProperty(ClientKey, e)
@@ -52,7 +51,7 @@ object UIElement {
   def wrap(c: java.awt.Component): UIElement = {
     val w = cachedWrapper[UIElement](c)
     if (w != null) w
-    else new UIElement { def peer = c }
+    else new UIElement { def peer: java.awt.Component = c }
   }
 }
 
@@ -75,7 +74,7 @@ trait UIElement extends Proxy with LazyPublisher {
    * The underlying Swing peer.
    */
   def peer: java.awt.Component
-  def self = peer
+  def self: Any = peer
 
   UIElement.cache(this)
 
@@ -122,16 +121,16 @@ trait UIElement extends Proxy with LazyPublisher {
   protected def onFirstSubscribe(): Unit = {
     peer.addComponentListener(new java.awt.event.ComponentListener {
       def componentHidden(e: java.awt.event.ComponentEvent): Unit =
-        publish(UIElementHidden(UIElement.this))
+        publish(event.UIElementHidden(UIElement.this))
 
       def componentShown(e: java.awt.event.ComponentEvent): Unit =
-        publish(UIElementShown(UIElement.this))
+        publish(event.UIElementShown(UIElement.this))
 
       def componentMoved(e: java.awt.event.ComponentEvent): Unit =
-        publish(UIElementMoved(UIElement.this))
+        publish(event.UIElementMoved(UIElement.this))
 
       def componentResized(e: java.awt.event.ComponentEvent): Unit =
-        publish(UIElementResized(UIElement.this))
+        publish(event.UIElementResized(UIElement.this))
     })
   }
   protected def onLastUnsubscribe(): Unit = ()

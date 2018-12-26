@@ -8,6 +8,8 @@
 
 package scala.swing
 
+import javax.swing.JProgressBar
+
 /**
  * A bar indicating progress of some action. Can be in indeterminate mode,
  * in which it indicates that the action is in progress (usually by some
@@ -16,7 +18,7 @@ package scala.swing
  * @see javax.swing.JProgressBar
  */
 class ProgressBar extends Component with Orientable.Wrapper {
-  override lazy val peer: javax.swing.JProgressBar =
+  override lazy val peer: JProgressBar =
     new javax.swing.JProgressBar with SuperMixin
 
   def min: Int = peer.getMinimum

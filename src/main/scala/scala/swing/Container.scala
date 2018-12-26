@@ -6,11 +6,9 @@
 **                          |/                                          **
 \*                                                                      */
 
-
-
 package scala.swing
 
-import scala.swing.event._
+import scala.swing.event.{ComponentAdded, ComponentRemoved}
 
 object Container {
   /**
@@ -21,18 +19,23 @@ object Container {
     override def peer: javax.swing.JComponent
 
     protected val _contents = new Content
-    def contents: Seq[Component] = _contents
+    def contents: scala.collection.Seq[Component] = _contents
 
     protected class Content extends BufferWrapper[Component] {
       override def clear(): Unit = peer.removeAll()
+
       override def remove(n: Int): Component = {
         val c = peer.getComponent(n)
         peer.remove(n)
         UIElement.cachedWrapper[Component](c)
       }
-      protected def insertAt(n: Int, c: Component): Unit = peer.add(c.peer, n)
-      def +=(c: Component): this.type = { peer.add(c.peer) ; this }
+
+      override def insert(n: Int, c: Component): Unit = peer.add(c.peer, n)
+
+      override def addOne(c: Component): this.type = { peer.add(c.peer) ; this }
+
       def length: Int = peer.getComponentCount
+
       def apply(n: Int): Component = UIElement.cachedWrapper[Component](peer.getComponent(n))
     }
 
@@ -58,5 +61,5 @@ trait Container extends UIElement {
   /**
    * The child components of this container.
    */
-  def contents: Seq[Component]
+  def contents: scala.collection.Seq[Component]
 }

@@ -6,14 +6,9 @@
 **                          |/                                          **
 \*                                                                      */
 
-
-
 package scala.swing
 
 import javax.swing.JTabbedPane
-
-import scala.swing.event._
-
 
 object TabbedPane {
   object Layout extends Enumeration {
@@ -23,7 +18,7 @@ object TabbedPane {
   }
 
   class Page protected[TabbedPane](parent0: TabbedPane, title0: String, content0: Component, tip0: String) extends Proxy {
-    def self = content0
+    def self: Any = content0
 
     def this(title0: String, content0: Component, tip0: String) =
       this(null, title0, content0, tip0)
@@ -90,15 +85,22 @@ class TabbedPane extends Component with Publisher {
       //for(i <- n to length) apply(i)._index -= 1
       t
     }
-    protected def insertAt(n: Int, t: Page): Unit = {
+
+    override def insert(n: Int, t: Page): Unit = {
       //for(i <- n to length) apply(i)._index += 1
       t.parent = TabbedPane.this
       peer.insertTab(t.title, null, t.content.peer, t.tip, n)
     }
 
-    def +=(t: Page): this.type = { t.parent = TabbedPane.this; peer.addTab(t.title, null, t.content.peer, t.tip); this }
+    override def addOne(t: Page): this.type = {
+      t.parent = TabbedPane.this
+      peer.addTab(t.title, null, t.content.peer, t.tip)
+      this
+    }
+
     def length: Int = peer.getTabCount
-    def apply(n: Int) = new Page(TabbedPane.this, peer.getTitleAt(n),
+
+    def apply(n: Int): Page = new Page(TabbedPane.this, peer.getTitleAt(n),
       UIElement.cachedWrapper[Component](peer.getComponentAt(n).asInstanceOf[javax.swing.JComponent]),
       peer.getToolTipTextAt(n))
   }
@@ -125,7 +127,7 @@ class TabbedPane extends Component with Publisher {
 
     peer.addChangeListener(new javax.swing.event.ChangeListener {
       def stateChanged(e: javax.swing.event.ChangeEvent): Unit =
-        publish(SelectionChanged(TabbedPane.this))
+        publish(event.SelectionChanged(TabbedPane.this))
     })
   }
 }

@@ -6,14 +6,13 @@
 **                          |/                                          **
 \*                                                                      */
 
-
-
 package scala.swing
 
-import event._
-import javax.swing._
-import java.awt.event._
+import java.awt.event.FocusAdapter
 
+import javax.swing.{InputVerifier, JComponent, JTextField}
+
+import scala.swing.event.EditDone
 
 /*object TextField {
   object FocusLostBehavior extends Enumeration {
@@ -64,7 +63,7 @@ class TextField(text0: String, columns0: Int) extends TextComponent with TextCom
   def verifier_=(v: String => Boolean): Unit = {
     peer.setInputVerifier(new InputVerifier {
       private val old = Option(peer.getInputVerifier)
-      def verify(c: JComponent) = v(text)
+      def verify(c: JComponent): Boolean = v(text)
       override def shouldYieldFocus(c: JComponent): Boolean = old forall (_ shouldYieldFocus c)
     })
   }
@@ -73,7 +72,7 @@ class TextField(text0: String, columns0: Int) extends TextComponent with TextCom
     peer.setInputVerifier(new InputVerifier {
       private val old = peer.getInputVerifier
       def verify(c: JComponent): Boolean = old.verify(c)
-      override def shouldYieldFocus(c: JComponent) = y(text)
+      override def shouldYieldFocus(c: JComponent): Boolean = y(text)
     })
   }
 }

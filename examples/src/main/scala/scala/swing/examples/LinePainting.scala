@@ -8,10 +8,11 @@
 
 package scala.swing.examples
 
-import scala.swing.Swing._
-import scala.swing.{SimpleSwingApplication, MainFrame, Panel}
-import scala.swing.event._
 import java.awt.{Color, Graphics2D, Point, geom}
+
+import scala.swing.Swing._
+import scala.swing.event._
+import scala.swing.{Frame, MainFrame, Panel, SimpleSwingApplication}
 
 /**
  * Dragging the mouse draws a simple graph
@@ -19,9 +20,9 @@ import java.awt.{Color, Graphics2D, Point, geom}
  * @author Frank Teubler, Ingo Maier
  */
 object LinePainting extends SimpleSwingApplication {
-  lazy val ui = new Panel {
+  lazy val ui: Panel = new Panel {
     background = Color.white
-    preferredSize = (200, 200)
+    preferredSize = (300, 200)
 
     focusable = true
     listenTo(mouse.clicks, mouse.moves, keys)
@@ -49,17 +50,18 @@ object LinePainting extends SimpleSwingApplication {
       path.moveTo(p.x, p.y); repaint()
     }
 
-    override def paintComponent(g: Graphics2D) = {
+    override def paintComponent(g: Graphics2D): Unit = {
       super.paintComponent(g)
       g.setColor(new Color(100, 100, 100))
-      g.drawString("Press left mouse button and drag to paint." +
-        (if (hasFocus) " Press 'c' to clear." else ""), 10, size.height - 10)
+      val h = size.height
+      g.drawString("Press left mouse button and drag to paint.", 10, h - 26)
+      if (hasFocus) g.drawString("Press 'c' to clear.", 10, h - 10)
       g.setColor(Color.black)
       g.draw(path)
     }
   }
 
-  def top = new MainFrame {
+  def top: Frame = new MainFrame {
     title = "Simple Line Painting Demo"
     contents = ui
   }

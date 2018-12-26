@@ -8,9 +8,8 @@
 
 package scala.swing
 
-import event._
-import javax.swing.text._
-import javax.swing.event._
+import javax.swing.event.{CaretEvent, CaretListener, DocumentEvent, DocumentListener}
+import javax.swing.text.JTextComponent
 
 object TextComponent {
   trait HasColumns extends TextComponent {
@@ -51,7 +50,7 @@ class TextComponent extends Component with Publisher {
 
     peer.addCaretListener {
       new CaretListener {
-        def caretUpdate(e: CaretEvent): Unit = publish(CaretUpdate(TextComponent.this))
+        def caretUpdate(e: CaretEvent): Unit = publish(event.CaretUpdate(TextComponent.this))
       }
     }
   }
@@ -70,8 +69,8 @@ class TextComponent extends Component with Publisher {
   def selectAll(): Unit = peer.selectAll()
 
   peer.getDocument.addDocumentListener(new DocumentListener {
-    def changedUpdate(e:DocumentEvent): Unit = publish(new ValueChanged(TextComponent.this))
-    def insertUpdate (e:DocumentEvent): Unit = publish(new ValueChanged(TextComponent.this))
-    def removeUpdate (e:DocumentEvent): Unit = publish(new ValueChanged(TextComponent.this))
+    def changedUpdate(e: DocumentEvent): Unit = publish(new event.ValueChanged(TextComponent.this))
+    def insertUpdate (e: DocumentEvent): Unit = publish(new event.ValueChanged(TextComponent.this))
+    def removeUpdate (e: DocumentEvent): Unit = publish(new event.ValueChanged(TextComponent.this))
   })
 }

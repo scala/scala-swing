@@ -6,12 +6,11 @@
 **                          |/                                          **
 \*                                                                      */
 
-
-
 package scala.swing
 
-import javax.swing.{KeyStroke, Icon}
 import java.awt.event.ActionListener
+
+import javax.swing.{Icon, KeyStroke}
 
 object Action {
   /**
@@ -29,7 +28,7 @@ object Action {
         def addActionListener(a: ActionListener): Unit
         def removeActionListener(a: ActionListener): Unit
         def setAction(a: javax.swing.Action): Unit
-        def getAction(): javax.swing.Action
+        def getAction(): javax.swing.Action // note: must keep empty parentheses for Java compatibility
       }
 
       // TODO: we need an action cache

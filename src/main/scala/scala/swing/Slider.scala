@@ -6,12 +6,9 @@
 **                          |/                                          **
 \*                                                                      */
 
-
-
 package scala.swing
 
-import javax.swing.{JSlider, JLabel}
-import scala.swing.event._
+import javax.swing.{JLabel, JSlider}
 
 /**
  * Lets users select a value from a given range. Visually, this is represented
@@ -52,10 +49,11 @@ class Slider extends Component with Orientable.Wrapper with Publisher {
   def adjusting: Boolean = peer.getValueIsAdjusting
 
   def labels: scala.collection.Map[Int, Label] = {
-    import scala.collection.convert.WrapAsScala._
-    val labelTable = peer.getLabelTable.asInstanceOf[java.util.Map[Int, JLabel]]
-    labelTable.mapValues(v => UIElement.cachedWrapper[Label](v))
+    import scala.collection.JavaConverters._
+    val labelTable = peer.getLabelTable.asInstanceOf[java.util.Map[Int, JLabel]].asScala
+    labelTable.map { case (k, v) => (k, UIElement.cachedWrapper[Label](v)) }
   }
+
   def labels_=(l: scala.collection.Map[Int, Label]): Unit = {
     // TODO: do some lazy wrapping
     val table = new java.util.Hashtable[java.lang.Integer, javax.swing.JComponent]
@@ -65,6 +63,6 @@ class Slider extends Component with Orientable.Wrapper with Publisher {
 
   peer.addChangeListener(new javax.swing.event.ChangeListener {
     def stateChanged(e: javax.swing.event.ChangeEvent): Unit =
-      publish(new ValueChanged(Slider.this))
+      publish(new event.ValueChanged(Slider.this))
   })
 }

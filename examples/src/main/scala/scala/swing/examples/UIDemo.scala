@@ -8,13 +8,13 @@
 
 package scala.swing.examples
 
+import scala.swing.ListView._
+import scala.swing.Swing._
 import scala.swing._
 import scala.swing.event._
-import scala.swing.Swing._
-import scala.swing.ListView._
 
 object UIDemo extends SimpleSwingApplication {
-  def top = new MainFrame {
+  def top: Frame = new MainFrame {
     title = "Scala Swing Demo"
 
     /*
@@ -49,11 +49,11 @@ object UIDemo extends SimpleSwingApplication {
 
       var reactLive = false
 
-      val tabs = new TabbedPane {
+      val tabs: TabbedPane = new TabbedPane {
 
         import TabbedPane._
 
-        val buttons = new FlowPanel {
+        val buttons: FlowPanel = new FlowPanel {
           border = Swing.EmptyBorder(5, 5, 5, 5)
 
           contents += new BoxPanel(Orientation.Vertical) {
@@ -70,7 +70,7 @@ object UIDemo extends SimpleSwingApplication {
             val paintTicks = new CheckBox("Paint Ticks")
             val snapTicks = new CheckBox("Snap To Ticks")
             val live = new CheckBox("Live")
-            contents.append(paintLabels, paintTicks, snapTicks, live)
+            contents ++= Seq(paintLabels, paintTicks, snapTicks, live)
             listenTo(paintLabels, paintTicks, snapTicks, live)
             reactions += {
               case ButtonClicked(`paintLabels`) =>
@@ -87,18 +87,18 @@ object UIDemo extends SimpleSwingApplication {
             centerOnScreen()
           })
         }
-        pages += new Page("Buttons", buttons)
-        pages += new Page("GridBag", GridBagDemo.ui)
-        pages += new Page("Converter", CelsiusConverter2.ui)
-        pages += new Page("Tables", TableSelection.ui)
-        pages += new Page("Dialogs", Dialogs.ui)
-        pages += new Page("Combo Boxes", ComboBoxes.ui)
-        pages += new Page("Split Panes",
+        pages += new Page("Buttons"     , buttons)
+        pages += new Page("GridBag"     , GridBagDemo       .ui)
+        pages += new Page("Converter"   , CelsiusConverter2 .ui)
+        pages += new Page("Tables"      , TableSelection    .ui)
+        pages += new Page("Dialogs"     , Dialogs           .ui)
+        pages += new Page("Combo Boxes" , ComboBoxes        .ui)
+        pages += new Page("Split Panes" ,
           new SplitPane(Orientation.Vertical, new Button("Hello"), new Button("World")) {
             continuousLayout = true
           })
 
-        val password = new FlowPanel {
+        val password: FlowPanel = new FlowPanel {
           contents += new Label("Enter your secret password here ")
           val field = new PasswordField(10)
           contents += field
@@ -115,12 +115,12 @@ object UIDemo extends SimpleSwingApplication {
         //pages += new Page("Text Editor", TextEditor.ui)
       }
 
-      val list = new ListView(tabs.pages) {
+      val list: ListView[TabbedPane.Page] = new ListView(tabs.pages) {
         selectIndices(0)
         selection.intervalMode = ListView.IntervalMode.Single
         renderer = ListView.Renderer(_.title)
       }
-      val center = new SplitPane(Orientation.Vertical, new ScrollPane(list), tabs) {
+      val center: SplitPane = new SplitPane(Orientation.Vertical, new ScrollPane(list), tabs) {
         oneTouchExpandable = true
         continuousLayout = true
       }
@@ -132,9 +132,9 @@ object UIDemo extends SimpleSwingApplication {
        * type inference at times.
        */
       object slider extends Slider {
-        min = 0
+        min   = 0
         value = tabs.selection.index
-        max = tabs.pages.size - 1
+        max   = tabs.pages.size - 1
         majorTickSpacing = 1
       }
 

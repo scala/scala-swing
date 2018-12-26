@@ -8,8 +8,8 @@
 
 package scala.swing
 
+import java.awt.event.{WindowEvent, WindowListener}
 import java.awt.{Window => AWTWindow}
-import event._
 
 /**
  * A window with decoration such as a title, border, and action buttons.
@@ -25,9 +25,9 @@ abstract class Window extends UIElement with RootPanel with Publisher { outer =>
   protected trait InterfaceMixin extends javax.swing.RootPaneContainer
 
   protected trait SuperMixin extends AWTWindow {
-    override protected def processWindowEvent(e: java.awt.event.WindowEvent): Unit = {
+    override protected def processWindowEvent(e: WindowEvent): Unit = {
       super.processWindowEvent(e)
-      if (e.getID == java.awt.event.WindowEvent.WINDOW_CLOSING)
+      if (e.getID == WindowEvent.WINDOW_CLOSING)
         closeOperation()
     }
   }
@@ -63,16 +63,16 @@ abstract class Window extends UIElement with RootPanel with Publisher { outer =>
 
   def owner: Window = UIElement.cachedWrapper[Window](peer.getOwner)
 
-  def open (): Unit = peer setVisible true
-  def close(): Unit = peer setVisible false
+  def open (): Unit = peer.setVisible(true)
+  def close(): Unit = peer.setVisible(false)
 
-  peer.addWindowListener(new java.awt.event.WindowListener {
-    def windowActivated   (e: java.awt.event.WindowEvent): Unit = publish(WindowActivated(outer))
-    def windowClosed      (e: java.awt.event.WindowEvent): Unit = publish(WindowClosed(outer))
-    def windowClosing     (e: java.awt.event.WindowEvent): Unit = publish(WindowClosing(outer))
-    def windowDeactivated (e: java.awt.event.WindowEvent): Unit = publish(WindowDeactivated(outer))
-    def windowDeiconified (e: java.awt.event.WindowEvent): Unit = publish(WindowDeiconified(outer))
-    def windowIconified   (e: java.awt.event.WindowEvent): Unit = publish(WindowIconified(outer))
-    def windowOpened      (e: java.awt.event.WindowEvent): Unit = publish(WindowOpened(outer))
+  peer.addWindowListener(new WindowListener {
+    def windowActivated   (e: WindowEvent): Unit = publish(event.WindowActivated  (outer))
+    def windowClosed      (e: WindowEvent): Unit = publish(event.WindowClosed     (outer))
+    def windowClosing     (e: WindowEvent): Unit = publish(event.WindowClosing    (outer))
+    def windowDeactivated (e: WindowEvent): Unit = publish(event.WindowDeactivated(outer))
+    def windowDeiconified (e: WindowEvent): Unit = publish(event.WindowDeiconified(outer))
+    def windowIconified   (e: WindowEvent): Unit = publish(event.WindowIconified  (outer))
+    def windowOpened      (e: WindowEvent): Unit = publish(event.WindowOpened     (outer))
   })
 }

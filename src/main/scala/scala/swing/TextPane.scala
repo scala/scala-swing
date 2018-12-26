@@ -5,6 +5,7 @@
 ** /____/\___/_/ |_/____/_/ | |                                         **
 **                          |/                                          **
 \*                                                                      */
+
 package scala.swing
 
 /**
@@ -12,7 +13,7 @@ package scala.swing
  * 
  * @see javax.swing.JTextPane
  */
-class TextPane() extends TextComponent {
+class TextPane extends TextComponent {
   override lazy val peer: javax.swing.JTextPane = new javax.swing.JTextPane() with SuperMixin
   def styledDocument: javax.swing.text.StyledDocument = peer.getStyledDocument
 }
