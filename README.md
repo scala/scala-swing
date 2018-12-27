@@ -16,7 +16,7 @@ The widget class hierarchy loosely resembles that of Java Swing. The main differ
   In scala-swing, components that can have child components extend the Container trait.
 - Layout managers and panels are coupled. There is no way to exchange the layout manager
   of a panel. As a result, the layout constraints for widgets can be typed. 
-  (Note that you gain more type-safety and don't loose much flexibility here. Besides 
+  (Note that you gain more type-safety and do not loose much flexibility here. Besides 
   being not a common operation, exchanging the layout manager of a panel in Java 
   Swing almost always leads to exchanging the layout constraints for every of the panel's 
   child component. In the end, it is not more work to move all children to a newly created 
@@ -25,8 +25,8 @@ The widget class hierarchy loosely resembles that of Java Swing. The main differ
   collection. The typical usage style is to create anonymous subclasses of the widgets to
   customize their properties, and nest children and event reactions.
 - The scala-swing event system follows a different approach than the underlying Java system.
-  Instead of add event listeners with a particular interface (such as `java.awt.ActionListener`),
-  a `Reactor` instances announces the interest in receiving events by calling `listenTo` for
+  Instead of adding event listeners with a particular interface (such as `java.awt.ActionListener`),
+  a `Reactor` instance announces the interest in receiving events by calling `listenTo` for
   a `Publisher`. Publishers are also reactors and listen to themselves per default as a convenience.
   A reactor contains an object `reactions` which serves as a convenient place to register observers
   by adding partial functions that pattern match for any event that the observer is interested in.
@@ -117,3 +117,4 @@ at [http://www.scala-lang.org/documentation/api.html](http://www.scala-lang.org/
 ## Current Work
 
 Current changes are being made on the `work` branch.
+Last published version is found on the `main` branch.
