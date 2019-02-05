@@ -20,7 +20,9 @@ scalaVersion in ThisBuild := "2.13.0-M5"  // for testing
 
 OsgiKeys.exportPackage := Seq(s"scala.swing.*;version=${version.value}")
 
-mimaPreviousVersion := None // Some("2.0.0")
+licenses := Seq("Apache 2.0" -> url("http://www.apache.org/licenses/LICENSE-2.0"))
+
+mimaPreviousVersion := Some("2.1.0")
 
 // set the prompt (for this build) to include the project id.
 shellPrompt in ThisBuild := { state => Project.extract(state).currentRef.project + "> " }
