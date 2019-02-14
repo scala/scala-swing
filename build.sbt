@@ -13,7 +13,8 @@ scalaVersionsByJvm in ThisBuild := Map(
    8 -> List("2.11.12", "2.12.8", "2.13.0-M5").map(_ -> true),
    9 -> List("2.11.12", "2.12.8", "2.13.0-M5").map(_ -> false),
   10 -> List("2.11.12", "2.12.8", "2.13.0-M5").map(_ -> false),
-  11 -> List("2.11.12", "2.12.8", "2.13.0-M5").map(_ -> false)
+  11 -> List("2.11.12", "2.12.8", "2.13.0-M5").map(_ -> false),
+  12 -> List("2.11.12", "2.12.8", "2.13.0-M5").map(_ -> false)
 )
 
 scalaVersion in ThisBuild := "2.13.0-M5"  // for testing
