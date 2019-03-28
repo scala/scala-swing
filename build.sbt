@@ -29,8 +29,16 @@ shellPrompt in ThisBuild := { state => Project.extract(state).currentRef.project
 lazy val swing = project.in(file("."))
   .settings(
     libraryDependencies += {
-      val v = if (scalaVersion.value == "2.13.0-M5") "3.0.6-SNAP5" else "3.0.5"
-      "org.scalatest" %% "scalatest" % v % Test
+      "org.scalatest" %% "scalatest" % "3.0.7" % Test
+    },
+    // Adds a `src/main/scala-2.13+` source directory for Scala 2.13 and newer
+    // and  a `src/main/scala-2.13-` source directory for Scala version older than 2.13
+    unmanagedSourceDirectories in Compile += {
+      val sourceDir = (sourceDirectory in Compile).value
+      CrossVersion.partialVersion(scalaVersion.value) match {
+        case Some((2, n)) if n >= 13 => sourceDir / "scala-2.13+"
+        case _                       => sourceDir / "scala-2.13-"
+      }
     }
   )
 
