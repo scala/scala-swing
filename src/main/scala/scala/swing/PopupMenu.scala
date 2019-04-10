@@ -59,7 +59,13 @@ class PopupMenu extends Component with SequentialContainer.Wrapper with Publishe
   def show(invoker: Component, x: Int, y: Int): Unit = peer.show(invoker.peer, x, y)
 
   def margin: Insets = peer.getMargin
+  
   def label: String = peer.getLabel
   def label_=(s: String): Unit = peer.setLabel(s)
+
+  /** Lays out the popup menu so that it uses the minimum space
+    * needed to display its contents.
+    */
+  def pack(): Unit = peer.pack()
 }
 
