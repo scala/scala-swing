@@ -4,7 +4,7 @@ scalaModuleSettings
 
 name               := "scala-swing"
 
-version            := "2.1.1-SNAPSHOT"
+version            := "2.1.1"
 
 scalacOptions in ThisBuild ++= Seq("-deprecation", "-feature")
 
