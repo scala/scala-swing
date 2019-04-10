@@ -43,8 +43,12 @@ class FlowPanel(alignment: FlowPanel.Alignment.Value)(contents0: Component*) ext
 
   private def layoutManager: FlowLayout = peer.getLayout.asInstanceOf[FlowLayout]
 
-  def vGap: Int = layoutManager.getVgap
-  def vGap_=(n: Int): Unit = layoutManager.setVgap(n)
-  def hGap: Int = layoutManager.getHgap
-  def hGap_=(n: Int): Unit = layoutManager.setHgap(n)
+  def vGap    : Int         = layoutManager.getVgap
+  def vGap_=(n: Int): Unit  = layoutManager.setVgap(n)
+
+  def hGap    : Int         = layoutManager.getHgap
+  def hGap_=(n: Int): Unit  = layoutManager.setHgap(n)
+
+  def alignOnBaseline         : Boolean         = layoutManager.getAlignOnBaseline
+  def alignOnBaseline_=(value : Boolean): Unit  = layoutManager.setAlignOnBaseline(value)
 }
