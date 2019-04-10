@@ -10,14 +10,14 @@ scalacOptions in ThisBuild ++= Seq("-deprecation", "-feature")
 
 // Map[JvmMajorVersion, List[(ScalaVersion, UseForPublishing)]]
 scalaVersionsByJvm in ThisBuild := Map(
-   8 -> List("2.11.12", "2.12.8", "2.13.0-M5").map(_ -> true),
-   9 -> List("2.11.12", "2.12.8", "2.13.0-M5").map(_ -> false),
-  10 -> List("2.11.12", "2.12.8", "2.13.0-M5").map(_ -> false),
-  11 -> List("2.11.12", "2.12.8", "2.13.0-M5").map(_ -> false),
-  12 -> List("2.11.12", "2.12.8", "2.13.0-M5").map(_ -> false)
+   8 -> List("2.11.12", "2.12.8", "2.13.0-RC1").map(_ -> true),
+   9 -> List("2.11.12", "2.12.8", "2.13.0-RC1").map(_ -> false),
+  10 -> List("2.11.12", "2.12.8", "2.13.0-RC1").map(_ -> false),
+  11 -> List("2.11.12", "2.12.8", "2.13.0-RC1").map(_ -> false),
+  12 -> List("2.11.12", "2.12.8", "2.13.0-RC1").map(_ -> false)
 )
 
-scalaVersion in ThisBuild := "2.13.0-M5"  // for testing
+scalaVersion in ThisBuild := "2.13.0-RC1"  // for testing
 
 OsgiKeys.exportPackage := Seq(s"scala.swing.*;version=${version.value}")
 
@@ -29,7 +29,7 @@ shellPrompt in ThisBuild := { state => Project.extract(state).currentRef.project
 lazy val swing = project.in(file("."))
   .settings(
     libraryDependencies += {
-      "org.scalatest" %% "scalatest" % "3.0.7" % Test
+      "org.scalatest" %% "scalatest" % "3.0.8-RC2" % Test
     },
     // Adds a `src/main/scala-2.13+` source directory for Scala 2.13 and newer
     // and  a `src/main/scala-2.13-` source directory for Scala version older than 2.13
