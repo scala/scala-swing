@@ -17,7 +17,7 @@ scalaVersionsByJvm in ThisBuild := Map(
   12 -> List("2.11.12", "2.12.8", "2.13.0-RC1").map(_ -> false)
 )
 
-scalaVersion in ThisBuild := "2.13.0-RC1"  // for testing
+scalaVersion in ThisBuild := "2.12.8"
 
 OsgiKeys.exportPackage := Seq(s"scala.swing.*;version=${version.value}")
 
