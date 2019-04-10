@@ -46,9 +46,9 @@ object FileChooser {
  *
  * @see  [[http://docs.oracle.com/javase/7/docs/api/javax/swing/JFileChooser.html javax.swing.JFileChooser]]
  */
-class FileChooser(dir: File) {
+class FileChooser(dir: File) extends Component {
   import scala.swing.FileChooser._
-  lazy val peer: JFileChooser = new JFileChooser(dir)
+  override lazy val peer: JFileChooser = new JFileChooser(dir)
 
   def this() = this(null)
 
