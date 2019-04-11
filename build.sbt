@@ -29,7 +29,7 @@ shellPrompt in ThisBuild := { state => Project.extract(state).currentRef.project
 lazy val swing = project.in(file("."))
   .settings(
     libraryDependencies += {
-      "org.scalatest" %% "scalatest" % "3.0.8-RC2" % Test
+      "org.scalatest" %% "scalatest" % "3.1.0-SNAP9" % Test
     },
     // Adds a `src/main/scala-2.13+` source directory for Scala 2.13 and newer
     // and  a `src/main/scala-2.13-` source directory for Scala version older than 2.13
