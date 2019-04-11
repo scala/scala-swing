@@ -81,11 +81,23 @@ abstract class Action(title0: String) {
     def actionPerformed(a: java.awt.event.ActionEvent): Unit = apply()
   }
 
-  /**
-   * Title is not optional.
-   */
-  def title: String = ifNull(peer.getValue(javax.swing.Action.NAME),"")
-  def title_=(t: String): Unit = peer.putValue(javax.swing.Action.NAME, t)
+  /** Gets the `NAME` property.
+    */
+  def text: String = ifNull(peer.getValue(javax.swing.Action.NAME),"")
+
+  /** Sets the `NAME` property.
+    */
+  def text_=(t: String): Unit = peer.putValue(javax.swing.Action.NAME, t)
+
+  /** An alias for `text`. This is kept for backwards compatibility.
+    *
+    * @see [[text]]
+    */
+  def title: String = text
+
+  /** An alias for `text_=`. This is kept for backwards compatibility.
+    */
+  def title_=(t: String): Unit  = text = t
 
   /**
    * None if large icon and small icon are not equal.

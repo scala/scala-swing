@@ -203,20 +203,6 @@ abstract class Component extends UIElement {
 
   protected override def onFirstSubscribe(): Unit = {
     super.onFirstSubscribe()
-    // TODO: deprecated, remove after 2.8
-    peer.addComponentListener(new java.awt.event.ComponentListener {
-      def componentHidden(e: java.awt.event.ComponentEvent): Unit =
-        publish(event.UIElementHidden(Component.this))
-
-      def componentShown(e: java.awt.event.ComponentEvent): Unit =
-        publish(event.UIElementShown(Component.this))
-
-      def componentMoved(e: java.awt.event.ComponentEvent): Unit =
-        publish(event.UIElementMoved(Component.this))
-
-      def componentResized(e: java.awt.event.ComponentEvent): Unit =
-        publish(event.UIElementResized(Component.this))
-    })
 
     peer.addFocusListener(new java.awt.event.FocusListener {
       def other(e: java.awt.event.FocusEvent): Option[Component] = e.getOppositeComponent match {

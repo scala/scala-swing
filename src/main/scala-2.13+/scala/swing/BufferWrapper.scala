@@ -48,13 +48,11 @@ abstract class BufferWrapper[A] extends mutable.Buffer[A] {
     }
   }
 
-  override def patchInPlace(from: Int, patch: scala.collection.Seq[A], replaced: Int): this.type = {
+  override def patchInPlace(from: Int, patch: MoreElem[A], replaced: Int): this.type = {
     if (replaced > 0) {
       remove(from, replaced)
     }
-    if (patch.nonEmpty) {
-      insertAll(from, patch)
-    }
+    insertAll(from, patch)
     this
   }
 }
