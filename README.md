@@ -4,9 +4,19 @@
 [<img src="https://img.shields.io/maven-central/v/org.scala-lang.modules/scala-swing_2.11.svg?label=latest%20release%20for%202.11"/>](http://search.maven.org/#search%7Cga%7C1%7Cg%3Aorg.scala-lang.modules%20a%3Ascala-swing_2.11)
 [<img src="https://img.shields.io/maven-central/v/org.scala-lang.modules/scala-swing_2.12.svg?label=latest%20release%20for%202.12"/>](http://search.maven.org/#search%7Cga%7C1%7Cg%3Aorg.scala-lang.modules%20a%3Ascala-swing_2.12)
 
-This is now community maintained by @benhutchison & @Sciss. If you are interested in helping then contact them or @adriaanm.
+This is now community maintained by [@Sciss](https://github.com/Sciss) and [@benhutchison](https://github.com/benhutchison). If you are interested in helping then contact them or [@adriaanm](https://github.com/adriaanm).
 
-This is a UI library that will wrap most of Java Swing for Scala in a straightforward manner. 
+## Adding an sbt dependency
+
+To use scala-swing from sbt, add this to your `build.sbt`:
+
+```
+libraryDependencies += "org.scala-lang.modules" %% "scala-parser-combinators" % "2.1.1"
+```
+
+## About scala-swing
+
+This is a UI library that wraps most of Java Swing for Scala in a straightforward manner. 
 The widget class hierarchy loosely resembles that of Java Swing. The main differences are:
 
 - In Java Swing all components are containers per default. This does not make much sense for
@@ -97,11 +107,11 @@ new Frame {
 
 ## Versions
   
-- The `1.0.x` branch is compiled with JDK 6 and released for Scala 2.10, 2.11. The 1.0.x releases can be used with both Scala versions on JDK 6 or newer.
+- The `1.0.x` branch is compiled with JDK 6 and released for Scala 2.11 and 2.11. The 1.0.x releases can be used with both Scala versions on JDK 6 or newer.
 - The `2.0.x` branch is compiled with JDK 8 and released for Scala 2.11 and 2.12.
   - When using Scala 2.11, you can use the Scala swing 2.0.x releases on JDK 6 or newer.
   - Scala 2.12 requires you to use JDK 8 (that has nothing to do with scala-swing).
-- Version `2.1.0` adds support for Scala 2.13, while dropping Scala 2.10.
+- The `2.1.x` series adds support for Scala 2.13, while dropping Scala 2.10.
 
 The reason to have different major versions is to allow for binary incompatible changes. Also, some java-swing classes were 
 generified in JDK 7 (see [SI-3634](https://issues.scala-lang.org/browse/SI-3634)) and require the scala-swing sources to be adjusted.
