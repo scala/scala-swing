@@ -11,7 +11,7 @@ This is now community maintained by [@Sciss](https://github.com/Sciss) and [@ben
 To use scala-swing from sbt, add this to your `build.sbt`:
 
 ```
-libraryDependencies += "org.scala-lang.modules" %% "scala-parser-combinators" % "2.1.1"
+libraryDependencies += "org.scala-lang.modules" %% "scala-swing" % "2.1.1"
 ```
 
 ## About scala-swing
