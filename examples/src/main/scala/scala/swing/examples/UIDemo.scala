@@ -114,7 +114,7 @@ object UIDemo extends SimpleSwingApplication {
           }
         }
 
-        pages += new Page("Password", password)
+        pages += new Page("Password", password, "Password tooltip")
         pages += new Page("Painting", LinePainting.ui)
         //pages += new Page("Text Editor", TextEditor.ui)
       }

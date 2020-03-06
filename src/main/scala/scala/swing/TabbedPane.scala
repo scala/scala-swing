@@ -46,7 +46,7 @@ object TabbedPane {
     def content_=(c: Component): Unit = { _content = c; if (parent != null) parent.peer.setComponentAt(index, c.peer) }
     protected var _tip: String = tip0
     def tip: String = _tip//peer.getToolTipTextAt(index)
-    def tip_=(t: String): Unit = { _tip = t; if (parent != null) parent.peer.setToolTipTextAt(index, t) }
+    def tip_=(t: String): Unit = { _tip = t; if (parent != null) parent.peer.setToolTipTextAt(index, if(t == "") null else t) }
     protected var _enabled = true
     def enabled: Boolean = _enabled//peer.isEnabledAt(index)
     def enabled_=(b: Boolean): Unit = { _enabled = b; if (parent != null) parent.peer.setEnabledAt(index, b) }
@@ -93,12 +93,12 @@ class TabbedPane extends Component with Publisher {
     override def insert(n: Int, t: Page): Unit = {
       //for(i <- n to length) apply(i)._index += 1
       t.parent = TabbedPane.this
-      peer.insertTab(t.title, null, t.content.peer, t.tip, n)
+      peer.insertTab(t.title, null, t.content.peer, if(t.tip == "") null else t.tip, n)
     }
 
     override def addOne(t: Page): this.type = {
       t.parent = TabbedPane.this
-      peer.addTab(t.title, null, t.content.peer, t.tip)
+      peer.addTab(t.title, null, t.content.peer, if(t.tip == "") null else t.tip)
       this
     }
 
