@@ -17,6 +17,8 @@ import java.io.File
 import javax.swing.filechooser.FileFilter
 import javax.swing.{Icon, JFileChooser}
 
+import scala.concurrent.{ExecutionContext, Future}
+
 object FileChooser {
   /**
    * The result of a file dialog. The precise meaning of the `Approve`
@@ -29,6 +31,9 @@ object FileChooser {
     val Approve: Result.Value = Value(APPROVE_OPTION)
     val Error  : Result.Value = Value(ERROR_OPTION)
   }
+
+  case class FileOpenException(result: Result.Value) extends Exception(s"A file could not be opened. Result = $result")
+  case class FileSaveException(result: Result.Value) extends Exception(s"A file could not be opened for saving. Result = $result")
 
   /**
    * The kind of elements a user can select in a file dialog.
@@ -67,6 +72,20 @@ class FileChooser(dir: File) extends Component {
    * @return a [[scala.swing.FileChooser.Result Result]] value based how dialog was closed.
    */
   def showSaveDialog(over: PeerContainer): Result.Value = Result(peer.showSaveDialog(nullPeer(over)))
+
+  def showOpenDialogAsync(over: PeerContainer)(implicit ec: ExecutionContext): Future[File] = Future {
+    showOpenDialog(over) match {
+      case Result.Approve => selectedFile
+      case res => throw FileOpenException(res)
+    }
+  }
+
+  def showSaveDialogAsync(over: PeerContainer)(implicit ec: ExecutionContext): Future[File] = Future {
+    showSaveDialog(over) match {
+      case Result.Approve => selectedFile
+      case res => throw FileOpenException(res)
+    }
+  }
 
   /**
    * Display a dialog box to select a file.
