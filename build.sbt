@@ -1,6 +1,6 @@
 lazy val swing = project.in(file("."))
   .settings(ScalaModulePlugin.scalaModuleSettings)
-  .settings(ScalaModulePlugin.scalaModuleSettingsJVM)
+  .settings(ScalaModulePlugin.scalaModuleOsgiSettings)
   .settings(
     name := "scala-swing",
     OsgiKeys.exportPackage := Seq(s"scala.swing.*;version=${version.value}"),
