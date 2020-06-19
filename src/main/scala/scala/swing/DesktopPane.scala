@@ -39,26 +39,33 @@ class DesktopPane extends Component with SequentialContainer.Wrapper {
   /**
    * Specifies how dragged frames will be animated.
    *
-   * @param newMode either `LiveDragMode` or `OutlineDragMode`.
+   * @param newMode either `DragMode.Live` or `DragMode.Outline`.
    */
-  def dragMode_= (newMode : DragMode) : Unit = peer.setDragMode(newMode.intValue)
+  def dragMode_= (newMode : DragMode) : Unit = peer.setDragMode(newMode.id)
 }
 
 
 object DesktopPane {
 
   /**
-   * Indicates how an internal frame will be animated as it is dragged.
+   * Supported drag modes for internal frames.
    */
-  final case class DragMode(intValue : Int)
+  //noinspection TypeAnnotation
+  object DragMode extends Enumeration {
+    /**
+     * Renders the contents of the frame while dragging.
+     */
+    val Live = Value(JDesktopPane.LIVE_DRAG_MODE)
+
+    /**
+     * Renders only the outline of the frame while dragging.
+     */
+    val Outline = Value(JDesktopPane.OUTLINE_DRAG_MODE)
+  }
 
   /**
-   * Indicates that a dragged internal frame will be animated with its contents.
+   * Type indicating how an internal frame will be animated as it is dragged.
    */
-  val LiveDragMode: DragMode = DragMode(JDesktopPane.LIVE_DRAG_MODE)
+  type DragMode = DragMode.Value
 
-  /**
-   * Indicates that a dragged internal frame will only render as an outline.
-   */
-  val OutlineDragMode: DragMode = DragMode(JDesktopPane.OUTLINE_DRAG_MODE)
 }
