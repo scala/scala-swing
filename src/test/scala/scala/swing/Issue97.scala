@@ -2,7 +2,8 @@ package scala.swing
 
 import java.util.concurrent.TimeUnit
 
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 
 import scala.concurrent.duration.Duration
 import scala.concurrent.{Await, Future, Promise}
@@ -10,7 +11,7 @@ import scala.swing.event.{UIElementHidden, UIElementMoved, UIElementResized, UIE
 import scala.util.control.NonFatal
 
 // Note: `AsyncFlatSpec` has issues with swallowing errors and returning early.
-class Issue97 extends FlatSpec with Matchers {
+class Issue97 extends AnyFlatSpec with Matchers {
   case class Count(shown: Int = 0, hidden: Int = 0, moved: Int = 0, resized: Int = 0)
 
   def countEvents(): Future[Count] = {

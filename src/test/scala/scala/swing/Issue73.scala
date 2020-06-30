@@ -1,8 +1,9 @@
 package scala.swing
 
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 
-class Issue73 extends FlatSpec with Matchers {
+class Issue73 extends AnyFlatSpec with Matchers {
   "Enumerations" should "not contain duplicate ids" in {
     // the initializers of any of these will through an
     // assertion error if an enumeration `Value` id is used twice.

@@ -7,7 +7,10 @@ lazy val swing = project.in(file("."))
     scalaModuleMimaPreviousVersion := Some("2.1.0"),
     // set the prompt (for this build) to include the project id.
     shellPrompt in ThisBuild := { state => Project.extract(state).currentRef.project + "> " },
-    libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.8" % Test,
+    libraryDependencies ++= Seq(
+      "org.scalatest" %% "scalatest-flatspec" % "3.2.0" % Test,
+      "org.scalatest" %% "scalatest-shouldmatchers" % "3.2.0" % Test,
+    ),
     // Adds a `src/main/scala-2.13+` source directory for Scala 2.13 and newer
     // and  a `src/main/scala-2.13-` source directory for Scala version older than 2.13
     unmanagedSourceDirectories in Compile += {
