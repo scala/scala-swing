@@ -32,9 +32,9 @@ class ButtonGroup(initialButtons: AbstractButton*) {
     override def size: Int = peer.getButtonCount
 
     def iterator: Iterator[AbstractButton] = new Iterator[AbstractButton] {
-      private val enum = peer.getElements
-      def next(): AbstractButton = UIElement.cachedWrapper[AbstractButton](enum.nextElement())
-      def hasNext: Boolean = enum.hasMoreElements
+      private val elements = peer.getElements
+      def next(): AbstractButton = UIElement.cachedWrapper[AbstractButton](elements.nextElement())
+      def hasNext: Boolean = elements.hasMoreElements
     }
   }
   buttons ++= initialButtons

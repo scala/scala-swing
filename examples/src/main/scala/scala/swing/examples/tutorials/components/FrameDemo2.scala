@@ -241,9 +241,7 @@ class MyFrame extends Frame {
   preferredSize = new Dimension(150, 150)
   pack()
   visible = true
-  override def closeOperation() = {
-    close
-  }
+  override def closeOperation() = close()
 }
 
 class MyFrameUndecorated extends Frame with RichWindow.Undecorated {
@@ -270,9 +268,7 @@ class MyFrameUndecorated extends Frame with RichWindow.Undecorated {
   preferredSize = new Dimension(150, 150)
   pack()
   visible = true
-  override def closeOperation() = {
-    close
-  }
+  override def closeOperation() = close()
 }
 
 object FrameDemo2 extends SimpleSwingApplication {

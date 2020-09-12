@@ -48,7 +48,7 @@ class DiagonalLayout(private var vgap: Int) extends LayoutManager {
 
   private var sizeUnknown: Boolean = true
 
-  def this() {
+  def this() = {
     this(5)
   }
 

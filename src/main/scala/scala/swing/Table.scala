@@ -91,7 +91,7 @@ object Table {
   }
 
   class LabelRenderer[A](convert: A => (Icon, String)) extends AbstractRenderer[A, Label](new Label) {
-    def this() {
+    def this() = {
       this(a => (null, a.toString))
     }
 

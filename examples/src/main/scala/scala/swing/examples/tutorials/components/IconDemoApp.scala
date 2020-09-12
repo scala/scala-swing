@@ -123,17 +123,15 @@ class IconDemoApp extends MainFrame {
     }.toList
   }
 
-  f.foreach {
-    thumbs:List[Option[ThumbnailAction]] =>
-      buttonBar.contents.dropRight(1)
-      thumbs.foreach{ thumbAction => {
-        thumbAction.foreach { ta =>
-          buttonBar.contents += new Button(ta)
-        }
-      }}
-      buttonBar.contents += Swing.Glue
+  f.foreach { thumbs =>
+    buttonBar.contents.dropRight(1)
+    thumbs.foreach { thumbAction =>
+      thumbAction.foreach { ta =>
+        buttonBar.contents += new Button(ta)
+      }
+    }
+    buttonBar.contents += Swing.Glue
   }
-
 
   /**
    * Resizes an image using a Graphics2D object backed by a BufferedImage.

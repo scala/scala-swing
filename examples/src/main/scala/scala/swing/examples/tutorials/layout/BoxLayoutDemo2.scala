@@ -93,9 +93,10 @@ class BoxLayoutDemo2 extends BorderPanel {
   }
   
   def notifyBldComponents(): Unit = {
-    for (i <- 0 until NumComponents)
+    for (i <- 0 until NumComponents) {
       bldComponent(i).setSizeRestriction(restrictSize)
-    bldComponent(0).revalidate
+    }
+    bldComponent(0).revalidate()
   }
 }
 

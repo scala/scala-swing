@@ -13,7 +13,7 @@
 package scala.swing
 
 import java.awt.event.{WindowEvent, WindowListener}
-import java.awt.{Window => AWTWindow}
+import java.awt.{GraphicsConfiguration, Window => AWTWindow}
 
 /**
  * A window with decoration such as a title, border, and action buttons.
@@ -48,22 +48,23 @@ abstract class Window extends UIElement with RootPanel with Publisher { outer =>
   }
   def defaultButton: Option[Button] =
     toOption(peer.getRootPane.getDefaultButton) map UIElement.cachedWrapper[Button]
-  def defaultButton_=(b: Button): Unit = {
+    
+  def defaultButton_=(b: Button): Unit =
     peer.getRootPane.setDefaultButton(b.peer)
-  }
-  def defaultButton_=(b: Option[Button]): Unit = {
+  
+  def defaultButton_=(b: Option[Button]): Unit =
     peer.getRootPane.setDefaultButton(b.map(_.peer).orNull)
-  }
 
   def dispose(): Unit = peer.dispose()
 
   def pack(): this.type = { peer.pack(); this }
 
-  def setLocationRelativeTo(c: UIElement): Unit = peer.setLocationRelativeTo(c.peer)
-  def centerOnScreen(): Unit = peer.setLocationRelativeTo(null)
-  def location_=(p: Point): Unit = peer.setLocation(p)
-  def size_=(size: Dimension): Unit = peer.setSize(size)
-  def bounds_=(rect: Rectangle): Unit = peer.setBounds(rect)
+  def setLocationRelativeTo(c: UIElement) : Unit = peer.setLocationRelativeTo(c.peer)
+  def centerOnScreen()                    : Unit = peer.setLocationRelativeTo(null)
+  
+  def location_=  (p    : Point     ): Unit = peer.setLocation(p    )
+  def size_=      (size : Dimension ): Unit = peer.setSize    (size )
+  def bounds_=    (rect : Rectangle ): Unit = peer.setBounds  (rect )
 
   def owner: Window = UIElement.cachedWrapper[Window](peer.getOwner)
 
