@@ -19,11 +19,13 @@ import javax.swing.border.{BevelBorder, Border, CompoundBorder, MatteBorder, Tit
 import javax.swing.event.{ChangeEvent, ChangeListener}
 import javax.swing.{BorderFactory, Icon, ImageIcon, JComponent, SwingUtilities}
 
+import scala.language.implicitConversions
+
 /**
  * Helpers for this package.
  */
 object Swing {
-  protected[swing] type PeerContainer = { def peer: awt.Container }
+  protected[swing] trait PeerContainer { def peer: awt.Container }
 
   protected[swing] def toNoIcon   (i: Icon): Icon = if (i == null) EmptyIcon else i
   protected[swing] def toNullIcon (i: Icon): Icon = if (i == EmptyIcon) null else i
@@ -74,8 +76,9 @@ object Swing {
    * that you don't want an icon.
    */
   case object EmptyIcon extends Icon {
-    def getIconHeight: Int = 0
-    def getIconWidth: Int = 0
+    def getIconHeight : Int = 0
+    def getIconWidth  : Int = 0
+
     def paintIcon(c: java.awt.Component, g: java.awt.Graphics, x: Int, y: Int): Unit = ()
   }
 
@@ -102,16 +105,16 @@ object Swing {
           shadowOuter, shadowInner)
 
   sealed abstract class Embossing {
-    def bevelPeer: Int
-    def etchPeer: Int
+    def bevelPeer : Int
+    def etchPeer  : Int
   }
   case object Lowered extends Embossing {
-    def bevelPeer: Int = BevelBorder.LOWERED
-    def etchPeer: Int = javax.swing.border.EtchedBorder.LOWERED
+    def bevelPeer : Int = BevelBorder.LOWERED
+    def etchPeer  : Int = javax.swing.border.EtchedBorder.LOWERED
   }
   case object Raised extends Embossing {
-    def bevelPeer: Int = BevelBorder.RAISED
-    def etchPeer: Int = javax.swing.border.EtchedBorder.RAISED
+    def bevelPeer : Int = BevelBorder.RAISED
+    def etchPeer  : Int = javax.swing.border.EtchedBorder.RAISED
   }
 
   def EtchedBorder: Border = BorderFactory.createEtchedBorder()

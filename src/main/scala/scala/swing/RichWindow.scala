@@ -12,8 +12,7 @@
 
 package scala.swing
 
-import java.awt.event.WindowEvent
-import java.awt.{GraphicsConfigTemplate, GraphicsConfiguration, Frame => AWTFrame, Window => AWTWindow}
+import java.awt.{Frame => AWTFrame, Window => AWTWindow}
 
 import javax.swing.{Icon, JDialog, JFrame, JMenuBar, JOptionPane, UIManager}
 

@@ -2,7 +2,8 @@ lazy val scalaTestVersion = "3.2.3"
 
 lazy val commonSettings = Seq(
   crossScalaVersions += "3.0.0-M1",
-  scalaVersion := "3.0.0-M1", // while working in IntelliJ
+  scalaVersion       := "2.13.3",
+  scalacOptions     ++= Seq("-deprecation", "-feature"),
 )
 
 lazy val swing = project.in(file("."))

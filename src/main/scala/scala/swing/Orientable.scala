@@ -12,12 +12,6 @@
 
 package scala.swing
 
-object Orientable {
-  trait Wrapper extends Oriented.Wrapper with Orientable {
-    def orientation_=(o: Orientation.Value): Unit = peer.setOrientation(o.id)
-  }
-}
-
 /**
  * An <code>Oriented</code> whose orientation can be changed.
  */

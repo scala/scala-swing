@@ -13,7 +13,9 @@
 package scala.swing
 
 import java.awt.event.{WindowEvent, WindowListener}
-import java.awt.{GraphicsConfiguration, Window => AWTWindow}
+import java.awt.{Window => AWTWindow}
+
+import scala.swing.Swing.PeerContainer
 
 /**
  * A window with decoration such as a title, border, and action buttons.
@@ -23,7 +25,7 @@ import java.awt.{GraphicsConfiguration, Window => AWTWindow}
  *
  * @see javax.swing.JFrame
  */
-abstract class Window extends UIElement with RootPanel with Publisher { outer =>
+abstract class Window extends UIElement with RootPanel with PeerContainer with Publisher { outer =>
   def peer: AWTWindow with InterfaceMixin
 
   protected trait InterfaceMixin extends javax.swing.RootPaneContainer
