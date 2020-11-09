@@ -79,7 +79,7 @@ private[swing] trait LazyPublisher extends Publisher {
 
 import scala.ref._
 
-private[swing] trait SingleRefCollection[/*+*/ A <: AnyRef] extends Iterable[A] { self =>
+private[swing] trait SingleRefCollection[A <: AnyRef] extends Iterable[A] { self =>
 
   trait Ref[+B <: AnyRef] extends Reference[B] {
     override def hashCode(): Int = get match {

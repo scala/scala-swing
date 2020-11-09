@@ -12,8 +12,6 @@
 
 package scala.swing
 
-import java.awt.event.ActionListener
-
 import javax.swing.{Icon, KeyStroke}
 
 object Action {

@@ -1,7 +1,7 @@
 lazy val scalaTestVersion = "3.2.3"
 
 lazy val commonSettings = Seq(
-  crossScalaVersions += "3.0.0-M1",
+  crossScalaVersions := Seq("3.0.0-M1", "2.13.3", "2.12.12", "2.11.12"),
   scalaVersion       := "2.13.3",
   scalacOptions     ++= Seq("-deprecation", "-feature"),
 )
