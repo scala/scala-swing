@@ -1,4 +1,4 @@
-lazy val scalaTestVersion = "3.2.2"
+lazy val scalaTestVersion = "3.2.3"
 
 lazy val commonSettings = Seq(
   crossScalaVersions += "3.0.0-M1",
@@ -15,13 +15,10 @@ lazy val swing = project.in(file("."))
     scalaModuleMimaPreviousVersion := Some("2.1.0"),
     // set the prompt (for this build) to include the project id.
     ThisBuild / shellPrompt := { state => Project.extract(state).currentRef.project + "> " },
-    libraryDependencies ++= {
-      if (scalaVersion.value == "3.0.0-M1") Nil else
-      Seq(
-        "org.scalatest" %% "scalatest-flatspec"       % scalaTestVersion % Test,
-        "org.scalatest" %% "scalatest-shouldmatchers" % scalaTestVersion % Test,
-      )
-    },
+    libraryDependencies ++= Seq(
+      "org.scalatest" %% "scalatest-flatspec"       % scalaTestVersion % Test,
+      "org.scalatest" %% "scalatest-shouldmatchers" % scalaTestVersion % Test,
+    ),
     // Adds a `src/main/scala-2.13+` source directory for Scala 2.13 and newer
     // and  a `src/main/scala-2.13-` source directory for Scala version older than 2.13
     Compile / unmanagedSourceDirectories += {
