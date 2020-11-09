@@ -13,7 +13,7 @@ If you are interested in helping then contact them or [@adriaanm](https://github
 To use scala-swing from sbt, add this to your `build.sbt`:
 
 ```
-libraryDependencies += "org.scala-lang.modules" %% "scala-swing" % "2.2.0"
+libraryDependencies += "org.scala-lang.modules" %% "scala-swing" % "3.0.0"
 ```
 
 ## About scala-swing
@@ -114,7 +114,7 @@ new Frame {
   - When using Scala 2.11, you can use the Scala swing 2.0.x releases on JDK 6 or newer.
   - Scala 2.12 requires you to use JDK 8 (that has nothing to do with scala-swing).
 - The `2.1.x` series adds support for Scala 2.13, while dropping Scala 2.10.
-- The `2.2.x` series adds support for Scala 3.0.
+- The `3.0.x` series adds support for Scala 3.0.
 
 The reason to have different major versions is to allow for binary incompatible changes. Also, some java-swing classes were 
 generified in JDK 7 (see [SI-3634](https://issues.scala-lang.org/browse/SI-3634)) and require the scala-swing sources to be adjusted.
