@@ -13,7 +13,7 @@ lazy val swing = project.in(file("."))
   .settings(
     name := "scala-swing",
     OsgiKeys.exportPackage := Seq(s"scala.swing.*;version=${version.value}"),
-    scalaModuleMimaPreviousVersion := Some("2.1.0"),
+    // scalaModuleMimaPreviousVersion := Some("2.1.0"),  TODO re-enable after we have a 3.0 release
     // set the prompt (for this build) to include the project id.
     ThisBuild / shellPrompt := { state => Project.extract(state).currentRef.project + "> " },
     libraryDependencies ++= Seq(
