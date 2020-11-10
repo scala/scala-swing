@@ -17,25 +17,21 @@ import javax.swing.{JScrollPane, ScrollPaneConstants}
 import scala.collection.immutable
 
 object ScrollPane {
-  object BarPolicy extends Enumeration {
+  object BarPolicy {
     import ScrollPaneConstants._
-    val AsNeeded = new Value(HORIZONTAL_SCROLLBAR_AS_NEEDED,
-                             VERTICAL_SCROLLBAR_AS_NEEDED)
-    val Never = new Value(HORIZONTAL_SCROLLBAR_NEVER,
-                          VERTICAL_SCROLLBAR_NEVER)
-    val Always = new Value(HORIZONTAL_SCROLLBAR_ALWAYS,
-                           VERTICAL_SCROLLBAR_ALWAYS)
+    val AsNeeded  = BarPolicy(HORIZONTAL_SCROLLBAR_AS_NEEDED, VERTICAL_SCROLLBAR_AS_NEEDED)
+    val Never     = BarPolicy(HORIZONTAL_SCROLLBAR_NEVER    , VERTICAL_SCROLLBAR_NEVER    )
+    val Always    = BarPolicy(HORIZONTAL_SCROLLBAR_ALWAYS   , VERTICAL_SCROLLBAR_ALWAYS   )
 
-    def wrap(id: Int): BarPolicy.Value = id match {
+    def wrap(id: Int): Value = id match {
       case HORIZONTAL_SCROLLBAR_AS_NEEDED | VERTICAL_SCROLLBAR_AS_NEEDED  => AsNeeded
       case HORIZONTAL_SCROLLBAR_NEVER     | VERTICAL_SCROLLBAR_NEVER      => Never
       case HORIZONTAL_SCROLLBAR_ALWAYS    | VERTICAL_SCROLLBAR_ALWAYS     => Always
     }
-
-    class Value(val horizontalPeer: Int, val verticalPeer: Int) extends super.Val {
-      override def id: Int = horizontalPeer
-    }
+    
+    type Value = BarPolicy
   }
+  final case class BarPolicy(val horizontalPeer: Int, val verticalPeer: Int)
 }
 
 /**

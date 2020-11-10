@@ -32,7 +32,7 @@ import scala.swing.Swing.nullPeer
   * @see javax.swing.JSplitPane
   */
 class SplitPane(o: Orientation.Value, left: Component, right: Component)
-  extends Component with Container with Orientable.Wrapper {
+  extends Component with Container with Orientable {
 
   def this(o: Orientation.Value) = this(o, new Component {}, new Component {})
   def this() = this(Orientation.Horizontal)
@@ -82,4 +82,7 @@ class SplitPane(o: Orientation.Value, left: Component, right: Component)
 
   def continuousLayout      : Boolean         = peer.isContinuousLayout
   def continuousLayout_=  (b: Boolean): Unit  = peer.setContinuousLayout(b)
+
+  def orientation     : Orientation.Value         = Orientation(peer.getOrientation())
+  def orientation_= (o: Orientation.Value): Unit  = peer.setOrientation(o.id)
 }

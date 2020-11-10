@@ -15,8 +15,8 @@ package scala.swing
 import java.awt.{Adjustable => JAdjustable}
 
 object Adjustable {
-  trait Wrapper extends Oriented.Wrapper with Adjustable {
-    def peer: JAdjustable with OrientedMixin
+  trait Wrapper extends Oriented with Adjustable {
+    def peer: JAdjustable
 
     def unitIncrement: Int = peer.getUnitIncrement
     def unitIncrement_=(i: Int): Unit = peer.setUnitIncrement(i)

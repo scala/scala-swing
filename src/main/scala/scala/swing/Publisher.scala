@@ -79,7 +79,7 @@ private[swing] trait LazyPublisher extends Publisher {
 
 import scala.ref._
 
-private[swing] trait SingleRefCollection[+A <: AnyRef] extends Iterable[A] { self =>
+private[swing] trait SingleRefCollection[A <: AnyRef] extends Iterable[A] { self =>
 
   trait Ref[+B <: AnyRef] extends Reference[B] {
     override def hashCode(): Int = get match {
@@ -119,7 +119,7 @@ private[swing] trait SingleRefCollection[+A <: AnyRef] extends Iterable[A] { sel
       while (!ahead && elems.hasNext) {
         // make sure we have a reference to the next element,
         // otherwise it might be garbage collected
-        val next = elems.next.get
+        val next = elems.next().get
         ahead = next.isDefined
         if (ahead) hd = next.get
       }

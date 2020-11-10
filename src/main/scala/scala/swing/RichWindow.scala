@@ -37,9 +37,9 @@ object RichWindow {
  * window is either a dialog or a frame at some point.
  */
 sealed trait RichWindow extends Window {
-  def peer: AWTWindow with InterfaceMixin
+  def peer: AWTWindow with InterfaceMixin2
 
-  trait InterfaceMixin extends super.InterfaceMixin {
+  trait InterfaceMixin2 extends InterfaceMixin {
     def getJMenuBar: JMenuBar
     def setJMenuBar(b: JMenuBar): Unit
     def setUndecorated(b: Boolean): Unit
@@ -79,13 +79,16 @@ sealed trait RichWindow extends Window {
  * @see javax.swing.JFrame
  */
 class Frame(gc: java.awt.GraphicsConfiguration = null) extends RichWindow {
-  override lazy val peer: JFrame with InterfaceMixin = new JFrame(gc) with InterfaceMixin with SuperMixin
+  override lazy val peer: JFrame with InterfaceMixin2 = new JFrame(gc) with InterfaceMixin2 with SuperMixin
 
-  def iconify(): Unit = { peer.setExtendedState(peer.getExtendedState | AWTFrame.ICONIFIED) }
-  def uniconify(): Unit = { peer.setExtendedState(peer.getExtendedState & ~AWTFrame.ICONIFIED) }
+  def iconify()   : Unit = { peer.setExtendedState(peer.getExtendedState | AWTFrame.ICONIFIED) }
+  def uniconify() : Unit = { peer.setExtendedState(peer.getExtendedState & ~AWTFrame.ICONIFIED) }
+  
   def iconified: Boolean = (peer.getExtendedState & AWTFrame.ICONIFIED) != 0
-  def maximize(): Unit = { peer.setExtendedState(peer.getExtendedState | AWTFrame.MAXIMIZED_BOTH) }
+  
+  def maximize()  : Unit = { peer.setExtendedState(peer.getExtendedState | AWTFrame.MAXIMIZED_BOTH) }
   def unmaximize(): Unit = { peer.setExtendedState(peer.getExtendedState & ~AWTFrame.MAXIMIZED_BOTH) }
+  
   def maximized: Boolean = (peer.getExtendedState & AWTFrame.MAXIMIZED_BOTH) != 0
 
   def iconImage: Image = peer.getIconImage
@@ -189,11 +192,11 @@ object Dialog {
  * @see javax.swing.JDialog
  */
 class Dialog(owner: Window, gc: java.awt.GraphicsConfiguration = null) extends RichWindow {
-  override lazy val peer: JDialog with InterfaceMixin =
-    if (owner == null) new JDialog with InterfaceMixin with SuperMixin
+  override lazy val peer: JDialog with InterfaceMixin2 =
+    if (owner == null) new JDialog with InterfaceMixin2 with SuperMixin
     else owner match {
-      case f: Frame => new JDialog(f.peer, "", false, gc) with InterfaceMixin with SuperMixin
-      case d: Dialog => new JDialog(d.peer, "", false, gc) with InterfaceMixin with SuperMixin
+      case f: Frame => new JDialog(f.peer, "", false, gc) with InterfaceMixin2 with SuperMixin
+      case d: Dialog => new JDialog(d.peer, "", false, gc) with InterfaceMixin2 with SuperMixin
     }
 
   def this() = this(null)

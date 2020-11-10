@@ -88,19 +88,19 @@ class ButtonHtmlDemo extends FlowPanel {
   listenTo(enable)
 
   reactions += {
-    case ButtonClicked(`enable`) => enableMiddle
-    case ButtonClicked(`disable`) => disableMiddle
+    case ButtonClicked(`enable`)  => enableMiddle()
+    case ButtonClicked(`disable`) => disableMiddle()
   }
 
   def enableMiddle(): Unit = {
-    enable.enabled = false
-    middle.enabled = true
-    disable.enabled = true
+    enable  .enabled = false
+    middle  .enabled = true
+    disable .enabled = true
   }
   def disableMiddle(): Unit = {
-    enable.enabled = true
-    middle.enabled = false
-    disable.enabled = false
+    enable  .enabled = true
+    middle  .enabled = false
+    disable .enabled = false
   }
   def createImageIcon(path: String): Option[javax.swing.ImageIcon] = {
     val imgURL: java.net.URL = getClass().getResource(path)

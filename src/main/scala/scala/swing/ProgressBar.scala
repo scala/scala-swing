@@ -21,7 +21,7 @@ import javax.swing.JProgressBar
  *
  * @see javax.swing.JProgressBar
  */
-class ProgressBar extends Component with Orientable.Wrapper {
+class ProgressBar extends Component with Orientable {
   override lazy val peer: JProgressBar =
     new javax.swing.JProgressBar with SuperMixin
 
@@ -43,4 +43,7 @@ class ProgressBar extends Component with Orientable.Wrapper {
 
   def paintBorder: Boolean = peer.isBorderPainted
   def paintBorder(v: Boolean): Unit = peer.setBorderPainted(v)
+
+  def orientation     : Orientation.Value         = Orientation(peer.getOrientation())
+  def orientation_= (o: Orientation.Value): Unit  = peer.setOrientation(o.id)
 }

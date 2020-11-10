@@ -14,8 +14,11 @@ package scala.swing
 
 import java.awt.Graphics
 import java.awt.event._
+
 import javax.swing.JComponent
 import javax.swing.border.Border
+
+import scala.swing.Swing.PeerContainer
 
 /**
  * Utility methods, mostly for wrapping components.
@@ -42,7 +45,7 @@ object Component {
  * @see http://java.sun.com/products/jfc/tsc/articles/painting/ for the component
  * painting mechanism
  */
-abstract class Component extends UIElement {
+abstract class Component extends UIElement with PeerContainer {
   override lazy val peer: javax.swing.JComponent = new javax.swing.JComponent with SuperMixin {}
 
   /**

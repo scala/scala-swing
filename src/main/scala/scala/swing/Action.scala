@@ -12,8 +12,6 @@
 
 package scala.swing
 
-import java.awt.event.ActionListener
-
 import javax.swing.{Icon, KeyStroke}
 
 object Action {
@@ -25,25 +23,6 @@ object Action {
    * In Java Swing, one would use `null` instead of a designated action.
    */
   case object NoAction extends Action("") { def apply(): Unit = () }
-
-  object Trigger {
-    trait Wrapper extends Action.Trigger {
-      def peer: javax.swing.JComponent {
-        def addActionListener(a: ActionListener): Unit
-        def removeActionListener(a: ActionListener): Unit
-        def setAction(a: javax.swing.Action): Unit
-        def getAction(): javax.swing.Action // note: must keep empty parentheses for Java compatibility
-      }
-
-      // TODO: we need an action cache
-      private var _action: Action = Action.NoAction
-      def action: Action = _action
-      def action_=(a: Action): Unit = { _action = a; peer.setAction(a.peer) }
-
-      //1.6: def hideActionText: Boolean = peer.getHideActionText
-      //def hideActionText_=(b: Boolean) = peer.setHideActionText(b)
-    }
-  }
 
   /**
    * Something that triggers an action.

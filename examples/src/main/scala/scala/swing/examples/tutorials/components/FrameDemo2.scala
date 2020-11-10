@@ -28,14 +28,17 @@
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+
 package scala.swing.examples.tutorials.components
+
+import java.awt.image.BufferedImage
+import java.awt.{Color, Dimension, Graphics, Image, Point, Toolkit}
+import java.net.URL
+
+import javax.swing.{ImageIcon, JDialog, JFrame, UIManager}
 
 import scala.swing._
 import scala.swing.event.ButtonClicked
-import javax.swing.{ Box, BoxLayout, JDialog, JFrame, ImageIcon, UIManager }
-import java.awt.{ BorderLayout, Color, Component, Dimension, Graphics, Image, Point, Toolkit }
-import java.awt.image.BufferedImage
-import java.net.URL
 
 /*
  * Tutorial: How to Make Frames (Main Windows)
@@ -49,75 +52,75 @@ import java.net.URL
  * setIconImage. It uses the file /scala/swing/examples/tutorials/images/FD.jpg.
  */
 class FrameDemo2 {
-  private var lastLocation: Point = null
-  private var defaultButton: Button = null
-  //  private val maxX = 500
-  //  private val maxY = 500
-  //constants for action commands
-  val NO_DECORATIONS = "no_dec";
-  val LF_DECORATIONS = "laf_dec";
-  val WS_DECORATIONS = "ws_dec";
-  val CREATE_WINDOW = "new_win";
-  val DEFAULT_ICON = "def_icon";
-  val FILE_ICON = "file_icon";
-  val PAINT_ICON = "paint_icon";
+  private var lastLocation  : Point   = null
+  private var defaultButton : Button  = null
 
-  //true if the next frame created should have no window decorations
-  var noDecorations = false;
+  // constants for action commands
+  val NO_DECORATIONS  = "no_dec"
+  val LF_DECORATIONS  = "laf_dec"
+  val WS_DECORATIONS  = "ws_dec"
+  val CREATE_WINDOW   = "new_win"
+  val DEFAULT_ICON    = "def_icon"
+  val FILE_ICON       = "file_icon"
+  val PAINT_ICON      = "paint_icon"
 
-  //true if the next frame created should have setIconImage called
-  var specifyIcon = false;
+  // true if the next frame created should have no window decorations
+  var noDecorations = false
 
-  //true if the next frame created should have a custom painted icon
-  var createIcon = false;
+  // true if the next frame created should have setIconImage called
+  var specifyIcon = false
 
-  val screenSize: Dimension = Toolkit.getDefaultToolkit().getScreenSize()
-  val maxX = screenSize.width - 50
-  val maxY = screenSize.height - 50
+  // true if the next frame created should have a custom painted icon
+  var createIcon = false
 
-  //Create a new MyFrame object and show it.
+  val screenSize: Dimension = Toolkit.getDefaultToolkit.getScreenSize
+
+  val maxX: Int = screenSize.width  - 50
+  val maxY: Int = screenSize.height - 50
+
+  // Creates a new MyFrame object and show it.
   def showNewWindow(): Unit = {
-    //Take care of the no window decorations case.
-    //NOTE: Unless you really need the functionality
-    //provided by JFrame, you would usually use a
-    //Window or JWindow instead of an undecorated JFrame.
+    // Take care of the no window decorations case.
+    // NOTE: Unless you really need the functionality
+    // provided by JFrame, you would usually use a
+    // Window or JWindow instead of an undecorated JFrame.
     val frame: Option[Frame] = if (noDecorations) Some(new MyFrameUndecorated()) else Some(new MyFrame())
-    //Set window location.
+    // Set window location.
     if (frame.isDefined) {
       val f = frame.get
       if (lastLocation != null) {
         //Move the window over and down 40 pixels.
-        lastLocation.translate(40, 40);
+        lastLocation.translate(40, 40)
         if ((lastLocation.x > maxX) || (lastLocation.y > maxY)) {
-          lastLocation.setLocation(0, 0);
+          lastLocation.setLocation(0, 0)
         }
         f.location = lastLocation
       } else {
         lastLocation = f.location
       }
 
-      //Calling setIconImage sets the icon displayed when the window
-      //is minimized.  Most window systems (or look and feels, if
-      //decorations are provided by the look and feel) also use this
-      //icon in the window decorations.
+      // Calling setIconImage sets the icon displayed when the window
+      // is minimized.  Most window systems (or look and feels, if
+      // decorations are provided by the look and feel) also use this
+      // icon in the window decorations.
       if (specifyIcon) {
         if (createIcon) {
-          //create an icon from scratch
+          // create an icon from scratch
           f.iconImage = FrameDemo2.createFDImage()
         } else {
-          //get the icon from a file
+          // get the icon from a file
           f.iconImage = FrameDemo2.getFDImage().get
         }
       }
     }
   }
 
-  // Create the window-creation controls that go in the main window.
+  // Creates the window-creation controls that go in the main window.
   def createOptionControls(frame: Frame): BoxPanel = {
-    val label1 = new Label("Decoration options for subsequently created frames:")
-    val bg1 = new ButtonGroup()
-    val label2 = new Label("Icon options:")
-    val bg2 = new ButtonGroup()
+    val label1  = new Label("Decoration options for subsequently created frames:")
+    val bg1     = new ButtonGroup()
+    val label2  = new Label("Icon options:")
+    val bg2     = new ButtonGroup()
 
     //Create the buttons
     val rb1 = new RadioButton() {
@@ -197,7 +200,7 @@ class FrameDemo2 {
     box
   }
 
-  //Create the button that goes in the main window.
+  // Creates the button that goes in the main window.
   def createButtonPane(frame: Frame): FlowPanel = {
     val button = new Button("New window")
     defaultButton = button
@@ -207,7 +210,7 @@ class FrameDemo2 {
       case ButtonClicked(`button`) => showNewWindow()
     }
 
-    //Center the button in a panel with some space around it.
+    // Center the button in a panel with some space around it.
     val pane = new FlowPanel() {
       border = Swing.EmptyBorder(5, 5, 5, 5)
       contents += button
@@ -220,12 +223,12 @@ class FrameDemo2 {
 class MyFrame extends Frame {
   title = "A window"
 
-  //This button lets you close even an undecorated window.
-  val button = new Button("Close window") {
+  // This button lets you close even an undecorated window.
+  val button: Button = new Button("Close window") {
     xLayoutAlignment = java.awt.Component.CENTER_ALIGNMENT
   }
 
-  //Place the button near the bottom of the window.
+  // Place the button near the bottom of the window.
   contents = new BoxPanel(Orientation.Vertical) {
     contents += Swing.VGlue
     contents += button
@@ -241,20 +244,19 @@ class MyFrame extends Frame {
   preferredSize = new Dimension(150, 150)
   pack()
   visible = true
-  override def closeOperation() = {
-    close
-  }
+
+  override def closeOperation(): Unit = close()
 }
 
 class MyFrameUndecorated extends Frame with RichWindow.Undecorated {
   visible = false
-    //This button lets you close even an undecorated window.
-  val button = new Button("Close window") {
+  // This button lets you close even an undecorated window.
+  val button: Button = new Button("Close window") {
     xLayoutAlignment = java.awt.Component.CENTER_ALIGNMENT
   }
 
-  //Place the button near the bottom of the window.
-  //Undecorated windows are not supported in scala swing.
+  // Place the button near the bottom of the window.
+  // Undecorated windows are not supported in scala swing.
   contents = new BoxPanel(Orientation.Vertical) {
     contents += Swing.VGlue
     contents += button
@@ -270,55 +272,54 @@ class MyFrameUndecorated extends Frame with RichWindow.Undecorated {
   preferredSize = new Dimension(150, 150)
   pack()
   visible = true
-  override def closeOperation() = {
-    close
-  }
+
+  override def closeOperation(): Unit = close()
 }
 
 object FrameDemo2 extends SimpleSwingApplication {
-  //Creates an icon-worthy Image from scratch.
+  // Creates an icon-worthy Image from scratch.
   def createFDImage(): Image = {
-    //Create a 16x16 pixel image.
+    // Create a 16x16 pixel image.
     val bi = new BufferedImage(16, 16, BufferedImage.TYPE_INT_RGB)
-    //Draw into it.
-    val g: Graphics = bi.getGraphics()
-    g.setColor(Color.BLACK);
+    // Draw into it.
+    val g: Graphics = bi.getGraphics
+    g.setColor(Color.BLACK)
     g.fillRect(0, 0, 15, 15)
     g.setColor(Color.RED)
     g.fillOval(5, 3, 6, 6)
 
-    //Clean up.
+    // Clean up.
     g.dispose()
 
-    //Return it.
+    // Return it.
     bi
   }
 
   // Returns an Image Option or None.
   def getFDImage(): Option[Image] = {
-    val imgURL: URL = getClass().getResource("/scala/swing/examples/tutorials/images/FD.jpg");
+    val imgURL: URL = getClass.getResource("/scala/swing/examples/tutorials/images/FD.jpg")
     if (imgURL != null) {
-      return Some(new ImageIcon(imgURL).getImage)
+      Some(new ImageIcon(imgURL).getImage)
     } else {
-      return None
+      None
     }
   }
 
-  lazy val top: Frame { val demo: FrameDemo2 } = new Frame() {
+  object top extends Frame {
     title = "FrameDemo2"
-    //Use the Java look and feel.  This needs to be done before the frame is created
-    //so the companion object FrameDemo2 cannot simply extend SimpleSwingApplcation.
+    // Use the Java look and feel.  This needs to be done before the frame is created
+    // so the companion object FrameDemo2 cannot simply extend SimpleSwingApplication.
     try {
       UIManager.setLookAndFeel(
-        UIManager.getCrossPlatformLookAndFeelClassName());
+        UIManager.getCrossPlatformLookAndFeelClassName)
     } catch {
-      case e: Exception => ;
+      case _: Exception => ()
     }
-    //Make sure we have nice window decorations.
-    JFrame.setDefaultLookAndFeelDecorated(true);
-    JDialog.setDefaultLookAndFeelDecorated(true);
-    //Create and set up the content pane.
-    val demo = new FrameDemo2();
+    // Make sure we have nice window decorations.
+    JFrame .setDefaultLookAndFeelDecorated(true)
+    JDialog.setDefaultLookAndFeelDecorated(true)
+    // Create and set up the content pane.
+    val demo = new FrameDemo2()
   }
   val bp: BorderPanel = new BorderPanel() {
       layout(top.demo.createOptionControls(top)) = BorderPanel.Position.Center

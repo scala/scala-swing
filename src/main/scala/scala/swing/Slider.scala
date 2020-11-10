@@ -23,7 +23,7 @@ import javax.swing.{JLabel, JSlider}
  *
  * @see javax.swing.JSlider
  */
-class Slider extends Component with Orientable.Wrapper with Publisher {
+class Slider extends Component with Orientable with Publisher {
   override lazy val peer: JSlider = new JSlider with SuperMixin
 
   def min: Int = peer.getMinimum
@@ -64,6 +64,9 @@ class Slider extends Component with Orientable.Wrapper with Publisher {
     for ((k,v) <- l) table.put(k, v.peer)
     peer.setLabelTable(table)
   }
+
+  def orientation     : Orientation.Value         = Orientation(peer.getOrientation())
+  def orientation_= (o: Orientation.Value): Unit  = peer.setOrientation(o.id)
 
   peer.addChangeListener(new javax.swing.event.ChangeListener {
     def stateChanged(e: javax.swing.event.ChangeEvent): Unit =

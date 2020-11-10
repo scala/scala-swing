@@ -30,3 +30,5 @@ scala-swing.iml
 .DS_Store
 
 target/
+/.bloop/
+/.bsp/

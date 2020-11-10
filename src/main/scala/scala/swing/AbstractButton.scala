@@ -22,7 +22,7 @@ import scala.swing.event.{ButtonClicked, Key}
  *
  * @see javax.swing.AbstractButton
  */
-abstract class AbstractButton extends Component with Action.Trigger.Wrapper with Publisher {
+abstract class AbstractButton extends Component with Action.Trigger with Publisher {
   override lazy val peer: JAbstractButton = new JAbstractButton with SuperMixin {}
 
   def text: String = peer.getText
@@ -42,6 +42,11 @@ abstract class AbstractButton extends Component with Action.Trigger.Wrapper with
   def rolloverIcon_=(b: Icon): Unit = peer.setRolloverIcon(b)
   def rolloverSelectedIcon: Icon = peer.getRolloverSelectedIcon
   def rolloverSelectedIcon_=(b: Icon): Unit = peer.setRolloverSelectedIcon(b)
+
+  // TODO: we need an action cache
+  private var _action: Action = Action.NoAction
+  def action: Action = _action
+  def action_=(a: Action): Unit = { _action = a; peer.setAction(a.peer) }
 
   peer.addActionListener(Swing.ActionListener { _ =>
     publish(ButtonClicked(AbstractButton.this))
