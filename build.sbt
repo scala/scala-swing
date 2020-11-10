@@ -1,8 +1,8 @@
+publish / skip := true  // root project
+
 lazy val scalaTestVersion = "3.2.3"
 
 lazy val commonSettings = Seq(
-  crossScalaVersions := Seq("3.0.0-M1", "2.13.3", "2.12.12", "2.11.12"),
-  scalaVersion       := "2.13.3",
   scalacOptions     ++= Seq("-deprecation", "-feature"),
 )
 
@@ -13,7 +13,7 @@ lazy val swing = project.in(file("."))
   .settings(
     name := "scala-swing",
     OsgiKeys.exportPackage := Seq(s"scala.swing.*;version=${version.value}"),
-    scalaModuleMimaPreviousVersion := Some("2.1.0"),
+    // scalaModuleMimaPreviousVersion := Some("2.1.0"),  TODO re-enable after we have a 3.0 release
     // set the prompt (for this build) to include the project id.
     ThisBuild / shellPrompt := { state => Project.extract(state).currentRef.project + "> " },
     libraryDependencies ++= Seq(
@@ -38,7 +38,8 @@ lazy val examples = project.in(file("examples"))
   .settings(
     scalaVersion := (swing / scalaVersion).value,
     run / fork := true,
-    fork := true
+    fork := true,
+    publish / skip := true,
   )
 
 lazy val uitest = project.in(file("uitest"))
@@ -47,5 +48,6 @@ lazy val uitest = project.in(file("uitest"))
   .settings(
     scalaVersion := (swing / scalaVersion).value,
     run / fork := true,
-    fork := true
+    fork := true,
+    publish / skip := true,
   )
