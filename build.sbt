@@ -1,5 +1,3 @@
-publish / skip := true  // root project
-
 lazy val scalaTestVersion = "3.2.3"
 
 lazy val commonSettings = Seq(
@@ -39,7 +37,6 @@ lazy val examples = project.in(file("examples"))
     scalaVersion := (swing / scalaVersion).value,
     run / fork := true,
     fork := true,
-    publish / skip := true,
   )
 
 lazy val uitest = project.in(file("uitest"))
@@ -49,5 +46,4 @@ lazy val uitest = project.in(file("uitest"))
     scalaVersion := (swing / scalaVersion).value,
     run / fork := true,
     fork := true,
-    publish / skip := true,
   )

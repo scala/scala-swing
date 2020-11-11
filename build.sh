@@ -26,9 +26,9 @@ isReleaseJob() {
 }
 
 if [[ "$SCALAJS_VERSION" == "" ]]; then
-  projectPrefix=""
+  projectPrefix="swing/"
 else
-  projectPrefix=""
+  projectPrefix="swingJS/"
 fi
 
 verPat="[0-9]+\.[0-9]+\.[0-9]+(-[A-Za-z0-9-]+)?"
