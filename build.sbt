@@ -27,7 +27,10 @@ lazy val swing = project.in(file("."))
         case Some((3, _))            => sourceDir / "scala-2.13+" // Dotty
         case _                       => sourceDir / "scala-2.13-"
       }
-    }
+    },
+    sources in (Compile, doc) := {
+      if (isDotty.value) Nil else (sources in (Compile, doc)).value // dottydoc is currently broken
+    },
   )
 
 lazy val examples = project.in(file("examples"))
