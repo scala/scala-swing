@@ -14,20 +14,11 @@ set -e
 # - check out the tag for the version that needs to be published
 # - change `.travis.yml` to adjust the version numbers and trim down the build matrix as necessary
 # - commit the changes and tag this new revision with an arbitrary suffix after a hash, e.g.,
-#   `v1.2.3#3.0.0-M2` (the suffix is ignored, the version will be `1.2.3`)
+#   `v1.2.3#dotty-0.27` (the suffix is ignored, the version will be `1.2.3`)
 
 # We release on JDK 8 (for Scala 2.x and 3.x)
 isReleaseJob() {
   if [[ "$ADOPTOPENJDK" == "8" ]]; then
-    true
-  else
-    false
-  fi
-}
-
-# For tags that define a Scala version, we pick the jobs of one Scala version (2.13.x) to do the releases
-isTagScalaReleaseJob() {
-  if [[ "$ADOPTOPENJDK" == "8" && "$TRAVIS_SCALA_VERSION" =~ ^2\.13\.[0-9]+$ ]]; then
     true
   else
     false
@@ -41,23 +32,13 @@ else
 fi
 
 verPat="[0-9]+\.[0-9]+\.[0-9]+(-[A-Za-z0-9-]+)?"
-tagPat="^v$verPat(#$verPat)?$"
+tagPat="^v$verPat(#.*)?$"
 
 if [[ "$TRAVIS_TAG" =~ $tagPat ]]; then
   releaseTask="ci-release"
-  tagScalaVer=$(echo $TRAVIS_TAG | sed s/[^#]*// | sed s/^#//)
-  if [[ "$tagScalaVer" == "" ]]; then
-    if ! isReleaseJob; then
-      echo "Not releasing on Java $ADOPTOPENJDK with Scala $TRAVIS_SCALA_VERSION"
-      exit 0
-    fi
-  else
-    if isTagScalaReleaseJob; then
-      setTagScalaVersion='set every scalaVersion := "'$tagScalaVer'"'
-    else
-      echo "The releases for Scala $tagScalaVer are built by other jobs in the travis job matrix"
-      exit 0
-    fi
+  if ! isReleaseJob; then
+    echo "Not releasing on Java $ADOPTOPENJDK with Scala $TRAVIS_SCALA_VERSION"
+    exit 0
   fi
 fi
 
@@ -70,4 +51,4 @@ export CI_SNAPSHOT_RELEASE="${projectPrefix}publish"
 # for now, until we're confident in the new release scripts, just close the staging repo.
 export CI_SONATYPE_RELEASE="; sonatypePrepare; sonatypeBundleUpload; sonatypeClose"
 
-sbt "$setTagScalaVersion" clean ${projectPrefix}test ${projectPrefix}publishLocal $releaseTask
+sbt clean ${projectPrefix}test ${projectPrefix}publishLocal $releaseTask
