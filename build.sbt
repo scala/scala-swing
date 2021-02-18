@@ -1,4 +1,4 @@
-lazy val scalaTestVersion = "3.2.3"
+lazy val scalaTestVersion = "3.2.4"
 
 lazy val commonSettings = Seq(
   scalacOptions     ++= Seq("-deprecation", "-feature"),
