@@ -1,4 +1,9 @@
-lazy val scalaTestVersion = "3.2.4"
+lazy val scalaTestVersion = "3.2.7"
+
+// We use <epoch>.<major>.<minor> like 99% of Scala libraries.
+// Versions are binary compatible within x.y.* but not within x.*.*
+ThisBuild / versionScheme := Some("pvp")
+ThisBuild / versionPolicyIntention := Compatibility.None  // 3.0.0
 
 lazy val commonSettings = Seq(
   scalacOptions     ++= Seq("-deprecation", "-feature"),
