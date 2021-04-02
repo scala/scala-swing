@@ -119,6 +119,7 @@ new Frame {
 The reason to have different major versions is to allow for binary incompatible changes. Also, some java-swing classes were 
 generified in JDK 7 (see [SI-3634](https://issues.scala-lang.org/browse/SI-3634)) and require the scala-swing sources to be adjusted.
 
+Versions now follow classic Scala PVP style with binary compatibility within `x.y.*` but not `x.*.*`.
 
 ## API documentation (Scaladoc)
 
@@ -130,3 +131,20 @@ at [http://www.scala-lang.org/documentation/api.html](http://www.scala-lang.org/
 
 Current changes are being made on the `work` branch.
 Last published version is found on the `main` branch.
+
+## Publishing New Versions
+
+We assume that you are working on a fork of remote `upstream`  with remote `origin`.
+
+- create a new local branch that will never be pushed remotely, e.g. `git checkout -b release-3.0.0#3.0.0-RC2`
+  (do not name the branch the same as a tag)
+- edit `.travis.yml` to reduce the matrix to only the Scala and JDK versions needed to publish the version
+  (publishing JDK is 8)
+- `git commit`
+- add a tag, e.g. `git tag -a 'v3.0.0#3.0.0-RC2' -m 'version 3.0.0 for 3.0.0-RC2'`
+- push __only the tag__, e.g. `git push upstream v3.0.0#3.0.0-RC2`.
+- check CI status at [https://travis-ci.com/github/scala/scala-swing](https://travis-ci.com/github/scala/scala-swing).
+  You should see a message `Running ci-release.` followed by e.g `published scala-swing_3.0.0-RC2 to ...` going into
+  local `sonatype-staging`, followed by the Sonatype plugin uploading the artifacts.
+- Upon success, nudge Seth to release the bundle from Sonatype.
+
