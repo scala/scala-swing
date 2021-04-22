@@ -1,4 +1,4 @@
-lazy val scalaTestVersion = "3.2.7"
+lazy val scalaTestVersion = "3.2.8"
 
 // We use <epoch>.<major>.<minor> like 99% of Scala libraries.
 // Versions are binary compatible within x.y.* but not within x.*.*
