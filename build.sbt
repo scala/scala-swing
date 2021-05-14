@@ -1,4 +1,4 @@
-lazy val scalaTestVersion = "3.2.7"
+lazy val scalaTestVersion = "3.2.9"
 
 // We use <epoch>.<major>.<minor> like 99% of Scala libraries.
 // Versions are binary compatible within x.y.* but not within x.*.*
@@ -15,6 +15,7 @@ lazy val swing = project.in(file("."))
   .settings(commonSettings)
   .settings(
     name := "scala-swing",
+    scalaModuleAutomaticModuleName := Some("scala.swing"),
     OsgiKeys.exportPackage := Seq(s"scala.swing.*;version=${version.value}"),
     // scalaModuleMimaPreviousVersion := Some("2.1.0"),  TODO re-enable after we have a 3.0 release
     // set the prompt (for this build) to include the project id.
@@ -33,9 +34,9 @@ lazy val swing = project.in(file("."))
         case _                       => sourceDir / "scala-2.13-"
       }
     },
-    sources in (Compile, doc) := {
-      if (isDotty.value) Nil else (sources in (Compile, doc)).value // dottydoc is currently broken
-    },
+    // sources in (Compile, doc) := {
+    //   if (isDotty.value) Nil else (sources in (Compile, doc)).value // dottydoc is currently broken
+    // },
   )
 
 lazy val examples = project.in(file("examples"))
