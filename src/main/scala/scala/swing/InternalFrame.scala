@@ -2,7 +2,6 @@ package scala.swing
 
 import javax.swing.{Icon, JInternalFrame, WindowConstants}
 
-import scala.swing.MenuBar.NoMenuBar
 import scala.swing.event.{InternalFrameActivated, InternalFrameClosed, InternalFrameClosing, InternalFrameDeactivated, InternalFrameDeiconified, InternalFrameIconified, InternalFrameOpened}
 
 
