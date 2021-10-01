@@ -1,18 +1,16 @@
-lazy val scalaTestVersion = "3.2.9"
+lazy val scalaTestVersion = "3.2.10"
+
+ThisBuild / crossScalaVersions := Seq("3.0.2", "2.13.6", "2.12.15", "2.11.12")
+ThisBuild / scalaVersion := crossScalaVersions.value.head
 
 // We use <epoch>.<major>.<minor> like 99% of Scala libraries.
 // Versions are binary compatible within x.y.* but not within x.*.*
 ThisBuild / versionScheme := Some("pvp")
 ThisBuild / versionPolicyIntention := Compatibility.None  // 3.0.0
 
-lazy val commonSettings = Seq(
-  scalacOptions     ++= Seq("-deprecation", "-feature"),
-)
-
 lazy val swing = project.in(file("."))
   .settings(ScalaModulePlugin.scalaModuleSettings)
   .settings(ScalaModulePlugin.scalaModuleOsgiSettings)
-  .settings(commonSettings)
   .settings(
     name := "scala-swing",
     scalaModuleAutomaticModuleName := Some("scala.swing"),
@@ -34,25 +32,18 @@ lazy val swing = project.in(file("."))
         case _                       => sourceDir / "scala-2.13-"
       }
     },
-    // sources in (Compile, doc) := {
-    //   if (isDotty.value) Nil else (sources in (Compile, doc)).value // dottydoc is currently broken
-    // },
   )
 
 lazy val examples = project.in(file("examples"))
   .dependsOn(swing)
-  .settings(commonSettings)
   .settings(
-    scalaVersion := (swing / scalaVersion).value,
     run / fork := true,
     fork := true,
   )
 
 lazy val uitest = project.in(file("uitest"))
   .dependsOn(swing)
-  .settings(commonSettings)
   .settings(
-    scalaVersion := (swing / scalaVersion).value,
     run / fork := true,
     fork := true,
   )
