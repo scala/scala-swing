@@ -16,7 +16,7 @@ import scala.swing._
 import scala.swing.event._
 
 object TableSelection extends SimpleSwingApplication {
-  val model = Array(List("Mary", "Campione", "Snowboarding", 5, false).toArray,
+  val model = Array[Array[Any]](List("Mary", "Campione", "Snowboarding", 5, false).toArray,
     List("Alison", "Huml", "Rowing", 5, false).toArray,
     List("Kathy", "Walrath", "Knitting", 5, false).toArray,
     List("Sharon", "Zakhour", "Speed reading", 5, false).toArray,
