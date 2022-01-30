@@ -16,11 +16,11 @@ import scala.swing._
 import scala.swing.event._
 
 object TableSelection extends SimpleSwingApplication {
-  val model = Array(List("Mary", "Campione", "Snowboarding", 5, false).toArray,
-    List("Alison", "Huml", "Rowing", 5, false).toArray,
-    List("Kathy", "Walrath", "Knitting", 5, false).toArray,
-    List("Sharon", "Zakhour", "Speed reading", 5, false).toArray,
-    List("Philip", "Milne", "Pool", 5, false).toArray)
+  val model = Array(List("Mary", "Campione", "Snowboarding", 5, false).toArray[Any],
+    List("Alison", "Huml", "Rowing", 5, false).toArray[Any],
+    List("Kathy", "Walrath", "Knitting", 5, false).toArray[Any],
+    List("Sharon", "Zakhour", "Speed reading", 5, false).toArray[Any],
+    List("Philip", "Milne", "Pool", 5, false).toArray[Any])
 
   lazy val ui: BoxPanel = new BoxPanel(Orientation.Vertical) {
     val table: Table = new Table(model, Array("First Name", "Last Name", "Sport", "# of Years", "Vegetarian")) {
