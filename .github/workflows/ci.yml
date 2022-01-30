@@ -22,4 +22,4 @@ jobs:
         distribution: adopt
         java-version: ${{matrix.java}}
     - name: Test
-      run: sbt ++${{matrix.scala}} test package
+      run: sbt ++${{matrix.scala}} "all Test/compile examples/Test/compile uitest/Test/compile" test package

@@ -6,7 +6,7 @@ package uitest
   */
 object Issue47 extends SimpleSwingApplication {
   lazy val top: Frame = {
-    val data0 = Array(
+    val data0 = Array[Array[Any]](
       Array("Schaeffer" , 1910, 1995),
       Array("Sun Ra"    , 1914, 1993),
       Array("Oram"      , 1925, 2003),
