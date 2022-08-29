@@ -1,12 +1,13 @@
-# scala-swing (mostly-unsupported)
+# scala-swing
 
 [<img src="https://img.shields.io/travis/scala/scala-swing/java7.svg"/>](https://travis-ci.org/scala/scala-swing)
 [<img src="https://img.shields.io/maven-central/v/org.scala-lang.modules/scala-swing_2.11.svg?label=latest%20release%20for%202.11"/>](http://search.maven.org/#search%7Cga%7C1%7Cg%3Aorg.scala-lang.modules%20a%3Ascala-swing_2.11)
 [<img src="https://img.shields.io/maven-central/v/org.scala-lang.modules/scala-swing_2.12.svg?label=latest%20release%20for%202.12"/>](http://search.maven.org/#search%7Cga%7C1%7Cg%3Aorg.scala-lang.modules%20a%3Ascala-swing_2.12)
 [<img src="https://img.shields.io/maven-central/v/org.scala-lang.modules/scala-swing_2.13.svg?label=latest%20release%20for%202.13"/>](http://search.maven.org/#search%7Cga%7C1%7Cg%3Aorg.scala-lang.modules%20a%3Ascala-swing_2.13)
 
-This is now community maintained by [@Sciss](https://github.com/Sciss) and [@benhutchison](https://github.com/benhutchison). 
-If you are interested in helping then contact them or [@adriaanm](https://github.com/adriaanm).
+## Maintenance status
+
+Scala-swing is community-maintained by [@Sciss](https://github.com/Sciss) and [@benhutchison](https://github.com/benhutchison), with an occasional assist from [@SethTisue](https://github.com/SethTisue). If you are interested in helping, then start a thread in the [Discussions section](https://github.com/scala/scala-swing/discussions), or contact the maintainers.
 
 ## Adding an sbt dependency
 
