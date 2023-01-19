@@ -125,7 +125,8 @@ Versions now follow classic Scala PVP style with binary compatibility within `x.
 ## API documentation (Scaladoc)
 
 The API documentation for scala-swing can be found
-at [http://www.scala-lang.org/documentation/api.html](http://www.scala-lang.org/documentation/api.html).
+at <https://javadoc.io/doc/org.scala-lang.modules/scala-swing_2.13/latest/index.html> for scala 2.13 and
+<https://javadoc.io/doc/org.scala-lang.modules/scala-swing_3/latest/index.html> for scala 3.
 
 
 ## Current Work
