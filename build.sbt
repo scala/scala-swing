@@ -1,4 +1,4 @@
-lazy val scalaTestVersion = "3.2.10"
+lazy val scalaTestVersion = "3.2.19"
 
 ThisBuild / crossScalaVersions := Seq("3.1.3", "2.13.8", "2.12.16", "2.11.12")
 ThisBuild / scalaVersion := crossScalaVersions.value.head
