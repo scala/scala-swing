@@ -10,6 +10,7 @@ ThisBuild / versionPolicyIntention := Compatibility.None  // 3.0.0
 
 lazy val swing = project.in(file("."))
   .settings(ScalaModulePlugin.scalaModuleSettings)
+  .enablePlugins(SbtOsgi)
   .settings(ScalaModulePlugin.scalaModuleOsgiSettings)
   .settings(
     name := "scala-swing",
