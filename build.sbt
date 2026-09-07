@@ -1,6 +1,6 @@
 lazy val scalaTestVersion = "3.2.20"
 
-ThisBuild / crossScalaVersions := Seq("3.3.8", "2.13.18", "2.12.21")
+ThisBuild / crossScalaVersions := Seq("3.9.0", "2.13.18", "2.12.21")
 ThisBuild / scalaVersion := crossScalaVersions.value.head
 
 // We use <epoch>.<major>.<minor> like 99% of Scala libraries.
